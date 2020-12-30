@@ -1,3 +1,7 @@
+.logo{
+  height: 70px;
+  width: auto;
+}
 .navbar {
   background: #9419F8;
   height: 80px;
@@ -6,8 +10,6 @@
   align-items: center;
   font-size: 1.2rem;
 }
-
-
 
 .fa-firstdraft {
   margin-left: 0.5rem;
@@ -21,7 +23,8 @@
   list-style: none;
   text-align: center;
   width: 70vw;
-  justify-content: end;
+  justify-content: start;
+  padding-left: 4rem;
   margin-right: 2rem;
 }
 
@@ -64,6 +67,7 @@
   .nav-menu {
     display: flex;
     flex-direction: column;
+    grid-gap: 1rem;
     width: 100%;
     height: 90vh;
     position: absolute;
@@ -79,6 +83,8 @@
     opacity: 1;
     transition: all 0.5s ease;
     z-index: 1;
+    height: 100%;
+    padding: 0;
   }
 
   .nav-links {

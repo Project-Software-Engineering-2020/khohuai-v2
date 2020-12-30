@@ -3,8 +3,8 @@ import '../../App.css';
 
 export default function Home() {
   return (
-    <>
-      <h1 className='home'>landing</h1>
-    </>
+    <div className='home'>
+      <h1>landing</h1>
+    </div>
   );
 }

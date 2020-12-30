@@ -3,6 +3,7 @@ import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import Dropdown from './Dropdown';
+import logo from '.././khohuai.png'
 
 
 function Navbar() {
@@ -29,11 +30,10 @@ function Navbar() {
   };
 
   return (
-    <>
+    <div>
       <nav className='navbar'>
-        <Link to='/'  onClick={closeMobileMenu}>
-          
-          logoฝากใส่ที
+        <Link to='/' onClick={closeMobileMenu} >
+          <img src={logo} alt="khohuai" className="logo"></img>
         </Link>
         <div className='menu-icon' onClick={handleClick}>
           <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
@@ -41,7 +41,7 @@ function Navbar() {
         <ul className={click ? 'nav-menu active' : 'nav-menu'}>
           <li className='nav-item'>
             <Link to='/' className='nav-links' onClick={closeMobileMenu}>
-            <i className="fas fa-home"/>    หน้าแรก
+              <i className="fas fa-home" />    หน้าแรก
             </Link>
           </li>
           <li
@@ -54,7 +54,7 @@ function Navbar() {
               className='nav-links'
               onClick={closeMobileMenu}
             >
-               <i className='fas fa-search' />     ค้นหาสลาก
+              <i className='fas fa-search' />     ค้นหาสลาก
             </Link>
             {dropdown && <Dropdown />}
           </li>
@@ -64,7 +64,7 @@ function Navbar() {
               className='nav-links'
               onClick={closeMobileMenu}
             >
-             <i className="fas fa-money-bill-alt"/>   ผลการออกรางวัล
+              <i className="fas fa-money-bill-alt" />   ผลการออกรางวัล
             </Link>
           </li>
           <li className='nav-item'>
@@ -73,7 +73,7 @@ function Navbar() {
               className='nav-links'
               onClick={closeMobileMenu}
             >
-            <i className="fas fa-gamepad"/>  เล่นเกม
+              <i className="fas fa-gamepad" />  เล่นเกม
             </Link>
           </li>
           <li>
@@ -88,7 +88,7 @@ function Navbar() {
         </ul>
         <Button />
       </nav>
-    </>
+    </div>
   );
 }
 
