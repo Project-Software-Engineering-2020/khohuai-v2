@@ -7,7 +7,7 @@ class LoginPage extends Component {
         super(props)
     
         this.state = {
-            username: '',
+            email: '',
             password: ''
         }
     }
@@ -31,16 +31,21 @@ class LoginPage extends Component {
                     <form>
                         <h3>Login Form</h3>
                         <div className="form-group">
-                            <label htmlFor="username">Username</label>
-                            <input type="text" className="form-control is-valid" name="username" onChange={this.onInputChange}></input>
-                            <div className="valid-feedback">พบชื่อผู้ใช้</div>
+                            <label htmlFor="email">Email</label>
+                            <input type="text" className="form-control" name="email" onChange={this.onInputChange}></input>
+                           
                         </div>
                         <div className="form-group">
                             <label htmlFor="password">Password</label>
-                            <input type="password" className="form-control is-invalid" name="password" onChange={this.onInputChange}></input>
-                            <div className="invalid-feedback">รหัสผ่านสั้นเกินไป</div>
+                            <input type="password" className="form-control" name="password" onChange={this.onInputChange}></input>
                         </div>
-                        <button type="button" className="btn btn-success">Login</button>
+                        <div>
+                            <Link to="/recoverpassword">Forget password ?</Link>
+                        </div>
+                        <div>
+                            <button type="button" className="btn btn-success">Login</button>
+                        </div>
+                        
                     </form>
                 </div>
                 <div>
