@@ -30,47 +30,47 @@ function Navbar() {
   };
 
   return (
-    <div>
-      <nav className='navbar'>
+    <div className="navbar-bg">
+      <nav className='lottery-navbar container'>
         <Link to='/' onClick={closeMobileMenu} >
-          <img src={logo} alt="khohuai" className="logo"></img>
+          <img src={logo} alt="khohuai" className="lottery-logo"></img>
         </Link>
         <div className='menu-icon' onClick={handleClick}>
           <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
         </div>
-        <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-          <li className='nav-item'>
-            <Link to='/' className='nav-links' onClick={closeMobileMenu}>
+        <ul className={click ? 'lottery-nav-menu active' : 'lottery-nav-menu'}>
+          <li className='lottery-nav-item'>
+            <Link to='/' className='lottery-nav-links' onClick={closeMobileMenu}>
               <i className="fas fa-home" />    หน้าแรก
             </Link>
           </li>
           <li
-            className='nav-item'
+            className='lottery-nav-item'
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
           >
             <Link
               to='/find'
-              className='nav-links'
+              className='lottery-nav-links'
               onClick={closeMobileMenu}
             >
               <i className='fas fa-search' />     ค้นหาสลาก
             </Link>
             {dropdown && <Dropdown />}
           </li>
-          <li className='nav-item'>
+          <li className='lottery-nav-item'>
             <Link
               to='/lottery'
-              className='nav-links'
+              className='lottery-nav-links'
               onClick={closeMobileMenu}
             >
               <i className="fas fa-money-bill-alt" />   ผลการออกรางวัล
             </Link>
           </li>
-          <li className='nav-item'>
+          <li className='lottery-nav-item'>
             <Link
               to='/game'
-              className='nav-links'
+              className='lottery-nav-links'
               onClick={closeMobileMenu}
             >
               <i className="fas fa-gamepad" />  เล่นเกม

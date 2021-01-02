@@ -1,8 +1,4 @@
-:root {
-  --primary: rgba(255, 255, 255, 1);
-}
-
-.btn {
+.signup-btn {
   padding: 8px 20px;
   border-radius: 37px;
   outline: none;
@@ -10,15 +6,19 @@
   font-size: 18px;
   color: #fff#535353;
   cursor: pointer;
-  background-color: var(--primary);
+  background-color: white;
 }
 
-.btn:hover {
+.signup-btn:hover {
   padding: 6px 18px;
   transition: all 0.3s ease-out;
-  background-color: transparent;
+  background: #9419F8;
   color: #fff;
   border-radius: 4px;
-  border: 2px solid var(--primary);
+  border: 2px solid white;
   transition: all 0.3s ease-out;
 }
+/* .signup-link
+{
+  justify-self: flex-end;
+} */
