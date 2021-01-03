@@ -1,17 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const fetch = require('node-fetch');
+const Axios = require('axios');
 
-router.get('/lottery',function(req,res){
-    console.log("Fetch Data");
-    fetch('https://lotto.api.rayriffy.com/latest')
-    .then(result => {
-        console.log(result);
-        res.send(result);
+router.get('/',function(req,res){
+    Axios.get("https://lotto.api.rayriffy.com/latest").then((result) => {
+        p2 = result.data.response.prizes[2];
+        res.send(p2);
     })
 });
-router.get('/chon', (req,res) => {
-    console.log("chon");
-})
 
 module.exports = router;
