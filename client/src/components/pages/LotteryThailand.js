@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
-const LotteryThailand = (p) => {
+const LotteryThailand = () => {
 
     const [DateLotteryThailand, setLotteryThailand] = useState([]);
     const [Prizes, setPrizes] = useState([]);
@@ -15,7 +15,7 @@ const LotteryThailand = (p) => {
             setRunningNumbers(res.data.response.runningNumbers);
         })
 
-        setloading(true);
+        await setloading(true);
     }
 
     useEffect(() => {
@@ -29,36 +29,44 @@ const LotteryThailand = (p) => {
                 loading ?
                     //success
                     <div className="reward-lottery">
-                        <div className="container pt-5">
+                        <div className="container pt-lg-4 p-0">
                             <div className="card-shadow">
-                                <h1 className="header-lottery">ผลการออกสลากกินแบ่งรัฐบาล</h1>
-                                <h3>งวดประจำวันที่ {DateLotteryThailand}</h3>
-                                <div className="row mt-5">
-                                    <div className="col-lg-7 col-12 prize-number-one">
+                                <section className="header-lottery">
+                                    <div>
+                                        <h1>ผลสลากกินแบ่งรัฐบาล</h1>
+                                        <h3>งวดประจำวันที่ {DateLotteryThailand}</h3>
+                                    </div>
+                                    <div className="check-your-lottery">
+                                        <button className="check-your-lottery-btn"> <i class="fas fa-search"> </i> ตรวจสลาก </button>
+                                    </div>
+                                </section>
+
+                                <section className="prize-number-one">
+                                    <div>
                                         <div className="prize-number-one-header">
                                             <h2>{Prizes[0].name}</h2>
-                                            <h5>รางวัลละ {Prizes[0].reward} บาท</h5>
+                                            <h5>รางวัล ๆ ละ {Prizes[0].reward} บาท</h5>
                                         </div>
-                                        
+
                                         <div className="prize-number-one-body">
                                             <span> {Prizes[0].number} </span>
                                         </div>
                                     </div>
 
-                                    <div className="col-lg-5 col-12">
+                                    <div>
                                         <div className="prize-number-near-one">
                                             <div className="prize-number-near-one-header">
                                                 <h4> {Prizes[1].name} </h4>
-                                                <h6>รางวัลละ {Prizes[1].reward} บาท</h6>
+                                                <h6>รางวัล ๆ ละ {Prizes[1].reward} บาท</h6>
                                             </div>
                                             <div className="prize-number-near-one-body">
                                                 {Prizes[1].number.map((number) => (
-                                                    <div key={number}> {number} </div>
+                                                    <div key={number}>{number}</div>
                                                 ))}
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </section>
 
                                 <section className="runningnumber">
                                     {RunningNumbers.map((run, index) => {
@@ -66,7 +74,7 @@ const LotteryThailand = (p) => {
                                             <div key={index} className="item-runningnumber">
                                                 <div className="item-runningnumber-header">
                                                     <h4>{run.name}</h4>
-                                                    <h6>รางวัลละ {run.reward} บาท</h6>
+                                                    <h6>รางวัล ๆ ละ {run.reward} บาท</h6>
                                                 </div>
 
                                                 <div className="item-runningnumber-body">
@@ -81,7 +89,7 @@ const LotteryThailand = (p) => {
                                 </section>
 
                                 <section className="prize-no2">
-                                    <h5>{Prizes[2].name} รางวัลละ {Prizes[2].reward} บาท </h5>
+                                    <h5>{Prizes[2].name} <p>รางวัล ๆ ละ {Prizes[2].reward} บาท</p> </h5>
                                     <div>
                                         {Prizes[2].number.map((number) => (
                                             <span key={number}> {number} </span>
@@ -90,7 +98,7 @@ const LotteryThailand = (p) => {
                                 </section>
 
                                 <section className="prize-no3">
-                                    <h5>{Prizes[3].name} รางวัลละ {Prizes[3].reward} บาท </h5>
+                                    <h5>{Prizes[3].name} <p>รางวัล ๆ ละ {Prizes[3].reward} บาท</p>  </h5>
                                     <div>
                                         {Prizes[3].number.map((number) => (
                                             <span key={number}> {number} </span>
@@ -99,7 +107,7 @@ const LotteryThailand = (p) => {
                                 </section>
 
                                 <section className="prize-no4">
-                                    <h5>{Prizes[4].name} รางวัลละ {Prizes[4].reward} บาท </h5>
+                                    <h5>{Prizes[4].name} <p>รางวัล ๆ ละ {Prizes[4].reward} บาท</p> </h5>
                                     <div>
                                         {Prizes[4].number.map((number) => (
                                             <span key={number}> {number} </span>
@@ -108,7 +116,7 @@ const LotteryThailand = (p) => {
                                 </section>
 
                                 <section className="prize-no5">
-                                    <h5>{Prizes[5].name} รางวัลละ {Prizes[5].reward} บาท </h5>
+                                    <h5> {Prizes[5].name} <p>รางวัล ๆ ละ {Prizes[5].reward} บาท</p> </h5>
                                     <div>
                                         {Prizes[5].number.map((number) => (
                                             <span key={number}> {number} </span>

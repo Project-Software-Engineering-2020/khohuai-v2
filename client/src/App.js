@@ -9,6 +9,7 @@ import LotteryThailand from './components/pages/LotteryThailand';
 import Game from './components/pages/Game';
 import SignUp from './components/pages/SignUp';
 import Consulting from './components/pages/Consulting';
+import Profile from './components/pages/Profile';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path='/game' component={Game} />
         <Route path='/sign-up' component={SignUp} />
         <Route path='/consulting' component={Consulting} />
+        <Route path='/profile' component={Profile} />
       </Switch>
     </Router>
   );

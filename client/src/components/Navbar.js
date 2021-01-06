@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Button } from './Button';
+import ButtonLogin from './Button';
+import ButtonLogout from './Logout';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import Dropdown from './Dropdown';
@@ -41,7 +42,7 @@ function Navbar() {
         <ul className={click ? 'lottery-nav-menu active' : 'lottery-nav-menu'}>
           <li className='lottery-nav-item'>
             <Link to='/' className='lottery-nav-links' onClick={closeMobileMenu}>
-              <i className="fas fa-home" />    หน้าแรก
+              <i className="fas fa-home" /> หน้าแรก
             </Link>
           </li>
           <li
@@ -54,7 +55,7 @@ function Navbar() {
               className='lottery-nav-links'
               onClick={closeMobileMenu}
             >
-              <i className='fas fa-search' />     ค้นหาสลาก
+              <i className='fas fa-search' /> ค้นหาสลาก
             </Link>
             {dropdown && <Dropdown />}
           </li>
@@ -64,7 +65,7 @@ function Navbar() {
               className='lottery-nav-links'
               onClick={closeMobileMenu}
             >
-              <i className="fas fa-money-bill-alt" />   ผลการออกรางวัล
+              <i className="fas fa-money-bill-alt" /> ผลการออกรางวัล
             </Link>
           </li>
           <li className='lottery-nav-item'>
@@ -73,7 +74,7 @@ function Navbar() {
               className='lottery-nav-links'
               onClick={closeMobileMenu}
             >
-              <i className="fas fa-gamepad" />  เล่นเกม
+              <i className="fas fa-gamepad" /> เล่นเกม
             </Link>
           </li>
           <li>
@@ -86,7 +87,8 @@ function Navbar() {
             </Link>
           </li>
         </ul>
-        <Button />
+        <ButtonLogin className="btn-login" />
+        {/* <ButtonLogout className="btn-login" /> */}
       </nav>
     </div>
   );
