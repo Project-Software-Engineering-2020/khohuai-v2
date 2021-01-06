@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import "../../stylesheet/signup.css";
 
 class SignUp extends Component {
   constructor() {
@@ -127,7 +128,7 @@ class SignUp extends Component {
 
   render() {
     return (
-      <div>
+      <div className="signup">
         <div className="col-md-4 col-sm-8 mx-auto mt-5 card">
           <div className="card-body">
             <div class="d-flex justify-content-center">
@@ -264,8 +265,8 @@ class SignUp extends Component {
               <div class="d-flex justify-content-center">
                 <input
                   type="submit"
-                  value="Submit"
-                  class="btn btn-success mt-2"
+                  value="สมัครสมาชิก"
+                  class="btn-signup mt-3"
                 />
               </div>
             </form>
@@ -275,57 +276,5 @@ class SignUp extends Component {
     );
   }
 }
-//   render() {
-//     const { username, password, errors } = this.state;
-
-//     return (
-//       <div className="col-4 mx-auto card">
-//         <div className="card-body">
-//           <form onSubmit={this.onSubmit}>
-//             <h3>Register Form</h3>
-//             <div className="form-group">
-//               <label htmlFor="username">Username</label>
-//               <input
-//                 type="text"
-//                 className="form-control is-valid"
-//                 name="username"
-//                 value={username}
-//                 onChange={this.onInputChange}
-//               ></input>
-//               <div className="valid-feedback">พบชื่อผู้ใช้</div>
-//             </div>
-//             <div className="form-group">
-//               <label htmlFor="password">Password</label>
-//               <input
-//                 type="password"
-//                 className="form-control is-invalid"
-//                 name="password"
-//                 value={password}
-//                 onChange={this.onInputChange}
-//               ></input>
-//               <div className="invalid-feedback"></div>
-//             </div>
-//             <div className="form-group">
-//               <label htmlFor="example-date-input">Birth Date</label>
-//               <div>
-//                 <input className="form-control" type="date"></input>
-//               </div>
-//             </div>
-//             <button type="button" className="btn btn-success">
-//               Login
-//             </button>
-//             {Object.keys(errors).map((key) => {
-//               return <div key={key}>{errors[key]}</div>;
-//             })}
-//           </form>
-//         </div>
-//         <div>
-//           <span>ลงชื่อเข้าใช้</span>
-//           <Link to="/login">คลิก</Link>
-//         </div>
-//       </div>
-//     );
-//   }
-// }
 
 export default SignUp;
