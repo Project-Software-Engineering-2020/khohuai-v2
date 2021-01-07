@@ -1,12 +1,12 @@
 .signup {
   background-image: url("../images/img-0.jpg");
-  background-position: center;
+  background-position: top;
   background-size: cover;
   background-repeat: no-repeat;
-  overflow: hidden;
-  width: 100%;
-  min-height: 100vh;
+  background-attachment: fixed;
+  padding: 100px 0;
 }
+
 .btn-signup {
   background-color: #961ff7;
   color: white;
