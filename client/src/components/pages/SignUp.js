@@ -129,7 +129,7 @@ class SignUp extends Component {
   render() {
     return (
       <div className="signup">
-        <div className="col-md-4 col-sm-8 mx-auto mt-5 card">
+        <div className="col-md-4 col-sm-8 mx-auto card">
           <div className="card-body">
             <div class="d-flex justify-content-center">
               <h1>สมัครสมาชิก</h1>
@@ -262,6 +262,20 @@ class SignUp extends Component {
                 </div>
               </div>
 
+              <div class="d-flex justify-content-center">
+                <input
+                  type="submit"
+                  value="สมัครสมาชิก"
+                  class="btn-signup mt-3"
+                />
+              </div>
+              <div class="d-flex justify-content-center">
+                <input
+                  type="submit"
+                  value="สมัครสมาชิก"
+                  class="btn-signup mt-3"
+                />
+              </div>
               <div class="d-flex justify-content-center">
                 <input
                   type="submit"
