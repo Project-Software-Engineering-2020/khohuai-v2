@@ -1,0 +1,30 @@
+.signup {
+  background-image: url("../images/img-0.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  width: 100%;
+  min-height: 100vh;
+}
+.btn-signup {
+  background-color: #961ff7;
+  color: white;
+  padding: 10px 50px;
+  border: none;
+  border-radius: 8px;
+}
+
+.btn-signup:hover {
+  background-color: #b574eb;
+  color: white;
+  padding: 10px 50px;
+  border: none;
+  border-radius: 8px;
+}
+
+.card {
+  background-color: #961ff71f;
+  border: none;
+  border-radius: 10px;
+}
