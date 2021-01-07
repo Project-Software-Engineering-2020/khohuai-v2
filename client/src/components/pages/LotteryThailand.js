@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Modal, Button } from 'react-bootstrap';
 import Axios from 'axios';
 const LotteryThailand = () => {
 
@@ -7,6 +8,11 @@ const LotteryThailand = () => {
     const [RunningNumbers, setRunningNumbers] = useState([]);
 
     const [loading, setloading] = useState(false);
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const fetchLotteryData = async () => {
         await Axios.get("https://lotto.api.rayriffy.com/latest").then((res) => {
@@ -125,7 +131,24 @@ const LotteryThailand = () => {
                                 </section>
                             </div>
                         </div>
+
+                        <Modal show={show} onHide={handleClose}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Modal heading</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleClose}>
+                                    Close
+                        </Button>
+                                <Button variant="primary" onClick={handleClose}>
+                                    Save Changes
+                        </Button>
+                            </Modal.Footer>
+                        </Modal>
                     </div>
+
+
                     :
                     //loading
                     <div className="loader">Loading...</div>
