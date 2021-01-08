@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import "../stylesheet/signup.css";
+import "../../stylesheet/signup.css";
 
-class RegisterForm extends Component {
+class SignUp extends Component {
   constructor() {
     super();
     this.state = {
@@ -129,21 +129,21 @@ class RegisterForm extends Component {
   render() {
     return (
       <div className="signup">
-        <div className="col-md-4 col-sm-8 mx-auto mt-5 card">
+        <div className="col-md-4 col-sm-8 mx-auto card">
           <div className="card-body">
-            <div class="d-flex justify-content-center">
+            <div className="d-flex justify-content-center">
               <h1>สมัครสมาชิก</h1>
             </div>
             <form onSubmit={this.handleSubmit}>
-              <div class="row mt-2">
-                <div class="form-group col-md-6">
-                  <label for="name">ชื่อ:</label>
+              <div className="row mt-2">
+                <div className="form-group col-md-6">
+                  <label htmlFor="name">ชื่อ:</label>
                   <input
                     type="text"
                     name="name"
                     value={this.state.input.name}
                     onChange={this.handleChange}
-                    class="form-control"
+                    className="form-control"
                     placeholder="ระบุชื่อ"
                     id="name"
                   />
@@ -151,14 +151,14 @@ class RegisterForm extends Component {
                   <div className="text-danger">{this.state.errors.name}</div>
                 </div>
 
-                <div class="form-group col-md-6">
-                  <label for="surname">นามสกุล:</label>
+                <div className="form-group col-md-6">
+                  <label htmlFor="surname">นามสกุล:</label>
                   <input
                     type="text"
                     name="surname"
                     value={this.state.input.surname}
                     onChange={this.handleChange}
-                    class="form-control"
+                    className="form-control"
                     placeholder="ระบุนามสกุล"
                     id="surname"
                   />
@@ -167,15 +167,15 @@ class RegisterForm extends Component {
                 </div>
               </div>
 
-              <div class="row">
-                <div class="form-group col-md-7">
-                  <label for="email">อีเมล:</label>
+              <div className="row">
+                <div className="form-group col-md-7">
+                  <label htmlFor="email">อีเมล:</label>
                   <input
                     type="text"
                     name="email"
                     value={this.state.input.email}
                     onChange={this.handleChange}
-                    class="form-control"
+                    className="form-control"
                     placeholder="ระบุอีเมล"
                     id="email"
                   />
@@ -184,15 +184,15 @@ class RegisterForm extends Component {
                 </div>
               </div>
 
-              <div class="row">
-                <div class="form-group col-md-6">
-                  <label for="password">รหัสผ่าน:</label>
+              <div className="row">
+                <div className="form-group col-md-6">
+                  <label htmlFor="password">รหัสผ่าน:</label>
                   <input
                     type="password"
                     name="password"
                     value={this.state.input.password}
                     onChange={this.handleChange}
-                    class="form-control"
+                    className="form-control"
                     placeholder="ระบุรหัสผ่าน"
                     id="password"
                   />
@@ -201,14 +201,14 @@ class RegisterForm extends Component {
                     {this.state.errors.password}
                   </div>
                 </div>
-                <div class="form-group col-md-6">
-                  <label for="password">ยืนยันรหัสผ่าน:</label>
+                <div className="form-group col-md-6">
+                  <label htmlFor="password">ยืนยันรหัสผ่าน:</label>
                   <input
                     type="password"
                     name="confirm_password"
                     value={this.state.input.confirm_password}
                     onChange={this.handleChange}
-                    class="form-control"
+                    className="form-control"
                     placeholder="ยืนยันรหัสผ่าน"
                     id="confirm_password"
                   />
@@ -219,15 +219,15 @@ class RegisterForm extends Component {
                 </div>
               </div>
 
-              <div class="row">
-                <div class="form-group col-md-7">
-                  <label for="phone">เบอร์โทรศัพท์:</label>
+              <div className="row">
+                <div className="form-group col-md-7">
+                  <label htmlFor="phone">เบอร์โทรศัพท์:</label>
                   <input
                     type="numeric"
                     name="phone"
                     value={this.state.input.phone}
                     onChange={this.handleChange}
-                    class="form-control"
+                    className="form-control"
                     placeholder="ระบุเบอร์โทรศัพท์"
                     id="phone"
                   />
@@ -236,37 +236,11 @@ class RegisterForm extends Component {
                 </div>
               </div>
 
-              <div class="row">
-                <div class="form-group col-md-3">
-                  <label for="inputDay">เกิดวันที่</label>
-                  <select id="day" class="form-control">
-                    <option selected>วัน</option>
-                    <option>...</option>
-                  </select>
-                </div>
-
-                <div class="form-group col-md-5">
-                  <label for="inputMonth">เดือน</label>
-                  <select id="month" class="form-control">
-                    <option selected>เดือน</option>
-                    <option>...</option>
-                  </select>
-                </div>
-
-                <div class="form-group col-md-4">
-                  <label for="inputYear">ปี</label>
-                  <select id="year" class="form-control">
-                    <option selected>ปี</option>
-                    <option>...</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="d-flex justify-content-center">
+              <div className="d-flex justify-content-center">
                 <input
                   type="submit"
                   value="สมัครสมาชิก"
-                  class="btn-signup mt-3"
+                  className="btn-signup mt-3"
                 />
               </div>
             </form>
@@ -277,4 +251,4 @@ class RegisterForm extends Component {
   }
 }
 
-export default RegisterForm;
+export default SignUp;
