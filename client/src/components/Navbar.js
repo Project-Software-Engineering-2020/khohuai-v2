@@ -55,7 +55,7 @@ function Navbar() {
               className='lottery-nav-links'
               onClick={closeMobileMenu}
             >
-              <i className='fas fa-search' /> ค้นหาสลาก
+              <i class="fas fa-store fa-1x"></i> ร้านค้าสลาก
             </Link>
             {dropdown && <Dropdown />}
           </li>
