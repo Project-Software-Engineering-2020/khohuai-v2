@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import "firebase/storage";
 // import firebaseConfig from './config';
 
 const firebaseConfig = {
@@ -21,11 +22,14 @@ const googleProvider = new firebase.auth.GoogleAuthProvider();
 //facebook login
 const facebookProvider = new firebase.auth.FacebookAuthProvider();
 facebookProvider.addScope('user_birthday');
+//firebase storage
+const storage = firebase.storage();
 
 export {
     firebaseApp,
     firestore,
     auth,
     googleProvider,
-    facebookProvider
+    facebookProvider,
+    storage
 }

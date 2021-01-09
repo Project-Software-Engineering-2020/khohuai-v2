@@ -50,7 +50,7 @@ const LotteryThailand = () => {
 
                     if (number === mylot) {
                         console.log("คุณถูกรางวัล  " + prize.name);
-                        return setResultCheckMyLottery(previous => [...previous, prize.name])
+                        return setResultCheckMyLottery(previous => [...previous, prize.name]);
                     }
                 })
             })

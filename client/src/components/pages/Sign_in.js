@@ -1,6 +1,6 @@
 import React, { useState, useEffect , useRef} from 'react';
 import { Link } from 'react-router-dom';
-import { auth, firestore, googleProvider } from '../../firebase/firebase'
+import { auth, firestore, googleProvider, storage } from '../../firebase/firebase'
 import Axios from 'axios';
 
 
@@ -10,6 +10,8 @@ function Sign_in() {
     const [email, setemail] = useState("");
     const [password, setpassword] = useState("");
     const userRef = useRef(firestore.collection("users")).current;
+    const [image, setImage] = useState(null);
+    const [imgUrl, setImgUrl] = useState("");
     // setloader(false);
     useEffect(() => {
         const authUnsubscribe = auth.onAuthStateChanged((user) => {
@@ -85,6 +87,31 @@ function Sign_in() {
             })
     }
 
+    const handleChange = e => {
+        if(e.target.files[0]){
+          setImage(e.target.files[0]);
+        }
+    };
+
+    const handleUpload = () => {
+        const uploadTask = storage.ref('images/' + user.uid).put(image);
+        uploadTask.on(
+          "state_change",
+          snapshot => {},
+          error => { console.log(error) },
+          () => {
+            storage
+              .ref("images")
+              .child(user.uid)
+              .getDownloadURL()
+              .then(url => { setImgUrl(url); console.log(url); 
+                    firestore.collection("users").doc(user.uid).update({
+                    photoURL:url})
+             });
+          }
+        )
+      };
+
     return (
         <div>
             {!user ? (
@@ -128,7 +155,12 @@ function Sign_in() {
                         <div className="card-body">
                             <div>name:{user.firstname}</div>
                             <div>email:{user.email}</div>
-                            <img src={user.photoURL}></img>
+                            <img src={user.photoURL} width="100" height="100"></img>
+                            <div>
+                                <p>เปลี่ยนรูปโปรไฟล์</p>
+                                <input type="file" onChange={handleChange} />
+                                <button onClick={handleUpload}>Upload</button>
+                            </div>
                             <div>
                                 <button onClick={signouthandle}>Logout</button>
                             </div>
