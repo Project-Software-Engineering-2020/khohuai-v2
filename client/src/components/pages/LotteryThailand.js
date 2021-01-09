@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import Axios from 'axios';
+import './LotteryThailand.css';
+
 const LotteryThailand = () => {
 
     const [DateLotteryThailand, setLotteryThailand] = useState([]);
@@ -10,6 +12,12 @@ const LotteryThailand = () => {
     const [loading, setloading] = useState(false);
 
     const [show, setShow] = useState(false);
+
+    const [myLottery1, setMyLottery1] = useState("");
+    const [myLottery2, setMyLottery2] = useState("");
+    const [myLottery3, setMyLottery3] = useState("");
+    const [MyLottery, setMyLottery] = useState([]);
+    const [resultCheckMyLottery, setResultCheckMyLottery] = useState([]);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -29,12 +37,40 @@ const LotteryThailand = () => {
         fetchLotteryData();
     }, []);
 
+    const checkyourlottery = () => {
+
+        setMyLottery([myLottery1, myLottery2, myLottery3]);
+        console.log(MyLottery);
+        setResultCheckMyLottery([]);
+        MyLottery.map((mylot) => {
+            //รางวัลที่ 1 ถึง 5
+            Prizes.map((prize) => {
+
+                prize.number.map((number) => {
+
+                    if (number === mylot) {
+                        console.log("คุณถูกรางวัล  " + prize.name);
+                        return setResultCheckMyLottery(previous => [...previous, prize.name])
+                    }
+                })
+            })
+            //รางวัลเลขท้าย
+            RunningNumbers.map((run) => {
+                
+            })
+            console.log(resultCheckMyLottery);
+        })
+
+    }
+
+
     return (
         <div>
             {
                 loading ?
                     //success
                     <div className="reward-lottery">
+
                         <div className="container pt-lg-4 p-0">
                             <div className="card-shadow">
                                 <section className="header-lottery">
@@ -43,7 +79,7 @@ const LotteryThailand = () => {
                                         <h3>งวดประจำวันที่ {DateLotteryThailand}</h3>
                                     </div>
                                     <div className="check-your-lottery">
-                                        <button className="check-your-lottery-btn"> <i class="fas fa-search"> </i> ตรวจสลาก </button>
+                                        <button className="check-your-lottery-btn" onClick={handleShow}> <i class="fas fa-search"> </i> ตรวจสลาก </button>
                                     </div>
                                 </section>
 
@@ -131,20 +167,37 @@ const LotteryThailand = () => {
                                 </section>
                             </div>
                         </div>
-
-                        <Modal show={show} onHide={handleClose}>
+                        <Modal
+                            show={show}
+                            onHide={() => setShow(false)}
+                            size="md"
+                            dialogClassName="modal-1"
+                            aria-labelledby="example-custom-modal-styling-title"
+                            centered
+                        >
                             <Modal.Header closeButton>
-                                <Modal.Title>Modal heading</Modal.Title>
+                                <Modal.Title id="example-custom-modal-styling-title">
+                                    <h4>ตรวจสลากของคุณ</h4>
+                                </Modal.Title>
                             </Modal.Header>
-                            <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-                            <Modal.Footer>
-                                <Button variant="secondary" onClick={handleClose}>
-                                    Close
-                        </Button>
-                                <Button variant="primary" onClick={handleClose}>
-                                    Save Changes
-                        </Button>
-                            </Modal.Footer>
+                            <Modal.Body>
+                                <div className="box-check-lottery">
+                                    <p>สลากใบที่ 1</p>
+                                    <input type="text" maxLength="6" className="form-control" onChange={(event) => { setMyLottery1(event.target.value) }}></input>
+                                </div>
+                                <div className="box-check-lottery">
+                                    <p>สลากใบที่ 2</p>
+                                    <input type="text" maxLength="6" className="form-control" onChange={(event) => { setMyLottery2(event.target.value) }}></input>
+                                </div>
+                                <div className="box-check-lottery">
+                                    <p>สลากใบที่ 3</p>
+                                    <input type="text" maxLength="6" className="form-control" onChange={(event) => { setMyLottery3(event.target.value) }}></input>
+                                </div>
+                                <div className="btn-checkyourlottery">
+                                    <button type="text" onClick={checkyourlottery}>ตรวจสลาก</button>
+                                </div>
+                                {console.log(MyLottery)}
+                            </Modal.Body>
                         </Modal>
                     </div>
 
@@ -153,6 +206,8 @@ const LotteryThailand = () => {
                     //loading
                     <div className="loader">Loading...</div>
             }
+
+
         </div>
     )
 }
