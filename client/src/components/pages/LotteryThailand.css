@@ -1,6 +1,6 @@
 /* ***** RewardLotteryThailand ***** */
 .reward-lottery {
-    background-image: url("./images/img-0.jpg");
+    background-image: url("../../images/img-0.jpg");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -464,7 +464,7 @@
     }
   }
   
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1000px) {
     .card-shadow {
       padding: 15px;
     }

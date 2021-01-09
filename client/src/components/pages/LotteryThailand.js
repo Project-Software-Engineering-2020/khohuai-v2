@@ -13,6 +13,12 @@ const LotteryThailand = () => {
 
     const [show, setShow] = useState(false);
 
+    const [myLottery1, setMyLottery1] = useState("");
+    const [myLottery2, setMyLottery2] = useState("");
+    const [myLottery3, setMyLottery3] = useState("");
+    const [MyLottery, setMyLottery] = useState([]);
+    const [resultCheckMyLottery, setResultCheckMyLottery] = useState([]);
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -31,12 +37,40 @@ const LotteryThailand = () => {
         fetchLotteryData();
     }, []);
 
+    const checkyourlottery = () => {
+
+        setMyLottery([myLottery1, myLottery2, myLottery3]);
+        console.log(MyLottery);
+        setResultCheckMyLottery([]);
+        MyLottery.map((mylot) => {
+            //รางวัลที่ 1 ถึง 5
+            Prizes.map((prize) => {
+
+                prize.number.map((number) => {
+
+                    if (number === mylot) {
+                        console.log("คุณถูกรางวัล  " + prize.name);
+                        return setResultCheckMyLottery(pervent => [...pervent, prize.name])
+                    }
+                })
+            })
+            //รางวัลเลขท้าย
+            RunningNumbers.map((run) => {
+                
+            })
+            console.log(resultCheckMyLottery);
+        })
+
+    }
+
+
     return (
         <div>
             {
                 loading ?
                     //success
                     <div className="reward-lottery">
+
                         <div className="container pt-lg-4 p-0">
                             <div className="card-shadow">
                                 <section className="header-lottery">
@@ -133,8 +167,38 @@ const LotteryThailand = () => {
                                 </section>
                             </div>
                         </div>
-
-
+                        <Modal
+                            show={show}
+                            onHide={() => setShow(false)}
+                            size="md"
+                            dialogClassName="modal-1"
+                            aria-labelledby="example-custom-modal-styling-title"
+                            centered
+                        >
+                            <Modal.Header closeButton>
+                                <Modal.Title id="example-custom-modal-styling-title">
+                                    <h4>ตรวจสลากของคุณ</h4>
+                                </Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <div className="box-check-lottery">
+                                    <p>สลากใบที่ 1</p>
+                                    <input type="text" maxLength="6" className="form-control" onChange={(event) => { setMyLottery1(event.target.value) }}></input>
+                                </div>
+                                <div className="box-check-lottery">
+                                    <p>สลากใบที่ 2</p>
+                                    <input type="text" maxLength="6" className="form-control" onChange={(event) => { setMyLottery2(event.target.value) }}></input>
+                                </div>
+                                <div className="box-check-lottery">
+                                    <p>สลากใบที่ 3</p>
+                                    <input type="text" maxLength="6" className="form-control" onChange={(event) => { setMyLottery3(event.target.value) }}></input>
+                                </div>
+                                <div className="btn-checkyourlottery">
+                                    <button type="text" onClick={checkyourlottery}>ตรวจสลาก</button>
+                                </div>
+                                {console.log(MyLottery)}
+                            </Modal.Body>
+                        </Modal>
                     </div>
 
 
@@ -143,38 +207,7 @@ const LotteryThailand = () => {
                     <div className="loader">Loading...</div>
             }
 
-            <Modal
-                show={show}
-                onHide={() => setShow(false)}
-                size="md"
-                dialogClassName="modal-1"
-                aria-labelledby="example-custom-modal-styling-title"
-                centered
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title id="example-custom-modal-styling-title">
-                        <h4>ตรวจสลากของคุณ</h4>    
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <div className="box-check-lottery">
-                        <p>สลากใบที่ 1</p>
-                        <input type="text" className="form-control"></input>
-                    </div>
-                    <div className="box-check-lottery">
-                        <p>สลากใบที่ 2</p>
-                        <input type="text" className="form-control"></input>
-                    </div>
-                    <div className="box-check-lottery">
-                        <p>สลากใบที่ 3</p>
-                        <input type="text" className="form-control"></input>
-                    </div>
-                    <div className="btn-checkyourlottery">
-                        <button type="text" >ตรวจสลาก</button>
-                    </div>
-                    
-                </Modal.Body>
-            </Modal>
+
         </div>
     )
 }
