@@ -140,5 +140,5 @@ function Sign_in() {
                     </div>
                 )
             }
-
+{console.log("ไอชล")}
 export default Sign_in;
