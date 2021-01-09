@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useRef} from "react";
 import { Link } from "react-router-dom";
 import "../../stylesheet/signup.css";
+import { auth, firestore, googleProvider } from '../../firebase/firebase'
 
 const SignUp = () => {
   const [firstname, setFirstname] = useState("");
@@ -10,17 +11,13 @@ const SignUp = () => {
   const [confirmpassword, setConfirmpassword] = useState("");
   const [phone, setPhone] = useState("");
 
+  // ส่วน Error
   const [firstnameErr, setFirstnameErr] = useState({});
   const [lastnameErr, setLastnameErr] = useState({});
   const [emailErr, setEmailErr] = useState({});
   const [passwordErr, setPasswordErr] = useState({});
   const [confirmpasswordErr, setConfirmpasswordErr] = useState({});
   const [phoneErr, setPhoneErr] = useState({});
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    const isValid = formValidation();
-  };
 
   const formValidation = () => {
     const firstnameErr = {};
@@ -104,6 +101,35 @@ const SignUp = () => {
   };
 
   const [loading, setloading] = useState(false);
+  
+  const onEmailSignUpSubmit = (e) => {
+    e.preventDefault();
+    const isValid = formValidation();
+    auth.createUserWithEmailAndPassword(email,password)
+    .then(async (result) => {
+      console.log("ลงทะเบียนเรียบร้อยแล้ว");
+      if(!!result){{
+        const userRef = firestore.collection("users").doc(result.user.uid);
+        const doc = await userRef.get();
+        if(!doc.data()) {
+          await userRef.set({
+            uid: result.user.uid,
+            displayName:"",
+            firstname:firstname,
+            lastname:lastname,
+            phone:phone,
+            photoURL:"logo.jvg",
+            email:result.user.email,
+            role:"user",
+          });
+        }
+      }
+    }
+    })
+  .catch((err) => {
+    console.log("Register ไม่ผ่าน")
+  })
+  };
 
   useEffect(() => {
     setloading(false);
@@ -121,7 +147,7 @@ const SignUp = () => {
               <div className="d-flex justify-content-center">
                 <h1>สมัครสมาชิก</h1>
               </div>
-              <form onSubmit={onSubmit}>
+              <form>
                 <div className="row mt-2">
                   <div className="form-group col-md-6">
                     <label htmlFor="name">ชื่อ:</label>
@@ -258,6 +284,7 @@ const SignUp = () => {
                     type="submit"
                     value="สมัครสมาชิก"
                     className="btn-signup mt-3"
+                    onClick={onEmailSignUpSubmit}
                   />
                 </div>
               </form>

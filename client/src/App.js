@@ -10,7 +10,7 @@ import Game from "./components/pages/Game";
 import SignUp from "./components/pages/SignUp";
 import Consulting from "./components/pages/Consulting";
 import Profile from "./components/pages/Profile";
-import Login from "./User/LoginForm";
+import Sign_in from "./components/pages/Sign_in";
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
         <Route path="/find" component={Find} />
         <Route path="/lottery" component={LotteryThailand} />
         <Route path="/game" component={Game} />
-        <Route path="/log-in" component={Login} />
+        <Route path="/log-in" component={Sign_in} />
         <Route path="/sign-up" component={SignUp} />
         <Route path="/consulting" component={Consulting} />
         <Route path="/profile" component={Profile} />
