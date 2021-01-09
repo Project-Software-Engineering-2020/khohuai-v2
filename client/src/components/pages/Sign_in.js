@@ -1,94 +1,3 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-import "../stylesheet/signin.css";
-
-class LoginPage extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      email: "",
-      password: "",
-    };
-  }
-
-  onInputChange = (event) => {
-    console.log(event);
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
-    console.log(this.state);
-  };
-
-  onLoginSubmit = (event) => {
-    event.preventDefault();
-    console.log(this.state);
-  };
-
-  render() {
-    return (
-      <div className="signin">
-        <div className="main-form">
-          <form>
-            <div className="d-flex justify-content-center">
-              <h1>
-                ลงชื่อเข้าใช้
-                <hr />
-              </h1>
-            </div>
-            <div className="form-group">
-              <label htmlFor="email">อีเมล</label>
-              <input
-                type="text"
-                className="form-control"
-                name="email"
-                onChange={this.onInputChange}
-              ></input>
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">รหัสผ่าน</label>
-              <input
-                type="password"
-                className="form-control"
-                name="password"
-                onChange={this.onInputChange}
-              ></input>
-            </div>
-
-            <div>
-              <Link to="/recoverpassword">ลืมรหัสผ่าน ?</Link>
-            </div>
-
-            <div className="row">
-              <div className="col-md-6">
-                <button type="button" className="btn-signin my-3">
-                  ลงชื่อเข้าใช้
-                </button>
-              </div>
-
-              <div className="col-md-6">
-                <button type="button" className="btn-google my-3">
-                  <FontAwesomeIcon icon={faGoogle} />
-                  &nbsp;&nbsp;ล็อคอินด้วยกูเกิ้ล
-                </button>
-              </div>
-            </div>
-
-            <div>
-              <span>สมัครสมาชิก</span>
-              <Link to="/register">คลิก</Link>
-            </div>
-          </form>
-        </div>
-      </div>
-    );
-  }
-}
-
-export default LoginPage;
-
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -98,6 +7,9 @@ import {
   storage,
 } from "../../firebase/firebase";
 import Axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import "../../stylesheet/signin.css";
 
 function Sign_in() {
   const [user, setuser] = useState(null);
@@ -107,6 +19,9 @@ function Sign_in() {
   const userRef = useRef(firestore.collection("users")).current;
   const [image, setImage] = useState(null);
   const [imgUrl, setImgUrl] = useState("");
+
+  const element = <FontAwesomeIcon icon={faGoogle} />;
+
   // setloader(false);
   useEffect(() => {
     const authUnsubscribe = auth.onAuthStateChanged((user) => {
@@ -215,12 +130,17 @@ function Sign_in() {
   return (
     <div>
       {!user ? (
-        <div className="col-4 mx-auto card">
-          <div className="card-body">
+        <div className="signin">
+          <div className="main-form">
             <form>
-              <h3>Login Form</h3>
+              <div className="d-flex justify-content-center">
+                <h1>
+                  ลงชื่อเข้าใช้
+                  <hr />
+                </h1>
+              </div>
               <div className="form-group">
-                <label htmlFor="username">Username</label>
+                <label htmlFor="username">อีเมล</label>
                 <input
                   type="email"
                   className="form-control is-valid"
@@ -230,8 +150,9 @@ function Sign_in() {
                 ></input>
                 <div className="valid-feedback">พบชื่อผู้ใช้</div>
               </div>
+
               <div className="form-group">
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">รหัสผ่าน</label>
                 <input
                   type="password"
                   className="form-control is-invalid"
@@ -241,17 +162,29 @@ function Sign_in() {
                 ></input>
                 <div className="invalid-feedback">รหัสผ่านสั้นเกินไป</div>
               </div>
-              <button
-                type="button"
-                className="btn btn-success"
-                onClick={onEmaillogin}
-              >
-                Login
-              </button>
+
+              <div className="row">
+                <div className="col-md-6">
+                  <button
+                    type="button"
+                    className="btn-signin my-3"
+                    onClick={onEmaillogin}
+                  >
+                    ลงชื่อเข้าใช้
+                  </button>
+                </div>
+
+                <div className="col-md-6">
+                  <button
+                    onClick={onloginwithgoogle}
+                    className="btn-google my-3"
+                  >
+                    <FontAwesomeIcon icon={faGoogle} />
+                    &nbsp;&nbsp;ล็อคอินด้วยกูเกิ้ล
+                  </button>
+                </div>
+              </div>
             </form>
-          </div>
-          <div>
-            <button onClick={onloginwithgoogle}>Google Login</button>
           </div>
         </div>
       ) : (

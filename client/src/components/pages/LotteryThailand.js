@@ -47,13 +47,9 @@ const LotteryThailand = () => {
 
                 prize.number.map((number) => {
 
-                    if (number === myLottery1) {
-                   
-                        setResultCheckMyLottery( prize.id);
-                        console.log("คุณถูกรางวัล  "+ prize.name );
-                        // setResultCheckMyLottery(previous => [...previous, prize.name]);
-                        
-                        console.log(resultCheckMyLottery);
+                    if (number === mylot) {
+                        console.log("คุณถูกรางวัล  " + prize.name);
+                        return setResultCheckMyLottery(previous => [...previous, prize.name]);
                     }
                 })
                 // setResultCheckMyLottery(previous => [...previous, "ไม่ถูกรางวัล"]);
