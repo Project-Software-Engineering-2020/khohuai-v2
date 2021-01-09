@@ -1,7 +1,7 @@
-import React, { useState, useEffect ,useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "../../stylesheet/signup.css";
-import { auth, firestore, googleProvider } from '../../firebase/firebase'
+import { auth, firestore, googleProvider } from "../../firebase/firebase";
 
 const SignUp = () => {
   const [firstname, setFirstname] = useState("");
@@ -101,34 +101,36 @@ const SignUp = () => {
   };
 
   const [loading, setloading] = useState(false);
-  
+
   const onEmailSignUpSubmit = (e) => {
     e.preventDefault();
     const isValid = formValidation();
-    auth.createUserWithEmailAndPassword(email,password)
-    .then(async (result) => {
-      console.log("ลงทะเบียนเรียบร้อยแล้ว");
-      if(!!result){{
-        const userRef = firestore.collection("users").doc(result.user.uid);
-        const doc = await userRef.get();
-        if(!doc.data()) {
-          await userRef.set({
-            uid: result.user.uid,
-            displayName:"",
-            firstname:firstname,
-            lastname:lastname,
-            phone:phone,
-            photoURL:"logo.jvg",
-            email:result.user.email,
-            role:"user",
-          });
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(async (result) => {
+        console.log("ลงทะเบียนเรียบร้อยแล้ว");
+        if (!!result) {
+          {
+            const userRef = firestore.collection("users").doc(result.user.uid);
+            const doc = await userRef.get();
+            if (!doc.data()) {
+              await userRef.set({
+                uid: result.user.uid,
+                displayName: "",
+                firstname: firstname,
+                lastname: lastname,
+                phone: phone,
+                photoURL: "logo.jvg",
+                email: result.user.email,
+                role: "user",
+              });
+            }
+          }
         }
-      }
-    }
-    })
-  .catch((err) => {
-    console.log("Register ไม่ผ่าน")
-  })
+      })
+      .catch((err) => {
+        console.log("Register ไม่ผ่าน");
+      });
   };
 
   useEffect(() => {
@@ -142,154 +144,148 @@ const SignUp = () => {
     <div>
       {loading ? (
         <div className="signup">
-          <div className="col-md-4 col-sm-8 mx-auto card">
-            <div className="card-body">
-              <div className="d-flex justify-content-center">
-                <h1>สมัครสมาชิก</h1>
-              </div>
-              <form>
-                <div className="row mt-2">
-                  <div className="form-group col-md-6">
-                    <label htmlFor="name">ชื่อ:</label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={firstname}
-                      onChange={(e) => {
-                        setFirstname(e.target.value);
-                      }}
-                      className="form-control"
-                      placeholder="ระบุชื่อ"
-                      id="name"
-                    />
-
-                    {Object.keys(firstnameErr).map((key) => {
-                      return (
-                        <div className="text-danger">{firstnameErr[key]}</div>
-                      );
-                    })}
-                  </div>
-
-                  <div className="form-group col-md-6">
-                    <label htmlFor="lastname">นามสกุล:</label>
-                    <input
-                      type="text"
-                      name="lastname"
-                      value={lastname}
-                      onChange={(e) => {
-                        setLastname(e.target.value);
-                      }}
-                      className="form-control"
-                      placeholder="ระบุนามสกุล"
-                      id="lastname"
-                    />
-
-                    {Object.keys(lastnameErr).map((key) => {
-                      return (
-                        <div className="text-danger">{lastnameErr[key]}</div>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="form-group col-md-7">
-                    <label htmlFor="phone">เบอร์โทรศัพท์:</label>
-                    <input
-                      type="numeric"
-                      name="phone"
-                      value={phone}
-                      onChange={(e) => {
-                        setPhone(e.target.value);
-                      }}
-                      className="form-control"
-                      placeholder="ระบุเบอร์โทรศัพท์"
-                      id="phone"
-                    />
-
-                    {Object.keys(phoneErr).map((key) => {
-                      return <div className="text-danger">{phoneErr[key]}</div>;
-                    })}
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="form-group col-md-7">
-                    <label htmlFor="email">อีเมล:</label>
-                    <input
-                      type="text"
-                      name="email"
-                      value={email}
-                      onChange={(e) => {
-                        setEmail(e.target.value);
-                      }}
-                      className="form-control"
-                      placeholder="ระบุอีเมล"
-                      id="email"
-                    />
-
-                    {Object.keys(emailErr).map((key) => {
-                      return <div className="text-danger">{emailErr[key]}</div>;
-                    })}
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="form-group col-md-6">
-                    <label htmlFor="password">รหัสผ่าน:</label>
-                    <input
-                      type="password"
-                      name="password"
-                      value={password}
-                      onChange={(e) => {
-                        setPassword(e.target.value);
-                      }}
-                      className="form-control"
-                      placeholder="ระบุรหัสผ่าน"
-                      id="password"
-                    />
-
-                    {Object.keys(passwordErr).map((key) => {
-                      return (
-                        <div className="text-danger">{passwordErr[key]}</div>
-                      );
-                    })}
-                  </div>
-                  <div className="form-group col-md-6">
-                    <label htmlFor="password">ยืนยันรหัสผ่าน:</label>
-                    <input
-                      type="password"
-                      name="confirm_password"
-                      value={confirmpassword}
-                      onChange={(e) => {
-                        setConfirmpassword(e.target.value);
-                      }}
-                      className="form-control"
-                      placeholder="ยืนยันรหัสผ่าน"
-                      id="confirm_password"
-                    />
-
-                    {Object.keys(confirmpasswordErr).map((key) => {
-                      return (
-                        <div className="text-danger">
-                          {confirmpasswordErr[key]}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div className="d-flex justify-content-center">
-                  <input
-                    type="submit"
-                    value="สมัครสมาชิก"
-                    className="btn-signup mt-3"
-                    onClick={onEmailSignUpSubmit}
-                  />
-                </div>
-              </form>
+          <form className="main-form">
+            <div className="d-flex justify-content-center">
+              <h1>
+                สมัครสมาชิก
+                <hr />
+              </h1>
             </div>
-          </div>
+            <div className="row mt-2">
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label htmlFor="name">ชื่อ:</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={firstname}
+                    onChange={(e) => {
+                      setFirstname(e.target.value);
+                    }}
+                    className="form-control"
+                    placeholder="ระบุชื่อ"
+                    id="name"
+                  />
+
+                  {Object.keys(firstnameErr).map((key) => {
+                    return (
+                      <div className="text-danger">{firstnameErr[key]}</div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label htmlFor="lastname">นามสกุล:</label>
+                  <input
+                    type="text"
+                    name="lastname"
+                    value={lastname}
+                    onChange={(e) => {
+                      setLastname(e.target.value);
+                    }}
+                    className="form-control"
+                    placeholder="ระบุนามสกุล"
+                    id="lastname"
+                  />
+
+                  {Object.keys(lastnameErr).map((key) => {
+                    return (
+                      <div className="text-danger">{lastnameErr[key]}</div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="phone">เบอร์โทรศัพท์:</label>
+              <input
+                type="numeric"
+                name="phone"
+                value={phone}
+                onChange={(e) => {
+                  setPhone(e.target.value);
+                }}
+                className="form-control"
+                placeholder="ระบุเบอร์โทรศัพท์"
+                id="phone"
+              />
+
+              {Object.keys(phoneErr).map((key) => {
+                return <div className="text-danger">{phoneErr[key]}</div>;
+              })}
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="email">อีเมล:</label>
+              <input
+                type="text"
+                name="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+                className="form-control"
+                placeholder="ระบุอีเมล"
+                id="email"
+              />
+
+              {Object.keys(emailErr).map((key) => {
+                return <div className="text-danger">{emailErr[key]}</div>;
+              })}
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="password">รหัสผ่าน:</label>
+              <input
+                type="password"
+                name="password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                className="form-control"
+                placeholder="ระบุรหัสผ่าน"
+                id="password"
+              />
+
+              {Object.keys(passwordErr).map((key) => {
+                return <div className="text-danger">{passwordErr[key]}</div>;
+              })}
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="password">ยืนยันรหัสผ่าน:</label>
+              <input
+                type="password"
+                name="confirm_password"
+                value={confirmpassword}
+                onChange={(e) => {
+                  setConfirmpassword(e.target.value);
+                }}
+                className="form-control"
+                placeholder="ยืนยันรหัสผ่าน"
+                id="confirm_password"
+              />
+
+              {Object.keys(confirmpasswordErr).map((key) => {
+                return (
+                  <div className="text-danger">{confirmpasswordErr[key]}</div>
+                );
+              })}
+            </div>
+
+            <div className="d-flex justify-content-center">
+              <input
+                type="submit"
+                value="สมัครสมาชิก"
+                className="btn-signup mt-3"
+                onClick={onEmailSignUpSubmit}
+              />
+            </div>
+          </form>
         </div>
       ) : (
         //loading
@@ -300,4 +296,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-

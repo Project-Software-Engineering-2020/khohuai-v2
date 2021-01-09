@@ -1,4 +1,4 @@
-.signup {
+.signin {
   background-image: url("../images/img-0.jpg");
   background-position: top;
   background-size: cover;
@@ -8,23 +8,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.btn-signup {
-  background-color: #961ff7;
-  color: white;
-  padding: 10px 50px;
-  border: none;
-  border-radius: 8px;
-  width: 70%;
-}
-
-.btn-signup:hover {
-  background-color: #b574eb;
-  color: white;
-  padding: 10px 50px;
-  border: none;
-  border-radius: 8px;
 }
 
 .main-form {
@@ -39,9 +22,47 @@
   background: #ffffff;
 }
 
+.btn-signin {
+  background-color: #961ff7;
+  color: white;
+  padding: 10px 50px;
+  border: none;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.btn-signin:hover {
+  background-color: #b574eb;
+  color: white;
+  padding: 10px 50px;
+  border: none;
+  border-radius: 8px;
+}
+
+.btn-google {
+  background-color: #fa3939;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.btn-google:hover {
+  background-color: #fc5e5e;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+}
+
+.btn-google p {
+  font-size: small;
+}
+
 @media (max-width: 768px) {
   .main-form {
-    width: 300px;
+    width: 450px;
     margin: -3rem;
     /* border: 1.5px solid #ddd; */
     padding: 1.5rem;
@@ -54,6 +75,7 @@
     border: none;
     border-radius: 8px;
     width: 100%;
+    font-size: smaller;
   }
 
   .btn-signup:hover {
@@ -62,5 +84,14 @@
     padding: 10px 50px;
     border: none;
     border-radius: 8px;
+  }
+}
+
+@media (max-width: 450px) {
+  .main-form {
+    width: 300px;
+    margin: -3rem;
+    /* border: 1.5px solid #ddd; */
+    padding: 1.5rem;
   }
 }
