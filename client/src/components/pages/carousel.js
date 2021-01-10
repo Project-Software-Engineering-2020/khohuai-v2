@@ -2,14 +2,10 @@ import React from 'react';
 import './shop.css';
 import { Carousel } from 'react-bootstrap'
 
-const Shop = () => {
+const Carousel = () => {
     return (
         <div>
-
-            <div className="shop">
-                <section className="header-shop">
-
-                </section>
+            <div>
                 <div className="container">
                     {/* <section class="">
                         <div id="demo" class="carousel slide shadow" data-ride="carousel">
@@ -83,9 +79,6 @@ const Shop = () => {
                         </Carousel.Item>
                     </Carousel>
                 </div>
-
-
-
             </div>
         </div>
 
@@ -93,4 +86,4 @@ const Shop = () => {
 
 }
 
-export default Shop;
+export default Carousel;

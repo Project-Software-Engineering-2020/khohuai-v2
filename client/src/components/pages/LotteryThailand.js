@@ -43,21 +43,21 @@ const LotteryThailand = () => {
         // setResultCheckMyLottery([]);
         // MyLottery.map((mylot) => {
             //รางวัลที่ 1 ถึง 5
-            Prizes.map((prize) => {
+            // Prizes.map((prize) => {
 
-                prize.number.map((number) => {
+            //     prize.number.map((number) => {
 
-                    if (number === mylot) {
-                        console.log("คุณถูกรางวัล  " + prize.name);
-                        return setResultCheckMyLottery(previous => [...previous, prize.name]);
-                    }
-                })
-                // setResultCheckMyLottery(previous => [...previous, "ไม่ถูกรางวัล"]);
-            })
-            //รางวัลเลขท้าย
-            RunningNumbers.map((run) => {
+            //         if (number === mylot) {
+            //             console.log("คุณถูกรางวัล  " + prize.name);
+            //             return setResultCheckMyLottery(previous => [...previous, prize.name]);
+            //         }
+            //     })
+            //     // setResultCheckMyLottery(previous => [...previous, "ไม่ถูกรางวัล"]);
+            // })
+            // //รางวัลเลขท้าย
+            // RunningNumbers.map((run) => {
                 
-            })
+            // })
             
         // })
         
