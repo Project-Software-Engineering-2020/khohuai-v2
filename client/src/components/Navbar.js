@@ -51,7 +51,7 @@ function Navbar() {
             onMouseLeave={onMouseLeave}
           >
             <Link
-              to='/find'
+              to='/shop'
               className='lottery-nav-links'
               onClick={closeMobileMenu}
             >
@@ -61,7 +61,7 @@ function Navbar() {
           </li>
           <li className='lottery-nav-item'>
             <Link
-              to='/lottery'
+              to='/shop'
               className='lottery-nav-links'
               onClick={closeMobileMenu}
             >

@@ -17,7 +17,7 @@ const LotteryThailand = () => {
     const [myLottery2, setMyLottery2] = useState("");
     const [myLottery3, setMyLottery3] = useState("");
     const [MyLottery, setMyLottery] = useState([]);
-    const [resultCheckMyLottery, setResultCheckMyLottery] = useState([]);
+    const [resultCheckMyLottery, setResultCheckMyLottery] = useState(null);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -37,30 +37,30 @@ const LotteryThailand = () => {
         fetchLotteryData();
     }, []);
 
-    const checkyourlottery = () => {
-
-        setMyLottery([myLottery1, myLottery2, myLottery3]);
-        console.log(MyLottery);
-        setResultCheckMyLottery([]);
-        MyLottery.map((mylot) => {
+    const checkyourlottery = async () => {
+        // setMyLottery([myLottery1, myLottery2, myLottery3]);
+        // console.log(MyLottery)
+        // setResultCheckMyLottery([]);
+        // MyLottery.map((mylot) => {
             //รางวัลที่ 1 ถึง 5
-            Prizes.map((prize) => {
+            // Prizes.map((prize) => {
 
-                prize.number.map((number) => {
+            //     prize.number.map((number) => {
 
-                    if (number === mylot) {
-                        console.log("คุณถูกรางวัล  " + prize.name);
-                        return setResultCheckMyLottery(previous => [...previous, prize.name])
-                    }
-                })
-            })
-            //รางวัลเลขท้าย
-            RunningNumbers.map((run) => {
+            //         if (number === mylot) {
+            //             console.log("คุณถูกรางวัล  " + prize.name);
+            //             return setResultCheckMyLottery(previous => [...previous, prize.name]);
+            //         }
+            //     })
+            //     // setResultCheckMyLottery(previous => [...previous, "ไม่ถูกรางวัล"]);
+            // })
+            // //รางวัลเลขท้าย
+            // RunningNumbers.map((run) => {
                 
-            })
-            console.log(resultCheckMyLottery);
-        })
-
+            // })
+            
+        // })
+        
     }
 
 
@@ -185,18 +185,18 @@ const LotteryThailand = () => {
                                     <p>สลากใบที่ 1</p>
                                     <input type="text" maxLength="6" className="form-control" onChange={(event) => { setMyLottery1(event.target.value) }}></input>
                                 </div>
-                                <div className="box-check-lottery">
+                                {/* <div className="box-check-lottery">
                                     <p>สลากใบที่ 2</p>
                                     <input type="text" maxLength="6" className="form-control" onChange={(event) => { setMyLottery2(event.target.value) }}></input>
                                 </div>
                                 <div className="box-check-lottery">
                                     <p>สลากใบที่ 3</p>
                                     <input type="text" maxLength="6" className="form-control" onChange={(event) => { setMyLottery3(event.target.value) }}></input>
-                                </div>
+                                </div> */}
                                 <div className="btn-checkyourlottery">
                                     <button type="text" onClick={checkyourlottery}>ตรวจสลาก</button>
                                 </div>
-                                {console.log(MyLottery)}
+                                {/* {console.log(MyLottery)} */}
                             </Modal.Body>
                         </Modal>
                     </div>

@@ -4,13 +4,13 @@ import Navbar from "./components/Navbar";
 import "./App.css";
 import Home from "./components/pages/Home";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Find from "./components/pages/Find";
+import Shop from "./components/pages/shop";
 import LotteryThailand from "./components/pages/LotteryThailand";
 import Game from "./components/pages/Game";
 import SignUp from "./components/pages/SignUp";
 import Consulting from "./components/pages/Consulting";
 import Profile from "./components/pages/Profile";
-import Login from "./User/LoginForm";
+import Sign_in from "./components/pages/Sign_in";
 
 function App() {
   return (
@@ -18,10 +18,10 @@ function App() {
       <Navbar />
       <Switch>
         <Route path="/" exact={true} component={Home} />
-        <Route path="/find" component={Find} />
+        <Route path="/shop" component={Shop} />
         <Route path="/lottery" component={LotteryThailand} />
         <Route path="/game" component={Game} />
-        <Route path="/log-in" component={Login} />
+        <Route path="/log-in" component={Sign_in} />
         <Route path="/sign-up" component={SignUp} />
         <Route path="/consulting" component={Consulting} />
         <Route path="/profile" component={Profile} />

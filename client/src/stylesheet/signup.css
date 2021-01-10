@@ -5,6 +5,9 @@
   background-repeat: no-repeat;
   background-attachment: fixed;
   padding: 100px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn-signup {
@@ -13,6 +16,7 @@
   padding: 10px 50px;
   border: none;
   border-radius: 8px;
+  width: 70%;
 }
 
 .btn-signup:hover {
@@ -23,8 +27,40 @@
   border-radius: 8px;
 }
 
-.card {
-  background-color: #d29aff67;
+.main-form {
+  background-color: rgb(255, 255, 255);
   border: none;
   border-radius: 10px;
+  box-shadow: 0px 7px 7px 4px rgba(206, 206, 206, 0.397);
+  width: 500px;
+  margin: -2rem;
+  /* border: 1.5px solid #ddd; */
+  padding: 3rem;
+  background: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .main-form {
+    width: 300px;
+    margin: -3rem;
+    /* border: 1.5px solid #ddd; */
+    padding: 1.5rem;
+  }
+
+  .btn-signup {
+    background-color: #961ff7;
+    color: white;
+    padding: 10px 50px;
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+  }
+
+  .btn-signup:hover {
+    background-color: #b574eb;
+    color: white;
+    padding: 10px 50px;
+    border: none;
+    border-radius: 8px;
+  }
 }
