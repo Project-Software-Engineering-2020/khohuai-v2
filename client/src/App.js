@@ -11,22 +11,30 @@ import SignUp from "./components/pages/SignUp";
 import Consulting from "./components/pages/Consulting";
 import Profile from "./components/pages/Profile";
 import Sign_in from "./components/pages/Sign_in";
+// import Login from './LoginForm1';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import rootReducer from './store/rootReducer';
 
 function App() {
+  const store = createStore(rootReducer)
   return (
-    <Router>
-      <Navbar />
-      <Switch>
-        <Route path="/" exact={true} component={Home} />
-        <Route path="/shop" component={Shop} />
-        <Route path="/lottery" component={LotteryThailand} />
-        <Route path="/game" component={Game} />
-        <Route path="/log-in" component={Sign_in} />
-        <Route path="/sign-up" component={SignUp} />
-        <Route path="/consulting" component={Consulting} />
-        <Route path="/profile" component={Profile} />
-      </Switch>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <Navbar />
+        <Switch>
+          <Route path="/" exact={true} component={Home} />
+          <Route path="/shop" component={Shop} />
+          <Route path="/lottery" component={LotteryThailand} />
+          <Route path="/game" component={Game} />
+          <Route path="/login" component={Sign_in} />
+          <Route path="/signup" component={SignUp} />
+          <Route path="/consulting" component={Consulting} />
+          <Route path="/me" component={Profile} />
+        </Switch>
+      </Router>
+    </Provider>
+
   );
 }
 

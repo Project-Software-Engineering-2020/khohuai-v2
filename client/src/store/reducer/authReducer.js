@@ -1,28 +1,25 @@
-const initialState = null
 
-const reducer = (state = initialState, action) => {
 
-    switch(action.type) {
+function userAuth(state = [] , action) {
 
-        case 'GET_STATUS_LOGIN' : 
-            return state
-
-        case 'SET_LOGIN' : 
+    switch (action.type) {
+        
+        case 'SET_LOGIN':
             state = action.payload;
-            console.log("Redux keep State Success")
-            console.log(state)
-            return state;
+            // console.log("Redux keep State Success")
+            // console.log(state)
+            return state = action.payload;
 
-        case 'SET_LOGOUT' :
+        case 'SET_LOGOUT':
             state = null;
             console.log(state)
-            return state
-
-        default :
             break;
+
+        default:
+            return state;
     }
 
-    return state;
-} 
+    
+}
 
-export default reducer;
+export default userAuth;

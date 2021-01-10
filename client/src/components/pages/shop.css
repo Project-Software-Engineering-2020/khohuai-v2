@@ -1,10 +1,97 @@
 .shop{
     margin: 20px 0;
-    padding: 50px;
+    padding: 30px;
     border-radius: 10px;
     background-color: rgb(255, 255, 255);
     box-shadow: 0px 7px 7px 4px rgba(206, 206, 206, 0.397);
 }
-.carousel{
-    z-index: 1 !important;
-} 
+.header-shop {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 10px;
+    padding: 30px 20px;
+    background-color: rgb(240, 185, 203);
+    border-radius: 3px;
+    
+}
+.header-shop-img {
+    text-align: center;
+}
+.header-shop-img > img {
+    width: 250px;
+    height: 180px;
+}
+.header-shop-text {
+    align-self: center;
+    /* justify-self: end; */
+    text-align: left;
+}
+.lottery-shop {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.section-search{
+    display: grid;
+    grid-template-columns: 1fr 362px;
+    justify-items: right;
+    align-items: center;
+    margin: 5px 0;
+    padding: 5px;
+}
+.box-search-lottery {
+    width: 100%;
+    margin: 10px;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid rgb(221, 221, 221);
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 2px 2px 2px rgba(228, 228, 228, 0.397);
+}
+.box-search-lottery p {
+    padding: 5px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.input-search-lottery {
+    display: inline;
+    width: 35px;
+    height: 48px;
+    margin: 9px;
+    padding: 2px;
+    font-size: 24px;
+    text-align: center;
+    font-family: sans-serif;
+}
+.btn-search-lottery {
+    display: grid;
+    grid-template-columns: 45% 55%;
+}
+.btn-search-lottery button:nth-child(1){
+    padding: 8px 20px;
+    margin: 10px 7px;
+    background-color: white;
+    border: 1px solid mediumslateblue;
+    border-radius: 5px;
+    color: mediumslateblue;
+    font-size: 16px;
+}
+.btn-search-lottery button:nth-child(2){
+    padding: 8px 20px;
+    margin: 10px 7px;
+    background-color: mediumslateblue;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+}
+.btn-search-lottery button:nth-child(2):hover {
+    background-color: rgb(139, 121, 241);
+}
+.info-shop {
+    justify-self: left;
+    padding: 25px;
+    align-self: flex-start;
+}
+.info-shop ol li {
+    font-size: 16px;
+}

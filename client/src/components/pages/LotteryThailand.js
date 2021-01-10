@@ -2,12 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import Axios from 'axios';
 import './LotteryThailand.css';
+import { useDispatch, useSelector } from 'react-redux';
 
 const LotteryThailand = () => {
+
+    const dispatch = useDispatch();
+    const profileData = useSelector(state => state.auth);
 
     const [DateLotteryThailand, setLotteryThailand] = useState([]);
     const [Prizes, setPrizes] = useState([]);
     const [RunningNumbers, setRunningNumbers] = useState([]);
+
+    const [Profile, setProfile] = useState()
 
     const [loading, setloading] = useState(false);
 
@@ -27,6 +33,9 @@ const LotteryThailand = () => {
             setLotteryThailand(res.data.response.date);
             setPrizes(res.data.response.prizes);
             setRunningNumbers(res.data.response.runningNumbers);
+
+            
+           
         })
 
         await setloading(true);
@@ -167,6 +176,7 @@ const LotteryThailand = () => {
                                 </section>
                             </div>
                         </div>
+                        {console.log(profileData)}
                         <Modal
                             show={show}
                             onHide={() => setShow(false)}
