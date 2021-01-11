@@ -26,18 +26,18 @@
   }
   .check-your-lottery-btn {
     background-color: white;
-    color: #961ff7;
-    border: 2px solid #961ff7;
-    border-radius: 10px;
-    padding: 12px 30px;
+    color: mediumslateblue;
+    border: 2px solid mediumslateblue;
+    border-radius: 8px;
+    padding: 10px 30px;
     font-size: 20px;
     font-weight: bold;
     width: 100%;
   }
   .check-your-lottery-btn:hover {
-    background-color: #a94ff3;
+    background-color:  mediumslateblue;
     color: white;
-    border: 1px solid #a94ff3;
+    border: 1px solid mediumslateblue;
     border-radius: 10px;
     transition: all 0.5s ease;
   }
@@ -48,12 +48,7 @@
   }
 
   .prize-number-one-header {
-    background: rgb(145, 66, 249);
-    background: linear-gradient(
-      169deg,
-      rgba(145, 66, 249, 1) 0%,
-      rgba(197, 163, 244, 1) 100%
-    );
+    background:  rgb(134, 113, 253);
     text-align: left;
     border-top-right-radius: 15px;
     border-top-left-radius: 15px;
@@ -92,12 +87,7 @@
   .prize-number-near-one-header {
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
-    background: rgb(145, 66, 249);
-    background: linear-gradient(
-      169deg,
-      rgba(145, 66, 249, 1) 0%,
-      rgba(197, 163, 244, 1) 100%
-    );
+    background:rgb(134, 113, 253);
     text-align: left;
     padding: 10px 20px;
     color: white;
@@ -142,12 +132,7 @@
     border: 1px solid rgb(204, 204, 204);
   }
   .item-runningnumber-header {
-    background: rgb(145, 66, 249);
-    background: linear-gradient(
-      169deg,
-      rgba(145, 66, 249, 1) 0%,
-      rgba(197, 163, 244, 1) 100%
-    );
+    background: rgb(134, 113, 253);
     padding: 10px;
     color: white;
     border-top-right-radius: 10px;
@@ -178,12 +163,7 @@
     background-color: white;
   }
   .prize-no2 h5 {
-    background: rgb(145, 66, 249);
-    background: linear-gradient(
-      169deg,
-      rgba(145, 66, 249, 1) 0%,
-      rgba(197, 163, 244, 1) 100%
-    );
+    background: rgb(134, 113, 253);
     padding: 15px 10px;
     color: white;
     font-weight: bold;
@@ -224,12 +204,7 @@
     background-color: white;
   }
   .prize-no3 h5 {
-    background: rgb(145, 66, 249);
-    background: linear-gradient(
-      169deg,
-      rgba(145, 66, 249, 1) 0%,
-      rgba(197, 163, 244, 1) 100%
-    );
+    background: rgb(134, 113, 253);
     padding: 15px 10px;
     color: white;
     font-weight: bold;
@@ -278,12 +253,7 @@
     background-color: white;
   }
   .prize-no4 h5 {
-    background: rgb(145, 66, 249);
-    background: linear-gradient(
-      169deg,
-      rgba(145, 66, 249, 1) 0%,
-      rgba(197, 163, 244, 1) 100%
-    );
+    background: rgb(134, 113, 253);
     padding: 15px 10px;
     color: white;
     font-weight: bold;
@@ -331,12 +301,7 @@
     background-color: white;
   }
   .prize-no5 h5 {
-    background: rgb(145, 66, 249);
-    background: linear-gradient(
-      169deg,
-      rgba(145, 66, 249, 1) 0%,
-      rgba(197, 163, 244, 1) 100%
-    );
+    background: rgb(134, 113, 253);
     padding: 15px 10px;
     color: white;
     font-weight: bold;
@@ -378,7 +343,7 @@
   }
 
   .loader {
-    color: #ae64eb;
+    color: rgb(134, 113, 253);
     font-size: 20px;
     margin: 100px auto;
     top: 10rem;

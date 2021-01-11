@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./components/Navbar";
 import "./App.css";
 import Home from "./components/pages/Home";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import Shop from "./components/pages/shop";
 import LotteryThailand from "./components/pages/LotteryThailand";
 import Game from "./components/pages/Game";
@@ -11,13 +11,12 @@ import SignUp from "./components/pages/SignUp";
 import Consulting from "./components/pages/Consulting";
 import Profile from "./components/pages/Profile";
 import Sign_in from "./components/pages/Sign_in";
-// import Login from './LoginForm1';
+//redux 
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import rootReducer from './store/rootReducer';
-
+// import { createStore } from 'redux';
+import store from './store/store';
 function App() {
-  const store = createStore(rootReducer)
+
   return (
     <Provider store={store}>
       <Router>

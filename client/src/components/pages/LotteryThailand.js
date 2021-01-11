@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const LotteryThailand = () => {
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const profileData = useSelector(state => state.auth);
 
     const [DateLotteryThailand, setLotteryThailand] = useState([]);
@@ -78,8 +78,9 @@ const LotteryThailand = () => {
             {
                 loading ?
                     //success
+                    
                     <div className="reward-lottery">
-
+                        {console.log(profileData)}
                         <div className="container pt-lg-4 p-0">
                             <div className="card-shadow">
                                 <section className="header-lottery">
@@ -176,7 +177,7 @@ const LotteryThailand = () => {
                                 </section>
                             </div>
                         </div>
-                        {console.log(profileData)}
+                        
                         <Modal
                             show={show}
                             onHide={() => setShow(false)}

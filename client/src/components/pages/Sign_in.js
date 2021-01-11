@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { Link } from "react-router-dom";
 import {
   auth,
@@ -6,7 +6,6 @@ import {
   googleProvider,
   storage,
 } from "../../firebase/firebase";
-import Axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import "../../stylesheet/signin.css";
@@ -27,12 +26,12 @@ const Sign_in = () => {
   const dispatch = useDispatch();
 
   // setloader(false);
-  useEffect(() => {
+  // useEffect(() => {
     
     
-    const fetchData = () => {setuser(dispatch({ type: 'GET_STATUS_LOGIN' }));
-    fetchData();
-  } 
+    // const fetchData = () => {setuser(dispatch({ type: 'GET_STATUS_LOGIN' }));
+    // fetchData();
+  
     // const authUnsubscribe = auth.onAuthStateChanged((user) => {
     //   setloader(true);
     //   if (!!user) {
@@ -56,7 +55,7 @@ const Sign_in = () => {
     // return () => {
     //   authUnsubscribe();
     // };
-  }, []);
+  // }, []);
 
   const onEmaillogin = (e) => {
     e.preventDefault();
@@ -66,9 +65,7 @@ const Sign_in = () => {
     auth
       .signInWithEmailAndPassword(email, password)
       .then((res) => {
-        dispatch({type:'SET_LOGIN', payload: res});
         setloader(false);
-        // console.log("Login แล้ว")
       })
       .catch((err) => {
         console.log(err);
@@ -81,21 +78,24 @@ const Sign_in = () => {
     if (result) {
       const userref = firestore.collection("users").doc(result.user.uid);
       userref.get().then((doc) => {
-        console.log(doc.data());
         if (!doc.data()) {
           userref.set({
             uid: result.user.uid,
             displayName: result.user.displayName,
+            firstname: "",
+            lastname: "",
+            phone: "",
             photoURL: result.user.photoURL,
             email: result.user.email,
             role: "user",
           }).then((res) => { 
-            dispatch({type:'SET_LOGIN', payload: res});
-             console.log("เพิ่มข้อมูแล้วเน้อ");
+             console.log("เพิ่มข้อมูลแล้วเน้อ");
           });
          
         } else {
-          dispatch({type:'SET_LOGIN', payload: doc.data()});
+          dispatch({
+            type:'SET_LOGIN', payload: doc.data()
+          });
           console.log("มีผู้ใช้นี้แล้ว");
 
         }
@@ -106,7 +106,7 @@ const Sign_in = () => {
     auth
       .signOut()
       .then(() => {
-        dispatch({type:'SET_LOGOUT'});
+        // dispatch({type:'SET_LOGOUT'});
         console.log("Logout OK");
       })
       .catch((err) => {
