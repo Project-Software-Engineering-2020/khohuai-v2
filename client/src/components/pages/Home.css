@@ -1,0 +1,28 @@
+body {
+    background-color: whitesmoke;
+}
+
+.home{
+    padding: 20px 0;
+    /* border-radius: 10px; */
+    /* box-shadow: 0px 7px 7px 4px rgba(206, 206, 206, 0.397); */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* color: #fff; */
+}
+.carousel{
+    padding: 0;
+    margin: 20px 5px;
+    box-shadow: 0px 7px 7px 4px rgba(206, 206, 206, 0.397);
+    z-index: 1 !important;
+} 
+.img-carousel {
+    width: 100%;
+}
+
+@media screen and (max-width: 992px) {
+    .home {
+        padding: 10px 0;
+    }
+}
