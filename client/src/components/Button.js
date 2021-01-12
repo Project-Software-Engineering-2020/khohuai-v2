@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 export default function Button() {
   return (
-    <Link to='sign-up'>
+    <Link to='signup'>
       <button className='signup-btn'>ลงชื่อเข้าใช้</button>
     </Link>
   );
