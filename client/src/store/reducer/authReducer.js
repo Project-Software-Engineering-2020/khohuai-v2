@@ -1,28 +1,36 @@
-const initialState = null
+const initialState = {
+    uid : null,
+    displayName: null,
+    photoURL: null,
+    email: null,
+    role: null
+};
 
-const reducer = (state = initialState, action) => {
+function userAuth(state = initialState , action) {
 
-    switch(action.type) {
-
-        case 'GET_STATUS_LOGIN' : 
-            return state
-
-        case 'SET_LOGIN' : 
-            state = action.payload;
-            console.log("Redux keep State Success")
-            console.log(state)
+    switch (action.type) {
+        
+        case 'SET_LOGIN':
+            state = {
+                ...state,
+                uid : action.payload.uid,
+                displayName: action.payload.displayName,
+                photoURL: action.payload.photoURL,
+                email: action.payload.email,
+                role: action.payload.role
+            };
+            // console.log("Redux keep State Success")
+            console.log(action.payload);
             return state;
-
-        case 'SET_LOGOUT' :
+        case 'SET_LOGOUT':
             state = null;
-            console.log(state)
-            return state
-
-        default :
             break;
+        case 'GET_STATUS_LOGIN':
+            return state;
+        
     }
-
     return state;
-} 
+    
+}
 
-export default reducer;
+export default userAuth;

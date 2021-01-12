@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { Link } from "react-router-dom";
 import {
   auth,
@@ -6,12 +6,12 @@ import {
   googleProvider,
   storage,
 } from "../../firebase/firebase";
-import Axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import "../../stylesheet/signin.css";
+import { useDispatch } from 'react-redux';
 
-function Sign_in() {
+const Sign_in = () => {
   const [user, setuser] = useState(null);
   const [loader, setloader] = useState(false);
   const [email, setemail] = useState("");
@@ -22,32 +22,41 @@ function Sign_in() {
 
   const element = <FontAwesomeIcon icon={faGoogle} />;
 
+
+  const dispatch = useDispatch();
+
   // setloader(false);
-  useEffect(() => {
-    const authUnsubscribe = auth.onAuthStateChanged((user) => {
-      setloader(true);
-      if (!!user) {
-        userRef.doc(user.uid).onSnapshot((doc) => {
-          if (doc.data()) {
-            const userdata = {
-              uid: doc.data().uid,
-              displayName: doc.data().displayName,
-              photoURL: doc.data().photoURL,
-              email: doc.data().email,
-              role: doc.data().role,
-            };
-            setuser(userdata);
-            setloader(false);
-          }
-        });
-      } else {
-        setuser(null);
-      }
-    });
-    return () => {
-      authUnsubscribe();
-    };
-  }, [user]);
+  // useEffect(() => {
+    
+    
+    // const fetchData = () => {setuser(dispatch({ type: 'GET_STATUS_LOGIN' }));
+    // fetchData();
+  
+    // const authUnsubscribe = auth.onAuthStateChanged((user) => {
+    //   setloader(true);
+    //   if (!!user) {
+    //     userRef.doc(user.uid).onSnapshot((doc) => {
+    //       if (doc.data()) {
+    //         const userdata = {
+    //           uid: doc.data().uid,
+    //           displayName: doc.data().displayName,
+    //           photoURL: doc.data().photoURL,
+    //           email: doc.data().email,
+    //           role: doc.data().role,
+    //         };
+    //         setuser(userdata);
+    //         setloader(false);
+    //       }
+    //     });
+    //   } else {
+    //     setuser(null);
+    //   }
+    // });
+    // return () => {
+    //   authUnsubscribe();
+    // };
+  // }, []);
+
   const onEmaillogin = (e) => {
     e.preventDefault();
     setloader(true);
@@ -57,7 +66,6 @@ function Sign_in() {
       .signInWithEmailAndPassword(email, password)
       .then((res) => {
         setloader(false);
-        // console.log("Login แล้ว")
       })
       .catch((err) => {
         console.log(err);
@@ -66,22 +74,30 @@ function Sign_in() {
   };
   const onloginwithgoogle = async () => {
     const result = await auth.signInWithPopup(googleProvider);
-    // console.log(result.user);
+    
     if (result) {
       const userref = firestore.collection("users").doc(result.user.uid);
       userref.get().then((doc) => {
-        console.log(doc.data());
         if (!doc.data()) {
           userref.set({
             uid: result.user.uid,
             displayName: result.user.displayName,
+            firstname: "",
+            lastname: "",
+            phone: "",
             photoURL: result.user.photoURL,
             email: result.user.email,
             role: "user",
+          }).then((res) => { 
+             console.log("เพิ่มข้อมูลแล้วเน้อ");
           });
-          console.log("เพิ่มข้อมูแล้วเน้อ");
+         
         } else {
+          dispatch({
+            type:'SET_LOGIN', payload: doc.data()
+          });
           console.log("มีผู้ใช้นี้แล้ว");
+
         }
       });
     }
@@ -90,6 +106,7 @@ function Sign_in() {
     auth
       .signOut()
       .then(() => {
+        // dispatch({type:'SET_LOGOUT'});
         console.log("Logout OK");
       })
       .catch((err) => {
@@ -176,6 +193,7 @@ function Sign_in() {
 
                 <div className="col-md-6">
                   <button
+                    type="button"
                     onClick={onloginwithgoogle}
                     className="btn-google my-3"
                   >
@@ -183,6 +201,7 @@ function Sign_in() {
                     &nbsp;&nbsp;ล็อคอินด้วยกูเกิ้ล
                   </button>
                 </div>
+              
               </div>
             </form>
           </div>
@@ -207,8 +226,5 @@ function Sign_in() {
       )}
     </div>
   );
-}
-{
-  console.log("ไอชล");
 }
 export default Sign_in;
