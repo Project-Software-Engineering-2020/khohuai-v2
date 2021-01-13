@@ -136,7 +136,7 @@
     margin: 1rem auto;
     border-radius: 4px;
     width: 80%;
-    background: #9419F8;
+    background: mediumslateblue;
     text-decoration: none;
     color: #fff;
     font-size: 1.5rem;
@@ -144,7 +144,7 @@
 
   .nav-links-mobile:hover {
     background: #fff;
-    color:#9419F8;
+    color:mediumslateblue;
     transition: 250ms;
   }
 /* 

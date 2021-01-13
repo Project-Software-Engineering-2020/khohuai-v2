@@ -97,3 +97,81 @@
 .info-shop ol li {
     font-size: 16px;
 }
+
+@media screen and (max-width:430px) {
+    
+    .shop {
+        padding: 0px;
+    }
+    .header-shop {
+        grid-template-columns: 1fr;
+        padding: 12px 20px;
+    }
+    .section-search {
+        grid-template-columns: 1fr;
+    }
+    .header-shop-img img {
+        width: 170px;
+        height: 120px;
+    }
+    .header-shop-text {
+        text-align: center;
+    }
+    .header-shop-text h1 {
+        font-size: 26px;
+    }
+    .header-shop-text h5 {
+        font-size: 18px;
+    }
+    .info-shop {
+        padding: 5px 7px;
+        font-size: 15px;
+        color: rgb(36, 36, 36);
+    }
+    .info-shop ol {
+        padding-left: 18px;
+    }
+    .section-search{
+        justify-items: center;
+        align-items: center;
+        margin: 5px 0;
+        padding: 5px;
+    }
+    .box-search-lottery {
+        width: 100%;
+        margin: 10px;
+        padding: 8px;
+        text-align: center;
+    }
+    .box-search-lottery p {
+        margin: 5px 0;
+        padding: 5px;
+        font-size: 18px;
+        font-weight: bold;
+    
+    }
+    .input-search-lottery {
+        display: inline;
+        width: 38px;
+        height: 47px;
+        margin: 9px;
+        padding: 1px;
+        font-size: 26px;
+        text-align: center;
+        font-family: sans-serif;
+    }
+    .btn-search-lottery {
+        display: grid;
+        grid-template-columns: 45% 55%;
+    }
+    .btn-search-lottery button:nth-child(1){
+        padding: 9px 20px;
+        margin: 10px 7px;
+        background-color: white;
+        border: 1px solid mediumslateblue;
+        border-radius: 5px;
+        color: mediumslateblue;
+        font-size: 14px;
+    }
+}
+
