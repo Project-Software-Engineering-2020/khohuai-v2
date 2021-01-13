@@ -1,12 +1,13 @@
-
-.bg-profile {
+body {
     background-color: whitesmoke;
     height: 100%;
-    padding-top: 30px;
 }
-.bg-profile div {
+.profile-page {
+    margin: 30px auto;
     background: white;
     padding-top: 20px;
+    border: 1px solid rgba(240, 240, 240, 0.397);
+    box-shadow: 0px 5px 5px 5px rgba(228, 228, 228, 0.397);
 }
 .bg-profile div h2 {
     text-align: center;
@@ -15,17 +16,18 @@
 .my-profile {
     display: grid;
     grid-template-columns: 40% 60%;
-    padding: 30px;
-    margin: 0;
+    margin: 30px;
 }
 .img-profile {
+    display: grid;
     margin: 0;
-    padding: 30px 50px;
+    justify-content: end;
+    padding: 20px;
 }
 .img-profile img {
-    border: 3px solid yellowgreen;
+    border: 3px solid rgb(59, 59, 59);
     border-radius: 50%;
-    width: 100%;
+    width: 300px;
     height: 300px;
     object-fit: cover;
     object-position: center ; 
@@ -34,18 +36,39 @@
     cursor: pointer;
 }
 .information-profile {
-    margin: 10px 10px;
-    padding: 10px 20px;
+    margin: 0px 10px;
+    padding: 5px 20px;
 }
 .profile-data{
-    margin: 20px 0;
-    font-size: 20px;
+    margin: 5px 0;
+    padding: auto 5px;
+    font-size: 18px;
     font-family: 'Bai Jamjuree', sans-serif;
+    display: grid;
+    grid-template-columns: 25% 75%;
+    height: 60px;
+    align-self: center;
+} 
+.profile-data label {
+    text-align: right;
+    margin: auto 10px;
 }
+.profile-data input {
+    font-size: 18px;
+    margin: auto 0px;
+}
+.profile-data span {
+    align-self: center;
+}
+.group-btn-profile{
+   margin: 0;
+   padding: 0 !important;
+}
+
 .btn-edit-profile {
-    background-color: slateblue;
+    background-color: rgb(130, 117, 221);
     color: white;
-    padding: 10px 25px;
+    padding: 9px 35px;
     margin: 10px 20px 10px 0;
     border: none;
     border-radius: 5px; 
@@ -53,12 +76,12 @@
     font-size: 16px;
 }
 .btn-edit-profile:hover{
-    background-color:rgb(136, 122, 228);
+    background-color:rgb(142, 128, 231);
 }
 .btn-change-password{
-    background-color: chocolate;
+    background-color: rgb(228, 148, 91);
     color: white;
-    padding: 10px 25px;
+    padding: 8px 25px;
     margin: 10px 20px 10px 0;
     border: none;
     border-radius: 5px; 
@@ -66,5 +89,19 @@
     font-size: 16px;
 }
 .btn-change-password:hover{
-    background-color:rgb(216, 128, 66);
+    background-color:rgb(243, 170, 118);
+}
+
+.btn-cancel-updateprofile {
+    background-color: white;
+    color: rgb(36, 36, 36);
+    padding: 8px 25px;
+    margin: 10px 20px 10px 0;
+    border: 1px solid rgb(154, 141, 240);
+    border-radius: 5px; 
+    cursor: pointer;
+    font-size: 16px;
+}
+.btn-cancel-updateprofile:hover {
+    background-color:rgb(215, 209, 255);
 }

@@ -59,10 +59,23 @@ const getProfile = async (req, res, next) => {
     try {
         const uid = req.params.id;
         await db.collection('users').doc(uid).get().then((doc) => {
-            console.log(doc.data());
+            // console.log(doc.data());
             res.send(doc.data())
         })
 
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const updateProfile = async (req, res, next) => {
+    try {
+        const uid = req.params.id;
+        const data = req.body.newProfile;
+        console.log(uid);
+        console.log(data);
+        db.collection('users').doc(uid).update(data)
+        res.send()
     } catch (error) {
         console.log(error);
     }
@@ -72,5 +85,6 @@ module.exports = {
     addUser,
     getAllUser,
     deleteUser,
-    getProfile
+    getProfile,
+    updateProfile
 }

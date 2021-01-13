@@ -13,7 +13,7 @@ const LotteryItem = (props) => {
             <figure className="lottery-item-image">
                 <img src="./images/lottery-demo1.jpg"></img>
             </figure>
-            <button onChange={addtoCart} className="add-to-cart"><i class="fas fa-cart-plus"> </i> เพิ่มลงในตะกร้า</button>
+            <button onChange={addtoCart} className="add-to-cart"><i className="fas fa-cart-plus"> </i> เพิ่มลงในตะกร้า</button>
         </div>
     )
 }
