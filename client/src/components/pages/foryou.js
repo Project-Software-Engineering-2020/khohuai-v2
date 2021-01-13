@@ -1,16 +1,22 @@
 import React from "react"
+import Lottoryitem from "./LotteryItem"
+import './foryou.css';
+
 
 
 const Foryou = ()=> {
     return (
         <div>
-            <div className="prize-number-one-header">
-                <h2>แนะนำสำหรับคุณ </h2>
+            <div className="recommend-header">
+                <span>แนะนำสำหรับคุณ </span>
                 
             </div>
 
-            <div className="prize-number-one-body">
-                <span></span>
+            <div className="recommend-body">
+                
+                <Lottoryitem/>
+                <Lottoryitem/>
+                <Lottoryitem/>
             </div>
         </div>
 

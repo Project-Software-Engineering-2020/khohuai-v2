@@ -1,0 +1,117 @@
+.recommend-header {
+  
+    background:  rgb(134, 113, 253);
+    text-align: center;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    padding: 15px 20px;
+    color: white;
+    border: 1px solid rgb(228, 228, 228);
+    width: 25%;
+  }
+  .recommend-header span {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 18px;
+  }
+  
+  .recommend-body {
+    background-color: white;
+    margin: 0;
+    padding: 20px 15px;
+    text-align: center;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border: 1px solid rgb(134, 113, 253);
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+  }
+
+
+  
+  @media screen and (max-width: 1024px) {
+    .recommend-header{
+      width: 30%;
+    }
+    .recommend-header span {
+      
+      font-size: 25px;
+    }
+  }
+  @media screen and (max-width: 812px) {
+    .recommend-header{
+      width: 30%;
+    }
+    .recommend-header span {
+      font-size: 18px;
+    }
+  }
+
+
+  @media screen and (max-width: 736px) {
+    .recommend-header{
+      padding: 12px ;
+      width: 45%;
+    }
+    .recommend-header span {
+      font-size: 18px;
+    }
+  }
+
+
+
+  @media screen and (max-width: 720px) {
+    .recommend-header{
+     
+      width: 50%;
+    }
+    
+    .recommend-header span {
+      font-size: 18px;
+    }
+     
+    .recommend-body {
+      grid-template-columns: repeat(3,1fr);
+    }
+  
+  }
+
+  @media screen and (max-width: 675px) {
+    
+    .reccommend-body {
+      grid-template-columns: repeat(3,1fr);
+    }
+    
+  }
+   
+
+
+
+  @media screen and (max-width: 425px) {
+    
+    .recommend-body {
+      grid-template-columns: repeat(1,1fr);
+    }
+    
+  }
+   
+
+
+  @media screen and (max-width: 375px) {
+    .recommend-header{
+      padding: 10px ;
+      width: 60%;
+    }
+    .recommend-header span {
+      font-size: 15px;
+    }
+    
+    .recommend-body {
+      grid-template-columns: repeat(1,1fr);
+    }
+    
+   
+    
+  }
+   
