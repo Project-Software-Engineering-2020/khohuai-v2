@@ -55,7 +55,7 @@ function Navbar() {
               className='lottery-nav-links'
               onClick={closeMobileMenu}
             >
-              <i class="fas fa-store fa-1x"></i> ร้านค้าสลาก
+              <i className="fas fa-store fa-1x"></i> ร้านค้าสลาก
             </Link>
             {dropdown && <Dropdown />}
           </li>
