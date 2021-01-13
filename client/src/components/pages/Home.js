@@ -5,6 +5,7 @@ import carousel1 from "../../images/carousel1.gif"
 import carousel2 from "../../images/carousel2.gif"
 import carousel3 from "../../images/carousel3.gif"
 import Foryou from "./foryou"
+import Hot from "./hot"
 
 const Home = () => {
     return (
@@ -41,6 +42,7 @@ const Home = () => {
                     </Carousel>
 
                     <Foryou> </Foryou>
+                    <Hot> </Hot>
 
 
                 </div>
