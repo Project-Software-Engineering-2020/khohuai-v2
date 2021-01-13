@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import Axios from 'axios';
 import './LotteryThailand.css';
 import { useDispatch, useSelector } from 'react-redux';
 
 const LotteryThailand = () => {
+
+    useEffect(() => {
+        fetchLotteryData();
+    }, []);
 
     // const dispatch = useDispatch();
     const profileData = useSelector(state => state.auth);
@@ -18,11 +22,6 @@ const LotteryThailand = () => {
     const [loading, setloading] = useState(false);
 
     const [show, setShow] = useState(false);
-
-    const [myLottery1, setMyLottery1] = useState("");
-    const [myLottery2, setMyLottery2] = useState("");
-    const [myLottery3, setMyLottery3] = useState("");
-    const [MyLottery, setMyLottery] = useState([]);
     const [resultCheckMyLottery, setResultCheckMyLottery] = useState(null);
 
     const handleClose = () => setShow(false);
@@ -32,43 +31,52 @@ const LotteryThailand = () => {
         await Axios.get("https://lotto.api.rayriffy.com/latest").then((res) => {
             setLotteryThailand(res.data.response.date);
             setPrizes(res.data.response.prizes);
-            setRunningNumbers(res.data.response.runningNumbers);
-
-            
-           
+            setRunningNumbers(res.data.response.runningNumbers);       
         })
 
         await setloading(true);
     }
 
-    useEffect(() => {
+    var n = 10;
 
-        fetchLotteryData();
-    }, []);
+    function createN(){
+        var inputArray = [];
+        for(var i=1; i<=n; i++){
+            inputArray.push(
+                <div className="box-check-lottery">
+                    <p>สลากใบที่ {i}</p>
+                    <input type="text" maxLength="6" className="form-control" id={"myLot" + i}></input>
+                </div>
+            );
+        }
+        return inputArray;
+    }
 
     const checkyourlottery = async () => {
-        // setMyLottery([myLottery1, myLottery2, myLottery3]);
-        // console.log(MyLottery)
-        // setResultCheckMyLottery([]);
-        // MyLottery.map((mylot) => {
+        var myLottery = [];
+        for(var i=1; i <= n;i++){
+            myLottery.push(document.getElementById("myLot" + i).value);
+        };
+        setResultCheckMyLottery([]);
+        myLottery.map((mylot) => {
             //รางวัลที่ 1 ถึง 5
-            // Prizes.map((prize) => {
-
-            //     prize.number.map((number) => {
-
-            //         if (number === mylot) {
-            //             console.log("คุณถูกรางวัล  " + prize.name);
-            //             return setResultCheckMyLottery(previous => [...previous, prize.name]);
-            //         }
-            //     })
-            //     // setResultCheckMyLottery(previous => [...previous, "ไม่ถูกรางวัล"]);
-            // })
-            // //รางวัลเลขท้าย
-            // RunningNumbers.map((run) => {
+            Prizes.map((prize) => {
+                prize.number.map((number) => {
+                    if (number === mylot) {
+                        console.log("คุณถูกรางวัล  " + prize.name);
+                        setResultCheckMyLottery(previous => [...previous, prize.name]);
+                    }
+                })
+                if(resultCheckMyLottery === []){
+                    setResultCheckMyLottery(previous => [...previous, "ไม่ถูกรางวัล"]);
+                }
+            })
+            //รางวัลเลขท้าย
+            RunningNumbers.map((run) => {
                 
-            // })
+            })
             
-        // })
+        })
         
     }
 
@@ -80,7 +88,6 @@ const LotteryThailand = () => {
                     //success
                     
                     <div className="reward-lottery">
-                        {console.log(profileData)}
                         <div className="container pt-lg-4 p-0">
                             <div className="card-shadow">
                                 <section className="header-lottery">
@@ -192,18 +199,21 @@ const LotteryThailand = () => {
                                 </Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                                <div className="box-check-lottery">
-                                    <p>สลากใบที่ 1</p>
-                                    <input type="text" maxLength="6" className="form-control" onChange={(event) => { setMyLottery1(event.target.value) }}></input>
-                                </div>
                                 {/* <div className="box-check-lottery">
-                                    <p>สลากใบที่ 2</p>
-                                    <input type="text" maxLength="6" className="form-control" onChange={(event) => { setMyLottery2(event.target.value) }}></input>
+                                    <p>สลากใบที่ 1</p>
+                                    <input type="text" maxLength="6" className="form-control" id="myLot1"></input>
                                 </div>
+                                
                                 <div className="box-check-lottery">
                                     <p>สลากใบที่ 3</p>
-                                    <input type="text" maxLength="6" className="form-control" onChange={(event) => { setMyLottery3(event.target.value) }}></input>
+                                    <input type="text" maxLength="6" className="form-control" id="myLot3"></input>
                                 </div> */}
+                                {
+                                    createN()
+                                }
+                                <div className="btn-checkyourlottery">
+                                    <button type="text" onClick={function incN(){n += 1;console.log(n);}}>เพิ่มสลาก</button>
+                                </div>
                                 <div className="btn-checkyourlottery">
                                     <button type="text" onClick={checkyourlottery}>ตรวจสลาก</button>
                                 </div>
