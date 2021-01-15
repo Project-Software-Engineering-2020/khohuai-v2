@@ -83,7 +83,7 @@ function Navbar() {
               className='nav-links-mobile'
               onClick={closeMobileMenu}
             >
-              Sign Up
+              ลงชื่อเข้าใช้
             </Link>
           </li>
         </ul>

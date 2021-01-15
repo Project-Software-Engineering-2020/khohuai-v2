@@ -17,6 +17,7 @@ const Foryou = ()=> {
                 <Lottoryitem/>
                 <Lottoryitem/>
                 <Lottoryitem/>
+                <Lottoryitem/>
             </div>
         </div>
 
