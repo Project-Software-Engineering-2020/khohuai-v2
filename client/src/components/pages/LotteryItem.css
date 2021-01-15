@@ -33,3 +33,34 @@
     background-color: rgb(133, 119, 224);
 
 }
+
+
+@media screen and (max-width:990px) {
+    .lottery-shop {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .lottery-item {
+         padding: 15px;
+    }
+    .add-to-cart {
+        padding: 10px 5px;
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    .container {
+        padding: 0;
+    }
+    .lottery-shop {
+        grid-template-columns: 1fr 1fr;
+    }
+    .lottery-item {
+        margin: 4px;
+        padding: 10px;
+   }
+   .add-to-cart {
+       padding: 9px 2px;
+       font-size: 13px;
+   }
+}
