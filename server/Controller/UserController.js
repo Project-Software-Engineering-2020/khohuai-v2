@@ -59,8 +59,8 @@ const deleteUser = async (req, res, next) => {
 const getProfile = async (req, res, next) => {
     try {
         const uid = req.params.id;
-        await db.collection('users').doc(uid).get().then((doc) => {
-            // console.log(doc.data());
+        await db.collection('users').doc(uid).onSnapshot((doc) => {
+            console.log(doc.data());
             res.send(doc.data())
         })
 

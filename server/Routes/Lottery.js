@@ -1,12 +1,10 @@
 const express = require('express');
-const router = express.Router();
-const Axios = require('axios');
+const { getAllLottery } = require('../Controller/LotteryController')
 
-router.get('/',function(req,res){
-    Axios.get("https://lotto.api.rayriffy.com/latest").then((result) => {
-        p2 = result.data.response.prizes[2];
-        res.send(p2);
-    })
-});
+const router = express.Router();
+
+
+
+router.get('/',getAllLottery)
 
 module.exports = router;

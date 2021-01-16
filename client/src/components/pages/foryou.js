@@ -1,24 +1,26 @@
 import React, {useState, useEffect} from "react"
 import Lottoryitem from "./LotteryItem"
 import './foryou.css';
-
-
+import Axios from "axios";
 
 const Foryou = ()=> {
 
-    // const [data, setData] = useState([]);
+    const [data, setData] = useState();
+    const [loading, setloading] = useState(false);
 
 
-    // const FetchData = () => {
-    //     // lot = [
-    //     //     { }]
+    const FetchData = async () => {
+        await Axios.get("http://localhost:3001/lottery").then((lot) => {
+            setData(lot.data);
+            console.log(lot.data);
+        })
+        await setloading(true);
+    }
 
-    //     // setData(lot)
-    // }
-
-    // useEffect(() => {
-    //     FetchData();
-    // }, [])
+    useEffect(() => {
+        FetchData();
+        console.log(data);
+    }, [])
 
     return (
         <div>
@@ -26,14 +28,21 @@ const Foryou = ()=> {
                 <span>แนะนำสำหรับคุณ </span>
                 
             </div>
-
+            {loading ? 
             <div className="recommend-body">
-                
-                <Lottoryitem/>
-                <Lottoryitem/>
-                <Lottoryitem/>
-                <Lottoryitem/>
+
+                {data.map((item,index) => {
+                    return (
+                        <Lottoryitem key={index} photo={item.photoURL} id={item.id}></Lottoryitem>
+                    )
+                    
+                })}
+
             </div>
+            :
+            <div className="loader">Loading...</div>
+            }
+            
         </div>
 
     )

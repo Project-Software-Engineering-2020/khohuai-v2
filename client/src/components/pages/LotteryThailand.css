@@ -346,7 +346,7 @@
     color: rgb(134, 113, 253);
     font-size: 20px;
     margin: 100px auto;
-    top: 10rem;
+    /* top: 10rem; */
     width: 0.8em;
     height: 0.8em;
     border-radius: 50%;
@@ -593,7 +593,6 @@
     transition: 1ms ease-in-out;
     cursor: pointer;
   }
-
 
   @media screen and (max-width: 900px) {
     .box-check-lottery 
