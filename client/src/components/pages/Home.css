@@ -1,11 +1,17 @@
 body {
-    background-color: whitesmoke;
+    /* background-color: whitesmoke; */
+    /* background-image: url("../../images/img-0.jpg"); */
+    background-image: url("../../images/light-violet.jpg");
+    /* background-image: url("https://static.vecteezy.com/system/resources/previews/000/566/196/non_2x/abstract-geometric-square-white-background-light-and-shadow-vector.jpg"); */
+    /* background-image: url("https://marilynscott.com/wp-content/uploads/2016/05/White-christmas-light-background.png"); */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* background-attachment: fixed; */
 }
 
 .home{
     padding: 20px 0;
-    /* border-radius: 10px; */
-    /* box-shadow: 0px 7px 7px 4px rgba(206, 206, 206, 0.397); */
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -14,7 +20,7 @@ body {
 .carousel{
     padding: 0;
     margin: 20px 5px;
-    box-shadow: 0px 7px 7px 4px rgba(206, 206, 206, 0.397);
+    box-shadow: 0px 5px 5px 4px rgba(216, 216, 216, 0.5);
     z-index: 1 !important;
 } 
 .img-carousel {

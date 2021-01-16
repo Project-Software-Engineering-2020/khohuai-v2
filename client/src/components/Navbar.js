@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ButtonLogin from './Button';
-import ButtonLogout from './Logout';
+import ButtonUser from './ButtonUSer';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import Dropdown from './Dropdown';
@@ -79,16 +79,19 @@ function Navbar() {
           </li>
           <li>
             <Link
-              to='/sign-up'
+              to='/login'
               className='nav-links-mobile'
               onClick={closeMobileMenu}
             >
-              Sign Up
+              ลงชื่อเข้าใช้
             </Link>
           </li>
         </ul>
+        {/* ถ้ายังไม่ login */}
         <ButtonLogin className="btn-login" />
-        {/* <ButtonLogout className="btn-login" /> */}
+
+        {/* <ButtonUser /> */}
+
       </nav>
     </div>
   );

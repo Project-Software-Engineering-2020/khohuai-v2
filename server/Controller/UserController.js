@@ -1,5 +1,6 @@
-const firebaseDB = require('../firebaseDB');
+const firebaseDB  = require('../firebaseDB');
 const db = firebaseDB.firestore();
+const storage = require('firebase/storage');
 
 //Models DB
 const User = require('../Models/User');
@@ -74,8 +75,10 @@ const updateProfile = async (req, res, next) => {
         const data = req.body.newProfile;
         console.log(uid);
         console.log(data);
-        db.collection('users').doc(uid).update(data)
-        res.send()
+        // console.log(image); 
+        db.collection('users').doc(uid).update(data);
+        res.send();
+        
     } catch (error) {
         console.log(error);
     }

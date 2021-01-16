@@ -6,9 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const LotteryThailand = () => {
 
-    useEffect(() => {
-        fetchLotteryData();
-    }, []);
+
 
     // const dispatch = useDispatch();
     const profileData = useSelector(state => state.auth);
@@ -22,74 +20,125 @@ const LotteryThailand = () => {
     const [loading, setloading] = useState(false);
 
     const [show, setShow] = useState(false);
-    const [resultCheckMyLottery, setResultCheckMyLottery] = useState(null);
+    // const [resultCheckMyLottery, setResultCheckMyLottery] = useState(null);
+
+    const initialInputList = [
+        {
+            myLot: "",
+            result: ""
+        }
+
+    ];
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+        setShow(true);
+        setInputList(initialInputList);
+    }
+
+    const [inputList, setInputList] = useState(initialInputList);
+
+    const addInput = (event) => {
+        if (inputList.length > 4) {
+            return
+        }
+        else {
+            const inputState = {
+                myLot: "",
+                result: ""
+            }
+            setInputList((perv) => [...perv, inputState]);
+        }
+
+    }
+
+    const handleInput = (index, event) => {
+        // event.preventDefault();
+
+        const list = [...inputList];
+        list[index]["myLot"] = event.target.value;
+        setInputList(list);
+    }
 
     const fetchLotteryData = async () => {
         await Axios.get("https://lotto.api.rayriffy.com/latest").then((res) => {
             setLotteryThailand(res.data.response.date);
             setPrizes(res.data.response.prizes);
-            setRunningNumbers(res.data.response.runningNumbers);       
+            setRunningNumbers(res.data.response.runningNumbers);
         })
 
         await setloading(true);
     }
 
-    var n = 10;
+    // var n = 10;
 
-    function createN(){
-        var inputArray = [];
-        for(var i=1; i<=n; i++){
-            inputArray.push(
-                <div className="box-check-lottery">
-                    <p>สลากใบที่ {i}</p>
-                    <input type="text" maxLength="6" className="form-control" id={"myLot" + i}></input>
-                </div>
-            );
-        }
-        return inputArray;
-    }
+    // function createN() {
+    //     var inputArray = [];
+    //     for (var i = 1; i <= n; i++) {
+    //         inputArray.push(
+    //             <div className="box-check-lottery">
+    //                 <p>สลากใบที่ {i}</p>
+    //                 <input type="text" maxLength="6" className="form-control" id={"myLot" + i}></input>
+    //             </div>
+    //         );
+    //     }
+    //     return inputArray;
+    // }
 
     const checkyourlottery = async () => {
-        var myLottery = [];
-        for(var i=1; i <= n;i++){
-            myLottery.push(document.getElementById("myLot" + i).value);
-        };
-        setResultCheckMyLottery([]);
-        myLottery.map((mylot) => {
+        // var myLottery = [];
+        // for (var i = 1; i <= n; i++) {
+        //     myLottery.push(document.getElementById("myLot" + i).value);
+        // };
+        // setResultCheckMyLottery([]);
+        inputList.map((item, index) => {
             //รางวัลที่ 1 ถึง 5
             Prizes.map((prize) => {
                 prize.number.map((number) => {
-                    if (number === mylot) {
+                    if (number === item.myLot) {
                         console.log("คุณถูกรางวัล  " + prize.name);
-                        setResultCheckMyLottery(previous => [...previous, prize.name]);
+
+                        const list = [...inputList];
+                        list[index]["result"] = prize.name;
+                        setInputList(list);
+
+                        // setResultCheckMyLottery(previous => [...previous, prize.name]);
                     }
                 })
-                if(resultCheckMyLottery === []){
-                    setResultCheckMyLottery(previous => [...previous, "ไม่ถูกรางวัล"]);
-                }
+                // if (resultCheckMyLottery === []) {
+
+                //     setResultCheckMyLottery(previous => [...previous, "ไม่ถูกรางวัล"]);
+                // }
             })
             //รางวัลเลขท้าย
             RunningNumbers.map((run) => {
-                
+
             })
-            
+            if (item.result == "") {
+                const list = [...inputList];
+                list[index]["result"] = "คุณไม่ถูกรางวัล";
+                setInputList(list);
+            }
+
+
         })
-        
+
     }
 
+    useEffect(() => {
+        fetchLotteryData();
+    }, []);
 
     return (
         <div>
             {
                 loading ?
                     //success
-                    
+
                     <div className="reward-lottery">
                         <div className="container pt-lg-4 p-0">
                             <div className="card-shadow">
+
                                 <section className="header-lottery">
                                     <div>
                                         <h1>ผลสลากกินแบ่งรัฐบาล</h1>
@@ -184,7 +233,7 @@ const LotteryThailand = () => {
                                 </section>
                             </div>
                         </div>
-                        
+
                         <Modal
                             show={show}
                             onHide={() => setShow(false)}
@@ -199,30 +248,27 @@ const LotteryThailand = () => {
                                 </Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                                {/* <div className="box-check-lottery">
-                                    <p>สลากใบที่ 1</p>
-                                    <input type="text" maxLength="6" className="form-control" id="myLot1"></input>
-                                </div>
-                                
-                                <div className="box-check-lottery">
-                                    <p>สลากใบที่ 3</p>
-                                    <input type="text" maxLength="6" className="form-control" id="myLot3"></input>
-                                </div> */}
-                                {
-                                    createN()
-                                }
-                                <div className="btn-checkyourlottery">
-                                    <button type="text" onClick={function incN(){n += 1;console.log(n);}}>เพิ่มสลาก</button>
+                                {inputList.map((item, index) => {
+                                    return (
+                                        <div className="box-check-lottery" key={index}>
+                                            <p>สลากใบที่ {index + 1}</p>
+                                            <input type="text" maxLength="6" className="form-control" value={item.myLot} name="checkLottery" onChange={(e) => handleInput(index, e)} />
+                                            <span>{item.result}</span>
+                                        </div>
+                                    )
+                                })}
+                                <div className="btn-input-checklot">
+                                    <button type="button" onClick={addInput}><i class="fas fa-plus-circle"> </i> เพิ่มสลาก </button>
                                 </div>
                                 <div className="btn-checkyourlottery">
                                     <button type="text" onClick={checkyourlottery}>ตรวจสลาก</button>
                                 </div>
-                                {/* {console.log(MyLottery)} */}
+                                {/* <pre>
+                                    {JSON.stringify(inputList, null, 2)}
+                                </pre> */}
                             </Modal.Body>
                         </Modal>
                     </div>
-
-
                     :
                     //loading
                     <div className="loader">Loading...</div>
@@ -234,3 +280,24 @@ const LotteryThailand = () => {
 }
 
 export default LotteryThailand;
+
+
+{/* <div className="box-check-lottery">
+                                    <p>สลากใบที่ 1</p>
+                                    <input type="text" maxLength="6" className="form-control" id="myLot1"></input>
+                                </div>
+                                
+                                <div className="box-check-lottery">
+                                    <p>สลากใบที่ 3</p>
+                                    <input type="text" maxLength="6" className="form-control" id="myLot3"></input>
+                                </div> */}
+{/* {
+                                    createN()
+                                }
+                                <div className="">
+                                    <button type="text" onClick={function incN(){n += 1;console.log(n);}}>เพิ่มสลาก</button>
+                                </div>
+                                <div className="btn-checkyourlottery">
+                                    <button type="text" onClick={checkyourlottery}>ตรวจสลาก</button>
+                                </div> */}
+{/* {console.log(MyLottery)} */ }

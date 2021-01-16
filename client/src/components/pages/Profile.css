@@ -21,14 +21,14 @@ body {
 .img-profile {
     display: grid;
     margin: 0;
-    justify-content: end;
+    justify-content: center;
     padding: 20px;
 }
 .img-profile img {
     border: 3px solid rgb(59, 59, 59);
     border-radius: 50%;
-    width: 300px;
-    height: 300px;
+    width: 250px;
+    height: 250px;
     object-fit: cover;
     object-position: center ; 
     border: 1px solid;
@@ -40,7 +40,7 @@ body {
     padding: 5px 20px;
 }
 .profile-data{
-    margin: 5px 0;
+    margin: 3px 0;
     padding: auto 5px;
     font-size: 18px;
     font-family: 'Bai Jamjuree', sans-serif;
@@ -79,22 +79,21 @@ body {
     background-color:rgb(142, 128, 231);
 }
 .btn-change-password{
-    background-color: rgb(228, 148, 91);
-    color: white;
+    background-color: white;
+    color: rgb(27, 27, 27);
     padding: 8px 25px;
     margin: 10px 20px 10px 0;
     border: none;
-    border-radius: 5px; 
-    cursor: pointer;
     font-size: 16px;
 }
 .btn-change-password:hover{
-    background-color:rgb(243, 170, 118);
+    text-decoration: underline mediumslateblue;
+    cursor: pointer;
 }
 
 .btn-cancel-updateprofile {
     background-color: white;
-    color: rgb(36, 36, 36);
+    color: rgb(158, 146, 235);
     padding: 8px 25px;
     margin: 10px 20px 10px 0;
     border: 1px solid rgb(154, 141, 240);
@@ -104,4 +103,22 @@ body {
 }
 .btn-cancel-updateprofile:hover {
     background-color:rgb(215, 209, 255);
+}
+
+
+.upload-img-profile {
+    display: grid;
+    justify-items: center;
+}
+.upload-img-profile input {
+    justify-self: center;
+	/* width: 0.1px;
+	height: 0.1px; */
+	/* opacity: 0;
+	overflow: hidden;
+	position: absolute; */
+	/* z-index: -1; */
+}
+.upload-img-profile input::after {
+    content: "" !important;
 }

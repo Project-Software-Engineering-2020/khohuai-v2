@@ -1,10 +1,26 @@
-import React from "react"
+import React, {useState, useEffect} from "react"
 import Lottoryitem from "./LotteryItem"
 import './foryou.css';
 
 
 
 const Foryou = ()=> {
+
+    // const [data, setData] = useState([]);
+
+
+    // const FetchData = () => {
+    //     // fetch(....)
+    //     lot = [
+    //         { }]
+
+    //     setData(lot)
+    // }
+
+    // useEffect(() => {
+    //     FetchData();
+    // }, [])
+
     return (
         <div>
             <div className="recommend-header">

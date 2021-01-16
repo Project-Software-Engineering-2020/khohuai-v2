@@ -11,20 +11,17 @@
 }
 
 .btn-signup {
-  background-color: #961ff7;
+  background-color: mediumslateblue;
   color: white;
-  padding: 10px 50px;
+  padding: 12px 50px;
   border: none;
-  border-radius: 8px;
-  width: 70%;
+  border-radius: 5px;
+  width: 100%;
 }
 
 .btn-signup:hover {
-  background-color: #b574eb;
-  color: white;
-  padding: 10px 50px;
+  background-color: rgb(136, 117, 241);
   border: none;
-  border-radius: 8px;
 }
 
 .main-form {
@@ -48,7 +45,7 @@
   }
 
   .btn-signup {
-    background-color: #961ff7;
+    background-color: mediumslateblue;
     color: white;
     padding: 10px 50px;
     border: none;
@@ -57,7 +54,7 @@
   }
 
   .btn-signup:hover {
-    background-color: #b574eb;
+    background-color: mediumslateblue;
     color: white;
     padding: 10px 50px;
     border: none;

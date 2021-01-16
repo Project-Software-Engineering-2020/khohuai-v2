@@ -11,12 +11,13 @@ import SignUp from "./components/pages/SignUp";
 import Consulting from "./components/pages/Consulting";
 import Profile from "./components/pages/Profile";
 import Sign_in from "./components/pages/Sign_in";
+import LotteryDetail from "./components/pages/LottoDetail"; 
+import Error404 from './Error/Error404'
 //redux 
 import { Provider } from 'react-redux';
 // import { createStore } from 'redux';
 import store from './store/store';
 function App() {
-
   return (
     <Provider store={store}>
       <Router>
@@ -29,11 +30,12 @@ function App() {
           <Route path="/login" component={Sign_in} />
           <Route path="/signup" component={SignUp} />
           <Route path="/consulting" component={Consulting} />
+          <Route path="/product" component={ LotteryDetail } />
           <Route path="/me" component={Profile} />
+          <Route component={Error404} />
         </Switch>
       </Router>
     </Provider>
-
   );
 }
 

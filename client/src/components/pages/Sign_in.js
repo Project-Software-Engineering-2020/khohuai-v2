@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link , Redirect } from "react-router-dom";
 import {
   auth,
   firestore,
@@ -9,9 +9,12 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import "../../stylesheet/signin.css";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Sign_in = () => {
+  const stetus = useSelector(state => state.auth)
+  const stotus = stetus.status;
+  const [redirect, setredirect] = useState(null)
   const [user, setuser] = useState(null);
   const [loader, setloader] = useState(false);
   const [email, setemail] = useState("");
@@ -25,38 +28,10 @@ const Sign_in = () => {
 
   const dispatch = useDispatch();
 
-  // setloader(false);
-  // useEffect(() => {
-    
-    
-    // const fetchData = () => {setuser(dispatch({ type: 'GET_STATUS_LOGIN' }));
-    // fetchData();
-  
-    // const authUnsubscribe = auth.onAuthStateChanged((user) => {
-    //   setloader(true);
-    //   if (!!user) {
-    //     userRef.doc(user.uid).onSnapshot((doc) => {
-    //       if (doc.data()) {
-    //         const userdata = {
-    //           uid: doc.data().uid,
-    //           displayName: doc.data().displayName,
-    //           photoURL: doc.data().photoURL,
-    //           email: doc.data().email,
-    //           role: doc.data().role,
-    //         };
-    //         setuser(userdata);
-    //         setloader(false);
-    //       }
-    //     });
-    //   } else {
-    //     setuser(null);
-    //   }
-    // });
-    // return () => {
-    //   authUnsubscribe();
-    // };
-  // }, []);
-
+  useEffect(() => {
+    const stotus = stetus.status;
+    setredirect(stotus)
+  })
   const onEmaillogin = (e) => {
     e.preventDefault();
     setloader(true);
@@ -74,7 +49,7 @@ const Sign_in = () => {
   };
   const onloginwithgoogle = async () => {
     const result = await auth.signInWithPopup(googleProvider);
-    
+
     if (result) {
       const userref = firestore.collection("users").doc(result.user.uid);
       userref.get().then((doc) => {
@@ -88,13 +63,29 @@ const Sign_in = () => {
             photoURL: result.user.photoURL,
             email: result.user.email,
             role: "user",
-          }).then((res) => { 
-             console.log("เพิ่มข้อมูลแล้วเน้อ");
+            status: true
+          }).then((res) => {
+            dispatch({
+              type: 'SET_LOGIN',
+              uid: result.user.uid,
+              displayName: result.user.displayName,
+              photoURL: result.user.photoURL,
+              email: result.user.email,
+              role: "user",
+              status: true
+            });
+            console.log("เพิ่มข้อมูลแล้วเน้อ");
           });
-         
+
         } else {
           dispatch({
-            type:'SET_LOGIN', payload: doc.data()
+            type: 'SET_LOGIN', 
+            uid: doc.data().uid,
+            displayName: doc.data().displayName,
+            photoURL: doc.data().photoURL,
+            email: doc.data().email,
+            role: doc.data().role,
+            status:true
           });
           console.log("มีผู้ใช้นี้แล้ว");
 
@@ -102,51 +93,40 @@ const Sign_in = () => {
       });
     }
   };
-  const signouthandle = () => {
-    auth
-      .signOut()
-      .then(() => {
-        // dispatch({type:'SET_LOGOUT'});
-        console.log("Logout OK");
-      })
-      .catch((err) => {
-        console.log("Logout Not work" + err);
-      });
-  };
 
-  const handleChange = (e) => {
-    if (e.target.files[0]) {
-      setImage(e.target.files[0]);
-    }
-  };
+  // const handleChange = (e) => {
+  //   if (e.target.files[0]) {
+  //     setImage(e.target.files[0]);
+  //   }
+  // };
 
-  const handleUpload = () => {
-    const uploadTask = storage.ref("images/" + user.uid).put(image);
-    uploadTask.on(
-      "state_change",
-      (snapshot) => {},
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        storage
-          .ref("images")
-          .child(user.uid)
-          .getDownloadURL()
-          .then((url) => {
-            setImgUrl(url);
-            console.log(url);
-            firestore.collection("users").doc(user.uid).update({
-              photoURL: url,
-            });
-          });
-      }
-    );
-  };
+  // const handleUpload = () => {
+  //   const uploadTask = storage.ref("images/" + user.uid).put(image);
+  //   uploadTask.on(
+  //     "state_change",
+  //     (snapshot) => { },
+  //     (error) => {
+  //       console.log(error);
+  //     },
+  //     () => {
+  //       storage
+  //         .ref("images")
+  //         .child(user.uid)
+  //         .getDownloadURL()
+  //         .then((url) => {
+  //           setImgUrl(url);
+  //           console.log(url);
+  //           firestore.collection("users").doc(user.uid).update({
+  //             photoURL: url,
+  //           });
+  //         });
+  //     }
+  //   );
+  // };
 
   return (
     <div>
-      {!user ? (
+      {!redirect ? (
         <div className="signin">
           <div className="main-form">
             <form>
@@ -160,7 +140,7 @@ const Sign_in = () => {
                 <label htmlFor="username">อีเมล</label>
                 <input
                   type="email"
-                  className="form-control is-valid"
+                  className="form-control"
                   name="email"
                   value={email}
                   onChange={(e) => setemail(e.target.value)}
@@ -172,7 +152,7 @@ const Sign_in = () => {
                 <label htmlFor="password">รหัสผ่าน</label>
                 <input
                   type="password"
-                  className="form-control is-invalid"
+                  className="form-control"
                   name="password"
                   value={password}
                   onChange={(e) => setpassword(e.target.value)}
@@ -180,50 +160,36 @@ const Sign_in = () => {
                 <div className="invalid-feedback">รหัสผ่านสั้นเกินไป</div>
               </div>
 
-              <div className="row">
-                <div className="col-md-6">
-                  <button
-                    type="button"
-                    className="btn-signin my-3"
-                    onClick={onEmaillogin}
-                  >
-                    ลงชื่อเข้าใช้
-                  </button>
-                </div>
 
-                <div className="col-md-6">
-                  <button
-                    type="button"
-                    onClick={onloginwithgoogle}
-                    className="btn-google my-3"
-                  >
-                    <FontAwesomeIcon icon={faGoogle} />
+              <div className="">
+                <button
+                  type="button"
+                  className="btn-signin my-3"
+                  onClick={onEmaillogin}
+                >
+                  ลงชื่อเข้าใช้
+                  </button>
+              </div>
+
+              <div className="">
+                <button
+                  type="button"
+                  onClick={onloginwithgoogle}
+                  className="btn-google my-3"
+                >
+                  <FontAwesomeIcon icon={faGoogle} />
                     &nbsp;&nbsp;ล็อคอินด้วยกูเกิ้ล
                   </button>
-                </div>
-              
               </div>
+
+              <Link to="/signup">สร้างบัญชีผู้ใช้</Link>
+
             </form>
           </div>
         </div>
       ) : (
-        <div className="col-4 mx-auto card">
-          <div className="card-body">
-            <div>name:{user.firstname}</div>
-            <div>email:{user.email}</div>
-            <img src={user.photoURL} width="100" height="100"></img>
-            <div>
-              <p>เปลี่ยนรูปโปรไฟล์</p>
-              <input type="file" onChange={handleChange} />
-              <button onClick={handleUpload}>Upload</button>
-            </div>
-            <div>
-              <button onClick={signouthandle}>Logout</button>
-            </div>
-            <div></div>
-          </div>
-        </div>
-      )}
+        <Redirect to='/'></Redirect>
+        )}
     </div>
   );
 }

@@ -546,23 +546,41 @@
 
   .box-check-lottery {
     display: grid;
-    grid-template-columns: 40% 50% 10%;
+    grid-template-columns: 25% 30% 45%;
     align-items: center;
-    justify-items: center;
+    justify-items: left;
     margin: 10px 0;
+    padding: 5px 20px;
+  }
+  .box-check-lottery input {
+    font-size: 18px;
+    font-family: sans-serif;
   }
   .box-check-lottery p
   {
     margin: 10px;
-    font-size: 20px;
+    font-size: 18px;
   }
-  .btn-checkyourlottery {
-    padding: 0 25px;
-    margin: 10px 20px 35px 20px;
+  .box-check-lottery span {
+    padding: 5px 10px;
+    font-size: 16px;
+    font-weight: bold;
   }
+
+  .btn-input-checklot button {
+    font-size: 16px;
+    background-color: white;
+    padding: 10px 20px;
+    color: rgb(133, 133, 133);
+    width: 100%;
+    border: none;
+    margin: 5px auto;
+  }
+
   .btn-checkyourlottery button {
     background-color: mediumslateblue;
     padding: 10px 20px;
+    margin: 5px auto;
     border-radius: 7px;
     color: white;
     width: 100%;
@@ -574,4 +592,20 @@
     background-color:  rgb(135, 116, 241);
     transition: 1ms ease-in-out;
     cursor: pointer;
+  }
+
+
+  @media screen and (max-width: 900px) {
+    .box-check-lottery 
+    {
+      padding: 5px 0;
+      margin: 2px 0;
+      grid-template-columns: 25% 23% 52%;
+    }
+    .box-check-lottery p {
+      margin: 10px 2px;
+    }
+    .box-check-lottery span {
+      margin: 0;
+    }
   }

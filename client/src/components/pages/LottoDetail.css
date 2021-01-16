@@ -1,0 +1,17 @@
+.lottery-detail-page {
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid whitesmoke;
+    box-shadow: 0px 7px 7px 4px rgba(206, 206, 206, 0.397);
+    margin: 30px auto;
+    padding: 60px;
+}
+.lottery-show {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+}
+
+.lottery-near-number {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+}
