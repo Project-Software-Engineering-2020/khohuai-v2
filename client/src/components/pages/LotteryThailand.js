@@ -25,7 +25,7 @@ const LotteryThailand = () => {
     const initialInputList = [
         {
             myLot: "",
-            result: ""
+            result: []
         }
 
     ];
@@ -45,7 +45,7 @@ const LotteryThailand = () => {
         else {
             const inputState = {
                 myLot: "",
-                result: ""
+                result: []
             }
             setInputList((perv) => [...perv, inputState]);
         }
@@ -86,26 +86,17 @@ const LotteryThailand = () => {
     // }
 
     const checkyourlottery = async () => {
-        // var myLottery = [];
-        // for (var i = 1; i <= n; i++) {
-        //     myLottery.push(document.getElementById("myLot" + i).value);
-        // };
-        // setResultCheckMyLottery([]);
+        setInputList(initialInputList);
         inputList.map((item, index) => {
-
             const list = [...inputList];
-            list[index]["result"] = "";
+            list[index]["result"] = [];
             setInputList(list);
-
-
             //รางวัลที่ 1 ถึง 5
             Prizes.map((prize) => {
                 prize.number.map((number) => {
                     if (number === item.myLot) {
-                        console.log("คุณถูกรางวัล  " + prize.name);
-
                         const list = [...inputList];
-                        list[index]["result"] = prize.name;
+                        list[index]["result"].push(prize.name);
                         setInputList(list);
 
                         // setResultCheckMyLottery(previous => [...previous, prize.name]);
@@ -116,11 +107,40 @@ const LotteryThailand = () => {
                 //     setResultCheckMyLottery(previous => [...previous, "ไม่ถูกรางวัล"]);
                 // }
             })
-            //รางวัลเลขท้าย
+
+            var myLot = parseInt(item.myLot);
+            var my3FirstLot = parseInt(myLot / 1000);
+            my3FirstLot = my3FirstLot.toString();
+            var my3LastLot = myLot % 1000;
+            my3LastLot = my3LastLot.toString();
+            var my2LastLot = myLot % 100;
+            my2LastLot = my2LastLot.toString();
+
             RunningNumbers.map((run) => {
+                
+                run.number.map((number) => {
+                    //รางวัลเลขหน้า 3 ตัว
+                    if(number === my3FirstLot && run.name === "รางวัลเลขหน้า 3 ตัว"){
+                        const list = [...inputList];
+                        list[index]["result"].push(run.name);
+                        setInputList(list);
+                    }
+                    //รางวัลเลขท้าย 3 ตัว
+                    if(number === my3LastLot && run.name === "รางวัลเลขท้าย 3 ตัว"){
+                        const list = [...inputList];
+                        list[index]["result"].push(run.name);
+                        setInputList(list);
+                    }
+                    //รางวัลเลขท้าย 2 ตัว
+                    if(number === my2LastLot && run.name === "รางวัลเลขท้าย 2 ตัว"){
+                        const list = [...inputList];
+                        list[index]["result"].push(run.name);
+                        setInputList(list);
+                    }
+                })
 
             })
-            if (item.result == "") {
+            if (item.result == []) {
                 const list = [...inputList];
                 list[index]["result"] = "คุณไม่ถูกรางวัล";
                 setInputList(list);
