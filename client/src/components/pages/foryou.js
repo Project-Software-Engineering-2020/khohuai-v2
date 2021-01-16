@@ -10,11 +10,10 @@ const Foryou = ()=> {
 
 
     // const FetchData = () => {
-    //     // fetch(....)
-    //     lot = [
-    //         { }]
+    //     // lot = [
+    //     //     { }]
 
-    //     setData(lot)
+    //     // setData(lot)
     // }
 
     // useEffect(() => {

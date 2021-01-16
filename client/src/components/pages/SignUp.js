@@ -2,9 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, Redirect } from "react-router-dom";
 import "../../stylesheet/signup.css";
 import { auth, firestore, googleProvider } from "../../firebase/firebase";
-import { useDispatch } from 'react-redux'
-import { useSelector } from 'react-redux'
-
+import { useDispatch, useSelector } from 'react-redux';
 const SignUp = () => {
   const stetus = useSelector(state => state.auth)
   const stotus = stetus.status;
@@ -25,6 +23,8 @@ const SignUp = () => {
   const [passwordErr, setPasswordErr] = useState({});
   const [confirmpasswordErr, setConfirmpasswordErr] = useState({});
   const [phoneErr, setPhoneErr] = useState({});
+
+  const [isvalid, setvalid] = useState(false);
 
   const formValidation = () => {
     const firstnameErr = {};
@@ -67,7 +67,7 @@ const SignUp = () => {
         /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
       );
       if (!pattern.test(email)) {
-        emailErr.invalidEmail = "กรุณากรอก invalid email";
+        emailErr.invalidEmail = "กรุณากรอกอีเมลล์ให้ถูกต้อง";
         isValid = false;
       }
     }
@@ -105,6 +105,7 @@ const SignUp = () => {
     setPasswordErr(passwordErr);
     setConfirmpasswordErr(confirmpasswordErr);
     setPhoneErr(phoneErr);
+    setvalid(isValid);
   };
 
 
@@ -162,50 +163,75 @@ const SignUp = () => {
     setConfirmpasswordErr(confirmpasswordErr);
   }
 
+  const validatePhone = (value) => {
+
+    const phone = value;
+    const phoneErr = {};
+
+    if (!phone) {
+      phoneErr.noPhone = "กรุณากรอกเบอร์โทรศัพท์";
+    } 
+    else if (typeof phone !== "undefined") {
+      var phonepattern = new RegExp(/^(?=.*[0-9])/i);
+      if (!phonepattern.test(phone)) {
+        phoneErr.inputnumber = "กรุณากรอกเป็นตัวเลข";
+      } else if (phone.length != 10) {
+        phoneErr.tennumber = "กรุณากรอกหมายเลขโทรศัพท์ 10 หลัก";
+      }
+    }
+
+  }
+
 
   const [loading, setloading] = useState(false);
 
-  const onEmailSignUpSubmit = (e) => {
+  const onEmailSignUpSubmit = async (e) => {
     e.preventDefault();
-    const isValid = formValidation();
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then(async (result) => {
-        console.log(result);
-        console.log("ลงทะเบียนเรียบร้อยแล้ว");
-        if (!!result) {
-          {
-            const userRef = firestore.collection("users").doc(result.user.uid);
-            const doc = await userRef.get();
-            if (!doc.data()) {
-              await userRef.set({
-                uid: result.user.uid,
-                displayName: "",
-                firstname: firstname,
-                lastname: lastname,
-                phone: phone,
-                photoURL: "https://scontent.fbkk5-7.fna.fbcdn.net/v/t31.0-8/966951_524915017575552_106824054_o.jpg?_nc_cat=108&ccb=2&_nc_sid=85a577&_nc_eui2=AeFFSb20QuKJw_3rSQCzle35lpkMdvSOJPyWmQx29I4k_C-gQIIz9ZFeq_H3AiOx7n4HJOLxygWY3U8WwWq02M7t&_nc_ohc=rrWdNtW_THMAX8MzUyf&_nc_ht=scontent.fbkk5-7.fna&oh=4dd10a01a31f14dc4aca9b7da446d008&oe=60264591",
-                email: result.user.email,
-                role: "user",
-                status: true,
-              }).then((res) => {
-                dispatch({
-                  type: 'SET_LOGIN',
+    await formValidation();
+    console.log(isvalid);
+    if (isvalid == true) {
+      auth
+        .createUserWithEmailAndPassword(email, password)
+        .then(async (result) => {
+          console.log(result);
+          console.log("ลงทะเบียนเรียบร้อยแล้ว");
+          if (!!result) {
+            {
+              const userRef = firestore.collection("users").doc(result.user.uid);
+              const doc = await userRef.get();
+              if (!doc.data()) {
+                await userRef.set({
                   uid: result.user.uid,
-                  displayName: result.user.displayName,
-                  photoURL: result.user.photoURL,
+                  displayName: "",
+                  firstname: firstname,
+                  lastname: lastname,
+                  phone: phone,
+                  photoURL: "https://scontent.fbkk5-7.fna.fbcdn.net/v/t31.0-8/966951_524915017575552_106824054_o.jpg?_nc_cat=108&ccb=2&_nc_sid=85a577&_nc_eui2=AeFFSb20QuKJw_3rSQCzle35lpkMdvSOJPyWmQx29I4k_C-gQIIz9ZFeq_H3AiOx7n4HJOLxygWY3U8WwWq02M7t&_nc_ohc=rrWdNtW_THMAX8MzUyf&_nc_ht=scontent.fbkk5-7.fna&oh=4dd10a01a31f14dc4aca9b7da446d008&oe=60264591",
                   email: result.user.email,
                   role: "user",
-                  status: true
-                })
-              });
+                  status: true,
+                }).then((res) => {
+                  dispatch({
+                    type: 'SET_LOGIN',
+                    uid: result.user.uid,
+                    displayName: result.user.displayName,
+                    photoURL: result.user.photoURL,
+                    email: result.user.email,
+                    role: "user",
+                    status: true
+                  })
+                });
+              }
             }
           }
-        }
-      })
-      .catch((err) => {
-        console.log("Register ไม่ผ่าน");
-      });
+        })
+        .catch((err) => {
+          console.log("Register ไม่ผ่าน");
+        });
+    }
+    else {
+      console.log("ข้อมูลไม่ตรบ")
+    }
   };
 
   useEffect(() => {
@@ -244,7 +270,11 @@ const SignUp = () => {
                           onChange={(e) => {
                             setFirstname(e.target.value);
                           }}
-                          className="form-control"
+                          className={
+                            firstnameErr.noFirstname ?
+                              "form-control is-invalid"
+                              :
+                              "form-control"}
                           placeholder="กรอกชื่อ"
                           id="name"
                         />
@@ -256,7 +286,7 @@ const SignUp = () => {
                         })}
                       </div>
                     </div>
-
+                  
                     <div className="col-md-6">
                       <div className="form-group">
                         <label htmlFor="lastname">นามสกุล:</label>
@@ -267,7 +297,11 @@ const SignUp = () => {
                           onChange={(e) => {
                             setLastname(e.target.value);
                           }}
-                          className="form-control"
+                          className={
+                            lastnameErr.noLastname ?
+                              "form-control is-invalid"
+                              :
+                              "form-control"}
                           placeholder="กรอกนามสกุล"
                           id="lastname"
                         />
@@ -281,8 +315,6 @@ const SignUp = () => {
                     </div>
                   </div>
 
-
-
                   <div className="form-group">
                     <label htmlFor="email">อีเมล:</label>
                     <input
@@ -294,7 +326,7 @@ const SignUp = () => {
                         setEmail(e.target.value);
                       }}
                       className={
-                        emailErr.invalidEmail ?
+                        emailErr.noEmail || emailErr.invalidEmail ?
                           "form-control is-invalid"
                           :
                           "form-control"}
@@ -305,6 +337,30 @@ const SignUp = () => {
                     {Object.keys(emailErr).map((key) => {
                       return <div className="text-danger">{emailErr[key]}</div>;
                     })}
+                  </div>
+
+                  <div className="form-group">
+                      <label htmlFor="phone">เบอร์โทรศัพท์:</label>
+                      <input
+                        type="numeric"
+                        name="phone"
+                        value={phone}
+                        onChange={(e) => {
+                          setPhone(e.target.value);
+                          validatePhone(e.target.value);
+                        }}
+                        className={
+                          phoneErr.noPhone || phoneErr.inputnumber || phoneErr.tennumber ?
+                            "form-control is-invalid"
+                            :
+                            "form-control"}
+                        placeholder="กรอกเบอร์โทรศัพท์"
+                        id="phone"
+                      />
+
+                      {Object.keys(phoneErr).map((key) => {
+                        return <div className="text-danger">{phoneErr[key]}</div>;
+                      })}
                   </div>
 
                   <div className="form-group">
@@ -341,7 +397,7 @@ const SignUp = () => {
                         setConfirmpassword(e.target.value);
                       }}
 
-                      className={confirmpasswordErr.dontMatch ? "form-control is-invalid" : "form-control"}
+                      className={confirmpasswordErr.dontMatch || confirmpasswordErr.noConfirmpassword ? "form-control is-invalid" : "form-control"}
                       placeholder="ยืนยันรหัสผ่าน"
                       id="confirm_password"
                     />
@@ -350,28 +406,6 @@ const SignUp = () => {
                         <div className="text-danger">{confirmpasswordErr[key]}</div>
                       );
                     })}
-
-
-                    <div className="form-group">
-                      <label htmlFor="phone">เบอร์โทรศัพท์:</label>
-                      <input
-                        type="numeric"
-                        name="phone"
-                        value={phone}
-                        onChange={(e) => {
-                          setPhone(e.target.value);
-                        }}
-                        className="form-control"
-                        placeholder="กรอกเบอร์โทรศัพท์"
-                        id="phone"
-                      />
-
-                      {Object.keys(phoneErr).map((key) => {
-                        return <div className="text-danger">{phoneErr[key]}</div>;
-                      })}
-                    </div>
-
-
                   </div>
 
                   <div className="d-flex justify-content-center">

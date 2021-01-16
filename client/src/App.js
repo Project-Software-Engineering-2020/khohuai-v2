@@ -12,6 +12,7 @@ import Consulting from "./components/pages/Consulting";
 import Profile from "./components/pages/Profile";
 import Sign_in from "./components/pages/Sign_in";
 import LotteryDetail from "./components/pages/LottoDetail"; 
+import UploadLottery from './components/pages/insertLottery'
 import Error404 from './Error/Error404'
 //redux 
 import { Provider } from 'react-redux';
@@ -30,8 +31,9 @@ function App() {
           <Route path="/login" component={Sign_in} />
           <Route path="/signup" component={SignUp} />
           <Route path="/consulting" component={Consulting} />
-          <Route path="/product" component={ LotteryDetail } />
+          <Route path="/product/:id" component={ LotteryDetail } />
           <Route path="/me" component={Profile} />
+          <Route path="/upload" component={UploadLottery} />
           <Route component={Error404} />
         </Switch>
       </Router>

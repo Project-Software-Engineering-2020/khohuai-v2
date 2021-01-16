@@ -8,10 +8,13 @@ const LotteryItem = (props) => {
 
     }
 
-    return ( 
+    return (
         <div className="lottery-item">
+
             <figure className="lottery-item-image">
-                <img src="./images/lottery-demo1.jpg"></img>
+                <a href="/product/">
+                    <img src="./images/lottery-demo1.jpg"></img>
+                </a>
             </figure>
             <button onChange={addtoCart} className="add-to-cart"><i className="fas fa-cart-plus"> </i> เพิ่มลงในตะกร้า</button>
         </div>

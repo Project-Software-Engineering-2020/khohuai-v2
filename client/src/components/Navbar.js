@@ -85,13 +85,13 @@ function Navbar() {
             >
               ลงชื่อเข้าใช้
             </Link>
+
           </li>
+          <il>
+            {/* <ButtonLogin className="btn-login nav-links-mobile" /> */}
+          </il>
         </ul>
-        {/* ถ้ายังไม่ login */}
         <ButtonLogin className="btn-login" />
-
-        {/* <ButtonUser /> */}
-
       </nav>
     </div>
   );
