@@ -27,7 +27,7 @@
 .btn-user-menu {
   text-align: right;
   position: relative;
-  width: 100%;
+  width: auto;
   padding: 8px 12px;
   border-radius: 7px;
   outline: none;

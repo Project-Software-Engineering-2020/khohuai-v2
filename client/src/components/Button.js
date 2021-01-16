@@ -35,7 +35,7 @@ export default function Button() {
       <span>
         <img src={stetus.photoURL} className="img-profile-nav"/>
       </span>
-      <span> HiChon <i class="fas fa-angle-down"></i> </span>
+      <span>&nbsp;{stetus.displayName} <i class="fas fa-angle-down" ></i> </span>
       
     </a>
   ));
