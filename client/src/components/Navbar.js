@@ -5,9 +5,13 @@ import { Link } from 'react-router-dom';
 import './Navbar.css';
 import Dropdown from './Dropdown';
 import logo from '.././khohuai.png'
-
+import { useSelector } from 'react-redux';
 
 function Navbar() {
+
+  const stetus = useSelector(state => state.auth)
+  const stotus = stetus.status;
+
   const [click, setClick] = useState(false);
   const [dropdown, setDropdown] = useState(false);
 
@@ -77,21 +81,27 @@ function Navbar() {
               <i className="fas fa-gamepad" /> เล่นเกม
             </Link>
           </li>
-          <li>
-            <Link
+          <li className="nav-user">
+            {!stotus? (
+              <Link
               to='/login'
               className='nav-links-mobile'
               onClick={closeMobileMenu}
             >
               ลงชื่อเข้าใช้
             </Link>
+            ):(
+              <ButtonLogin className="btn-login" />
+            )}
+            
 
           </li>
-          <il>
-            {/* <ButtonLogin className="btn-login nav-links-mobile" /> */}
-          </il>
+          
         </ul>
-        <ButtonLogin className="btn-login" />
+        
+            {/* <ButtonLogin className="btn-login nav-links-mobile" /> */}
+        
+        {/* <ButtonLogin className="btn-login" /> */}
       </nav>
     </div>
   );

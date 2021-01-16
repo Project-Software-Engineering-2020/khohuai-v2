@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from "react"
+import React, { useState, useEffect } from "react"
 import Lottoryitem from "./LotteryItem"
 import './foryou.css';
 import Axios from "axios";
 
-const Foryou = ()=> {
+const Foryou = () => {
 
     const [data, setData] = useState();
     const [loading, setloading] = useState(false);
@@ -26,23 +26,24 @@ const Foryou = ()=> {
         <div>
             <div className="recommend-header">
                 <span>แนะนำสำหรับคุณ </span>
-                
-            </div>
-            {loading ? 
-            <div className="recommend-body">
-
-                {data.map((item,index) => {
-                    return (
-                        <Lottoryitem key={index} photo={item.photoURL} id={item.id}></Lottoryitem>
-                    )
-                    
-                })}
 
             </div>
-            :
-            <div className="loader">Loading...</div>
+            {loading ?
+                <div className="recommend-body">
+                    {data.map((item, index) => {
+                        if (index < 4) {
+                            return (
+                                <Lottoryitem key={index} photo={item.photoURL} id={item.id}></Lottoryitem>
+                            )
+                        }
+
+                    })}
+
+                </div>
+                :
+                <div className="loader">Loading...</div>
             }
-            
+
         </div>
 
     )

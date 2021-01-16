@@ -15,7 +15,7 @@ const LotteryItem = (props) => {
     return (
         <div className="lottery-item">
             <figure className="lottery-item-image">
-                <a href="/product/">
+                <a href={"/product/"+ props.id} >
                     <img src={ props.photo }></img>
                 </a>
             </figure>

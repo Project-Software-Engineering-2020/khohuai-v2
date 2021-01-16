@@ -37,6 +37,7 @@ const LotteryThailand = () => {
     }
 
     const [inputList, setInputList] = useState(initialInputList);
+    const [inputErr, setInputErr] = useState("");
 
     const addInput = (event) => {
         if (inputList.length > 4) {
@@ -86,68 +87,91 @@ const LotteryThailand = () => {
     // }
 
     const checkyourlottery = async () => {
-        setInputList(initialInputList);
-        inputList.map((item, index) => {
+
+        let err = false;
+
+        setInputErr("");
+
+        await inputList.map((item, i) => {
+
             const list = [...inputList];
-            list[index]["result"] = [];
-            setInputList(list);
-            //รางวัลที่ 1 ถึง 5
-            Prizes.map((prize) => {
-                prize.number.map((number) => {
-                    if (number === item.myLot) {
-                        const list = [...inputList];
-                        list[index]["result"].push(prize.name);
-                        setInputList(list);
+                list[i]["result"] = [];
 
-                        // setResultCheckMyLottery(previous => [...previous, prize.name]);
-                    }
-                })
-                // if (resultCheckMyLottery === []) {
-
-                //     setResultCheckMyLottery(previous => [...previous, "ไม่ถูกรางวัล"]);
-                // }
-            })
-
-            var myLot = parseInt(item.myLot);
-            var my3FirstLot = parseInt(myLot / 1000);
-            my3FirstLot = my3FirstLot.toString();
-            var my3LastLot = myLot % 1000;
-            my3LastLot = my3LastLot.toString();
-            var my2LastLot = myLot % 100;
-            my2LastLot = my2LastLot.toString();
-
-            RunningNumbers.map((run) => {
-                
-                run.number.map((number) => {
-                    //รางวัลเลขหน้า 3 ตัว
-                    if(number === my3FirstLot && run.name === "รางวัลเลขหน้า 3 ตัว"){
-                        const list = [...inputList];
-                        list[index]["result"].push(run.name);
-                        setInputList(list);
-                    }
-                    //รางวัลเลขท้าย 3 ตัว
-                    if(number === my3LastLot && run.name === "รางวัลเลขท้าย 3 ตัว"){
-                        const list = [...inputList];
-                        list[index]["result"].push(run.name);
-                        setInputList(list);
-                    }
-                    //รางวัลเลขท้าย 2 ตัว
-                    if(number === my2LastLot && run.name === "รางวัลเลขท้าย 2 ตัว"){
-                        const list = [...inputList];
-                        list[index]["result"].push(run.name);
-                        setInputList(list);
-                    }
-                })
-
-            })
-            if (item.result == []) {
-                const list = [...inputList];
-                list[index]["result"] = "คุณไม่ถูกรางวัล";
-                setInputList(list);
+            if (item.myLot.length != 6) {
+                setInputErr("กรุณากรอกเลขสลากให้ครบ 6 หลัก")
+                err = true;
             }
-
-
+            else return;
         })
+
+        if (err == true) {
+            return
+        }
+        else {
+            setInputList(initialInputList);
+            inputList.map((item, index) => {
+                
+                // setInputList(list);
+                //รางวัลที่ 1 ถึง 5
+                Prizes.map((prize) => {
+                    prize.number.map((number) => {
+                        if (number === item.myLot) {
+                            const list = [...inputList];
+                            list[index]["result"].push(prize.name);
+                            setInputList(list);
+
+                            // setResultCheckMyLottery(previous => [...previous, prize.name]);
+                        }
+                    })
+                    // if (resultCheckMyLottery === []) {
+
+                    //     setResultCheckMyLottery(previous => [...previous, "ไม่ถูกรางวัล"]);
+                    // }
+                })
+
+                var myLot = parseInt(item.myLot);
+                var my3FirstLot = parseInt(myLot / 1000);
+                my3FirstLot = my3FirstLot.toString();
+                var my3LastLot = myLot % 1000;
+                my3LastLot = my3LastLot.toString();
+                var my2LastLot = myLot % 100;
+                my2LastLot = my2LastLot.toString();
+
+                RunningNumbers.map((run) => {
+
+                    run.number.map((number) => {
+                        //รางวัลเลขหน้า 3 ตัว
+                        if (number === my3FirstLot && run.name === "รางวัลเลขหน้า 3 ตัว") {
+                            const list = [...inputList];
+                            list[index]["result"].push(run.name);
+                            setInputList(list);
+                        }
+                        //รางวัลเลขท้าย 3 ตัว
+                        if (number === my3LastLot && run.name === "รางวัลเลขท้าย 3 ตัว") {
+                            const list = [...inputList];
+                            list[index]["result"].push(run.name);
+                            setInputList(list);
+                        }
+                        //รางวัลเลขท้าย 2 ตัว
+                        if (number === my2LastLot && run.name === "รางวัลเลขท้าย 2 ตัว") {
+                            const list = [...inputList];
+                            list[index]["result"].push(run.name);
+                            setInputList(list);
+                        }
+                    })
+
+                })
+                if (item.result.length == 0) {
+                    console.log("ไม่ถูกรางวัล")
+                    const list = [...inputList];
+                    list[index]["result"].push("ไม่ถูกรางวัล");
+                    setInputList(list);
+                }
+
+
+            })
+        }
+
 
     }
 
@@ -274,6 +298,12 @@ const LotteryThailand = () => {
                                 </Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
+
+                                {inputErr != "" ?
+                                    <div className="alert alert-danger">{inputErr}</div>
+                                    :
+                                    null
+                                }
                                 {inputList.map((item, index) => {
                                     return (
                                         <div className="box-check-lottery" key={index}>
