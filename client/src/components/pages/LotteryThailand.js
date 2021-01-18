@@ -102,29 +102,27 @@ const LotteryThailand = () => {
 
                 var myLot = parseInt(item.myLot);
                 var my3FirstLot = parseInt(myLot / 1000);
-                my3FirstLot = my3FirstLot.toString();
                 var my3LastLot = myLot % 1000;
-                my3LastLot = my3LastLot.toString();
                 var my2LastLot = myLot % 100;
-                my2LastLot = my2LastLot.toString();
 
                 RunningNumbers.map((run) => {
 
                     run.number.map((number) => {
+                        var numberInt = parseInt(number);
                         //รางวัลเลขหน้า 3 ตัว
-                        if (number === my3FirstLot && run.name === "รางวัลเลขหน้า 3 ตัว") {
+                        if (numberInt === my3FirstLot && run.name === "รางวัลเลขหน้า 3 ตัว") {
                             const list = [...inputList];
                             list[index]["result"].push("ถูก" + run.name);
                             setInputList(list);
                         }
                         //รางวัลเลขท้าย 3 ตัว
-                        if (number === my3LastLot && run.name === "รางวัลเลขท้าย 3 ตัว") {
+                        if (numberInt === my3LastLot && run.name === "รางวัลเลขท้าย 3 ตัว") {
                             const list = [...inputList];
                             list[index]["result"].push("ถูก" + run.name);
                             setInputList(list);
                         }
                         //รางวัลเลขท้าย 2 ตัว
-                        if (number === my2LastLot && run.name === "รางวัลเลขท้าย 2 ตัว") {
+                        if (numberInt === my2LastLot && run.name === "รางวัลเลขท้าย 2 ตัว") {
                             const list = [...inputList];
                             list[index]["result"].push("ถูก" + run.name);
                             setInputList(list);
