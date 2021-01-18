@@ -12,7 +12,6 @@
     padding: 30px 20px;
     background-color: rgb(240, 185, 203);
     border-radius: 3px;
-    
 }
 .header-shop-img {
     text-align: center;
@@ -28,7 +27,7 @@
 }
 .lottery-shop {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(4,1fr);
 }
 .section-search{
     display: grid;

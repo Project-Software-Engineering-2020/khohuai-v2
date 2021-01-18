@@ -1,9 +1,11 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Navbar from "./components/Navbar";
 import "./App.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+//page
+import Navbar from "./components/Navbar";
 import Home from "./components/pages/Home";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import Shop from "./components/pages/shop";
 import LotteryThailand from "./components/pages/LotteryThailand";
 import Game from "./components/pages/Game";
@@ -14,10 +16,13 @@ import Sign_in from "./components/pages/Sign_in";
 import LotteryDetail from "./components/pages/LottoDetail"; 
 import UploadLottery from './components/pages/insertLottery'
 import Error404 from './Error/Error404'
+import UpdatePassword from './components/pages/Updatepassword';
+import ForgotPassword from './components/pages/Forgotpassword'; 
+
 //redux 
 import { Provider } from 'react-redux';
-// import { createStore } from 'redux';
 import store from './store/store';
+
 function App() {
   return (
     <Provider store={store}>
@@ -34,6 +39,8 @@ function App() {
           <Route path="/product/:id" component={ LotteryDetail } />
           <Route path="/me" component={Profile} />
           <Route path="/upload" component={UploadLottery} />
+          <Route path="/updatepassword" component={UpdatePassword} />
+          <Route path="/forgotpassword" component={ForgotPassword} />
           <Route component={Error404} />
         </Switch>
       </Router>

@@ -9,7 +9,7 @@ body {
     border: 1px solid rgba(240, 240, 240, 0.397);
     box-shadow: 0px 5px 5px 5px rgba(228, 228, 228, 0.397);
 }
-.bg-profile div h2 {
+.bg-profile div h3 {
     text-align: center;
     margin: 10px;
 }
@@ -121,4 +121,65 @@ body {
 }
 .upload-img-profile input::after {
     content: "" !important;
+}
+
+
+@media screen and (max-width: 1000px) {
+    .profile-page {
+        margin: 0 auto;
+        padding: 5px auto;
+    }
+    .profile-page h3 {
+        font-size: 26px;
+    }
+    .my-profile {
+        /* grid-template-columns: 1fr; */
+        margin: 10px;
+    }
+    .img-profile {
+        padding: 5px;
+    }
+    .img-profile img {
+        width: 200px;
+        height: 200px;
+    } 
+    .information-profile {
+        padding: 10px;
+        margin: 10px;
+    }
+    .profile-data {
+        font-size: 15px;
+        grid-template-columns: 78px 1fr;
+        height: 50px;
+    }
+    .profile-data label {
+        text-align: right;
+        margin: auto 2px;
+    }
+    .profile-data input {
+        font-size: 15px;
+        margin: auto 0px;
+    }
+    .btn-edit-profile {
+        padding: 9px 25px;
+        margin: 10px 0;
+        font-size: 14px;
+    }
+    .btn-change-password{
+        padding: 8px 20px;
+        margin: 10px 20px 10px 0;
+        font-size: 14px;
+    }
+    .btn-cancel-updateprofile {
+        padding: 8px 18px;
+        margin: 10px 0px 10px 10px;
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .my-profile {
+        grid-template-columns: 1fr;
+        margin: 10px;
+    }
 }

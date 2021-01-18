@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect} from 'react';
 import { Redirect } from 'react-router-dom';
 import './Button.css';
 import { Link } from 'react-router-dom';
-import { FormControl, DropdownButton, Dropdown } from 'react-bootstrap'
+import { Dropdown } from 'react-bootstrap'
 import {
   auth,
-  firestore
 } from "../firebase/firebase";
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -14,17 +13,19 @@ import { useSelector, useDispatch } from 'react-redux';
 
 export default function Button() {
   const dispatch = useDispatch();
-  const [user, setuser] = useState(false)
-  const userRef = useRef(firestore.collection("users")).current;
 
   const stetus = useSelector(state => state.auth)
   const stotus = stetus.status;
 
 
+  // const userRef = useRef(firestore.collection("users")).current;
+  const [user, setuser] = useState(false)
+
+
   // The forwardRef is important!!
   // Dropdown needs access to the DOM node in order to position the Menu
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-    <a
+    <span
       ref={ref}
       onClick={(e) => {
         e.preventDefault();
@@ -32,12 +33,13 @@ export default function Button() {
       }}
     >
       {children}
-      <span>
-        <img src={stetus.photoURL} className="img-profile-nav"/>
-      </span>
-      <span>&nbsp;{stetus.displayName} <i class="fas fa-angle-down" ></i> </span>
       
-    </a>
+      <span>
+        <img src={stetus.photoURL} className="img-profile-nav" alt="" />
+      </span>
+      <span>&nbsp;{stetus.displayName} <i className="fas fa-angle-down" ></i> </span>
+
+    </span>
   ));
 
   // forwardRef again here!
@@ -64,18 +66,10 @@ export default function Button() {
     },
   );
 
-  useEffect(() => {
-    // auth.onAuthStateChanged((user) => {
-    //   if (!!user) {
-    //     userRef.doc(user.uid).onSnapshot((doc) => {
-    //       setuser(true);
-    //     });
-    //   } else {
-    //     setuser(false);
-    //   }
-    // });
+  useEffect( () => {
     setuser(stotus);
-  }, [stotus]);
+  }, [stetus]);
+  
   const signouthandle = () => {
     auth.signOut().then(() => {
       console.log("Logout OK");
@@ -89,20 +83,19 @@ export default function Button() {
   return (
     <div>
       {user ? (
-        <Dropdown className="btn-user-menu">
+        <Dropdown className="btn-user-menu" >
           <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components" />
           <Dropdown.Menu as={CustomMenu}>
-            <Dropdown.Item eventKey="1" href="/me"><i class="fas fa-user"></i> ข้อมูลส่วนตัว</Dropdown.Item>
-            {/* <Dropdown.Divider /> */}
-            <Dropdown.Item eventKey="2" onClick={signouthandle}><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</Dropdown.Item>
+            <Dropdown.Item eventKey="1" href="/me"><i className="fas fa-user"></i> ข้อมูลส่วนตัว</Dropdown.Item>
+            <Dropdown.Item eventKey="2" onClick={signouthandle}><i className="fas fa-sign-out-alt"></i> ออกจากระบบ</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       ) : (
-          <div>
+          
             <Link to='/login'>
               <button className='signup-btn'>ลงชื่อเข้าใช้</button>
             </Link>
-          </div>
+          
         )
       }
     </div >

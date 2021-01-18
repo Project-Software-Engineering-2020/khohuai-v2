@@ -1,5 +1,5 @@
 .signup-btn {
-  width: 92%;
+  width: 100%;
   padding: 10px 20px;
   border-radius: 37px;
   outline: none;
@@ -26,10 +26,13 @@
 
 .btn-user-menu {
   text-align: right;
+  /* justify-self: end; */
   position: relative;
   width: auto;
   padding: 8px 12px;
+  margin-right: 0;
   border-radius: 7px;
+  right: 0;
   outline: none;
   border: none;
   font-size: 18px;

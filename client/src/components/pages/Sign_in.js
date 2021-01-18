@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { Link , Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import {
   auth,
   firestore,
   googleProvider,
-  storage,
 } from "../../firebase/firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
@@ -13,17 +12,21 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const Sign_in = () => {
   const stetus = useSelector(state => state.auth)
-  const stotus = stetus.status;
+  // const stotus = stetus.status;
   const [redirect, setredirect] = useState(null)
-  const [user, setuser] = useState(null);
-  const [loader, setloader] = useState(false);
+  // const [user, setuser] = useState(null);
+  // const [loader, setloader] = useState(false);
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
-  const userRef = useRef(firestore.collection("users")).current;
-  const [image, setImage] = useState(null);
-  const [imgUrl, setImgUrl] = useState("");
 
-  const element = <FontAwesomeIcon icon={faGoogle} />;
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordErr] = useState("");
+  const [UserError, setUserErr] = useState("");
+  // const userRef = useRef(firestore.collection("users")).current;
+  // const [image, setImage] = useState(null);
+  // const [imgUrl, setImgUrl] = useState("");
+
+  // const element = <FontAwesomeIcon icon={faGoogle} />;
 
 
   const dispatch = useDispatch();
@@ -31,22 +34,52 @@ const Sign_in = () => {
   useEffect(() => {
     const stotus = stetus.status;
     setredirect(stotus)
-  })
-  const onEmaillogin = (e) => {
+  }, [stetus])
+
+  function onEmaillogin(e) {
+
+    setEmailError("");
+    setPasswordErr("")
+    setUserErr("")
     e.preventDefault();
-    setloader(true);
-    console.log(email);
-    console.log(password);
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then((res) => {
-        setloader(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setloader(false);
-      });
-  };
+
+    try {
+      auth
+        .signInWithEmailAndPassword(email, password)
+        .then((res) => {
+          // console.log(res);
+          const user = firestore.collection("users").doc(res.user.uid);
+          user.get().then((doc) => {
+            dispatch({
+              type: 'SET_LOGIN',
+              uid: doc.data().uid,
+              displayName: doc.data().displayName,
+              photoURL: doc.data().photoURL,
+              email: doc.data().email,
+              role: doc.data().role,
+              provider: "email",
+              status: true
+            });
+          })
+        }).catch((error) => {
+          console.log(error);
+          if (error.code === "auth/invalid-email") {
+            setEmailError("อีเมลไม่ถูกต้อง")
+          }
+          else if(error.code === "auth/wrong-password") {
+            setPasswordErr("รหัสผ่านไม่ถูกต้อง")
+          }
+          else if(error.code === "auth/user-not-found") {
+            setUserErr("ไม่พบบัญชีผู้ใช้งาน")
+          }
+
+        })
+    } catch (error) {
+      alert(error)
+    }
+
+
+  }
   const onloginwithgoogle = async () => {
     const result = await auth.signInWithPopup(googleProvider);
 
@@ -63,6 +96,7 @@ const Sign_in = () => {
             photoURL: result.user.photoURL,
             email: result.user.email,
             role: "user",
+            provider: "google",
             status: true
           }).then((res) => {
             dispatch({
@@ -72,22 +106,24 @@ const Sign_in = () => {
               photoURL: result.user.photoURL,
               email: result.user.email,
               role: "user",
+              provider: "google",
               status: true
             });
-            console.log("เพิ่มข้อมูลแล้วเน้อ");
+            // console.log("เพิ่มข้อมูลแล้วเน้อ");
           });
 
         } else {
           dispatch({
-            type: 'SET_LOGIN', 
+            type: 'SET_LOGIN',
             uid: doc.data().uid,
             displayName: doc.data().displayName,
             photoURL: doc.data().photoURL,
             email: doc.data().email,
             role: doc.data().role,
-            status:true
+            provider: "google",
+            status: true
           });
-          console.log("มีผู้ใช้นี้แล้ว");
+          // console.log("มีผู้ใช้นี้แล้ว");
 
         }
       });
@@ -136,39 +172,60 @@ const Sign_in = () => {
                   <hr />
                 </h1>
               </div>
+              { UserError.length > 0 ?
+              <div className="alert alert-danger">{UserError}</div>
+              :
+                null
+              }
               <div className="form-group">
                 <label htmlFor="username">อีเมล</label>
                 <input
                   type="email"
-                  className="form-control"
+                  className= {emailError.length > 0 ? "form-control  is-invalid" : "form-control"}
                   name="email"
                   value={email}
                   onChange={(e) => setemail(e.target.value)}
-                ></input>
-                <div className="valid-feedback">พบชื่อผู้ใช้</div>
+                />
+                {emailError.length || UserError.length > 0 ? 
+                  <div className="text-danger mt-1">{emailError}</div>
+                : 
+                  null
+                }
+                
               </div>
 
               <div className="form-group">
                 <label htmlFor="password">รหัสผ่าน</label>
                 <input
                   type="password"
-                  className="form-control"
+                  className= {passwordError.length || UserError.length > 0 ? "form-control  is-invalid" : "form-control"}
                   name="password"
                   value={password}
                   onChange={(e) => setpassword(e.target.value)}
-                ></input>
-                <div className="invalid-feedback">รหัสผ่านสั้นเกินไป</div>
+                />
+                {passwordError.length > 0 ? 
+                  <div className="text-danger mt-1">{passwordError}</div>
+                : 
+                  null
+                }
               </div>
 
+              <div>
+                <p>ลืมรหัสผ่าน? <a href="/forgotpassword" >คลิก</a></p>
+              </div>
 
               <div className="">
                 <button
                   type="button"
-                  className="btn-signin my-3"
+                  className="btn-signin"
                   onClick={onEmaillogin}
                 >
                   ลงชื่อเข้าใช้
                   </button>
+              </div>
+
+              <div className="text-center mt-1">
+                หรือ
               </div>
 
               <div className="">
@@ -182,13 +239,16 @@ const Sign_in = () => {
                   </button>
               </div>
 
-              <Link to="/signup">สร้างบัญชีผู้ใช้</Link>
+              <div>
+                <p>หากคุณยังไม่มีบัญชีผู้ใช้งาน <a href="/signup"> สร้างบัญชีผู้ใช้</a> </p>
+              </div>
+              {/* <Link to="">สร้างบัญชีผู้ใช้</Link> */}
 
             </form>
           </div>
         </div>
       ) : (
-        <Redirect to='/'></Redirect>
+          <Redirect to='/'></Redirect>
         )}
     </div>
   );

@@ -15,9 +15,9 @@
   }
   .header-lottery {
     display: grid;
-    grid-template-columns: auto 185px;
+    grid-template-columns: auto 190px;
   }
-  .header-lottery h1 {
+  .header-lottery h2 {
     font-weight: bold;
   }
   .check-your-lottery {
@@ -48,7 +48,7 @@
   }
 
   .prize-number-one-header {
-    background:  rgb(134, 113, 253);
+    background: rgb(152, 134, 255);
     text-align: left;
     border-top-right-radius: 15px;
     border-top-left-radius: 15px;
@@ -57,13 +57,14 @@
     border: 1px solid rgb(228, 228, 228);
     width: 80%;
   }
-  .prize-number-one-header h2 {
+  .prize-number-one-header h4 {
     display: inline-block;
     font-weight: bold;
   }
   .prize-number-one-header h5 {
     display: inline-block;
     padding-left: 10px;
+    font-size: medium;
   }
   .prize-number-one-body {
     background-color: white;
@@ -76,7 +77,7 @@
   .prize-number-one-body span {
     letter-spacing: 18px;
     margin: 0;
-    font-size: 76px;
+    font-size: 68px;
     font-weight: bold;
     font-family: sans-serif;
     color: rgb(50, 50, 50);
@@ -87,7 +88,7 @@
   .prize-number-near-one-header {
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
-    background:rgb(134, 113, 253);
+    background:rgb(152, 134, 255);
     text-align: left;
     padding: 10px 20px;
     color: white;
@@ -96,7 +97,7 @@
   .prize-number-near-one-header h4 {
     display: inline-block;
     font-weight: bold;
-    font-size: 22px;
+    font-size: 20px;
   }
   .prize-number-near-one-header h6 {
     display: inline-block;
@@ -112,7 +113,7 @@
   .prize-number-near-one-body div {
     letter-spacing: 3px;
     margin: 0;
-    font-size: 32px;
+    font-size: 26px;
     font-weight: bold;
     font-family: sans-serif;
     color: rgb(50, 50, 50);
@@ -132,18 +133,18 @@
     border: 1px solid rgb(204, 204, 204);
   }
   .item-runningnumber-header {
-    background: rgb(134, 113, 253);
+    background: rgb(152, 134, 255);
     padding: 10px;
     color: white;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
   }
   .item-runningnumber-header h4 {
+    font-size: 20px;
     font-weight: bold;
   }
   .item-runningnumber-body {
     padding: 10px;
-    font-size: 32px;
     justify-content: center;
     padding: 10px 0;
   }
@@ -152,7 +153,7 @@
     margin: 0;
     font-family: sans-serif;
     font-weight: 600;
-    font-size: 42px;
+    font-size: 38px;
     color: rgb(50, 50, 50);
   }
 
@@ -163,7 +164,7 @@
     background-color: white;
   }
   .prize-no2 h5 {
-    background: rgb(134, 113, 253);
+    background:rgb(152, 134, 255);
     padding: 15px 10px;
     color: white;
     font-weight: bold;
@@ -204,7 +205,7 @@
     background-color: white;
   }
   .prize-no3 h5 {
-    background: rgb(134, 113, 253);
+    background: rgb(152, 134, 255);
     padding: 15px 10px;
     color: white;
     font-weight: bold;
@@ -253,7 +254,7 @@
     background-color: white;
   }
   .prize-no4 h5 {
-    background: rgb(134, 113, 253);
+    background: rgb(152, 134, 255);
     padding: 15px 10px;
     color: white;
     font-weight: bold;
@@ -301,7 +302,7 @@
     background-color: white;
   }
   .prize-no5 h5 {
-    background: rgb(134, 113, 253);
+    background: rgb(152, 134, 255);
     padding: 15px 10px;
     color: white;
     font-weight: bold;
@@ -439,10 +440,14 @@
     }
     .prize-number-one-body span {
       font-size: 52px;
-      padding-left: 10px;
+      padding-left: 1px;
+    }
+    .prize-number-near-one-header {
+      padding: 10px 15px;
+      text-align: center;
     }
     .prize-number-near-one-header h4 {
-      font-size: 18px;
+      font-size: 16px;
     }
     .prize-number-near-one > .prize-number-near-one-body > div {
       display: inline-block;
@@ -485,7 +490,7 @@
       padding: 15px 0 10px 15px;
       width: 87%;
     }
-    .prize-number-one-header h2 {
+    .prize-number-one-header h4 {
       font-size: 18px;
     }
     .prize-number-one-header h5 {
@@ -546,11 +551,11 @@
 
   .box-check-lottery {
     display: grid;
-    grid-template-columns: 25% 30% 45%;
+    grid-template-columns: 70px 140px 1fr;
     align-items: center;
     justify-items: left;
     margin: 10px 0;
-    padding: 5px 20px;
+    padding: 5px 1px;
   }
   .box-check-lottery input {
     font-size: 18px;
@@ -564,7 +569,7 @@
   .box-check-lottery span {
     padding: 5px 10px;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: normal;
   }
 
   .btn-input-checklot button {
@@ -593,18 +598,27 @@
     transition: 1ms ease-in-out;
     cursor: pointer;
   }
+  .result-check-lot {
+    font-size: 15px;
+    /* display: grid;
+    grid-template-rows: 1fr 1fr; */
+  }
 
   @media screen and (max-width: 900px) {
     .box-check-lottery 
     {
       padding: 5px 0;
       margin: 2px 0;
-      grid-template-columns: 25% 23% 52%;
+      grid-template-columns: 53px 100px 1fr;
     }
     .box-check-lottery p {
       margin: 10px 2px;
     }
     .box-check-lottery span {
       margin: 0;
+    }
+    .result-check-lot p {
+      font-size: 14px;
+      padding-left: 5px;
     }
   }

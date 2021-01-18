@@ -4,7 +4,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  padding: 100px 0;
+  padding: 60px 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -43,7 +43,6 @@
     /* border: 1.5px solid #ddd; */
     padding: 1.5rem;
   }
-
   .btn-signup {
     background-color: mediumslateblue;
     color: white;
@@ -52,7 +51,6 @@
     border-radius: 8px;
     width: 100%;
   }
-
   .btn-signup:hover {
     background-color: mediumslateblue;
     color: white;

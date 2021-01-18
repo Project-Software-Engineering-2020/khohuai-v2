@@ -11,33 +11,33 @@ const Home = () => {
     return (
         <div>
             <div className="home">
-    
+
                 <div className="container">
-                   
+
                     <Carousel>
                         <Carousel.Item interval={3500}>
                             <img
                                 className="img-carousel"
-                                src = {carousel1}
+                                src={carousel1}
                                 alt="First slide"
                             />
-                            
+
                         </Carousel.Item>
                         <Carousel.Item interval={3500}>
                             <img
                                 className="img-carousel"
-                                src = {carousel2}
+                                src={carousel2}
                                 alt="Third slide"
                             />
-                           
+
                         </Carousel.Item>
-                        <Carousel.Item  interval={3500}>
+                        <Carousel.Item interval={3500}>
                             <img
                                 className="img-carousel"
-                                src = {carousel3}
+                                src={carousel3}
                                 alt="Third slide"
                             />
-                            
+
                         </Carousel.Item>
                     </Carousel>
 

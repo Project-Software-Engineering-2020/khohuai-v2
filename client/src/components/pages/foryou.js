@@ -10,7 +10,7 @@ const Foryou = () => {
 
 
     const FetchData = async () => {
-        await Axios.get("http://localhost:3001/lottery").then((lot) => {
+        await Axios.get("http://192.168.1.150:3001/lottery").then((lot) => {
             setData(lot.data);
             console.log(lot.data);
         })

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import ButtonLogin from './Button';
 import ButtonUser from './ButtonUSer';
 import { Link } from 'react-router-dom';
@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 function Navbar() {
 
   const stetus = useSelector(state => state.auth)
-  const stotus = stetus.status;
+  // const stotus = stetus.status;
 
   const [click, setClick] = useState(false);
   const [dropdown, setDropdown] = useState(false);
@@ -33,6 +33,10 @@ function Navbar() {
       setDropdown(false);
     }
   };
+
+  useEffect(() => {
+    // const stotus = stetus.status;
+  }, [stetus])
 
   return (
     <div className="navbar-bg">
@@ -82,19 +86,20 @@ function Navbar() {
             </Link>
           </li>
           <li className="nav-user">
-            {!stotus? (
-              <Link
-              to='/login'
-              className='nav-links-mobile'
-              onClick={closeMobileMenu}
-            >
-              ลงชื่อเข้าใช้
-            </Link>
+            {/* {!stotus? (
+            //   <Link
+            //   to='/login'
+            //   className='nav-links-mobile'
+            //   onClick={closeMobileMenu}
+            // >
+            //   ลงชื่อเข้าใช้
+            // </Link>
+            <ButtonLogin className="btn-login" />
             ):(
               <ButtonLogin className="btn-login" />
-            )}
+            )} */}
             
-
+            <ButtonLogin className="btn-login" />
           </li>
           
         </ul>

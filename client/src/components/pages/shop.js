@@ -1,21 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom'
+import Lottoryitem from "./LotteryItem"
 import './shop.css';
-import { Carousel } from 'react-bootstrap'
-import LotteryItem from './LotteryItem';
+import Axios from "axios";
+// import { Carousel } from 'react-bootstrap'
+// import LotteryItem from './LotteryItem';
 import { useSelector } from 'react-redux';
 
 const Shop = () => {
     const stetus = useSelector(state => state.auth)
     const stotus = stetus.status;
     const [redirect, setredirect] = useState(true)
-    const [loterryList, setLottery] = useState([]);
-    const [loading, setloading] = useState(null)
+    // const [loterryList, setLottery] = useState([]);
 
-    useEffect(() => {
-        setredirect(stotus)
-        setloading(true)
-    })
+    const [data, setData] = useState();
+    const [loading, setloading] = useState(false);
+
+
+    const FetchData = async () => {
+        await Axios.get("http://192.168.1.150:3001/lottery").then((lot) => {
+            setData(lot.data);
+            console.log(lot.data);
+        })
+        await setloading(true);
+    }
+
+
+    useEffect(async () => {
+        await setredirect(stotus)
+        await FetchData()
+        await setloading(true)
+    },[])
+
+
+
     return (
         <div>
             {redirect ? (
@@ -39,10 +57,10 @@ const Shop = () => {
                                         <div className="info-shop">
                                             <h5>ขั้นตอนการซื้อสลากกินแบ่งรัฐบาลออนไลน์</h5>
                                             <ol>
-                                                <li><p>.......................................</p></li>
-                                                <li><p>.......................................</p></li>
-                                                <li><p>.......................................</p></li>
-                                                <li><p>.......................................</p></li>
+                                                <li><p>เลือกสลากที่ต้องการ</p></li>
+                                                <li><p>เพิ่มลงในตะกร้า</p></li>
+                                                <li><p>ชำระเงิน</p></li>
+                                                <li><p>รอการประกาศผลรางวัล</p></li>
                                             </ol>
                                         </div>
                                         <div className="box-search-lottery">
@@ -60,12 +78,15 @@ const Shop = () => {
                                         </div>
                                     </section>
                                     <section className="lottery-shop">
-                                        <LotteryItem />
-                                        <LotteryItem />
-                                        <LotteryItem />
-                                        <LotteryItem />
-                                        <LotteryItem />
-                                        <LotteryItem />
+
+                                        {data.map((item, index) => {
+                                            if (index) {
+                                                return (
+                                                    <Lottoryitem key={index} photo={item.photoURL} id={item.id}></Lottoryitem>
+                                                )
+                                            }
+
+                                        })}
                                     </section>
                                 </div>
                             </div>
@@ -75,8 +96,8 @@ const Shop = () => {
                         )}
                 </div>
             ) : (
-            <Redirect to='/login'></Redirect>
-        )}
+                    <Redirect to='/login'></Redirect>
+                )}
         </div>
     )
 

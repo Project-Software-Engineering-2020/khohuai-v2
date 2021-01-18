@@ -23,7 +23,7 @@ const SignUp = () => {
   const [passwordErr, setPasswordErr] = useState({});
   const [confirmpasswordErr, setConfirmpasswordErr] = useState({});
   const [phoneErr, setPhoneErr] = useState({});
-
+  const [registerErr, setRegisterErr] = useState("");
   const [isvalid, setvalid] = useState(false);
 
   const formValidation = () => {
@@ -106,6 +106,7 @@ const SignUp = () => {
     setConfirmpasswordErr(confirmpasswordErr);
     setPhoneErr(phoneErr);
     setvalid(isValid);
+    return isValid;
   };
 
 
@@ -170,7 +171,7 @@ const SignUp = () => {
 
     if (!phone) {
       phoneErr.noPhone = "กรุณากรอกเบอร์โทรศัพท์";
-    } 
+    }
     else if (typeof phone !== "undefined") {
       var phonepattern = new RegExp(/^(?=.*[0-9])/i);
       if (!phonepattern.test(phone)) {
@@ -179,17 +180,19 @@ const SignUp = () => {
         phoneErr.tennumber = "กรุณากรอกหมายเลขโทรศัพท์ 10 หลัก";
       }
     }
-
+    setPhoneErr(phoneErr);
   }
 
 
   const [loading, setloading] = useState(false);
 
   const onEmailSignUpSubmit = async (e) => {
+
+    setRegisterErr("");
     e.preventDefault();
-    await formValidation();
-    console.log(isvalid);
-    if (isvalid == true) {
+    const valid = await formValidation();
+    // console.log(isvalid);
+    if (valid == true) {
       auth
         .createUserWithEmailAndPassword(email, password)
         .then(async (result) => {
@@ -202,22 +205,24 @@ const SignUp = () => {
               if (!doc.data()) {
                 await userRef.set({
                   uid: result.user.uid,
-                  displayName: "",
+                  displayName: firstname,
                   firstname: firstname,
                   lastname: lastname,
                   phone: phone,
-                  photoURL: "https://scontent.fbkk5-7.fna.fbcdn.net/v/t31.0-8/966951_524915017575552_106824054_o.jpg?_nc_cat=108&ccb=2&_nc_sid=85a577&_nc_eui2=AeFFSb20QuKJw_3rSQCzle35lpkMdvSOJPyWmQx29I4k_C-gQIIz9ZFeq_H3AiOx7n4HJOLxygWY3U8WwWq02M7t&_nc_ohc=rrWdNtW_THMAX8MzUyf&_nc_ht=scontent.fbkk5-7.fna&oh=4dd10a01a31f14dc4aca9b7da446d008&oe=60264591",
+                  photoURL: "https://img2.thaipng.com/20180523/tha/kisspng-businessperson-computer-icons-avatar-clip-art-lattice-5b0508dc6a3a10.0013931115270566044351.jpg",
                   email: result.user.email,
                   role: "user",
+                  provider: "hotmail",
                   status: true,
                 }).then((res) => {
                   dispatch({
                     type: 'SET_LOGIN',
                     uid: result.user.uid,
-                    displayName: result.user.displayName,
-                    photoURL: result.user.photoURL,
+                    displayName: firstname,
+                    photoURL: "https://img2.thaipng.com/20180523/tha/kisspng-businessperson-computer-icons-avatar-clip-art-lattice-5b0508dc6a3a10.0013931115270566044351.jpg",
                     email: result.user.email,
                     role: "user",
+                    provider: "hotmail",
                     status: true
                   })
                 });
@@ -226,11 +231,15 @@ const SignUp = () => {
           }
         })
         .catch((err) => {
-          console.log("Register ไม่ผ่าน");
+          console.log(err);
+          if (err.code === "auth/email-already-in-use") {
+            setRegisterErr("อีเมลนี้ถูกใช้งานแล้ว");
+          }
         });
     }
     else {
       console.log("ข้อมูลไม่ตรบ")
+
     }
   };
 
@@ -240,7 +249,7 @@ const SignUp = () => {
       const stotus = stetus.status;
       setredirect(stotus)
       setloading(true);
-    }, 2000);
+    }, 1000);
     /*มี timeout ด้วย ลำ้สัสๆ */
   }, [stotus]);
 
@@ -286,7 +295,7 @@ const SignUp = () => {
                         })}
                       </div>
                     </div>
-                  
+
                     <div className="col-md-6">
                       <div className="form-group">
                         <label htmlFor="lastname">นามสกุล:</label>
@@ -322,45 +331,49 @@ const SignUp = () => {
                       name="email"
                       value={email}
                       onChange={(e) => {
-                        validateEmail(e.target.value);
                         setEmail(e.target.value);
+                        validateEmail(e.target.value);
                       }}
                       className={
-                        emailErr.noEmail || emailErr.invalidEmail ?
+                        emailErr.noEmail || emailErr.invalidEmail || (registerErr.length > 0)  ?
                           "form-control is-invalid"
                           :
                           "form-control"}
                       placeholder="กรอกอีเมล"
                       id="email"
                     />
-
+                    {
+                      registerErr.length > 0 ? 
+                      <div className="text-danger">{registerErr}</div>
+                      : null
+                    }
                     {Object.keys(emailErr).map((key) => {
                       return <div className="text-danger">{emailErr[key]}</div>;
                     })}
                   </div>
 
                   <div className="form-group">
-                      <label htmlFor="phone">เบอร์โทรศัพท์:</label>
-                      <input
-                        type="numeric"
-                        name="phone"
-                        value={phone}
-                        onChange={(e) => {
-                          setPhone(e.target.value);
-                          validatePhone(e.target.value);
-                        }}
-                        className={
-                          phoneErr.noPhone || phoneErr.inputnumber || phoneErr.tennumber ?
-                            "form-control is-invalid"
-                            :
-                            "form-control"}
-                        placeholder="กรอกเบอร์โทรศัพท์"
-                        id="phone"
-                      />
+                    <label htmlFor="phone">เบอร์โทรศัพท์:</label>
+                    <input
+                      type="numeric"
+                      name="phone"
+                      value={phone}
+                      onChange={(e) => {
+                        setPhone(e.target.value);
+                        validatePhone(e.target.value);
+                      }}
+                      className={
+                        phoneErr.noPhone || phoneErr.inputnumber || phoneErr.tennumber ?
+                          "form-control is-invalid"
+                          :
+                          "form-control"}
+                      placeholder="กรอกเบอร์โทรศัพท์"
+                      id="phone"
+                    />
 
-                      {Object.keys(phoneErr).map((key) => {
-                        return <div className="text-danger">{phoneErr[key]}</div>;
-                      })}
+                    {Object.keys(phoneErr).map((key) => {
+                      return <div className="text-danger">{phoneErr[key]}</div>;
+                    })}
                   </div>
 
                   <div className="form-group">
@@ -393,8 +406,8 @@ const SignUp = () => {
                       name="confirm_password"
                       value={confirmpassword}
                       onChange={(e) => {
-                        validateConfirmPassword(e.target.value);
                         setConfirmpassword(e.target.value);
+                        validateConfirmPassword(e.target.value);
                       }}
 
                       className={confirmpasswordErr.dontMatch || confirmpasswordErr.noConfirmpassword ? "form-control is-invalid" : "form-control"}

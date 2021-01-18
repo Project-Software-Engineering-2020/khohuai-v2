@@ -1,44 +1,97 @@
-import React, { useState } from 'react';
-import './LottoDetail.css'
+import React, { useState, useEffect } from 'react';
+import Axios from 'axios';
+import './LottoDetail.css';
 import Lottoryitem from "./LotteryItem";
 
-const LottoDetail = () => {
+const LottoDetail = (props) => {
+
+    //รับค่า id จาก URL
+    const lotteryID = props.match.params.id;
+
+    const [lottery, setLottery] = useState([]);
+    const [recommended, setRecommended] = useState([]);
+    const [loading, setloading] = useState(false);
+
+
+    const [count, setCount] = useState(1);
+
+    const plus = () => {
+        setCount(count + 1);
+    };
+
+    const minnus = () => {
+        setCount(count - 1);
+    };
+
+    useEffect(async () => {
+
+        const fetchData = async () => {
+
+            //get detail
+            await Axios.get("http://192.168.1.150:3001/lottery/" + lotteryID).then((lot) => {
+                setLottery(lot.data);
+            })
+
+            //get recommended 
+            await Axios.get("http://192.168.1.150:3001/lottery").then((lot) => {
+                setRecommended(lot.data);
+            })
+
+            await setloading(true);
+        }
+        await fetchData();
+    }, [])
 
     return (
         <div>
             <div className="container">
+                {loading ? 
                 <div className="lottery-detail-page">
                     <section className="lottery-show">
                         <div>
                             <figure className="lottery-item-image">
-                                <img src="./images/lottery-demo1.jpg"></img>
+                                <img src={lottery.photoURL}></img>
                             </figure>
                         </div>
-                        <div>
+                        <div className="info-lot">
                             <div>
-                                <p>ใบละ 80 บาท</p>
-                                <p>คงเหลือ 9 ใบ</p>
-                                <input type="number"></input>
+                                <p>ราคาใบละ 80 บาท</p>
+                                
+                                <div className="min-plus-input">
+                                    <button type="button" onClick={minnus}><i className="fas fa-minus"></i></button>
+                                    <input type="text" value={count} onChange={(e) => setCount(e.target.value)}/>
+                                    <button type="button" onClick={plus}> <i className="fas fa-plus"></i> </button>
+                                </div>
+                                
                             </div>
-                            <div className="group-btn-">
-                                <button>เพิ่มลงในตะกร้า</button>
-                                <button>ซื้อสลากใบนี้</button>
+                            <div className="group-btn-add-buy">
+                                <button className="add-cart">เพิ่มลงในตะกร้า</button>
+                                <button className="buy-now">ซื้อสลากใบนี้</button>
                             </div>
                         </div>
                     </section>
-                    <section>
+                    <section className="lottery-near-number">
+                        <p> เลขสลากใกล้เคียง</p>
                         <div>
-                            เลขสลากใกล้เคียง
+
+                            {recommended.map((item, index) => {
+                                if (index < 4) {
+                                    return (
+                                        <Lottoryitem key={index} photo={item.photoURL} id={item.id}></Lottoryitem>
+                                    )
+                                }
+
+                            })}
+
                         </div>
-                        <div className="lottery-near-number">
-                            <Lottoryitem/>
-                            <Lottoryitem/>
-                            <Lottoryitem/>
-                            <Lottoryitem/>
-                            
-                        </div>
+
+                        {/* <div className="recommend-body">
+                        </div> */}
                     </section>
                 </div>
+                : 
+                    <div className="loading">loading...</div>
+                }
 
             </div>
         </div>

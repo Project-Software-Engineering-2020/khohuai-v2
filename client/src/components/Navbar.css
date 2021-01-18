@@ -3,7 +3,7 @@
   width: auto;
 }
 .navbar-bg{
-  background: rgb(110, 88, 238);
+  background: rgb(111, 90, 233);
 }
 .lottery-navbar {
   height: 80px;
@@ -12,7 +12,7 @@
   justify-content: start;
    align-items: center;
   display: grid;
-  grid-template-columns: 150px 1fr;
+  grid-template-columns: 165px 1fr;
  
   font-size: 1.2rem;
   padding: 0 5px;
@@ -25,7 +25,7 @@
 
 .lottery-nav-menu {
   display: grid;
-  grid-template-columns: 140px 170px 210px 150px 1fr;
+  grid-template-columns: 138px 167px 207px 132px 1fr;
   justify-self: start;
   align-items: center;
   list-style: none;
@@ -78,9 +78,10 @@ ul.lottery-nav-menu {
   display: none;
 }
 
-@media screen and (max-width: 1200px){
+@media screen and (max-width: 1203px){
   .lottery-nav-links {
-    margin: auto 5px;
+    margin: auto 0px;
+    padding: 7px 10px;
   }
 }
 
@@ -172,7 +173,7 @@ ul.lottery-nav-menu {
     display: none;
   } */
 
-  Button.signup-btn {
+  /* Button.signup-btn {
     display: none;
-  }
+  } */
 }
