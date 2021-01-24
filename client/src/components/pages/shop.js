@@ -18,7 +18,7 @@ const Shop = () => {
 
 
     const FetchData = async () => {
-        await Axios.get("http://192.168.1.150:3001/lottery").then((lot) => {
+        await Axios.get("http://localhost:3001/lottery").then((lot) => {
             setData(lot.data);
             console.log(lot.data);
         })
@@ -27,13 +27,11 @@ const Shop = () => {
 
 
     useEffect(async () => {
-        await setredirect(stotus)
+        // await setredirect(stotus)
+        await setredirect(true);
         await FetchData()
         await setloading(true)
     },[])
-
-
-
     return (
         <div>
             {redirect ? (

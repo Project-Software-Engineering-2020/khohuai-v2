@@ -16,6 +16,8 @@ export default function Button() {
 
   const stetus = useSelector(state => state.auth)
   const stotus = stetus.status;
+  const stotus2 = stetus.displayName;
+  const stotus3 = stetus.photoURL;
 
 
   // const userRef = useRef(firestore.collection("users")).current;
@@ -68,7 +70,7 @@ export default function Button() {
 
   useEffect( () => {
     setuser(stotus);
-  }, [stetus]);
+  }, [stetus,stotus2,stotus3]);
   
   const signouthandle = () => {
     auth.signOut().then(() => {

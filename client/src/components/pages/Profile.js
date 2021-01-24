@@ -28,7 +28,7 @@ const Profile = () => {
     const fetchUserProfile = async () => {
         const id = stetus.uid;
         let profile = null;
-        await Axios.get("http://192.168.1.150:3001/api/profile/" + id).then((res) => {
+        await Axios.get("http://localhost:3001/api/profile/" + id).then((res) => {
             profile = res.data
         })
        

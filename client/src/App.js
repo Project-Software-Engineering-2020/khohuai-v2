@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 //page
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import Home from "./components/pages/Home";
 import Shop from "./components/pages/shop";
 import LotteryThailand from "./components/pages/LotteryThailand";

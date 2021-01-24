@@ -72,7 +72,9 @@ const Sign_in = () => {
           else if(error.code === "auth/user-not-found") {
             setUserErr("ไม่พบบัญชีผู้ใช้งาน")
           }
-
+          else if(error.code === "auth/too-many-requests"){
+            setUserErr("คุณใส่รหัสผ่านผิดเกิน 3 ครั้ง กรุณารอสักครู่")
+          }
         })
     } catch (error) {
       alert(error)

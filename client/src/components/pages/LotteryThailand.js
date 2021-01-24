@@ -43,7 +43,17 @@ const LotteryThailand = () => {
     }
 
     const handleInput = (index, event) => {
+
         // event.preventDefault();
+
+        // if (typeof phone !== "undefined") {
+        //     var phonepattern = new RegExp(/^(?=.*[0-9])/i);
+        //     if (!phonepattern.test(phone)) {
+        //         phoneErr.inputnumber = "กรุณากรอกเป็นตัวเลข";
+        //     } else if (phone.length != 10) {
+        //         phoneErr.tennumber = "กรุณากรอกหมายเลขโทรศัพท์ 10 หลัก";
+        //     }
+        // }
 
         const list = [...inputList];
         list[index]["myLot"] = event.target.value;

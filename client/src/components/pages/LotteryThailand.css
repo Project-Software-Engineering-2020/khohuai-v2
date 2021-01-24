@@ -343,6 +343,19 @@
     background-color: rgb(240, 240, 240);
   }
 
+  .small-input {
+		-moz-appearance: "textfield";
+}
+.small-input::-webkit-inner-spin-button {
+			display: none;
+		}
+
+.small-input::-webkit-outer-spin-button,
+.small-input::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+
   .loader {
     color: rgb(134, 113, 253);
     font-size: 20px;

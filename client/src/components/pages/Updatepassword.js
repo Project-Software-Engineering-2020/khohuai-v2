@@ -128,7 +128,8 @@ const Updatepassword = () => {
         if (checkvalid == true) {
             const user2 = auth.currentUser;
             user2.updatePassword(password).then(() => {
-                // console.log("Change Laew")
+                console.log("Change Laew")
+                setredirect(false);
             })
                 .catch((err) => {
                     // console.log("Err Na")
@@ -199,7 +200,7 @@ const Updatepassword = () => {
                         )}
                 </div>
             ) : (
-                    <Redirect to="/"></Redirect>
+                    <Redirect to="/me"></Redirect>
                 )}
         </div>
 

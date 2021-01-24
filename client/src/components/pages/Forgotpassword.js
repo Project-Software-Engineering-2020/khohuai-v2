@@ -12,6 +12,8 @@ const Forgotpassword = () => {
     const [redirect, setredirect] = useState(stetus.status)
     const [loading, setloading] = useState(false)
     const [email, setemail] = useState("")
+    const [Success, setSuccess] = useState("");
+
     useEffect(() => {
         setloading(false);
         setTimeout(() => {
@@ -20,7 +22,10 @@ const Forgotpassword = () => {
     }, [redirect])
     const sendpasswordreset = (e) => {
         auth.sendPasswordResetEmail(email).then((res) => {
-            console.log("Send Success")
+            // console.log("Send Success");
+            // console.log(res);
+            // setredirect(true);
+            setSuccess("ข้อความถูกส่งเข้าไปในอีเมลของคุณแล้ว");
         })
             .catch(function (error) {
                 console.log("Cannot Send")
@@ -29,13 +34,19 @@ const Forgotpassword = () => {
     return (
         <div className="mt-5 p-2">
             {redirect ? (
-                <Redirect to="/"></Redirect>
+                <Redirect to="/login"></Redirect>
 
             ) : (
                     <div>
                         {loading ? (
                             <div class="container col-xl-4 col-md-6 col-sm-12 update-password-page mt-auto p-md-5 p-4">
+                                
                                 <div className="head-change-password">กู้คืนรหัสผ่าน</div>
+                                { Success.length > 0 ?
+                                    <div className="alert alert-success">{Success}</div>
+                                    :
+                                    null
+                                }
                                 <div className="mt-3">
                                     <input
                                         className="form-control"
