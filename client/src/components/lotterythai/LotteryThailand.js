@@ -7,7 +7,7 @@ const LotteryThailand = () => {
 
     const [DateLotteryThailand, setLotteryThailand] = useState([]);
     const [Prizes, setPrizes] = useState([]);
-    const [RunningNumbers, setRunningNumbers] = useState([])
+    const [RunningNumbers, setRunningNumbers] = useState([]);
     const [loading, setloading] = useState(false);
     const [show, setShow] = useState(false);
 
@@ -16,10 +16,8 @@ const LotteryThailand = () => {
             myLot: "",
             result: []
         }
-
     ];
 
-    // const handleClose = () => setShow(false);
     const handleShow = () => {
         setShow(true);
         setInputList(initialInputList);

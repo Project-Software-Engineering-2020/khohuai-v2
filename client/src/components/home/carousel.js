@@ -1,48 +1,40 @@
 import React from 'react';
-import './shop.css';
+// import './shop.css';
 import { Carousel } from 'react-bootstrap'
+import carousel1 from "../../images/carousel1.gif"
+import carousel2 from "../../images/carousel2.gif"
+import carousel3 from "../../images/carousel3.gif"
 
-const Carousel = () => {
+const CarouselItem = () => {
     return (
         <div>
-            <div>
+            <Carousel>
+                <Carousel.Item interval={3500}>
+                    <img
+                        className="img-carousel"
+                        src={carousel1}
+                        alt="First slide"
+                    />
+                </Carousel.Item>
+                <Carousel.Item interval={3500}>
+                    <img
+                        className="img-carousel"
+                        src={carousel2}
+                        alt="Third slide"
+                    />
+                </Carousel.Item>
+                <Carousel.Item interval={3500}>
+                    <img
+                        className="img-carousel"
+                        src={carousel3}
+                        alt="Third slide"
+                    />
+
+                </Carousel.Item>
+            </Carousel>
+
+            {/* <div>
                 <div className="container">
-                    {/* <section class="">
-                        <div id="demo" class="carousel slide shadow" data-ride="carousel">
-
-                            <ul class="carousel-indicators">
-                                <li data-target="#demo" data-slide-to="0" class="active"></li>
-                                <li data-target="#demo" data-slide-to="1"></li>
-                                <li data-target="#demo" data-slide-to="2"></li>
-                            </ul>
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-
-                                    <img src="https://res.cloudinary.com/dvzib8cte/image/upload/v1593015941/msajodthxvtjeyx3iw7q.jpg" alt="" height="auto" width="auto" />
-
-                                </div>
-                                <div class="carousel-item">
-
-                                    <img src="https://res.cloudinary.com/dvzib8cte/image/upload/v1593015941/msajodthxvtjeyx3iw7q.jpg" alt="" height="auto" width="auto" />
-
-                                </div>
-                                <div class="carousel-item">
-
-                                    <img src="https://res.cloudinary.com/dvzib8cte/image/upload/v1593015941/msajodthxvtjeyx3iw7q.jpg" alt="" height="auto" width="auto" />
-
-                                </div>
-
-                            </div>
-
-
-                            <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                                <span class="carousel-control-prev-icon"></span>
-                            </a>
-                            <a class="carousel-control-next" href="#demo" data-slide="next">
-                                <span class="carousel-control-next-icon"></span>
-                            </a>
-                        </div>
-                    </section> */}
                     <Carousel>
                         <Carousel.Item interval={1000}>
                             <img
@@ -79,11 +71,11 @@ const Carousel = () => {
                         </Carousel.Item>
                     </Carousel>
                 </div>
-            </div>
+            </div> */}
         </div>
 
     )
 
 }
 
-export default Carousel;
+export default CarouselItem;

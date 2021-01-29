@@ -3,9 +3,7 @@ import { Redirect } from 'react-router-dom';
 import './Button.css';
 import { Link } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap'
-import {
-  auth,
-} from "../firebase/firebase";
+import { auth } from "../../firebase/firebase";
 import { useSelector, useDispatch } from 'react-redux';
 
 

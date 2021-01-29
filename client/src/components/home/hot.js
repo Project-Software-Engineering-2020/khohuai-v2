@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import Lottoryitem from "./LotteryItem"
+import Lottoryitem from "../shop/LotteryItem"
 import './hot.css';
 import Axios from "axios";
 
@@ -10,17 +10,19 @@ const Hot = () => {
     const [loading, setloading] = useState(false);
 
 
-    const FetchData = async () => {
-        await Axios.get("http://localhost:3001/lottery").then((lot) => {
-            setData(lot.data);
-            console.log(lot.data);
-        })
-        await setloading(true);
-    }
+    
 
     useEffect(() => {
+
+        const FetchData = async () => {
+            await Axios.get("http://localhost:3001/lottery").then((lot) => {
+                setData(lot.data);
+                console.log(lot.data);
+            })
+            await setloading(true);
+        }
+
         FetchData();
-        console.log(data);
     }, [])
 
 
@@ -33,11 +35,11 @@ const Hot = () => {
             {loading ?
                 <div className="hot-body">
                     {data.map((item, index) => {
-                        if (index < 4) {
+                        // if (index < 4) {
                             return (
                                 <Lottoryitem key={index} photo={item.photoURL} id={item.id}></Lottoryitem>
                             )
-                        }
+                        // }
 
                     })}
                     {/* <div>

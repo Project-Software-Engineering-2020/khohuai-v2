@@ -4,7 +4,7 @@ import ButtonLogin from './Button';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import Dropdown from './Dropdown';
-import logo from '.././khohuai.png'
+import logo from './khohuai.png'
 import { useSelector } from 'react-redux';
 
 function Navbar() {

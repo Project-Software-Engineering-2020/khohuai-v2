@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import Axios from 'axios';
-import { auth } from '../../firebase/firebase'
 import './Profile.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { storage, firestore } from '../../firebase/firebase'
@@ -9,7 +8,9 @@ import { storage, firestore } from '../../firebase/firebase'
 const Profile = () => {
 
     const dispatch = useDispatch();
-    // const profileData = useSelector(state => state.auth);
+    //status user login
+    const auth = useSelector(state => state.auth)
+    const status = auth.status;
 
     const [Profile, setProfile] = useState();
     const [newProfile, setNewProfile] = useState();
@@ -17,16 +18,14 @@ const Profile = () => {
     const [imagePreview, setImagePreview] = useState();
     const [loading, setloading] = useState(false);
 
-    // const [update, set]
-
     const [editState, setEditState] = useState(true);
 
-    const stetus = useSelector(state => state.auth)
+   
     const [redirect, setredirect] = useState(true)
-    const stotus = stetus.status;
+    
 
     const fetchUserProfile = async () => {
-        const id = stetus.uid;
+        const id = auth.uid;
         let profile = null;
         await Axios.get("http://localhost:3001/api/profile/" + id).then((res) => {
             profile = res.data
@@ -38,12 +37,12 @@ const Profile = () => {
     }
 
     useEffect( async () => {
-        setredirect(stotus)
+        setredirect(status)
         let pro = await fetchUserProfile();
         await setProfile(pro);
         await setloading(true);
 
-    }, [stotus]);
+    }, [status]);
 
 
     const OnClickeditProfile = () => {
@@ -90,7 +89,7 @@ const Profile = () => {
         }
     };
     const UpdateProfile = async () => {
-        const uid = stetus.uid;
+        const uid = status.uid;
         if (updateImage) {
             console.log("Update image")
             const uploadTask = storage.ref("images/" + uid).put(updateImage);
@@ -207,7 +206,7 @@ const Profile = () => {
                                             </div>
                                             <div className="group-btn-profile">
                                                 <button type="button" className="btn-edit-profile" onClick={OnClickeditProfile}> แก้ไขข้อมูล </button>
-                                                {stetus.provider != "google" ? 
+                                                {status.provider != "google" ? 
                                                     <button type="button" className="btn-change-password" ><a href="/updatepassword">เปลี่ยนรหัสผ่าน</a></button>
                                                 :
                                                 null

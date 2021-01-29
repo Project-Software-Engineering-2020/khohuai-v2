@@ -1,11 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Link, Redirect } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import "../../stylesheet/signup.css";
-import { auth, firestore, googleProvider } from "../../firebase/firebase";
+import { firestore } from "../../firebase/firebase";
 import { useDispatch, useSelector } from 'react-redux';
 const SignUp = () => {
-  const stetus = useSelector(state => state.auth)
-  const stotus = stetus.status;
+
+  //check status user
+  const auth = useSelector(state => state.auth)
+  const status = auth.status;
   const [redirect, setredirect] = useState(null)
 
   const dispatch = useDispatch();
@@ -24,7 +26,7 @@ const SignUp = () => {
   const [confirmpasswordErr, setConfirmpasswordErr] = useState({});
   const [phoneErr, setPhoneErr] = useState({});
   const [registerErr, setRegisterErr] = useState("");
-  const [isvalid, setvalid] = useState(false);
+
 
   const formValidation = () => {
     const firstnameErr = {};
@@ -53,7 +55,7 @@ const SignUp = () => {
       if (!phonepattern.test(phone)) {
         phoneErr.inputnumber = "กรุณากรอกเป็นตัวเลข";
         isValid = false;
-      } else if (phone.length != 10) {
+      } else if (phone.length !== 10) {
         phoneErr.tennumber = "กรุณากรอกหมายเลขโทรศัพท์ 10 หลัก";
         isValid = false;
       }
@@ -93,7 +95,7 @@ const SignUp = () => {
       typeof password !== "undefined" &&
       typeof confirmpassword !== "undefined"
     ) {
-      if (password != confirmpassword) {
+      if (password !== confirmpassword) {
         confirmpasswordErr.dontMatch = "รหัสผ่านไม่ตรงกันกรุณากรอกใหม่อีกครั้ง";
         isValid = false;
       }
@@ -105,7 +107,6 @@ const SignUp = () => {
     setPasswordErr(passwordErr);
     setConfirmpasswordErr(confirmpasswordErr);
     setPhoneErr(phoneErr);
-    setvalid(isValid);
     return isValid;
   };
 
@@ -156,7 +157,7 @@ const SignUp = () => {
       typeof password !== "undefined" &&
       typeof confirmpassword !== "undefined"
     ) {
-      if (password != confirmpassword) {
+      if (password !== confirmpassword) {
         confirmpasswordErr.dontMatch = "รหัสผ่านไม่ตรงกัน กรุณากรอกใหม่อีกครั้ง";
       }
     }
@@ -176,7 +177,7 @@ const SignUp = () => {
       var phonepattern = new RegExp(/^(?=.*[0-9])/i);
       if (!phonepattern.test(phone)) {
         phoneErr.inputnumber = "กรุณากรอกเป็นตัวเลข";
-      } else if (phone.length != 10) {
+      } else if (phone.length !== 10) {
         phoneErr.tennumber = "กรุณากรอกหมายเลขโทรศัพท์ 10 หลัก";
       }
     }
@@ -192,41 +193,41 @@ const SignUp = () => {
     e.preventDefault();
     const valid = await formValidation();
     // console.log(isvalid);
-    if (valid == true) {
+    if (valid === true) {
       auth
         .createUserWithEmailAndPassword(email, password)
         .then(async (result) => {
           console.log(result);
           console.log("ลงทะเบียนเรียบร้อยแล้ว");
-          if (!!result) {
-            {
-              const userRef = firestore.collection("users").doc(result.user.uid);
-              const doc = await userRef.get();
-              if (!doc.data()) {
-                await userRef.set({
+          if (!result) {
+
+            const userRef = firestore.collection("users").doc(result.user.uid);
+            const doc = await userRef.get();
+            if (!doc.data()) {
+              await userRef.set({
+                uid: result.user.uid,
+                displayName: firstname,
+                firstname: firstname,
+                lastname: lastname,
+                phone: phone,
+                photoURL: "https://img2.thaipng.com/20180523/tha/kisspng-businessperson-computer-icons-avatar-clip-art-lattice-5b0508dc6a3a10.0013931115270566044351.jpg",
+                email: result.user.email,
+                role: "user",
+                provider: "hotmail",
+                status: true,
+              }).then((res) => {
+                dispatch({
+                  type: 'SET_LOGIN',
                   uid: result.user.uid,
                   displayName: firstname,
-                  firstname: firstname,
-                  lastname: lastname,
-                  phone: phone,
                   photoURL: "https://img2.thaipng.com/20180523/tha/kisspng-businessperson-computer-icons-avatar-clip-art-lattice-5b0508dc6a3a10.0013931115270566044351.jpg",
                   email: result.user.email,
                   role: "user",
                   provider: "hotmail",
-                  status: true,
-                }).then((res) => {
-                  dispatch({
-                    type: 'SET_LOGIN',
-                    uid: result.user.uid,
-                    displayName: firstname,
-                    photoURL: "https://img2.thaipng.com/20180523/tha/kisspng-businessperson-computer-icons-avatar-clip-art-lattice-5b0508dc6a3a10.0013931115270566044351.jpg",
-                    email: result.user.email,
-                    role: "user",
-                    provider: "hotmail",
-                    status: true
-                  })
-                });
-              }
+                  status: true
+                })
+              });
+
             }
           }
         })
@@ -246,12 +247,11 @@ const SignUp = () => {
   useEffect(() => {
     setloading(false);
     setTimeout(() => {
-      const stotus = stetus.status;
-      setredirect(stotus)
+      setredirect(status)
       setloading(true);
     }, 1000);
     /*มี timeout ด้วย ลำ้สัสๆ */
-  }, [stotus]);
+  }, [status]);
 
   return (
     <div>
@@ -335,7 +335,7 @@ const SignUp = () => {
                         validateEmail(e.target.value);
                       }}
                       className={
-                        emailErr.noEmail || emailErr.invalidEmail || (registerErr.length > 0)  ?
+                        emailErr.noEmail || emailErr.invalidEmail || (registerErr.length > 0) ?
                           "form-control is-invalid"
                           :
                           "form-control"}
@@ -343,9 +343,9 @@ const SignUp = () => {
                       id="email"
                     />
                     {
-                      registerErr.length > 0 ? 
-                      <div className="text-danger">{registerErr}</div>
-                      : null
+                      registerErr.length > 0 ?
+                        <div className="text-danger">{registerErr}</div>
+                        : null
                     }
                     {Object.keys(emailErr).map((key) => {
                       return <div className="text-danger">{emailErr[key]}</div>;
