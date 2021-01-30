@@ -11,10 +11,7 @@ function Cart(state = initialState , action) {
             }
             else{
                  state = [...state ,action.id];
-            }
-            
-            console.log(state)
-            
+            }            
             return state;
 
         case 'remove_from_cart':
