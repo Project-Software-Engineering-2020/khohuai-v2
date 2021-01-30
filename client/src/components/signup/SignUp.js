@@ -192,14 +192,14 @@ const SignUp = () => {
     setRegisterErr("");
     e.preventDefault();
     const valid = await formValidation();
-    
+    // console.log(isvalid);
     if (valid === true) {
       auth
         .createUserWithEmailAndPassword(email, password)
         .then(async (result) => {
           console.log(result);
-          
-          //ผู้ใช้ใหม่
+          console.log("ลงทะเบียนเรียบร้อยแล้ว");
+
           if (result.additionalUserInfo.isNewUser === true) {
 
             const userRef = firestore.collection("users").doc(result.user.uid);
@@ -228,7 +228,7 @@ const SignUp = () => {
                   status: true
                 })
               });
-              console.log("ลงทะเบียนเรียบร้อยแล้ว");
+
             }
           }
          
