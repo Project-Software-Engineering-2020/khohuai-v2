@@ -48,8 +48,27 @@ const getDetailLottery = async (req, res, next) => {
     }
 }
 
+const getSearchNumber = async (req, res, next) => {
+    try {
+        const number = req.params.number;
+        const finding = number.split("");
+        let findingNum = "";
+        for(let i=0; i<6; i++){
+            if(finding[i] === "x") continue;
+            findingNum[i] += finding[i];
+        }
+        await db.collection('LotteriesAvailable').doc().get().then((doc) => {
+            res.send(doc.data())
+        })
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 module.exports = {
     getAllLottery,
-    getDetailLottery
+    getDetailLottery,
+    getSearchNumber
 }

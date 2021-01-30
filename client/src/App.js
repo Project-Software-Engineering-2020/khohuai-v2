@@ -3,21 +3,23 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
+import PrivateRoute from './ProtectedRoute';
+
 //page
-import Navbar from "./components/Navbar";
-import Home from "./components/pages/Home";
-import Shop from "./components/pages/shop";
-import LotteryThailand from "./components/pages/LotteryThailand";
-import Game from "./components/pages/Game";
-import SignUp from "./components/pages/SignUp";
-import Consulting from "./components/pages/Consulting";
-import Profile from "./components/pages/Profile";
-import Sign_in from "./components/pages/Sign_in";
-import LotteryDetail from "./components/pages/LottoDetail"; 
-import UploadLottery from './components/pages/insertLottery'
-import Error404 from './Error/Error404'
-import UpdatePassword from './components/pages/Updatepassword';
-import ForgotPassword from './components/pages/Forgotpassword'; 
+import Navbar from "./components/navbar/Navbar";
+// import Footer from "./components/footer/Footer";
+import Home from "./components/home/Home";
+import Shop from "./components/shop/shop";
+import LotteryThailand from "./components/lotterythai/LotteryThailand";
+import Game from "./components/game/Game";
+import SignUp from "./components/signup/SignUp";
+import Profile from "./components/profile/Profile";
+import Sign_in from "./components/signin/Sign_in";
+import LotteryDetail from "./components/shop/LottoDetail"; 
+import UploadLottery from './components/insert/insertLottery'
+import Error404 from './components/error/Error404'
+import UpdatePassword from './components/recover/Updatepassword';
+import ForgotPassword from './components/recover/Forgotpassword'; 
 
 //redux 
 import { Provider } from 'react-redux';
@@ -32,17 +34,18 @@ function App() {
           <Route path="/" exact={true} component={Home} />
           <Route path="/shop" component={Shop} />
           <Route path="/lottery" component={LotteryThailand} />
-          <Route path="/game" component={Game} />
+          {/* <Route path="/game" component={Game} /> */}
           <Route path="/login" component={Sign_in} />
           <Route path="/signup" component={SignUp} />
-          <Route path="/consulting" component={Consulting} />
           <Route path="/product/:id" component={ LotteryDetail } />
           <Route path="/me" component={Profile} />
           <Route path="/upload" component={UploadLottery} />
           <Route path="/updatepassword" component={UpdatePassword} />
           <Route path="/forgotpassword" component={ForgotPassword} />
-          <Route component={Error404} />
+          {/* <Route component={Error404} /> */}
+          <PrivateRoute path="/game" component={Game} />
         </Switch>
+       
       </Router>
     </Provider>
   );

@@ -1,11 +1,12 @@
 const express = require('express');
-const { getAllLottery, getDetailLottery} = require('../Controller/LotteryController')
+const { getAllLottery, getDetailLottery, getSearchNumber } = require('../Controller/LotteryController')
 
 const router = express.Router();
 
 
 
-router.get('/',getAllLottery)
-router.get('/:id',getDetailLottery)
+router.get('/', getAllLottery);
+router.get('/:id', getDetailLottery);
+router.get('/search=:number', getSearchNumber);
 
 module.exports = router;

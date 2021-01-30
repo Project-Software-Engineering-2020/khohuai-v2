@@ -50,6 +50,9 @@ function userAuth(state = initialState , action) {
             break;
         case 'GET_STATUS_LOGIN':
             return state;
+
+        default:
+            return state;
         
     }
     return state;
