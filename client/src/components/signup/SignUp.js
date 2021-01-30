@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import "../../stylesheet/signup.css";
-import { firestore } from "../../firebase/firebase";
+import { firestore, auth } from "../../firebase/firebase";
 import { useDispatch, useSelector } from 'react-redux';
 const SignUp = () => {
 
   //check status user
-  const auth = useSelector(state => state.auth)
-  const status = auth.status;
+  const currentUser = useSelector(state => state.auth)
+  const status = currentUser.status;
   const [redirect, setredirect] = useState(null)
 
   const dispatch = useDispatch();
@@ -199,7 +199,8 @@ const SignUp = () => {
         .then(async (result) => {
           console.log(result);
           console.log("ลงทะเบียนเรียบร้อยแล้ว");
-          if (!result) {
+
+          if (result.additionalUserInfo.isNewUser === true) {
 
             const userRef = firestore.collection("users").doc(result.user.uid);
             const doc = await userRef.get();
@@ -230,6 +231,7 @@ const SignUp = () => {
 
             }
           }
+         
         })
         .catch((err) => {
           console.log(err);

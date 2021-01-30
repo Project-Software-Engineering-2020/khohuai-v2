@@ -13,7 +13,7 @@ function userAuth(state = initialState , action) {
     switch (action.type) {
         
         case 'SET_LOGIN':
-            console.log(action);
+            // console.log(action);
             state = {
                 ...state,
                 uid : action.uid,
