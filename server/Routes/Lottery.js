@@ -4,9 +4,9 @@ const { getAllLottery, getDetailLottery, getSearchNumber } = require('../Control
 const router = express.Router();
 
 
-
+router.get('/search=:number&:position', getSearchNumber);
 router.get('/', getAllLottery);
 router.get('/:id', getDetailLottery);
-router.get('/search=:number&:position', getSearchNumber);
+
 
 module.exports = router;
