@@ -49,13 +49,13 @@ const getDetailLottery = async (req, res, next) => {
 }
 
 const getSearchNumber = async (req, res, next) => {
+    console.log("test");
     try {
         const lotteryArray = [];
         const matchedLotteryArray = [];
         //recieved search number
         const number = req.params.number;
         const position = req.params.position;
-        console.log("test");
 
         const finding = number.split("");
         let findingNum = "";
