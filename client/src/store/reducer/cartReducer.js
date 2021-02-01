@@ -5,13 +5,19 @@ function Cart(state = initialState , action) {
     switch (action.type) {
         
         case 'add_to_cart':
-            // console.log(action);
-            if(state.includes(action.id) === true){
+            console.log(action);
+            // state = []
+            
+            state = [...state ,action.item];
+
+            if(state.includes(action.item.id === state.id)) {
                 break;
             }
             else{
-                 state = [...state ,action.id];
+                 state = [...state ,action.item];
             }            
+
+            console.log(state)
             return state;
 
         case 'remove_from_cart':

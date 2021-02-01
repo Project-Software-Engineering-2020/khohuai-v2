@@ -1,15 +1,13 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux' 
+import { useDispatch } from 'react-redux' 
 import './LotteryItem.css'
 
-const LotteryItem = (data) => {
-
+const LotteryItem = ({data}) => {
 
     const dispatch = useDispatch();
-    const mycart = useSelector(state => state.cart);
 
     const addtoCart = () => {
-        dispatch({ type:"add_to_cart", id: data.id})
+        dispatch({ type:"add_to_cart", item: data })
     }
     // useEffect(async ()  => {
     //     await setLottery(data)
@@ -18,7 +16,6 @@ const LotteryItem = (data) => {
 
     return (
         <div className="lottery-item">
-            {console.log(mycart)}
             <figure className="lottery-item-image">
                 <a href={"/product/"+ data.id} >
                     <img src={ data.photo }></img>
