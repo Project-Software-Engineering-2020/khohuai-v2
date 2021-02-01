@@ -19,7 +19,7 @@ const Foryou = () => {
         let datb = [];
         const FetchData = async () => {
             await Axios.get("http://localhost:3001/lottery").then((lot) => {
-                console.log(lot);
+                // console.log(lot);
                 setData(lot.data);
                 datb = lot.data;
             })
@@ -66,7 +66,7 @@ const Foryou = () => {
                     {data.map((item, index) => {
                         // if (index < 4) {
                             return (
-                                <Lottoryitem key={index} photo={item.photoURL} id={item.id}></Lottoryitem>
+                                <Lottoryitem key={index} data={item}></Lottoryitem>
                             )
                         // }
 
