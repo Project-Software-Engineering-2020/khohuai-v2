@@ -111,9 +111,12 @@ function Cart(state = initialState, action) {
             return state;
 
         case 'REMOVE_FROM_CART':
+
+            const _id = action.data.id;
+
             state = {
                 ...state,
-                cart: state.cart.filter((item => item.id !== action.data.id))
+                cart: state.cart.filter((item => item.id !== _id))
             }
 
             //sum price
@@ -122,6 +125,11 @@ function Cart(state = initialState, action) {
                 totalPrice: SumTotalPrice()
             }
 
+            return state;
+
+        case 'CLEAR_CART':
+
+            state = initialState;
             return state;
 
         default:

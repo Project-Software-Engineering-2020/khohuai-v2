@@ -113,7 +113,7 @@ const Shop = () => {
                                         {data.map((item, index) => {
 
                                             return (
-                                                <Lottoryitem key={index} data={item}></Lottoryitem>
+                                                <Lottoryitem key={index} data={item} ></Lottoryitem>
                                             )
                                         }
 
