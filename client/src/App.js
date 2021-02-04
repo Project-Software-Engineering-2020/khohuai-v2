@@ -20,6 +20,7 @@ import UploadLottery from './components/insert/insertLottery'
 import Error404 from './components/error/Error404'
 import UpdatePassword from './components/recover/Updatepassword';
 import ForgotPassword from './components/recover/Forgotpassword'; 
+import Basket from './components/pages/basket';
 
 //redux 
 import { Provider } from 'react-redux';
@@ -44,6 +45,7 @@ function App() {
           <Route path="/forgotpassword" component={ForgotPassword} />
           {/* <Route component={Error404} /> */}
           <PrivateRoute path="/game" component={Game} />
+          <PrivateRoute path="/cart" component={Basket} />
         </Switch>
        
       </Router>
