@@ -44,14 +44,14 @@ const Profile = () => {
         await setProfile(pro);
         await setloading(true);
 
-        setProfile(
-            {   
-                id: "73847879",
-                firstname: "chon",
-                lastname: "last",
-                displayName: "Bosszaaa"
-            }
-        )
+        // setProfile(
+        //     {   
+        //         id: "73847879",
+        //         firstname: "chon",
+        //         lastname: "last",
+        //         displayName: "Bosszaaa"
+        //     }
+        // )
 
     }, [status]);
 

@@ -84,7 +84,7 @@ const Sign_in = () => {
   }
   const onloginwithgoogle = async () => {
     const result = await auth.signInWithPopup(googleProvider);
-
+    console.log(result);
     if (result) {
       const userref = firestore.collection("users").doc(result.user.uid);
       userref.get().then((doc) => {
