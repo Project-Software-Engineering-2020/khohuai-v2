@@ -21,6 +21,7 @@ import Error404 from './components/error/Error404'
 import UpdatePassword from './components/recover/Updatepassword';
 import ForgotPassword from './components/recover/Forgotpassword'; 
 import Basket from './components/pages/basket';
+// import creditcard from './components/checkoutpage/checkoutpage'
 
 //redux 
 import { Provider } from 'react-redux';
@@ -44,6 +45,7 @@ function App() {
           <Route path="/upload" component={UploadLottery} />
           <Route path="/updatepassword" component={UpdatePassword} />
           <Route path="/forgotpassword" component={ForgotPassword} />
+          {/* <Route path="/checkoutpage" component={}/> */}
           {/* <Route component={Error404} /> */}
           <PrivateRoute path="/game" component={Game} />
           <PrivateRoute path="/cart" component={Basket} />

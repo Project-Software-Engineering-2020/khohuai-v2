@@ -35,15 +35,14 @@ function Basket() {
                 <div>loading...</div>
             ) : (
                     <div className="row">
-                        <section className="col-8 from-group bg-white p-3">
-
+                        <div className="col-8 from-group bg-white p-3">
                             {myCart.cart.map((item, index) => {
                                 return <BasketItem key={index} item={item} />
                             })}
                             {/* <pre>
                                 {JSON.stringify(myCart, null, 2)}
                             </pre> */}
-                        </section>
+                        </div>
                         <aside className="col-4 from-group bg-white p-3">
                             <h4>ตะกร้าสินค้า</h4>
                             <h5>ทั้งหมด {myCart.cart.length} รายการ</h5>
