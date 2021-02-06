@@ -26,7 +26,6 @@ const getAllLottery = async (req, res, next) => {
                     )
                     lotteryArray.push(lot);
                 });
-                console.log(lotteryArray)
                 res.send(lotteryArray);
             }
         } catch (error) {

@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import BasketItem from './basketItem';
 
-function Basket() {
+const Basket = () => {
 
-    let cart = useSelector(state => state.cart);
+    const myCart = useSelector(state => state.cart);
 
     const dispatch = useDispatch();
     const [loading, setloading] = useState(true)
-    const [myCart, setmyCart] = useState();
+    // const [myCart, setmyCart] = useState();
     const [clearCart, setclearCart] = useState();
 
     const payfromcart = () => {
@@ -22,15 +22,15 @@ function Basket() {
     }
 
     useEffect(async () => {
-        await setmyCart(cart);
+        // await setmyCart(cart);
         // await setclearCart(false);
+        console.log(myCart);
         await setloading(false);
 
-    }, [clearCart]);
+    }, [myCart]);
 
     return (
         <div className="container mt-3 p-3">
-
             {loading ? (
                 <div>loading...</div>
             ) : (
@@ -39,10 +39,10 @@ function Basket() {
                             {myCart.cart.map((item, index) => {
                                 return <BasketItem key={index} item={item} />
                             })}
-                            {/* <pre>
-                                {JSON.stringify(myCart, null, 2)}
-                            </pre> */}
-                        </div>
+
+                            {/* {JSON.stringify(myCart, null, 2)} */}
+
+                        </section>
                         <aside className="col-4 from-group bg-white p-3">
                             <h4>ตะกร้าสินค้า</h4>
                             <h5>ทั้งหมด {myCart.cart.length} รายการ</h5>

@@ -132,10 +132,12 @@ function Cart(state = initialState, action) {
             state = initialState;
             return state;
 
+        case 'GET_CART':
+            return state;
+
         default:
             return state;
     }
-
 }
 
 export default Cart;

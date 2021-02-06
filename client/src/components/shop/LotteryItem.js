@@ -80,21 +80,19 @@ import './LotteryItem.css'
 
 let OmiseCard;
 
-const LotteryItem = ({ data }) => {
+const LotteryItem = ({data}) => {
+
+
 
     const dispatch = useDispatch();
 
     const addtoCart = () => {
-        alert.log("Boss")
-        dispatch({ type: "ADD_TO_CART", data: data })
+        dispatch({ type:"ADD_TO_CART", data: data })
     }
-    // const addtoCart = () => {
-    //     dispatch({ type:"ADD_TO_CART", data: data })
-    // }
-    // useEffect(async ()  => {
-    //     await setLottery(data)
-    //     await setloading(false);
-    // }, [])
+    useEffect(async ()  => {
+        // await setLottery(data)
+        // await setloading(false);
+    }, [])
 
     return (
 
