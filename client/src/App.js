@@ -21,10 +21,15 @@ import Error404 from './components/error/Error404'
 import UpdatePassword from './components/recover/Updatepassword';
 import ForgotPassword from './components/recover/Forgotpassword'; 
 import Basket from './components/pages/basket';
-
+import Sidebar from './components/admin/Sidebar';
+import Overview from './components/pages/Overview';
+import LotteryReports from './components/pages/LotteryReports';
+import Invoice from './components/pages/Invoice';
+import AdUser from './components/pages/AdUser';
 //redux 
 import { Provider } from 'react-redux';
 import store from './store/store';
+
 
 function App() {
   
@@ -32,6 +37,7 @@ function App() {
     <Provider store={store}>
       <Router>
         <Navbar />
+        <Sidebar/>
         <Switch>
           <Route path="/" exact={true} component={Home} />
           <Route path="/shop" component={Shop} />
@@ -47,6 +53,10 @@ function App() {
           {/* <Route component={Error404} /> */}
           <PrivateRoute path="/game" component={Game} />
           <PrivateRoute path="/cart" component={Basket} />
+          <Route path='/dashbord' exact component={Overview} />
+        <Route path='/LotteryReports' exact component={LotteryReports} />
+        <Route path='/Invoice' exact component={Invoice} />
+        <Route path='/AdUser' exact component={AdUser} />
         </Switch>
        
       </Router>
