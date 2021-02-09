@@ -21,11 +21,16 @@ import Error404 from './components/error/Error404'
 import UpdatePassword from './components/recover/Updatepassword';
 import ForgotPassword from './components/recover/Forgotpassword';
 import Basket from './components/pages/basket';
-
+import Sidebar from './components/admin/Sidebar';
+import Overview from './components/pages/Overview';
+import LotteryReports from './components/pages/LotteryReports';
+import Invoice from './components/pages/Invoice';
+import AdUser from './components/pages/AdUser';
 //redux 
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persister } from './redux/store';
+
 
 function App() {
 
@@ -47,6 +52,12 @@ function App() {
             <Route path="/updatepassword" component={UpdatePassword} />
             <Route path="/forgotpassword" component={ForgotPassword} />
             {/* <Route component={Error404} /> */}
+
+            <Route path='/dashbord' exact component={Overview} />
+            <Route path='/LotteryReports' exact component={LotteryReports} />
+            <Route path='/Invoice' exact component={Invoice} />
+            <Route path='/AdUser' exact component={AdUser} />
+
             <PrivateRoute path="/game" component={Game} />
             <PrivateRoute path="/cart" component={Basket} />
           </Switch>
