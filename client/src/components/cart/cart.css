@@ -1,0 +1,49 @@
+.card-header {
+  background-color: white;
+}
+
+.lotto-number {
+  font-size: xx-large;
+}
+
+.btn-primary {
+  background-color: rgb(111, 90, 233);
+}
+
+.btn-primary:hover {
+  background-color: rgb(117, 102, 201);
+}
+
+/* หน้า AddDel */
+
+.AddDel span {
+  font-size: large;
+  border-style: solid;
+  border-width: thin;
+  padding-top: 2px;
+  padding-bottom: 6px;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.btnAdd {
+  border-style: solid;
+  border-width: thin;
+  padding-top: 3.5px;
+  padding-bottom: 5px;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: rgb(19, 133, 89);
+  color: white;
+}
+
+.btnDel {
+  border-style: solid;
+  border-width: thin;
+  padding-top: 3.5px;
+  padding-bottom: 5px;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: rgb(196, 61, 61);
+  color: white;
+}

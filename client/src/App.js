@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import PrivateRoute from './ProtectedRoute';
+import PrivateRoute from "./ProtectedRoute";
 
 //page
 import Navbar from "./components/navbar/Navbar";
@@ -15,15 +15,17 @@ import Game from "./components/game/Game";
 import SignUp from "./components/signup/SignUp";
 import Profile from "./components/profile/Profile";
 import Sign_in from "./components/signin/Sign_in";
-import LotteryDetail from "./components/shop/LottoDetail"; 
-import UploadLottery from './components/insert/insertLottery'
-import Error404 from './components/error/Error404'
-import UpdatePassword from './components/recover/Updatepassword';
-import ForgotPassword from './components/recover/Forgotpassword'; 
+import LotteryDetail from "./components/shop/LottoDetail";
+import UploadLottery from "./components/insert/insertLottery";
+import Cart from "./components/cart/Cart";
+import Footer from "./components/footer/Footer";
+import Error404 from "./components/error/Error404";
+import UpdatePassword from "./components/recover/Updatepassword";
+import ForgotPassword from "./components/recover/Forgotpassword";
 
-//redux 
-import { Provider } from 'react-redux';
-import store from './store/store';
+//redux
+import { Provider } from "react-redux";
+import store from "./store/store";
 
 function App() {
   return (
@@ -37,15 +39,16 @@ function App() {
           {/* <Route path="/game" component={Game} /> */}
           <Route path="/login" component={Sign_in} />
           <Route path="/signup" component={SignUp} />
-          <Route path="/product/:id" component={ LotteryDetail } />
+          <Route path="/product/:id" component={LotteryDetail} />
           <Route path="/me" component={Profile} />
           <Route path="/upload" component={UploadLottery} />
           <Route path="/updatepassword" component={UpdatePassword} />
           <Route path="/forgotpassword" component={ForgotPassword} />
+          <Route path="/cart" component={Cart} />
+          <Route path="/footer" component={Footer} />
           {/* <Route component={Error404} /> */}
           <PrivateRoute path="/game" component={Game} />
         </Switch>
-       
       </Router>
     </Provider>
   );
