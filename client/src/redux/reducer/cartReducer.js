@@ -1,23 +1,38 @@
 const initialState = {
     totalPrice: 0,
+    totalItem: 0,
     cart: []
 }
 
 function Cart(state = initialState, action) {
 
-    //sum total price in cart
-    function SumTotalPrice() {
-        let total = 0
+    //sum total in cart
+    function SumTotal() {
+        let totalPrice = 0;
+        let itemInCart = 0;
         state.cart.map((item) => {
-            console.log(80, "X", item.qty)
-            const price = item.qty * 80
-            console.log(total, "+", price);
-            total = total + price;
-            console.log("total = ", total);
-            return total;
+           
+            const Currentprice = item.qty * 80
+            totalPrice = totalPrice + Currentprice;
+
+            itemInCart = itemInCart + item.qty;
+         
+            return totalPrice,itemInCart;
         })
-        return total;
+        return totalPrice,itemInCart;
     }
+
+    // function SumTotalItem() {
+    //     let itemInCart = 0;
+    //     state.cart.map((item) => {
+      
+    //         itemInCart = itemInCart + item.qty;
+         
+    //         return itemInCart;
+    //     })
+    //     return itemInCart;
+    // }
+
 
     switch (action.type) {
 
@@ -74,10 +89,11 @@ function Cart(state = initialState, action) {
                     ],
             }
 
-            //sum price
+            let TotalPrice_1, TotalItem_1 = SumTotal();
             state = {
                 ...state,
-                totalPrice: SumTotalPrice()
+                totalPrice: TotalPrice_1,
+                totalItem: TotalItem_1
             }
 
             console.log(state)
@@ -102,10 +118,11 @@ function Cart(state = initialState, action) {
                 })
             }
 
-            //sum price
+            let TotalPrice_2, TotalItem_2 = SumTotal();
             state = {
                 ...state,
-                totalPrice: SumTotalPrice()
+                totalPrice: TotalPrice_2,
+                totalItem: TotalItem_2
             }
 
             return state;
@@ -119,10 +136,11 @@ function Cart(state = initialState, action) {
                 cart: state.cart.filter((item => item.id !== _id))
             }
 
-            //sum price
+            let TotalPrice_3, TotalItem_3 = SumTotal();
             state = {
                 ...state,
-                totalPrice: SumTotalPrice()
+                totalPrice: TotalPrice_3,
+                totalItem: TotalItem_3
             }
 
             return state;

@@ -15,41 +15,44 @@ import Game from "./components/game/Game";
 import SignUp from "./components/signup/SignUp";
 import Profile from "./components/profile/Profile";
 import Sign_in from "./components/signin/Sign_in";
-import LotteryDetail from "./components/shop/LottoDetail"; 
+import LotteryDetail from "./components/shop/LottoDetail";
 import UploadLottery from './components/insert/insertLottery'
 import Error404 from './components/error/Error404'
 import UpdatePassword from './components/recover/Updatepassword';
-import ForgotPassword from './components/recover/Forgotpassword'; 
+import ForgotPassword from './components/recover/Forgotpassword';
 import Basket from './components/pages/basket';
 
 //redux 
 import { Provider } from 'react-redux';
-import store from './store/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persister } from './redux/store';
 
 function App() {
-  
+
   return (
     <Provider store={store}>
-      <Router>
-        <Navbar />
-        <Switch>
-          <Route path="/" exact={true} component={Home} />
-          <Route path="/shop" component={Shop} />
-          <Route path="/lottery" component={LotteryThailand} />
-          {/* <Route path="/game" component={Game} /> */}
-          <Route path="/login" component={Sign_in} />
-          <Route path="/signup" component={SignUp} />
-          <Route path="/product/:id" component={ LotteryDetail } />
-          <Route path="/me" component={Profile} />
-          <Route path="/upload" component={UploadLottery} />
-          <Route path="/updatepassword" component={UpdatePassword} />
-          <Route path="/forgotpassword" component={ForgotPassword} />
-          {/* <Route component={Error404} /> */}
-          <PrivateRoute path="/game" component={Game} />
-          <PrivateRoute path="/cart" component={Basket} />
-        </Switch>
-       
-      </Router>
+      <PersistGate loading={null} persistor={persister}>
+        <Router>
+          <Navbar />
+          <Switch>
+            <Route path="/" exact={true} component={Home} />
+            <Route path="/shop" component={Shop} />
+            <Route path="/lottery" component={LotteryThailand} />
+            {/* <Route path="/game" component={Game} /> */}
+            <Route path="/login" component={Sign_in} />
+            <Route path="/signup" component={SignUp} />
+            <Route path="/product/:id" component={LotteryDetail} />
+            <Route path="/me" component={Profile} />
+            <Route path="/upload" component={UploadLottery} />
+            <Route path="/updatepassword" component={UpdatePassword} />
+            <Route path="/forgotpassword" component={ForgotPassword} />
+            {/* <Route component={Error404} /> */}
+            <PrivateRoute path="/game" component={Game} />
+            <PrivateRoute path="/cart" component={Basket} />
+          </Switch>
+
+        </Router>
+      </PersistGate>
     </Provider>
   );
 }

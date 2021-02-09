@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 function Navbar() {
 
   const stetus = useSelector(state => state.auth)
+  let cart = useSelector(state => state.cart)
   // const stotus = stetus.status;
 
   const [click, setClick] = useState(false);
@@ -85,6 +86,7 @@ function Navbar() {
               <i className="fas fa-gamepad" /> เล่นเกม
             </Link>
           </li>
+          <a href="/cart" className="text-white"><i class="fas fa-shopping-cart"></i>{cart.totalItem}</a>
           <li className="nav-user">
             {/* {!stotus? (
             //   <Link

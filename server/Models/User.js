@@ -1,9 +1,14 @@
 class User {
-    constructor(id ,firstname, lastname)
+    constructor(uid ,firstname,lastname, displayName,photoURL,email,role,provider)
     {
-        this.id = id
+        this.uid = uid
         this.firstname = firstname;
         this.lastname = lastname;
+        this.displayName = displayName;
+        this.photoURL = photoURL;
+        this.email = email;
+        this.role = role;
+        this.provider = provider;
     }
 }
 

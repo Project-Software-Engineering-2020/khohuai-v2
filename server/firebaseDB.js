@@ -1,8 +1,40 @@
 const firebase = require('firebase');
 const config = require('./config');
+const firebaseAdmin = require("firebase-admin");
 
-const db = firebase.initializeApp(config.firebaseConfig);
+const serviceAccount = require("./hi-chon-firebase-adminsdk-9pav9-4cf41da28a.json");
+const admin = firebaseAdmin.initializeApp({
+  credential: firebaseAdmin.credential.cert(serviceAccount),
+  databaseURL: "https://hi-chon.firebaseio.com"
+});
+
+// firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+
+
+const firebaseApp = firebase.initializeApp(config.firebaseConfig);
+
+//firestore
+const firestore = firebaseApp.firestore();
+
+//email&password login
+const auth = firebaseApp.auth();
+
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+//google login 
+const googleProvider = new firebase.auth.GoogleAuthProvider();
+
+//facebook login
+const facebookProvider = new firebase.auth.FacebookAuthProvider();
+facebookProvider.addScope('user_birthday');
+
+// //firebase storage
 // const storage = firebase.storage();
 
-
-module.exports = db;
+module.exports = {
+    firebaseApp,
+    firestore,
+    auth,
+    admin,
+    googleProvider,
+    facebookProvider,
+}

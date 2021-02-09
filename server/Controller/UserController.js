@@ -1,6 +1,5 @@
-const firebaseDB  = require('../firebaseDB');
-const db = firebaseDB.firestore();
-const storage = require('firebase/storage');
+const {firestore,firebaseApp, auth}  = require('../firebaseDB');
+// const storage = require('firebase/storage');
 
 //Models DB
 const User = require('../Models/User');
@@ -9,7 +8,7 @@ const User = require('../Models/User');
 const addUser = async (req, res, next) => {
     try {
         const data = req.body;
-        await db.collection('users').doc().set(data);
+        await firestore.collection('users').doc().set(data);
         res.send('Add to DB success');
     }
     catch (error) {
@@ -19,7 +18,7 @@ const addUser = async (req, res, next) => {
 
 const getAllUser = async (req, res, next) => {
     try {
-        const user = await db.collection('users');
+        const user = await firestore.collection('users');
         const usersdata = await user.get();
         const userArray = [];
         if (usersdata.empty) {
@@ -47,7 +46,7 @@ const getAllUser = async (req, res, next) => {
 const deleteUser = async (req, res, next) => {
     try {
         const id = req.params.id;
-        await db.collection('users').doc(id).delete();
+        await firestore.collection('users').doc(id).delete();
         res.send('Delete success');
     }
     catch (error) {
@@ -58,8 +57,15 @@ const deleteUser = async (req, res, next) => {
 
 const getProfile = async (req, res, next) => {
     try {
+        await auth.onAuthStateChanged(function(user) {
+            if (user) {
+              console.log("login แล้ว",user)
+            } else {
+              console.log("ยังไม่ login",user);
+            }
+          });
         const uid = req.params.id;
-        await db.collection('users').doc(uid).get().then((doc) => {
+        await firestore.collection('users').doc(uid).get().then((doc) => {
             console.log(doc.data());
             res.send(doc.data())
         })
@@ -76,7 +82,7 @@ const updateProfile = async (req, res, next) => {
         console.log(uid);
         console.log(data);
         // console.log(image); 
-        db.collection('users').doc(uid).update(data);
+        firestore.collection('users').doc(uid).update(data);
         res.send();
         
     } catch (error) {

@@ -1,5 +1,4 @@
-const firebaseDB = require('../firebaseDB');
-const db = firebaseDB.firestore();
+const {firestore} = require('../firebaseDB');
 
 //Model
 const Lottery = require("../Models/Lottery");
@@ -10,7 +9,7 @@ const getAllLottery = async (req, res, next) => {
 
     if (lotteryArray !== []) {
         try {
-            const lottery = await db.collection('LotteriesAvailable').get()
+            const lottery = await firestore.collection('LotteriesAvailable').get()
             if (lottery.empty) {
                 res.status(404).send("No lottery in record")
             } else {
@@ -41,7 +40,7 @@ const getAllLottery = async (req, res, next) => {
 const getDetailLottery = async (req, res, next) => {
     try {
         const id = req.params.id;
-        await db.collection('LotteriesAvailable').doc(id).get().then((doc) => {
+        await firestore.collection('LotteriesAvailable').doc(id).get().then((doc) => {
             res.send(doc.data())
         })
 
@@ -89,7 +88,7 @@ const getSearchNumber = async (req, res, next) => {
         for(let i=findK; i<maxK; i++){
             findingNum += finding[i];
         }
-        const lottery = await db.collection('LotteriesAvailable').get()
+        const lottery = await firestore.collection('LotteriesAvailable').get()
         lottery.docs.forEach(doc => {
             //push into array
             const lot = new Lottery(

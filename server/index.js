@@ -1,12 +1,13 @@
 const express = require('express');
 const cors = require('cors');
-const bodypParder = require('body-parser');
+const bodyParder = require('body-parser');
 const config = require('./config')
 require('dotenv').config()
 
 //import route
 const lotteryRoutes = require('./Routes/Lottery');
 const userRouter = require('./Routes/User');
+const authentication = require('./Routes/Auth')
 
 var omise = require('omise')({
     'publicKey': process.env.OMISE_PUBLIC_KEY,
@@ -19,9 +20,10 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(bodypParder.json());
+app.use(bodyParder.json());
 
 app.use('/api', userRouter);
+app.use('/auth',authentication);
 app.use('/lottery', lotteryRoutes);
 
 app.post('/checkout-credit-card', (req,res,next) => {

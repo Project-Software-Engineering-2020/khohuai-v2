@@ -4,13 +4,16 @@
 }
 .navbar-bg{
   background: rgb(111, 90, 233);
+  z-index: 20;
+  top: 0;
+  position: sticky;
 }
 .lottery-navbar {
-  height: 80px;
+  height: 70px;
   width: 100%;
   /* display: flex; */
   justify-content: start;
-   align-items: center;
+  align-items: center;
   display: grid;
   grid-template-columns: 165px 1fr;
  
@@ -25,7 +28,7 @@
 
 .lottery-nav-menu {
   display: grid;
-  grid-template-columns: 138px 167px 207px 132px 1fr;
+  grid-template-columns: 138px 167px 207px 132px 50px 1fr;
   justify-self: start;
   align-items: center;
   list-style: none;
@@ -42,7 +45,7 @@ ul.lottery-nav-menu {
 .lottery-nav-item {
   display: flex;
   align-items: center;
-  height: 80px;
+  height: 65px;
 }
 
 .nav-user {
@@ -56,6 +59,10 @@ ul.lottery-nav-menu {
   text-decoration: none;
   padding: 0.5rem 1rem;
   margin: 0 10px;
+}
+
+a.lottery-nav-links {
+  margin: 0px auto;
 }
 
 .lottery-nav-links:hover {
