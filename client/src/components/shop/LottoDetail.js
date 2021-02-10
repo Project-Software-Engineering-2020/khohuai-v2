@@ -8,6 +8,7 @@ const LottoDetail = (props) => {
     //รับค่า id จาก URL
     const lotteryID = props.match.params.id;
 
+
     const [lottery, setLottery] = useState([]);
     const [recommended, setRecommended] = useState([]);
     const [loading, setloading] = useState(false);
@@ -77,7 +78,7 @@ const LottoDetail = (props) => {
                             {recommended.map((item, index) => {
                                 if (index < 4) {
                                     return (
-                                        <Lottoryitem key={index} photo={item.photoURL} id={item.id}></Lottoryitem>
+                                        <Lottoryitem key={index} data={item} />
                                     )
                                 }
 

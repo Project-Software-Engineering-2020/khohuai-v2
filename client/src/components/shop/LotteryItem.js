@@ -1,32 +1,38 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux' 
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux'
 import './LotteryItem.css'
 
-const LotteryItem = (data) => {
+let OmiseCard;
+
+const LotteryItem = ({data}) => {
+
 
 
     const dispatch = useDispatch();
-    const mycart = useSelector(state => state.cart);
-
+       
     const addtoCart = () => {
-        dispatch({ type:"add_to_cart", id: data.id})
+        dispatch({ type:"ADD_TO_CART", data: data })
     }
-    // useEffect(async ()  => {
-    //     await setLottery(data)
-    //     await setloading(false);
-    // }, [])
+    useEffect(async ()  => {
+        // await setLottery(data)
+        // await setloading(false);
+    }, [])
 
     return (
+
         <div className="lottery-item">
-            {console.log(mycart)}
+            
             <figure className="lottery-item-image">
-                <a href={"/product/"+ data.id} >
-                    <img src={ data.photo }></img>
+                <a href={"/product/" + data.id} >
+                    <img src={data.photoURL}></img>
                 </a>
             </figure>
-            <button onClick={addtoCart} className="add-to-cart"><i className="fas fa-cart-plus"> </i> เพิ่มลงในตะกร้า</button>
+            <form>
+                <button id="creditcard" className="btn" type="button" onClick={addtoCart}><i className="fas fa-cart-plus"> </i> เพิ่มลงในตะกร้า</button>
+            </form>
+            
         </div>
-       
+
     )
 }
 

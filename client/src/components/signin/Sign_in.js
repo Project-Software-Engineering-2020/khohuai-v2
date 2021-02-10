@@ -9,7 +9,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import "../../stylesheet/signin.css";
 import { useDispatch, useSelector } from 'react-redux';
-
+import Axios from 'axios'
+ 
 const Sign_in = () => {
   const stetus = useSelector(state => state.auth)
   // const stotus = stetus.status;
@@ -44,38 +45,25 @@ const Sign_in = () => {
     e.preventDefault();
 
     try {
-      auth
-        .signInWithEmailAndPassword(email, password)
-        .then((res) => {
-          // console.log(res);
-          const user = firestore.collection("users").doc(res.user.uid);
-          user.get().then((doc) => {
-            dispatch({
+
+      Axios.post("http://localhost:3001/auth/login",{
+        email,
+        password
+      }).then((res) => {
+
+        console.log(res);
+          dispatch({
               type: 'SET_LOGIN',
-              uid: doc.data().uid,
-              displayName: doc.data().displayName,
-              photoURL: doc.data().photoURL,
-              email: doc.data().email,
-              role: doc.data().role,
+              uid: res.data.uid,
+              displayName: res.data.displayName,
+              photoURL: res.data.photoURL,
+              email: res.data.email,
+              role: res.data.role,
               provider: "email",
               status: true
             });
-          })
-        }).catch((error) => {
-          console.log(error);
-          if (error.code === "auth/invalid-email") {
-            setEmailError("อีเมลไม่ถูกต้อง")
-          }
-          else if(error.code === "auth/wrong-password") {
-            setPasswordErr("รหัสผ่านไม่ถูกต้อง")
-          }
-          else if(error.code === "auth/user-not-found") {
-            setUserErr("ไม่พบบัญชีผู้ใช้งาน")
-          }
-          else if(error.code === "auth/too-many-requests"){
-            setUserErr("คุณใส่รหัสผ่านผิดเกิน 3 ครั้ง กรุณารอสักครู่")
-          }
-        })
+      })
+      
     } catch (error) {
       alert(error)
     }
@@ -84,7 +72,7 @@ const Sign_in = () => {
   }
   const onloginwithgoogle = async () => {
     const result = await auth.signInWithPopup(googleProvider);
-
+    console.log(result);
     if (result) {
       const userref = firestore.collection("users").doc(result.user.uid);
       userref.get().then((doc) => {
@@ -115,6 +103,8 @@ const Sign_in = () => {
           });
 
         } else {
+          const tokenn = result.credential.idToken;
+          Axios.post("http://localhost:3001/auth/session", {tokenn})
           dispatch({
             type: 'SET_LOGIN',
             uid: doc.data().uid,

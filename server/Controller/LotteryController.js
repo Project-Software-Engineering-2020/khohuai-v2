@@ -1,5 +1,4 @@
-const firebaseDB = require('../firebaseDB');
-const db = firebaseDB.firestore();
+const {firestore} = require('../firebaseDB');
 
 //Model
 const Lottery = require("../Models/Lottery");
@@ -8,9 +7,9 @@ const getAllLottery = async (req, res, next) => {
 
     const lotteryArray = [];
 
-    if (lotteryArray != []) {
+    if (lotteryArray !== []) {
         try {
-            const lottery = await db.collection('LotteriesAvailable').get()
+            const lottery = await firestore.collection('LotteriesAvailable').get()
             if (lottery.empty) {
                 res.status(404).send("No lottery in record")
             } else {
@@ -33,13 +32,15 @@ const getAllLottery = async (req, res, next) => {
         }
     }
     else {
+        console.log(lotteryArray)
         res.send(lotteryArray);
     }
 }
+
 const getDetailLottery = async (req, res, next) => {
     try {
         const id = req.params.id;
-        await db.collection('LotteriesAvailable').doc(id).get().then((doc) => {
+        await firestore.collection('LotteriesAvailable').doc(id).get().then((doc) => {
             res.send(doc.data())
         })
 
@@ -50,22 +51,79 @@ const getDetailLottery = async (req, res, next) => {
 
 const getSearchNumber = async (req, res, next) => {
     try {
+        const lotteryArray = [];
+        const matchedLotteryArray = [];
+        //recieved search number
         const number = req.params.number;
+        const position = req.params.position;
+
         const finding = number.split("");
         let findingNum = "";
-        for(let i=0; i<6; i++){
-            if(finding[i] === "x") continue;
-            findingNum[i] += finding[i];
+        //สองตัวท้าย
+        if(position === "last2"){
+            var findK = 0;
+            var maxK = 2;
+            var lotK = 4;
+            var maxLotK = 6;
         }
-        await db.collection('LotteriesAvailable').doc().get().then((doc) => {
-            res.send(doc.data())
-        })
-
+        //สามตัวท้าย
+        else if(position === "last3"){
+            var findK = 0;
+            var maxK = 3;
+            var lotK = 3;
+            var maxLotK = 6;
+        }
+        //สามตัวหน้า
+        else if(position === "front"){
+            var findK = 0;
+            var maxK = 3;
+            var lotK = 0;
+            var maxLotK = 3;
+        }
+        //เลขทั้งหมด
+        else if(position === "whole"){
+            var findK = 0;
+            var maxK = 3;
+        }
+        for(let i=findK; i<maxK; i++){
+            findingNum += finding[i];
+        }
+        const lottery = await firestore.collection('LotteriesAvailable').get()
+        lottery.docs.forEach(doc => {
+            //push into array
+            const lot = new Lottery(
+                doc.id,
+                doc.data().number,
+                doc.data().photoURL,
+                doc.data().r,
+                doc.data().s,
+                doc.data().t
+            )
+            lotteryArray.push(lot);
+        });
+        //instant find without any split
+        if(position === "whole"){
+            lotteryArray.forEach(lot => {
+                let searchingNum = lot.number;
+                if(findingNum === searchingNum) matchedLotteryArray.push(lot);
+            }); 
+        }
+        //split and find
+        else if(position === "last2" || position === "last3" || position === "front"){
+            lotteryArray.forEach(lot => {
+                const num = lot.number.split("");
+                let searchingNum = "";
+                for(let i=lotK; i<maxLotK; i++){
+                    searchingNum += num[i];
+                }
+                if(findingNum === searchingNum) matchedLotteryArray.push(lot);
+            });
+        }
+        res.send(matchedLotteryArray);
     } catch (error) {
         console.log(error);
     }
 }
-
 
 module.exports = {
     getAllLottery,

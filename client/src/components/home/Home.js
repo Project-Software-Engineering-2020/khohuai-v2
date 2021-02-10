@@ -3,16 +3,22 @@ import "./Home.css";
 import Foryou from "./foryou";
 import Hot from "./hot";
 import Carousel from "./carousel";
-import Footer from "../footer/Footer";
+import { useSelector } from 'react-redux' 
 
 const Home = () => {
-  return (
-    <div>
-      <div className="home">
-        <div className="container">
-          <Carousel></Carousel>
-          <Foryou />
-          <Hot />
+
+    const mycart = useSelector(state => state.cart);
+
+    return (
+        <div>
+            {console.log(mycart)}
+            <div className="home">
+                <div className="container">
+                    <Carousel />
+                    <Foryou /> 
+                    <Hot /> 
+                </div>
+            </div>
         </div>
       </div>
       <Footer />

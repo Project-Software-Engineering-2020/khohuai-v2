@@ -18,11 +18,13 @@ const Profile = () => {
     const [imagePreview, setImagePreview] = useState();
     const [loading, setloading] = useState(false);
 
-    const [editState, setEditState] = useState(true);
+    const [editState, setEditState] = useState(false);
 
-   
+
     const [redirect, setredirect] = useState(true)
+
     
+
 
     const fetchUserProfile = async () => {
         const id = auth.uid;
@@ -30,17 +32,26 @@ const Profile = () => {
         await Axios.get("http://localhost:3001/api/profile/" + id).then((res) => {
             profile = res.data
         })
-       
+
         console.log(profile)
 
         return profile;
     }
 
-    useEffect( async () => {
+    useEffect(async () => {
         setredirect(status)
         let pro = await fetchUserProfile();
         await setProfile(pro);
         await setloading(true);
+
+        // setProfile(
+        //     {   
+        //         id: "73847879",
+        //         firstname: "chon",
+        //         lastname: "last",
+        //         displayName: "Bosszaaa"
+        //     }
+        // )
 
     }, [status]);
 
@@ -159,7 +170,7 @@ const Profile = () => {
         setEditState(!editState);
     }
 
- 
+
     return (
         <div>
             {redirect ? (
@@ -169,55 +180,8 @@ const Profile = () => {
                         <div className="container profile-page">
                             <h3>ข้อมูลส่วนตัว</h3>
                             {editState ?
-                                <div className="my-profile">
-                                    <section>
-                                        <figure className="img-profile">
-                                            <img src={imagePreview || Profile.photoURL} alt="profile"></img>
-                                        </figure>
 
-                                    </section>
-                                    <section className="information-profile">
-                                        <div className="profile-data">
-                                            <label htmlFor="text"> ชื่อผู้ใช้ : </label>
-                                            <span>{Profile.displayName}</span>
-                                        </div>
-
-                                        <div className="profile-data">
-                                            <label htmlFor="text"> ชื่อ : </label>
-                                            <span>{Profile.firstname}</span>
-                                        </div>
-
-                                        <div className="profile-data">
-                                            <label> นามสกุล : </label>
-                                            <span>{Profile.lastname}</span>
-                                        </div>
-
-                                        <div className="profile-data">
-                                            <label> อีเมล : </label>
-                                            <span>{Profile.email}</span>
-                                        </div>
-
-                                        <div className="profile-data">
-                                            <label> เบอร์โทร : </label>
-                                            <span>{Profile.phone}</span>
-                                        </div>
-                                        <div className="profile-data">
-                                            <div>
-                                            </div>
-                                            <div className="group-btn-profile">
-                                                <button type="button" className="btn-edit-profile" onClick={OnClickeditProfile}> แก้ไขข้อมูล </button>
-                                                {status.provider != "google" ? 
-                                                    <button type="button" className="btn-change-password" ><a href="/updatepassword">เปลี่ยนรหัสผ่าน</a></button>
-                                                :
-                                                null
-                                            }
-                                               
-                                            </div>
-                                        </div>
-
-                                    </section>
-                                </div>
-                                :
+                                //before edit
                                 <div className="my-profile">
 
                                     <section>
@@ -266,6 +230,59 @@ const Profile = () => {
 
                                     </section>
                                 </div>
+
+                                :
+                                <div className="my-profile">
+                                    <section>
+                                        <figure className="img-profile">
+                                            <img src={imagePreview || Profile.photoURL} alt="profile"></img>
+                                        </figure>
+
+                                    </section>
+                                    <section className="information-profile">
+                                        <div className="profile-data">
+                                            <label htmlFor="text"> ชื่อผู้ใช้ : </label>
+                                            <span>{Profile.displayName}</span>
+                                        </div>
+
+                                        <div className="profile-data">
+                                            <label htmlFor="text"> ชื่อ : </label>
+                                            <span>{Profile.firstname}</span>
+                                        </div>
+
+                                        <div className="profile-data">
+                                            <label> นามสกุล : </label>
+                                            <span>{Profile.lastname}</span>
+                                        </div>
+
+                                        <div className="profile-data">
+                                            <label> อีเมล : </label>
+                                            <span>{Profile.email}</span>
+                                        </div>
+
+                                        <div className="profile-data">
+                                            <label> เบอร์โทร : </label>
+                                            <span>{Profile.phone}</span>
+                                        </div>
+                                        <div className="profile-data">
+                                            <div>
+                                            </div>
+                                            <div className="group-btn-profile">
+                                                <button type="button" className="btn-edit-profile" onClick={OnClickeditProfile}> แก้ไขข้อมูล </button>
+                                                {status.provider != "google" ?
+                                                    <button type="button" className="btn-change-password" ><a href="/updatepassword">เปลี่ยนรหัสผ่าน</a></button>
+                                                    :
+                                                    null
+                                                }
+
+                                            </div>
+                                        </div>
+
+                                    </section>
+                                </div>
+
+
+
                             }
 
                         </div>

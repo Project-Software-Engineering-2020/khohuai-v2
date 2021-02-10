@@ -17,39 +17,50 @@ import Profile from "./components/profile/Profile";
 import Sign_in from "./components/signin/Sign_in";
 import LotteryDetail from "./components/shop/LottoDetail";
 import UploadLottery from "./components/insert/insertLottery";
-import Cart from "./components/cart/Cart";
-import Footer from "./components/footer/Footer";
 import Error404 from "./components/error/Error404";
 import UpdatePassword from "./components/recover/Updatepassword";
 import ForgotPassword from "./components/recover/Forgotpassword";
-
+import Basket from "./components/pages/basket";
+import Sidebar from "./components/admin/Sidebar";
+import Overview from "./components/pages/Overview";
+import LotteryReports from "./components/pages/LotteryReports";
+import Invoice from "./components/pages/Invoice";
+import AdUser from "./components/pages/AdUser";
 //redux
 import { Provider } from "react-redux";
-import store from "./store/store";
+import { PersistGate } from "redux-persist/integration/react";
+import { store, persister } from "./redux/store";
 
 function App() {
   return (
     <Provider store={store}>
-      <Router>
-        <Navbar />
-        <Switch>
-          <Route path="/" exact={true} component={Home} />
-          <Route path="/shop" component={Shop} />
-          <Route path="/lottery" component={LotteryThailand} />
-          {/* <Route path="/game" component={Game} /> */}
-          <Route path="/login" component={Sign_in} />
-          <Route path="/signup" component={SignUp} />
-          <Route path="/product/:id" component={LotteryDetail} />
-          <Route path="/me" component={Profile} />
-          <Route path="/upload" component={UploadLottery} />
-          <Route path="/updatepassword" component={UpdatePassword} />
-          <Route path="/forgotpassword" component={ForgotPassword} />
-          <Route path="/cart" component={Cart} />
-          <Route path="/footer" component={Footer} />
-          {/* <Route component={Error404} /> */}
-          <PrivateRoute path="/game" component={Game} />
-        </Switch>
-      </Router>
+      <PersistGate loading={null} persistor={persister}>
+        <Router>
+          <Navbar />
+          <Switch>
+            <Route path="/" exact={true} component={Home} />
+            <Route path="/shop" component={Shop} />
+            <Route path="/lottery" component={LotteryThailand} />
+            {/* <Route path="/game" component={Game} /> */}
+            <Route path="/login" component={Sign_in} />
+            <Route path="/signup" component={SignUp} />
+            <Route path="/product/:id" component={LotteryDetail} />
+            <Route path="/me" component={Profile} />
+            <Route path="/upload" component={UploadLottery} />
+            <Route path="/updatepassword" component={UpdatePassword} />
+            <Route path="/forgotpassword" component={ForgotPassword} />
+            {/* <Route component={Error404} /> */}
+
+            <Route path="/dashbord" exact component={Overview} />
+            <Route path="/LotteryReports" exact component={LotteryReports} />
+            <Route path="/Invoice" exact component={Invoice} />
+            <Route path="/AdUser" exact component={AdUser} />
+
+            <PrivateRoute path="/game" component={Game} />
+            <PrivateRoute path="/cart" component={Basket} />
+          </Switch>
+        </Router>
+      </PersistGate>
     </Provider>
   );
 }
