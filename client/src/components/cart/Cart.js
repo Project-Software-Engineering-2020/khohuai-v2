@@ -1,8 +1,11 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./cart.css";
 import AddDel from "./AddDel";
 
-const Cart = () => {
+const Cart = (data) => {
+  const dispatch = useDispatch();
+
   return (
     <div className="container cart">
       <div className="row">
@@ -43,7 +46,7 @@ const Cart = () => {
                   1&nbsp;&nbsp;2&nbsp;&nbsp;3&nbsp;&nbsp;4&nbsp;&nbsp;5&nbsp;&nbsp;6
                 </h1>
                 <h5>งวดประจำวันที่ 1 กุมภาพันธ์ 2563</h5>
-                <AddDel /> คงเหลือจำนวน 2 ใบ
+                <AddDel />
               </div>
             </div>
           </div>

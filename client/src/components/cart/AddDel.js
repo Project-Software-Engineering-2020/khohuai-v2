@@ -30,7 +30,7 @@ class AddDel extends Component {
         <button type="button" className="btnAdd" onClick={this.IncrementItem}>
           <FontAwesomeIcon icon={faPlus} />
         </button>
-        {/* &nbsp;&nbsp;&nbsp;คงเหลือจำนวน 2 ใบ */}
+        &nbsp;&nbsp;&nbsp;คงเหลือจำนวน 2 ใบ
       </div>
     );
   }
