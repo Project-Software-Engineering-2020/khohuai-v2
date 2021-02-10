@@ -5,11 +5,14 @@ import { Link } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap'
 import { auth } from "../../firebase/firebase";
 import { useSelector, useDispatch } from 'react-redux';
+import { setlogout } from '../../redux/action/authAction';
+import Axios from 'axios'; 
 
 
 
 
 export default function Button() {
+
   const dispatch = useDispatch();
 
   const stetus = useSelector(state => state.auth)
@@ -71,14 +74,22 @@ export default function Button() {
   }, [stetus,stotus2,stotus3]);
   
   const signouthandle = () => {
-    auth.signOut().then(() => {
-      console.log("Logout OK");
-      dispatch({ type: "SET_LOGOUT" });
-      return <Redirect to="/" />
+
+    Axios.post("http://localhost:3001/auth/logout")
+    .then((res) => {
+      if(res.data === "logout_success")
+      {
+        dispatch(setlogout())
+      }
     })
-      .catch((err) => {
-        console.log("Logout Not work" + err)
-      })
+
+    // auth.signOut().then(() => {
+    //   dispatch(setlogout());
+      
+    // })
+    //   .catch((err) => {
+    //     console.log("Logout Not work" + err)
+    //   })
   }
   return (
     <div>

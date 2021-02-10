@@ -7,9 +7,6 @@ import thunk from 'redux-thunk';
 import authReducer from './reducer/authReducer';
 import mycart from './reducer/cartReducer';
 
-
-
-
  // ******Combine Reducers******
 const rootReducer = combineReducers({
     auth: authReducer,

@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import "../../stylesheet/signin.css";
 import { useDispatch, useSelector } from 'react-redux';
+import { setloginWithEmail, setloginWithGoogle } from '../../redux/action/authAction';
 import Axios from 'axios'
  
 const Sign_in = () => {
@@ -45,30 +46,15 @@ const Sign_in = () => {
     e.preventDefault();
 
     try {
-
       Axios.post("http://localhost:3001/auth/login",{
         email,
         password
       }).then((res) => {
-
-        console.log(res);
-          dispatch({
-              type: 'SET_LOGIN',
-              uid: res.data.uid,
-              displayName: res.data.displayName,
-              photoURL: res.data.photoURL,
-              email: res.data.email,
-              role: res.data.role,
-              provider: "email",
-              status: true
-            });
+        dispatch(setloginWithEmail(res));
       })
-      
     } catch (error) {
-      alert(error)
+      console.log(error);
     }
-
-
   }
   const onloginwithgoogle = async () => {
     const result = await auth.signInWithPopup(googleProvider);
@@ -105,16 +91,11 @@ const Sign_in = () => {
         } else {
           const tokenn = result.credential.idToken;
           Axios.post("http://localhost:3001/auth/session", {tokenn})
-          dispatch({
-            type: 'SET_LOGIN',
-            uid: doc.data().uid,
-            displayName: doc.data().displayName,
-            photoURL: doc.data().photoURL,
-            email: doc.data().email,
-            role: doc.data().role,
-            provider: "google",
-            status: true
-          });
+
+          // console.log(result.user.uid,doc.data().displayName)
+
+          dispatch(setloginWithGoogle(doc,result.user.uid))
+          
           // console.log("มีผู้ใช้นี้แล้ว");
 
         }
