@@ -216,5 +216,6 @@ const getSearchNumber = async (req, res, next) => {
 module.exports = {
     getAllLottery,
     getDetailLottery,
+    getRecommendedLottery,
     getSearchNumber
 }
