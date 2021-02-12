@@ -96,7 +96,6 @@ function Cart(state = initialState, action) {
                 totalItem: TotalItem_1
             }
 
-            console.log(state)
             return state;
 
         case 'ADJUST_QTY':

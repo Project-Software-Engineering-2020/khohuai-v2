@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { Route, Redirect } from "react-router-dom";
 import { useSelector } from 'react-redux';
 
@@ -12,7 +12,6 @@ function ProtectedRoute({component: Component, ...rest}) {
         <Route 
             {...rest}
             component={(props) => {
-                console.log(isAuthenticated);
                 // check login
                 if(isAuthenticated === true) {
                     return <Component {...props} />

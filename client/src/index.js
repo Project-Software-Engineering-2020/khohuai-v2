@@ -3,10 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './ReectReport/reportWebVitals';
+//redux 
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persister } from './redux/store';
 
 ReactDOM.render(
-    <App />,
-  document.getElementById('root')
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persister}>
+      <App />
+    </PersistGate>
+  </Provider>
+  ,document.getElementById('root')
 );
 
 reportWebVitals();
