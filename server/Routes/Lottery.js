@@ -4,7 +4,7 @@ const { getAllLottery, getDetailLottery, getSearchNumber } = require('../Control
 const router = express.Router();
 
 
-router.get('/search=:number&:position', getSearchNumber);
+router.get('/search', getSearchNumber);
 router.get('/', getAllLottery);
 router.get('/:id', getDetailLottery);
 

@@ -26,7 +26,7 @@ const LotteryThailand = () => {
     const [inputList, setInputList] = useState(initialInputList);
     const [inputErr, setInputErr] = useState("");
 
-    const addInput = (event) => {
+    const addInput = () => {
         if (inputList.length > 4) {
             return
         }
@@ -38,6 +38,12 @@ const LotteryThailand = () => {
             setInputList((perv) => [...perv, inputState]);
         }
 
+    }
+
+    const removeInput = (index) => {
+        const target = [...inputList];
+        target.splice(index,1);
+        return setInputList(target);
     }
 
     const handleInput = (index, event) => {
@@ -283,18 +289,25 @@ const LotteryThailand = () => {
                                     null
                                 }
                                 {inputList.map((item, index) => {
+
+                                    //win = true สีเขียว
+                                    //win = false สีแดง
+                                    let win = item.result[0] !== "ไม่ถูกรางวัล" ? true : false
                                     return (
-                                        <div className="box-check-lottery" key={index}>
+                                        <div 
+                                            className= { win? "box-check-lottery" : "box-check-lottery" }          
+                                            key={index}
+                                        >
                                             <p>ใบที่ {index + 1}</p>
                                             <input type="text" maxLength="6" className="form-control" value={item.myLot} name="checkLottery" onChange={(e) => handleInput(index, e)} />
                                             <div className="result-check-lot">
                                                 {item.result.map((r, i) => {
                                                     return (
-                                                        <p key={i} > {r} </p>
+                                                        <p key={i}> {r} </p>
                                                     )
                                                 })}
                                             </div>
-
+                                            <button onClick={e => removeInput(index)} className="remove-input"><i class="fas fa-times"></i></button>
                                         </div>
                                     )
                                 })}
@@ -304,9 +317,9 @@ const LotteryThailand = () => {
                                 <div className="btn-checkyourlottery">
                                     <button type="text" onClick={checkyourlottery}>ตรวจสลาก</button>
                                 </div>
-                                {/* <pre>
+                                <pre>
                                     {JSON.stringify(inputList, null, 2)}
-                                </pre> */}
+                                </pre>
                             </Modal.Body>
                         </Modal>
                     </div>

@@ -2,11 +2,11 @@
   height: 70px;
   width: auto;
 }
-.navbar-bg{
+div.navbar-bg{
   background: rgb(111, 90, 233);
-  /* z-index: 20;
+  z-index: 20;
   top: 0;
-  position: sticky; */
+  position: sticky;
 }
 .lottery-navbar {
   height: 70px;
@@ -95,6 +95,11 @@ a.lottery-nav-links {
 
 
 @media screen and (max-width: 1010px) {
+
+  div.navbar-bg {
+    z-index: 20;
+    position: inherit;
+  }
   .NavbarItems {
     position: relative;
 }
