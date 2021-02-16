@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ButtonLogin from './Button';
-// import ButtonUser from './ButtonUSer';
+import NotificationBadge from 'react-notification-badge';
+import { Effect } from 'react-notification-badge';
 import { Link, useHistory } from 'react-router-dom';
 import './Navbar.css';
 import Dropdown from './Dropdown';
@@ -90,16 +91,21 @@ function Navbar() {
               <i className="fas fa-gamepad" /> เล่นเกม
             </Link>
           </li>
-          <a href="/cart" className="text-white"><i class="fas fa-shopping-cart"></i>{cart.totalItem}</a>
+          <li className="cart-on-nav">
+            <a href="/cart" className="text-white">
+              {/* <NotificationBadge count={cart.totalItem} effect={Effect.SCALE} >
+                  <i class="fas fa-shopping-cart"></i>
+                  </NotificationBadge> */}
+                  
+              <i className="fas fa-shopping-cart fa-lg"></i>
+               <span className="badge-cart">{cart.totalItem}</span>
+            </a>
+          </li>
           <li className="nav-user">
             <ButtonLogin className="btn-login" onClick={closeMobileMenu} />
           </li>
 
         </ul>
-
-        {/* <ButtonLogin className="btn-login nav-links-mobile" /> */}
-
-        {/* <ButtonLogin className="btn-login" /> */}
       </nav>
     </div>
 

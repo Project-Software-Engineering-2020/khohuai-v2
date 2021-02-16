@@ -28,7 +28,7 @@ const LotteryItem = ({data}) => {
                 </a>
             </figure>
             <form>
-                <button id="creditcard" className="btn" type="button" onClick={addtoCart}><i className="fas fa-cart-plus"> </i> เพิ่มลงในตะกร้า</button>
+                <button className="add-to-cart" type="button" onClick={addtoCart}><i className="fas fa-cart-plus"> </i> เพิ่มลงในตะกร้า</button>
             </form>
             
         </div>

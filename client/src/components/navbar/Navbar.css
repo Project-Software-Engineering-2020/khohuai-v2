@@ -3,7 +3,7 @@
   width: auto;
 }
 div.navbar-bg{
-  background: rgb(111, 90, 233);
+  background: #7d27ce;
   z-index: 20;
   top: 0;
   position: sticky;
@@ -28,7 +28,7 @@ div.navbar-bg{
 
 .lottery-nav-menu {
   display: grid;
-  grid-template-columns: 138px 167px 207px 132px 50px 1fr;
+  grid-template-columns: 138px 167px 207px 132px 1fr 150px;
   justify-self: start;
   align-items: center;
   list-style: none;
@@ -83,6 +83,22 @@ a.lottery-nav-links {
 
 .menu-icon {
   display: none;
+}
+.cart-on-nav {
+  display: flex;
+  justify-self: end;
+}
+.badge-cart {
+  position: relative;
+  right: 10px;
+  top:-10px;
+  height: 20px;
+  width: 20px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+  font-size: 13px;
+  font-family: sans-serif;
 }
 
 @media screen and (max-width: 1203px){
