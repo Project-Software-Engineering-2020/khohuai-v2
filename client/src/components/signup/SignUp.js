@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import "../../stylesheet/signup.css";
-import { firestore, auth } from "../../firebase/firebase";
+import Axios from 'axios';
+// import { firestore, auth } from "../../firebase/firebase";
 import { useDispatch, useSelector } from 'react-redux';
 const SignUp = () => {
 
@@ -192,53 +193,27 @@ const SignUp = () => {
     setRegisterErr("");
     e.preventDefault();
     const valid = await formValidation();
-    // console.log(isvalid);
     if (valid === true) {
-      auth
-        .createUserWithEmailAndPassword(email, password)
-        .then(async (result) => {
-          console.log(result);
-          console.log("ลงทะเบียนเรียบร้อยแล้ว");
-
-          if (result.additionalUserInfo.isNewUser === true) {
-
-            const userRef = firestore.collection("users").doc(result.user.uid);
-            const doc = await userRef.get();
-            if (!doc.data()) {
-              await userRef.set({
-                uid: result.user.uid,
-                displayName: firstname,
-                firstname: firstname,
-                lastname: lastname,
-                phone: phone,
-                photoURL: "https://img2.thaipng.com/20180523/tha/kisspng-businessperson-computer-icons-avatar-clip-art-lattice-5b0508dc6a3a10.0013931115270566044351.jpg",
-                email: result.user.email,
-                role: "user",
-                provider: "hotmail",
-                status: true,
-              }).then((res) => {
-                dispatch({
-                  type: 'SET_LOGIN',
-                  uid: result.user.uid,
-                  displayName: firstname,
-                  photoURL: "https://img2.thaipng.com/20180523/tha/kisspng-businessperson-computer-icons-avatar-clip-art-lattice-5b0508dc6a3a10.0013931115270566044351.jpg",
-                  email: result.user.email,
-                  role: "user",
-                  provider: "hotmail",
-                  status: true
-                })
-              });
-
-            }
-          }
-         
+      Axios.post("http://localhost:3001/auth/sigup", {
+        firstname: firstname,
+        lastname: lastname,
+        phone: phone,
+        email: email,
+        password: password,
+      }).then((res) => {
+        console.log(res);
+        dispatch({
+          type: 'SET_LOGIN',
+          uid: res.data,
+          displayName: firstname,
+          photoURL: "https://img2.thaipng.com/20180523/tha/kisspng-businessperson-computer-icons-avatar-clip-art-lattice-5b0508dc6a3a10.0013931115270566044351.jpg",
+          email: email,
+          role: "user",
+          provider: "hotmail",
+          status: true
         })
-        .catch((err) => {
-          console.log(err);
-          if (err.code === "auth/email-already-in-use") {
-            setRegisterErr("อีเมลนี้ถูกใช้งานแล้ว");
-          }
-        });
+      }
+      )
     }
     else {
       console.log("ข้อมูลไม่ตรบ")

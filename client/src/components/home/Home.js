@@ -11,7 +11,6 @@ const Home = () => {
 
     return (
         <div>
-            {console.log(mycart)}
             <div className="home">
                 <div className="container">
                     <Carousel />

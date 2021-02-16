@@ -31,15 +31,13 @@
 }
 .section-search{
     display: grid;
-    grid-template-columns: 1fr 400px;
+    grid-template-columns: 1fr 420px;
     justify-items: right;
     align-items: center;
     margin: 5px 0;
     padding: 5px;
 }
 .box-search-lottery {
-    
-   
     width: 100%;
     margin: 10px;
     padding: 15px;
