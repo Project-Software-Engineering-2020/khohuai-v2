@@ -75,10 +75,10 @@
 // export default LotteryItem;
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import Checkoutcerditcard from '../checkoutpage/creditcard';
+// import Checkoutcerditcard from '../checkoutpage/creditcard';
 import './LotteryItem.css'
 
-let OmiseCard;
+// let OmiseCard;
 
 const LotteryItem = ({data}) => {
 
@@ -106,7 +106,6 @@ const LotteryItem = ({data}) => {
             <form>
                 <button onClick={addtoCart} className="add-to-cart"><i className="fas fa-cart-plus"> </i> เพิ่มลงในตะกร้า</button>
             </form>
-            <Checkoutcerditcard></Checkoutcerditcard>
 
         </div>
 
