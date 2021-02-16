@@ -7,12 +7,9 @@ require('dotenv').config()
 //import route
 const lotteryRoutes = require('./Routes/Lottery');
 const userRouter = require('./Routes/User');
+const checkoutCreditCard = require('./Routes/Checkout')
 const authentication = require('./Routes/Auth')
 
-var omise = require('omise')({
-    'publicKey': process.env.OMISE_PUBLIC_KEY,
-    'secretKey': process.env.OMISE_SECRET_KEY,
-})
 
 // console.log("-------------This is pub key-------------------" + process.env.OMISE_PUBLIC_KEY)
 
@@ -25,27 +22,34 @@ app.use(bodyParder.json());
 app.use('/api', userRouter);
 app.use('/auth',authentication);
 app.use('/lottery', lotteryRoutes);
+app.use(checkoutCreditCard)
 
-app.post('/checkout-credit-card', (req,res,next) => {
-  console.log(req)
-  // try{
-  //   const customer = await omise.customers.create({
-  //     email:"bebeoblybe@gmail.com",
-  //     description:"John Doe",
-  //     card:'tokn_test_5mr8vzzc7y4r8tfl8ys'
-  //   })
-  //   const charge   = await omise.charges.create({
-  //     amount: 10000,
-  //     currency: "thb",
-  //     customer: customer.id
-  //   })
-  //   console.log(charge)
-  // }
-  // catch(error){
-  //   console.log(error)
-  // }
-  next()
-})
+
+// app.post('/checkout-credit-card', async (req, res, next) => {
+//   const { email, name, amount, token } = req.body;
+//   console.log(amount)
+//   try {
+//     const customer = await omise.customers.create({
+//       email,
+//       description: name,
+//       card: token,
+//     })
+//     const charge = await omise.charges.create({
+//       amount,
+//       currency: "thb",
+//       customer: customer.id
+//     })
+//     console.log("Charge ========> " , charge)
+//     res.send({
+//       amount : charge.amount,
+//       status: charge.status,
+//     })
+//   } catch (err) {
+//     console.log("ตรงนี้")
+//     console.log(err)
+//   }
+//   next()
+// })
 
 // http://localhost:3001
 app.listen(config.port, () => 
