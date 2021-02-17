@@ -16,6 +16,7 @@ const Basket = () => {
     const [clearCart, setclearCart] = useState();
 
     const createCreditCardCharge = async (email, name, amount, token) => {
+
         console.log("Token Here ===>" + token)
         try {
             const res =  await axios.post('http://localhost:3001/checkout-credit-card',{
@@ -84,9 +85,6 @@ const Basket = () => {
                         </aside>
                     </div>
                 )}
-
-
-
         </div>
     )
 }

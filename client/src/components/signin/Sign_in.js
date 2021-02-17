@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
+import { GoogleLogin } from 'react-google-login'
 import {
   auth,
   firestore,
@@ -11,24 +12,17 @@ import "../../stylesheet/signin.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { setloginWithEmail, setloginWithGoogle } from '../../redux/action/authAction';
 import Axios from 'axios'
- 
+
 const Sign_in = () => {
   const stetus = useSelector(state => state.auth)
-  // const stotus = stetus.status;
   const [redirect, setredirect] = useState(null)
-  // const [user, setuser] = useState(null);
-  // const [loader, setloader] = useState(false);
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
 
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordErr] = useState("");
   const [UserError, setUserErr] = useState("");
-  // const userRef = useRef(firestore.collection("users")).current;
-  // const [image, setImage] = useState(null);
-  // const [imgUrl, setImgUrl] = useState("");
 
-  // const element = <FontAwesomeIcon icon={faGoogle} />;
 
 
   const dispatch = useDispatch();
@@ -46,7 +40,7 @@ const Sign_in = () => {
     e.preventDefault();
 
     try {
-      Axios.post("http://localhost:3001/auth/login",{
+      Axios.post("http://localhost:3001/auth/login", {
         email,
         password
       }).then((res) => {
@@ -85,23 +79,37 @@ const Sign_in = () => {
               provider: "google",
               status: true
             });
-            // console.log("เพิ่มข้อมูลแล้วเน้อ");
           });
 
         } else {
           const tokenn = result.credential.idToken;
-          Axios.post("http://localhost:3001/auth/session", {tokenn})
+          Axios.post("http://localhost:3001/auth/session", { tokenn })
 
           // console.log(result.user.uid,doc.data().displayName)
 
-          dispatch(setloginWithGoogle(doc,result.user.uid))
-          
+          dispatch(setloginWithGoogle(doc, result.user.uid))
+
           // console.log("มีผู้ใช้นี้แล้ว");
 
         }
       });
     }
   };
+
+  const handleLogin = async (googleData) => {
+    alert("login")
+    const res = await fetch("http://localhost:3001/auth/google", {
+        method: "POST",
+        body: JSON.stringify({
+        token: googleData.tokenId
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    const data = await res.json()
+    // store returned user somehow
+  }
 
   // const handleChange = (e) => {
   //   if (e.target.files[0]) {
@@ -145,40 +153,40 @@ const Sign_in = () => {
                   <hr />
                 </h1>
               </div>
-              { UserError.length > 0 ?
-              <div className="alert alert-danger">{UserError}</div>
-              :
+              {UserError.length > 0 ?
+                <div className="alert alert-danger">{UserError}</div>
+                :
                 null
               }
               <div className="form-group">
                 <label htmlFor="username">อีเมล</label>
                 <input
                   type="email"
-                  className= {emailError.length > 0 ? "form-control  is-invalid" : "form-control"}
+                  className={emailError.length > 0 ? "form-control  is-invalid" : "form-control"}
                   name="email"
                   value={email}
                   onChange={(e) => setemail(e.target.value)}
                 />
-                {emailError.length || UserError.length > 0 ? 
+                {emailError.length || UserError.length > 0 ?
                   <div className="text-danger mt-1">{emailError}</div>
-                : 
+                  :
                   null
                 }
-                
+
               </div>
 
               <div className="form-group">
                 <label htmlFor="password">รหัสผ่าน</label>
                 <input
                   type="password"
-                  className= {passwordError.length || UserError.length > 0 ? "form-control  is-invalid" : "form-control"}
+                  className={passwordError.length || UserError.length > 0 ? "form-control  is-invalid" : "form-control"}
                   name="password"
                   value={password}
                   onChange={(e) => setpassword(e.target.value)}
                 />
-                {passwordError.length > 0 ? 
+                {passwordError.length > 0 ?
                   <div className="text-danger mt-1">{passwordError}</div>
-                : 
+                  :
                   null
                 }
               </div>
@@ -201,7 +209,7 @@ const Sign_in = () => {
                 หรือ
               </div>
 
-              <div className="">
+              {/* <div className="">
                 <button
                   type="button"
                   onClick={onloginwithgoogle}
@@ -210,7 +218,16 @@ const Sign_in = () => {
                   <FontAwesomeIcon icon={faGoogle} />
                     &nbsp;&nbsp;ล็อคอินด้วยกูเกิ้ล
                   </button>
-              </div>
+              </div> */}
+
+              <GoogleLogin
+                className="btn-google my-3"
+                clientId="909598832056-fvgpul65lep8ufn3saohneehkaiddhhk.apps.googleusercontent.com"
+                buttonText="ลงชื่อเข้าใช้ด้วย Google"
+                onSuccess={handleLogin}
+                onFailure={handleLogin}
+                cookiePolicy={'single_host_origin'}
+              />
 
               <div>
                 <p>หากคุณยังไม่มีบัญชีผู้ใช้งาน <a href="/signup"> สร้างบัญชีผู้ใช้</a> </p>

@@ -12,7 +12,7 @@ const getAllLottery = async (req, res, next) => {
         try {
             const lottery = await firestore.collection('LotteriesAvailable').get()
             if (lottery.empty) {
-                res.status(404).send("No lottery in record")
+                res.status(400).send("No lottery in record")
             } else {
                 lottery.docs.forEach(doc => {
                     //push into array
@@ -60,7 +60,7 @@ const getRecommendedLottery = async (req, res, next) => {
         history.docs.forEach(hist => {
             //หาประวัติการซื้อของ user นั้น
             //ค่าตัวแปรของ user id และ date ยังไม่ถูก
-            if(hist.uid === user.id && hist.date <= date - 31){
+            if (hist.uid === user.id && hist.date <= date - 31) {
                 //push ค่า lottery ที่เคยซื้อลง historyArray
                 const lot = new Lottery(
                     hist.id,
@@ -90,49 +90,46 @@ const getRecommendedLottery = async (req, res, next) => {
 
         let i = 0;
         //ถ้าไม่เคยซื้อในช่วง 31 วันที่ผ่านมา
-        if(hist.Array === []){
-            const count_lot = lotteryArray.length; 
-            for(lot in lotteryArray){
+        if (hist.Array === []) {
+            const count_lot = lotteryArray.length;
+            for (lot in lotteryArray) {
                 let rand = (int)(Math.random() * count_lot) + 1;
-                if(rand >= Math.ceil(count_lot / 4)){
+                if (rand >= Math.ceil(count_lot / 4)) {
                     matchedArray.push(lot);
                     i++;
                 }
-                if(i === 4) break;
-            }   
+                if (i === 4) break;
+            }
         }
-        else{
-            for(hist in historyArray){
+        else {
+            for (hist in historyArray) {
                 let histNum = parseInt(hist.number);
                 let histLastTwoDigit = histNum % 100;
                 histLastTwoDigit = parseInt(histLastTwoDigit / 10) + ((histLastTwoDigit % 10) * 10)
-                for(lot in lotteryArray){
+                for (lot in lotteryArray) {
                     let lotNum = parseInt(lot.number);
                     let lotLastTwoDigit = lotNum % 100;
-                    if(lotLastTwoDigit === histLastTwoDigit){
+                    if (lotLastTwoDigit === histLastTwoDigit) {
                         matchedArray.push(lot);
                         i++;
                     }
-                    if(i === 4) break;
+                    if (i === 4) break;
                 }
             }
-            if(i <= 4){
-                for(lot in lotteryArray){
+            if (i <= 4) {
+                for (lot in lotteryArray) {
                     let duplicated = false;
-                    for(match in matchedArray){
-                        if(match.number === lot.number) duplicated = true;
+                    for (match in matchedArray) {
+                        if (match.number === lot.number) duplicated = true;
                     }
-                    if(duplicated === false){
+                    if (duplicated === false) {
                         matchedArray.push(lot);
                         i++;
-                    }  
-                    if(i === 4) break;
-                }   
+                    }
+                    if (i === 4) break;
+                }
             }
         }
-        
-        
-
     } catch (error) {
         console.log(error);
     }

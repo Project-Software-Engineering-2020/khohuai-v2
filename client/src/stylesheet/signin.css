@@ -40,12 +40,12 @@
 }
 
 .btn-google {
-  background-color: #fa3939;
-  color: white;
+  color: rgb(32, 32, 32) !important;
   padding: 12px 15px;
   border: none;
   border-radius: 8px;
   width: 100%;
+  justify-content: center;
 }
 
 .btn-google:hover {
