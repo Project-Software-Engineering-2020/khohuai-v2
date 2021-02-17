@@ -1,18 +1,36 @@
 const { auth,firebaseApp, admin, firestore } = require('../firebaseDB');
+const { OAuth2Client } = require('google-auth-library')
+const client = new OAuth2Client("909598832056-fvgpul65lep8ufn3saohneehkaiddhhk.apps.googleusercontent.com")
 const User = require('../Models/User');
 
 const sessionLogin = async (req, res, next) => {
 
-  // Get the ID token passed and the CSRF token.
-  const idToken = req.body.tokenn.toString();
- 
-  var credential = firebaseApp.auth.GoogleAuthProvider.credential(idToken);
+  const { token }  = req.body
+    const ticket = await client.verifyIdToken({
+        idToken: token,
+        audience: "909598832056-fvgpul65lep8ufn3saohneehkaiddhhk.apps.googleusercontent.com"
+    });
+    const { name, email, picture } = ticket.getPayload();    
+    const user = await db.user.upsert({ 
+        where: { email: email },
+        update: { name, picture },
+        create: { name, email, picture }
+    })
+    // res.status(201)
+    // res.json(user)
+    console.log(user);
 
-  // Sign in with credential from the Google user.
-  auth.signInWithCredential(credential)
-  .then(r => console.log(r))
-  .catch((error) => {
-  });
+
+//   // Get the ID token passed and the CSRF token.
+//   const idToken = req.body.tokenn.toString();
+ 
+//   var credential = firebaseApp.auth.GoogleAuthProvider.credential(idToken);
+
+//   // Sign in with credential from the Google user.
+//   auth.signInWithCredential(credential)
+//   .then(r => console.log(r))
+//   .catch((error) => {
+//   });
 }
 
 

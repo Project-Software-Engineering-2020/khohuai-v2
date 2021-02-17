@@ -6,20 +6,23 @@ const initialState = {
 
 function Cart(state = initialState, action) {
 
-    //sum total in cart
     function SumTotal() {
         let totalPrice = 0;
         let itemInCart = 0;
         state.cart.map((item) => {
            
-            const Currentprice = item.qty * 80
+            const Currentprice = item.qty * 80;
             totalPrice = totalPrice + Currentprice;
 
             itemInCart = itemInCart + item.qty;
          
-            return totalPrice,itemInCart;
+            return item;
         })
-        return totalPrice,itemInCart;
+        return state = {
+            ...state,
+            totalPrice: totalPrice,
+            totalItem: itemInCart
+        }
     }
 
     // function SumTotalItem() {
@@ -37,8 +40,6 @@ function Cart(state = initialState, action) {
     switch (action.type) {
 
         case 'ADD_TO_CART':
-
-            // state = initialState
 
             const thisLottery = action.data;
 
@@ -67,7 +68,6 @@ function Cart(state = initialState, action) {
                     state.cart.map((item) => {
                         //วนหา item ที่มี id ตรงกัน
                         return (
-
                             item.id === thisLottery.id ?
                                 // เพิ่มจำนวน qty + 1
                                 { ...item, qty: item.qty + 1 }
@@ -80,22 +80,16 @@ function Cart(state = initialState, action) {
                     :
                     //inCart = false ไม่มีในตะกร้า
                     [...state.cart,
-                    {
-                        id: thisLottery.id,
-                        number: thisLottery.number,
-                        photoURL: thisLottery.photoURL,
-                        qty: 1
-                    }
+                        {
+                            id: thisLottery.id,
+                            number: thisLottery.number,
+                            photoURL: thisLottery.photoURL,
+                            qty: 1
+                        }
                     ],
             }
 
-            let TotalPrice_1, TotalItem_1 = SumTotal();
-            state = {
-                ...state,
-                totalPrice: TotalPrice_1,
-                totalItem: TotalItem_1
-            }
-
+            SumTotal();
             return state;
 
         case 'ADJUST_QTY':
@@ -117,13 +111,7 @@ function Cart(state = initialState, action) {
                 })
             }
 
-            let TotalPrice_2, TotalItem_2 = SumTotal();
-            state = {
-                ...state,
-                totalPrice: TotalPrice_2,
-                totalItem: TotalItem_2
-            }
-
+            SumTotal();
             return state;
 
         case 'REMOVE_FROM_CART':
@@ -135,13 +123,7 @@ function Cart(state = initialState, action) {
                 cart: state.cart.filter((item => item.id !== _id))
             }
 
-            let TotalPrice_3, TotalItem_3 = SumTotal();
-            state = {
-                ...state,
-                totalPrice: TotalPrice_3,
-                totalItem: TotalItem_3
-            }
-
+            SumTotal();
             return state;
 
         case 'CLEAR_CART':

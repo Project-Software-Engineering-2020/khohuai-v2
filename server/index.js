@@ -7,8 +7,9 @@ require('dotenv').config()
 //import route
 const lotteryRoutes = require('./Routes/Lottery');
 const userRouter = require('./Routes/User');
-const checkoutCreditCard = require('./Routes/Checkout')
-const authentication = require('./Routes/Auth')
+const checkoutCreditCard = require('./Routes/Checkout');
+const authentication = require('./Routes/Auth');
+const basketRouter = require('./Routes/Basket');
 
 
 // console.log("-------------This is pub key-------------------" + process.env.OMISE_PUBLIC_KEY)
@@ -22,6 +23,7 @@ app.use(bodyParder.json());
 app.use('/api', userRouter);
 app.use('/auth',authentication);
 app.use('/lottery', lotteryRoutes);
+app.use('/cart', basketRouter);
 app.use(checkoutCreditCard)
 
 
