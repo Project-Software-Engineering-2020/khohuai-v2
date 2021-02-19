@@ -6,11 +6,13 @@ import thunk from 'redux-thunk';
 //Reducer
 import authReducer from './reducer/authReducer';
 import mycart from './reducer/cartReducer';
+import profile from './reducer/profileReducer';
 
  // ******Combine Reducers******
 const rootReducer = combineReducers({
     auth: authReducer,
-    cart: mycart
+    cart: mycart,
+    profile: profile,
 });
 
 const PersistConfig = {

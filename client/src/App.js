@@ -2,6 +2,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useSelector } from 'react-redux'
 
 import PrivateRoute from './util/ProtectedRoute';
 
@@ -29,35 +30,46 @@ import AdUser from './components/pages/AdUser';
 
 function App() {
 
+  const auth = useSelector(state => state.auth);
+
   return (
-    
-        <Router>
-          <Navbar />
-          <Switch>
-            <Route path="/" exact={true} component={Home} />
-            <Route path="/shop" component={Shop} />
-            <Route path="/lottery" component={LotteryThailand} />
-            {/* <Route path="/game" component={Game} /> */}
-            <Route path="/login" component={Sign_in} />
-            <Route path="/signup" component={SignUp} />
-            <PrivateRoute path="/product/:id" component={LotteryDetail} />
-            <PrivateRoute path="/me" component={Profile} />
-            <PrivateRoute path="/upload" component={UploadLottery} />
-            <PrivateRoute path="/updatepassword" component={UpdatePassword} />
-            <PrivateRoute path="/forgotpassword" component={ForgotPassword} />
-            {/* <Route component={Error404} /> */}
+    <Router>
+      {
+        auth.role === "admin" ?
 
-            {/* <Route path='/dashbord' exact component={Overview} /> */}
-            <PrivateRoute path='/LotteryReports' exact component={LotteryReports} />
-            <PrivateRoute path='/Invoice' exact component={Invoice} />
-            <PrivateRoute path='/AdUser' exact component={AdUser} />
+          console.log("32323")
 
-            <PrivateRoute path="/game" component={Game} />
-            <PrivateRoute path="/cart" component={Basket} />
-          </Switch>
+          :
+          (
+            <div>
+              <Navbar />
+              <Switch>
+                <Route path="/" exact={true} component={Home} />
+                <Route path="/shop" component={Shop} />
+                <Route path="/lottery" component={LotteryThailand} />
+                {/* <Route path="/game" component={Game} /> */}
+                <Route path="/login" component={Sign_in} />
+                <Route path="/signup" component={SignUp} />
+                <PrivateRoute path="/product/:id" component={LotteryDetail} />
+                <PrivateRoute path="/me" component={Profile} />
+                <PrivateRoute path="/upload" component={UploadLottery} />
+                <PrivateRoute path="/updatepassword" component={UpdatePassword} />
+                <PrivateRoute path="/forgotpassword" component={ForgotPassword} />
+                {/* <Route component={Error404} /> */}
 
-        </Router>
-    
+                {/* <Route path='/dashbord' exact component={Overview} /> */}
+                <PrivateRoute path='/LotteryReports' exact component={LotteryReports} />
+                <PrivateRoute path='/Invoice' exact component={Invoice} />
+                <PrivateRoute path='/AdUser' exact component={AdUser} />
+                <PrivateRoute path="/game" component={Game} />
+                <PrivateRoute path="/cart" component={Basket} />
+              </Switch>
+            </div>
+          )
+      }
+
+    </Router>
+
   );
 }
 

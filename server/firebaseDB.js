@@ -19,7 +19,6 @@ const firestore = firebaseApp.firestore();
 //email&password login
 const auth = firebaseApp.auth();
 
-firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 //google login 
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 

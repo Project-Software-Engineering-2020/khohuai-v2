@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Redirect } from "react-router-dom";
 import { useSelector } from 'react-redux';
 
-function ProtectedRoute({component: Component, ...rest}) {
+function AdminRoute({component: Component, ...rest}) {
 
     //status user login
     const auth = useSelector(state => state.auth);
@@ -11,7 +11,7 @@ function ProtectedRoute({component: Component, ...rest}) {
             {...rest}
             component={(props) => {
                 // check login
-                if(auth.status === true && auth.role === "user" || "admin") {
+                if(auth.status === true && auth.role ===  "admin") {
                     return <Component {...props} />
                 }
                 else{
@@ -23,4 +23,4 @@ function ProtectedRoute({component: Component, ...rest}) {
     )
 }
 
-export default ProtectedRoute
+export default AdminRoute;

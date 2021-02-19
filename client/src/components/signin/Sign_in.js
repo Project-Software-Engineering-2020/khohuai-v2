@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
-import { GoogleLogin } from 'react-google-login'
+import { GoogleLogin, GoogleLogout } from 'react-google-login'
 import {
   auth,
   firestore,
@@ -44,7 +44,28 @@ const Sign_in = () => {
         email,
         password
       }).then((res) => {
-        dispatch(setloginWithEmail(res));
+
+        if (res.status === 201) {
+          if (res.data === "auth/invalid-email") {
+            setEmailError("อีเมลไม่ถูกต้อง");
+            setUserErr("อีเมลไม่ถูกต้อง");
+          }
+          else if (res.data === "auth/wrong-password") {
+            setPasswordErr("รหัสผ่านไม่ถูกต้อง");
+            setUserErr("รหัสผ่านไม่ถูกต้อง");
+          }
+          else if (res.data === "auth/user-not-found") {
+            setUserErr("ไม่พบบัญชีผู้ใช้งาน");
+          }
+          else if(res.data === "auth/too-many-requests") {
+            setUserErr("คุณใส่รหัสผ่านผิดเกิน 3 ครั้ง กรุณารอสักครู่");
+          }
+        }
+        else if (res.status === 200) {
+          
+          dispatch(setloginWithEmail(res));
+        }
+
       })
     } catch (error) {
       console.log(error);
@@ -53,63 +74,41 @@ const Sign_in = () => {
   const onloginwithgoogle = async () => {
     const result = await auth.signInWithPopup(googleProvider);
     console.log(result);
-    if (result) {
-      const userref = firestore.collection("users").doc(result.user.uid);
-      userref.get().then((doc) => {
-        if (!doc.data()) {
-          userref.set({
-            uid: result.user.uid,
-            displayName: result.user.displayName,
-            firstname: "",
-            lastname: "",
-            phone: "",
-            photoURL: result.user.photoURL,
-            email: result.user.email,
-            role: "user",
-            provider: "google",
-            status: true
-          }).then((res) => {
-            dispatch({
-              type: 'SET_LOGIN',
-              uid: result.user.uid,
-              displayName: result.user.displayName,
-              photoURL: result.user.photoURL,
-              email: result.user.email,
-              role: "user",
-              provider: "google",
-              status: true
-            });
-          });
+    const token = result.credential.idToken;
+    await Axios.post("http://localhost:3001/auth/google", { token })
+      .then((res) => { dispatch(setloginWithGoogle(res, token)) })
 
-        } else {
-          const tokenn = result.credential.idToken;
-          Axios.post("http://localhost:3001/auth/session", { tokenn })
+    // console.log(result);
+    // if (result) {
+    //   // const userref = firestore.collection("users").doc(result.user.uid);
+    //   // userref.get().then((doc) => {
 
-          // console.log(result.user.uid,doc.data().displayName)
+    //   //   if (!doc.data()) {
 
-          dispatch(setloginWithGoogle(doc, result.user.uid))
-
-          // console.log("มีผู้ใช้นี้แล้ว");
-
-        }
-      });
-    }
+    //   //       dispatch(setloginWithGoogle(res));
+    //   //   } else {
+    //   //     const token = result.credential.idToken;
+    //   //     Axios.post("http://localhost:3001/auth/google", { token })
+    //   //       .then((res) => { dispatch(setloginWithGoogle(res)) })
+    //   //   }
+    //   // });
+    // }
   };
 
-  const handleLogin = async (googleData) => {
-    alert("login")
-    const res = await fetch("http://localhost:3001/auth/google", {
-        method: "POST",
-        body: JSON.stringify({
-        token: googleData.tokenId
-      }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-    const data = await res.json()
-    // store returned user somehow
-  }
+  // const handleLogin = async googleData => {
+  //   await console.log("login", googleData.tokenId);
+  //   const res = await fetch("http://localhost:3001/auth/google", {
+  //     method: "POST",
+  //     body: JSON.stringify({
+  //       token: googleData.tokenId
+  //     }),
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     }
+  //   })
+  //   const data = await res.json()
+  //   // store returned user somehow
+  // }
 
   // const handleChange = (e) => {
   //   if (e.target.files[0]) {
@@ -162,7 +161,7 @@ const Sign_in = () => {
                 <label htmlFor="username">อีเมล</label>
                 <input
                   type="email"
-                  className={emailError.length > 0 ? "form-control  is-invalid" : "form-control"}
+                  className={emailError.length || UserError.length > 0 ? "form-control  is-invalid" : "form-control"}
                   name="email"
                   value={email}
                   onChange={(e) => setemail(e.target.value)}
@@ -209,7 +208,7 @@ const Sign_in = () => {
                 หรือ
               </div>
 
-              {/* <div className="">
+              <div>
                 <button
                   type="button"
                   onClick={onloginwithgoogle}
@@ -218,16 +217,23 @@ const Sign_in = () => {
                   <FontAwesomeIcon icon={faGoogle} />
                     &nbsp;&nbsp;ล็อคอินด้วยกูเกิ้ล
                   </button>
-              </div> */}
+              </div>
 
-              <GoogleLogin
+              {/* <GoogleLogin
                 className="btn-google my-3"
-                clientId="909598832056-fvgpul65lep8ufn3saohneehkaiddhhk.apps.googleusercontent.com"
+                clientId="909598832056-4e7km1tuqnqp1k8l5mghsk912rsf3j93.apps.googleusercontent.com"
                 buttonText="ลงชื่อเข้าใช้ด้วย Google"
                 onSuccess={handleLogin}
-                onFailure={handleLogin}
+                // onFailure={}
                 cookiePolicy={'single_host_origin'}
-              />
+                // isSignedIn={false}
+              /> */}
+              {/* <GoogleLogout
+                clientId="909598832056-fvgpul65lep8ufn3saohneehkaiddhhk.apps.googleusercontent.com"
+                buttonText="Logout"
+                // onLogoutSuccess={alert("logout")}
+              >
+              </GoogleLogout> */}
 
               <div>
                 <p>หากคุณยังไม่มีบัญชีผู้ใช้งาน <a href="/signup"> สร้างบัญชีผู้ใช้</a> </p>

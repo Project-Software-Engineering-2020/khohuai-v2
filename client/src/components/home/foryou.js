@@ -17,27 +17,10 @@ const Foryou = () => {
 
     useEffect(() => {
 
-
-        // setData([
-        //     {
-        //         id: 12233,
-        //         info: "eruurieur"
-        //     },
-        //     {
-        //         id: 212121212,
-        //         info: "ieeiwiewe"
-        //     },
-        //     {
-        //         id: 2121212,
-        //         info: "ieeiwiewe"
-        //     },
-        // ])
-
         let datb = [];
         const FetchData = async () => {
 
             await Axios.get("http://localhost:3001/lottery").then((lot) => {
-                console.log(lot.data);
                 setData(lot.data);
                 datb = lot.data;
             })
@@ -72,7 +55,6 @@ const Foryou = () => {
 
         FetchData();
         recommended();
-        console.log(data);
     }, [stotus])
 
     return (
@@ -84,11 +66,11 @@ const Foryou = () => {
             {loading ?
                 <div className="recommend-body">
                     {data.map((item, k) => {
-                        // if (index < 4) {
+                        if (k < 4) {
                             return (
                                 <Lottoryitem key={k} data={item} />
                             )
-                        // }
+                        }
                     })}
 
                 </div>

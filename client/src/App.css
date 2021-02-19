@@ -30,12 +30,13 @@
   outline: unset;
 }
 body {
-  /* width: 100%;
-  height: 100%; */
-  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  /* background-repeat: no-repeat;
   background-size: cover;
-  background-position: center;
-  background-image: url("https://wallpaperaccess.com/full/274228.jpg");
+  background-position: center; */
+  background-color: rgb(247, 234, 236);
+  /* background-image: url("https://wallpaperaccess.com/full/274228.jpg"); */
 }
 
 .modal-open{
