@@ -317,9 +317,9 @@ const LotteryThailand = () => {
                                 <div className="btn-checkyourlottery">
                                     <button type="text" onClick={checkyourlottery}>ตรวจสลาก</button>
                                 </div>
-                                <pre>
+                                {/* <pre>
                                     {JSON.stringify(inputList, null, 2)}
-                                </pre>
+                                </pre> */}
                             </Modal.Body>
                         </Modal>
                     </div>

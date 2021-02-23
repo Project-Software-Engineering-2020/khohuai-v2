@@ -29,10 +29,6 @@ const Shop = () => {
 
     const findLottery = async () => {
 
-        await setdataPost({
-            name: "june",
-            create: "2021-02-15T14:44:18.580+00:00"
-        });
 
         if (position === "all") {
             await Axios.get("http://localhost:3001/lottery").then((lot) => {
@@ -51,8 +47,9 @@ const Shop = () => {
 
     useEffect(async () => {
 
-        history.push("/shop?position=all" + "&number=");
-
+        await history.push("/shop?position=all" + "&number=");
+        numberP = await searchParams.get("number");
+        positionP = await  searchParams.get("position");
         await setNumber(numberP);
         await setPosition(positionP);
         await setredirect(true);

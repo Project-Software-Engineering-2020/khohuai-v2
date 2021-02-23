@@ -193,14 +193,14 @@ const getSearchNumber = async (req, res, next) => {
         //instant find without any split
         if (position === "whole") {
             lotteryArray.forEach(lot => {
-                let searchingNum = lot.number;
+                let searchingNum = lot.id;
                 if (findingNum === searchingNum) matchedLotteryArray.push(lot);
             });
         }
         //split and find
         else if (position === "last2" || position === "last3" || position === "front") {
             lotteryArray.forEach(lot => {
-                const num = lot.number.split("");
+                const num = lot.id.split("");
                 let searchingNum = "";
                 for (let i = lotK; i < maxLotK; i++) {
                     searchingNum += num[i];
