@@ -18,13 +18,18 @@ const firebaseConfig = {
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 const firestore = firebaseApp.firestore();
+
 //email&password login
 const auth = firebaseApp.auth();
+
 //google login 
 const googleProvider = new firebase.auth.GoogleAuthProvider();
+// googleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+
 //facebook login
 const facebookProvider = new firebase.auth.FacebookAuthProvider();
 facebookProvider.addScope('user_birthday');
+
 //firebase storage
 const storage = firebase.storage();
 

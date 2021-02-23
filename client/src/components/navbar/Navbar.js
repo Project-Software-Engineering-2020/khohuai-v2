@@ -1,13 +1,16 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import ButtonLogin from './Button';
-// import ButtonUser from './ButtonUSer';
-import { Link } from 'react-router-dom';
+import NotificationBadge from 'react-notification-badge';
+import { Effect } from 'react-notification-badge';
+import { Link, useHistory } from 'react-router-dom';
 import './Navbar.css';
 import Dropdown from './Dropdown';
 import logo from './khohuai.png'
 import { useSelector } from 'react-redux';
 
 function Navbar() {
+
+  const history = useHistory()
 
   const stetus = useSelector(state => state.auth)
   let cart = useSelector(state => state.cart)
@@ -40,8 +43,9 @@ function Navbar() {
   }, [stetus])
 
   return (
+
     <div className="navbar-bg">
-      <nav className='lottery-navbar container'>
+      <nav className='lottery-navbar  container'>
         <Link to='/' onClick={closeMobileMenu} >
           <img src={logo} alt="khohuai" className="lottery-logo"></img>
         </Link>
@@ -60,10 +64,11 @@ function Navbar() {
             onMouseLeave={onMouseLeave}
           >
             <Link
-              to='/shop'
+              to='/shop?position=all&number='
               className='lottery-nav-links'
-              onClick={closeMobileMenu}
+              onClick={(e) => closeMobileMenu}
             >
+              {/* {history.replace("?position=all&number=")} */}
               <i className="fas fa-store fa-1x"></i> ร้านค้าสลาก
             </Link>
             {dropdown && <Dropdown />}
@@ -86,31 +91,24 @@ function Navbar() {
               <i className="fas fa-gamepad" /> เล่นเกม
             </Link>
           </li>
-          <a href="/cart" className="text-white"><i class="fas fa-shopping-cart"></i>{cart.totalItem}</a>
+          <li className="cart-on-nav">
+            <a href="/cart" className="text-white">
+              {/* <NotificationBadge count={cart.totalItem} effect={Effect.SCALE} >
+                  <i class="fas fa-shopping-cart"></i>
+                  </NotificationBadge> */}
+                  
+              <i className="fas fa-shopping-cart fa-lg"></i>
+               <span className="badge-cart">{cart.totalItem}</span>
+            </a>
+          </li>
           <li className="nav-user">
-            {/* {!stotus? (
-            //   <Link
-            //   to='/login'
-            //   className='nav-links-mobile'
-            //   onClick={closeMobileMenu}
-            // >
-            //   ลงชื่อเข้าใช้
-            // </Link>
-            <ButtonLogin className="btn-login" />
-            ):(
-              <ButtonLogin className="btn-login" />
-            )} */}
-            
             <ButtonLogin className="btn-login" />
           </li>
-          
+
         </ul>
-        
-            {/* <ButtonLogin className="btn-login nav-links-mobile" /> */}
-        
-        {/* <ButtonLogin className="btn-login" /> */}
       </nav>
     </div>
+
   );
 }
 

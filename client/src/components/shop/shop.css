@@ -4,42 +4,44 @@
     border-radius: 7px;
     background-color: rgb(255, 255, 255);
     box-shadow: 0px 7px 7px 4px rgba(206, 206, 206, 0.397);
+    
 }
+
 .header-shop {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin: 10px;
-    padding: 30px 20px;
-    background-color: rgb(240, 185, 203);
+    grid-template-columns: 170px 1fr;
+    /* margin: 10px;
+    padding: 30px 20px; */
+    /* background-color: rgb(240, 185, 203); */
     border-radius: 3px;
 }
 .header-shop-img {
-    text-align: center;
+    text-align: left;
 }
 .header-shop-img > img {
-    width: 250px;
-    height: 180px;
+    width: 160px;
+    height: 110px;
 }
 .header-shop-text {
     align-self: center;
     /* justify-self: end; */
     text-align: left;
+    font-weight: bold;
+    font-family: sans-serif;
 }
+
 .lottery-shop {
     display: grid;
     grid-template-columns: repeat(4,1fr);
 }
 .section-search{
     display: grid;
-    grid-template-columns: 1fr 400px;
-    justify-items: right;
+    grid-template-columns: 1fr 420px;
+    /* justify-items: right; */
     align-items: center;
     margin: 5px 0;
-    padding: 5px;
 }
 .box-search-lottery {
-    
-   
     width: 100%;
     margin: 10px;
     padding: 15px;

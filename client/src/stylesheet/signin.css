@@ -1,9 +1,9 @@
 .signin {
-  background-image: url("../images/img-0.jpg");
+  /* background-image: url("../images/img-0.jpg");
   background-position: top;
   background-size: cover;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-attachment: fixed; */
   padding: 70px 0;
   display: flex;
   justify-content: center;
@@ -40,12 +40,12 @@
 }
 
 .btn-google {
-  background-color: #fa3939;
-  color: white;
+  color: rgb(32, 32, 32) !important;
   padding: 12px 15px;
   border: none;
   border-radius: 8px;
   width: 100%;
+  justify-content: center;
 }
 
 .btn-google:hover {

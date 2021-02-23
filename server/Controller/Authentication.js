@@ -1,48 +1,114 @@
-const { auth, admin, firestore } = require('../firebaseDB');
+const { auth, firebaseApp, admin, firestore, googleProvider } = require('../firebaseDB');
+const { OAuth2Client } = require('google-auth-library')
+const client = new OAuth2Client("909598832056-4e7km1tuqnqp1k8l5mghsk912rsf3j93.apps.googleusercontent.com")
 const User = require('../Models/User');
+const { getProfile } = require('./UserController');
 
-const sessionLogin = async (req, res, next) => {
+const googleLogin = async (req, res) => {
+
+  // Sign in with credential from the Google user.
+  const tokenID = req.body.token;
+  const credential = googleProvider.credential(tokenID);
+  const result = await firebaseApp.auth().signInWithCredential(credential);
+
+  req.session.token = tokenID;
+  console.log(req.session);
+  // console.log(JSON.stringify(result, null, 2));
+
+  const userRef = firestore.collection("users").doc(result.user.uid);
+
+  await userRef.get().then((doc) => {
+
+    if (!doc.data()) {
+      //ผู้ใช้งานใหม่
+      console.log("New user");
+      userRef.set({
+        uid: result.user.uid,
+        displayName: result.user.displayName,
+        firstname: "",
+        lastname: "",
+        phone: "",
+        photoURL: result.user.photoURL,
+        email: result.user.email,
+        role: "user",
+        provider: "google",
+        status: true,
+        token: tokenID
+      })
+
+      let user_1 = new User(
+        uid = result.user.uid,
+        firstname = "",
+        lastname = "",
+        displayName = result.user.displayName,
+        photoURL = result.user.photoURL,
+        email = result.user.email,
+        role = "user",
+        provider = "google",
+        token = tokenID
+      )
+      res.status(200).send(user_1);
+      //ดึงข้อมูล
+    }
+    else {
+      //ผู้ใช้ปัจจุบัน
+      console.log("Present", doc.data())
+      // u.then((doc) => {
+      const user = new User(
+        uid = doc.data().uid,
+        firstname = doc.data().firstname,
+        lastname = doc.data().lastname,
+        displayName = doc.data().displayName,
+        photoURL = doc.data().photoURL,
+        email = doc.data().email,
+        role = doc.data().role,
+        provider = doc.data().provider,
+        token = tokenID
+      )
+      // console.log(user);
+      res.status(200).send(user);
+      // })
+    }
+
+  })
 
 
+  // .catch((error) => {
+  //   console.log("error")
+  //   // Handle Errors here.
+  //   // var errorCode = error.code;
+  //   // var errorMessage = error.message;
+  //   // // The email of the user's account used.
+  //   // var email = error.email;
+  //   // // The firebase.auth.AuthCredential type that was used.
+  //   // var credential = error.credential;
+  //   // ...
+  // });
 
-  // Get the ID token passed and the CSRF token.
-  const idToken = req.body.tokenn.toString();
-  console.log(idToken);
-  // Guard against CSRF attacks.
-  //   if (csrfToken !== req.cookies.csrfToken) {
-  //     res.status(401).send('UNAUTHORIZED REQUEST!');
-  //     return;
-  //   }
-  // Set session expiration to 5 days.
-  const expiresIn = 60 * 60 * 24 * 5 * 1000;
-  // Create the session cookie. This will also verify the ID token in the process.
-  // The session cookie will have the same claims as the ID token.
-  // To only allow session cookie setting on recent sign-in, auth_time in ID token
-  // can be checked to ensure user was recently signed in before creating a session cookie.
-  admin
-    .auth()
-    .createSessionCookie(idToken, { expiresIn })
-    .then(
-      (sessionCookie) => {
-        console.log(sessionCookie);
-        // Set cookie policy for session cookie.
-        const options = { maxAge: expiresIn, httpOnly: true, secure: true };
-        res.cookie('session', sessionCookie, options);
-        res.send(JSON.stringify({ status: 'success' }));
-      },
-      (error) => {
-        res.status(401).send('UNAUTHORIZED REQUEST!');
-      }
-    );
+
+  // req.session.userId = user.id
+
+
+  //   // Get the ID token passed and the CSRF token.
+  //   const idToken = req.body.tokenn.toString();
+
+  //   var credential = firebaseApp.auth.GoogleAuthProvider.credential(idToken);
+
+  //   // Sign in with credential from the Google user.
+  //   auth.signInWithCredential(credential)
+  //   .then(r => console.log(r))
+  //   .catch((error) => {
+  //   });
 }
 
 
-const sigin = async (req, res) => {
+const signin = async (req, res) => {
   const _email = req.body.email;
   const _password = req.body.password;
   try {
     auth.signInWithEmailAndPassword(_email, _password)
-      .then((result) => {
+      .then((result) => { 
+        console.log(result);
         const user = firestore.collection("users").doc(result.user.uid);
         user.get().then((doc) => {
           const user = new User(
@@ -55,27 +121,14 @@ const sigin = async (req, res) => {
             role = doc.data().role,
             provider = doc.data().provider
           )
-        res.status(200).send(user);
+          res.status(200).send(user);
+        })
+      }).catch((error) => {
+        res.status(201).send(error.code);
       })
-  }).catch ((error) => {
-    res.status(200).send()
+  } catch (error) {
     console.log(error);
-    // if (error.code === "auth/invalid-email") {
-    //   setEmailError("อีเมลไม่ถูกต้อง")
-    // }
-    // else if(error.code === "auth/wrong-password") {
-    //   setPasswordErr("รหัสผ่านไม่ถูกต้อง")
-    // }
-    // else if(error.code === "auth/user-not-found") {
-    //   setUserErr("ไม่พบบัญชีผู้ใช้งาน")
-    // }
-    // else if(error.code === "auth/too-many-requests"){
-    //   setUserErr("คุณใส่รหัสผ่านผิดเกิน 3 ครั้ง กรุณารอสักครู่")
-    // }
-  })
-} catch (error) {
-  throw error;
-}
+  }
 
 }
 
@@ -90,16 +143,11 @@ const signup = (req, res) => {
   const role = "user";
   const provider = "hotmail";
 
-
-  console.log(req.body);
-
   try {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then(async (result) => {
-        console.log(result);
-        console.log("ลงทะเบียนเรียบร้อยแล้ว");
-
+       
         if (result.additionalUserInfo.isNewUser === true) {
 
           const userRef = firestore.collection("users").doc(result.user.uid);
@@ -134,12 +182,21 @@ const signup = (req, res) => {
 
   }
   catch (error) {
-    console.error();
+    console.error(error);
   }
 }
 
+const logout = async (req, res) => {
+  await auth.signOut();
+  await req.session.destroy();
+  console.log("logout",req.session);
+  res.status(200).send("logout_success");
+}
+
+
 module.exports = {
-  sigin,
+  signin,
+  logout,
   signup,
-  sessionLogin
+  googleLogin
 }

@@ -560,15 +560,21 @@
       color: rgb(50, 50, 50);
     }
   }
-
+  .win {
+    background-color: palegreen;
+  }
+  .lost {
+    background-color: salmon;
+  }
 
   .box-check-lottery {
     display: grid;
-    grid-template-columns: 70px 140px 1fr;
+    grid-template-columns: 70px 140px 1fr 15px;
     align-items: center;
     justify-items: left;
     margin: 10px 0;
     padding: 5px 1px;
+    border-bottom: solid 1px rgb(214, 214, 214);
   }
   .box-check-lottery input {
     font-size: 18px;
@@ -583,6 +589,14 @@
     padding: 5px 10px;
     font-size: 16px;
     font-weight: normal;
+  }
+
+  .remove-input {
+    border: none;
+    cursor: pointer;
+    color: rgb(185, 185, 185);
+    font-size: medium;
+    background-color: transparent;
   }
 
   .btn-input-checklot button {
@@ -622,7 +636,7 @@
     {
       padding: 5px 0;
       margin: 2px 0;
-      grid-template-columns: 53px 100px 1fr;
+      grid-template-columns: 53px 100px 1fr 50px;
     }
     .box-check-lottery p {
       margin: 10px 2px;
