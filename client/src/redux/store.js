@@ -1,43 +1,34 @@
-import { createStore,applyMiddleware,combineReducers } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import { persistStore, persistReducer} from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-import thunk from 'redux-thunk';
+import { createStore, applyMiddleware, combineReducers } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import thunk from "redux-thunk";
 //Reducer
-import authReducer from './reducer/authReducer';
-import mycart from './reducer/cartReducer';
+import authReducer from "./reducer/authReducer";
+import mycart from "./reducer/cartReducer";
 
-
-
-
- // ******Combine Reducers******
+// ******Combine Reducers******
 const rootReducer = combineReducers({
-    auth: authReducer,
-    cart: mycart
+  auth: authReducer,
+  cart: mycart,
 });
 
 const PersistConfig = {
-  key: 'root',
+  key: "root",
   storage: storage,
-  whitelist: ['auth']
-}
+  whitelist: ["auth", "cart"],
+};
 
-const persitReducer = persistReducer(PersistConfig,rootReducer);
+const persitReducer = persistReducer(PersistConfig, rootReducer);
 
 // ******Create Store******
-const store = createStore(persitReducer, composeWithDevTools(applyMiddleware(thunk)));
+const store = createStore(
+  persitReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+);
 const persister = persistStore(store);
 
-export {
-  store,
-  persister
-} 
-
-
-
-
-
-
+export { store, persister };
 
 // const loadState = () => {
 //     try {
@@ -51,7 +42,7 @@ export {
 //       return undefined
 //     }
 // };
-  
+
 // const saveState = (state) => {
 //     try {
 //       const serializedState = JSON.stringify(state)

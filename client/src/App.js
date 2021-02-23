@@ -26,6 +26,7 @@ import Overview from "./components/pages/Overview";
 import LotteryReports from "./components/pages/LotteryReports";
 import Invoice from "./components/pages/Invoice";
 import AdUser from "./components/pages/AdUser";
+import Cart from "./components/cart/Cart";
 //redux
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
@@ -58,6 +59,7 @@ function App() {
 
             <PrivateRoute path="/game" component={Game} />
             <PrivateRoute path="/cart" component={Basket} />
+            <PrivateRoute path="/cart1" component={Cart} />
           </Switch>
         </Router>
       </PersistGate>

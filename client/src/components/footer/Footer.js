@@ -15,8 +15,8 @@ const Footer = () => {
       <div className="d-flex justify-content-center">
         <div className="container p-4">
           <div className="row">
-            <div className="col-md-4 mb-4 mb-md-0">
-              <h5 className="text-uppercase">Links</h5>
+            <div className="col-md-4 mb-4 mb-md-0 mt-2">
+              <h5 className="text-uppercase"></h5>
 
               <ul className="list-unstyled mb-0">
                 <li>
@@ -34,8 +34,8 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className="col-md-4 mb-4 mb-md-0">
-              <h5 className="text-uppercase">Links</h5>
+            <div className="col-md-4 mb-4 mb-md-0 mt-2">
+              <h5 className="text-uppercase"></h5>
 
               <ul className="list-unstyled mb-0">
                 <li>

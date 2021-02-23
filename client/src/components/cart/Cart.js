@@ -1,10 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { withRouter } from "react-router-dom";
 import "./cart.css";
-import AddDel from "./AddDel";
+import CartItem from "./Cartitem";
 
-const Cart = (data) => {
+const Cart = () => {
+  const myCart = useSelector((state) => state.cart);
+
   const dispatch = useDispatch();
+  const [loading, setloading] = useState(true);
+  // const [myCart, setmyCart] = useState();
+  const [clearCart, setclearCart] = useState();
+
+  const payfromcart = () => {
+    alert("ชำระเงิน");
+  };
+
+  const clearBasket = () => {
+    dispatch({ type: "CLEAR_CART" });
+    setclearCart(true);
+  };
+
+  useEffect(async () => {
+    // await setmyCart(cart);
+    // await setclearCart(false);
+    console.log(myCart);
+    await setloading(false);
+  }, [myCart]);
 
   return (
     <div className="container cart">
@@ -25,31 +47,10 @@ const Cart = (data) => {
           </div>
 
           {/* รายละเอียดหวย */}
-          <div class="card-header lotto mt-3">
-            <div className="row">
-              <div className="col-md-4">
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="defaultCheck1"
-                  />
-                  <label class="form-check-label" for="defaultCheck1">
-                    lotto pic
-                  </label>
-                </div>
-              </div>
 
-              <div className="col-md-8">
-                <h1>
-                  1&nbsp;&nbsp;2&nbsp;&nbsp;3&nbsp;&nbsp;4&nbsp;&nbsp;5&nbsp;&nbsp;6
-                </h1>
-                <h5>งวดประจำวันที่ 1 กุมภาพันธ์ 2563</h5>
-                <AddDel />
-              </div>
-            </div>
-          </div>
+          {myCart.cart.map((item, index) => {
+            return <CartItem key={index} item={item} />;
+          })}
         </div>
 
         {/* สรุปรายการสั่งซื้อ */}
@@ -64,7 +65,7 @@ const Cart = (data) => {
                   <p class="text-left">จำนวน</p>
                 </div>
                 <div className="col-md-6">
-                  <p class="text-right">2 ใบ</p>
+                  <p class="text-right">{myCart.totalItem} ใบ</p>
                 </div>
 
                 {/* ยอดรวม */}
@@ -72,7 +73,7 @@ const Cart = (data) => {
                   <p class="text-left">ยอดรวม</p>
                 </div>
                 <div className="col-md-6">
-                  <p class="text-right">160 บาท</p>
+                  <p class="text-right">{myCart.totalPrice} บาท</p>
                 </div>
 
                 {/* โค้ดลด */}
@@ -99,11 +100,15 @@ const Cart = (data) => {
                   <h5 class="text-left">ยอดรวมทั้งสิ้น</h5>
                 </div>
                 <div className="col-md-6 mt-3">
-                  <h5 class="text-right">160 บาท</h5>
+                  <h5 class="text-right">{myCart.totalPrice} บาท</h5>
                 </div>
               </div>
 
-              <button type="button" class="btn btn-primary btn-block mt-2">
+              <button
+                type="button"
+                class="btn btn-primary btn-block mt-2"
+                onClick={payfromcart}
+              >
                 ดำเนินการชำระเงิน
               </button>
             </div>
