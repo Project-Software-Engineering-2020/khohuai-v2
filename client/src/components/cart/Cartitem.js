@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import AddDel from "./AddDel";
 
 function BasketItem({ item }) {
+  // const [qty, setQty] = useState(item.qty)
   return (
     <div className="card p-3 mt-3">
       <div className="row">

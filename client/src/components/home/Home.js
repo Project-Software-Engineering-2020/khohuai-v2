@@ -9,17 +9,13 @@ import { useSelector } from "react-redux";
 const Home = () => {
   const mycart = useSelector((state) => state.cart);
 
-    const mycart = useSelector(state => state.cart);
-
-    return (
-        <div>
-            <div className="home">
-                <div className="container">
-                    <Carousel />
-                    <Foryou /> 
-                    <Hot /> 
-                </div>
-            </div>
+  return (
+    <div>
+      <div className="home">
+        <div className="container">
+          <Carousel />
+          <Foryou />
+          <Hot />
         </div>
       </div>
 

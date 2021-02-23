@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
-import BasketItem from "./basketItem";
+import CartitemTest from "./CartitemTest";
 import CheckoutCreditcard from "../checkout/checkoutwithcard";
 
 const Basket = () => {
@@ -61,7 +61,7 @@ const Basket = () => {
         <div className="row">
           <section className="col-8 from-group bg-white p-3">
             {myCart.cart.map((item, index) => {
-              return <BasketItem key={index} item={item} />;
+              return <CartitemTest key={index} item={item} />;
             })}
 
             {/* {JSON.stringify(myCart, null, 2)} */}

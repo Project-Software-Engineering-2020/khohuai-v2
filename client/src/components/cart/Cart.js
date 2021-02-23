@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
 import "./cart.css";
-import CartItem from "./Cartitem";
+import CartItem from "./CartTest";
 
 const Cart = () => {
   const myCart = useSelector((state) => state.cart);

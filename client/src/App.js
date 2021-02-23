@@ -23,6 +23,7 @@ import UpdatePassword from "./components/recover/Updatepassword";
 import ForgotPassword from "./components/recover/Forgotpassword";
 import Basket from "./components/pages/basket";
 import Sidebar from "./components/admin/Sidebar";
+import CartTest from "./components/cart/CartTest";
 // import Overview from './components/pages/Overview';
 import LotteryReports from "./components/pages/LotteryReports";
 import Invoice from "./components/pages/Invoice";
@@ -62,6 +63,7 @@ function App() {
             <PrivateRoute path="/AdUser" exact component={AdUser} />
             <PrivateRoute path="/game" component={Game} />
             <PrivateRoute path="/cart" component={Basket} />
+            <PrivateRoute path="/carttest" component={CartTest} />
           </Switch>
         </div>
       )}
