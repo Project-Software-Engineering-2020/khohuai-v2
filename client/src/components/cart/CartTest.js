@@ -13,6 +13,7 @@ const Basket = () => {
   const [loading, setloading] = useState(true);
   // const [myCart, setmyCart] = useState();
   const [clearCart, setclearCart] = useState();
+  const [removeFromCart, setremoveFromCart] = useState();
 
   const createCreditCardCharge = async (email, name, amount, token) => {
     console.log("Token Here ===>" + token);
@@ -46,6 +47,11 @@ const Basket = () => {
     setclearCart(true);
   };
 
+  const removeItem = () => {
+    dispatch({ type: "REMOVE_FROM_CART" });
+    setremoveFromCart(true);
+  };
+
   useEffect(async () => {
     // await setmyCart(cart);
     // await setclearCart(false);
@@ -59,31 +65,93 @@ const Basket = () => {
         <div>loading...</div>
       ) : (
         <div className="row">
-          <section className="col-8 from-group bg-white p-3">
+          <div className="col-md-8 mt-4">
+            <div class="card-header all">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="defaultCheck1"
+                />
+                <label class="form-check-label" for="defaultCheck1">
+                  เลือกทั้งหมด
+                </label>
+              </div>
+            </div>
             {myCart.cart.map((item, index) => {
               return <CartitemTest key={index} item={item} />;
             })}
 
             {/* {JSON.stringify(myCart, null, 2)} */}
-          </section>
-          <aside className="col-4 from-group bg-white p-3">
-            <h4>ตะกร้าสินค้า</h4>
-            <h5>ทั้งหมด {myCart.cart.length} รายการ</h5>
-            <h5>ราคารวม {myCart.totalPrice} บาท</h5>
-            <button
-              type="button"
-              className="btn btn-danger m-2"
-              onClick={clearBasket}
-            >
-              ล้างตะกร้า
-            </button>
-            {/* <button type="button" className="btn btn-success m-2" onClick={payfromcart}>ชำระเงิน</button> */}
-            <CheckoutCreditcard
-              user={Usernaw}
-              cart={myCart}
-              createCreditCardCharge={createCreditCardCharge}
-            />
-          </aside>
+          </div>
+
+          {/* สรุปรายการสั่งซื้อ */}
+          <div className="col-md-4 mt-4">
+            <div class="card cartSum">
+              <div class="card-body">
+                <h5 class="card-title">สรุปรายการสั่งซื้อ</h5>
+
+                {/* จำนวน */}
+                <div className="row">
+                  <div className="col-md-6">
+                    <p class="text-left">จำนวน</p>
+                  </div>
+                  <div className="col-md-6">
+                    <p class="text-right">{myCart.totalItem} ใบ</p>
+                  </div>
+
+                  {/* ยอดรวม */}
+                  <div className="col-md-6">
+                    <p class="text-left">ยอดรวม</p>
+                  </div>
+                  <div className="col-md-6">
+                    <p class="text-right">{myCart.totalPrice} บาท</p>
+                  </div>
+
+                  {/* โค้ดลด */}
+                  <div className="col-md-6">
+                    <p class="text-left">โค้ดส่วนลด</p>
+                  </div>
+
+                  <div className="col-md-6">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="inputGroupSelect01">
+                        โค้ด
+                      </label>
+                      <select class="custom-select" id="inputGroupSelect01">
+                        <option selected>Choose...</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* ยอดรวมทั้งสิ้น */}
+                  <div className="col-md-6 mt-3">
+                    <h5 class="text-left">ยอดรวมทั้งสิ้น</h5>
+                  </div>
+                  <div className="col-md-6 mt-3">
+                    <h5 class="text-right">{myCart.totalPrice} บาท</h5>
+                  </div>
+                </div>
+
+                {/* <button
+                type="button"
+                class="btn btn-primary btn-block mt-2"
+                onClick={payfromcart}
+              >
+                ดำเนินการชำระเงิน
+              </button> */}
+                <CheckoutCreditcard
+                  user={Usernaw}
+                  cart={myCart}
+                  createCreditCardCharge={createCreditCardCharge}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>

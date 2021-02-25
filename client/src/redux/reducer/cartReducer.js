@@ -1,142 +1,135 @@
 const initialState = {
-    totalPrice: 0,
-    totalItem: 0,
-    cart: []
-}
+  totalPrice: 0,
+  totalItem: 0,
+  cart: [],
+};
 
 function Cart(state = initialState, action) {
+  function SumTotal() {
+    let totalPrice = 0;
+    let itemInCart = 0;
+    state.cart.map((item) => {
+      const Currentprice = item.qty * 80;
+      totalPrice = totalPrice + Currentprice;
 
-    function SumTotal() {
-        let totalPrice = 0;
-        let itemInCart = 0;
-        state.cart.map((item) => {
-           
-            const Currentprice = item.qty * 80;
-            totalPrice = totalPrice + Currentprice;
+      itemInCart = itemInCart + item.qty;
 
-            itemInCart = itemInCart + item.qty;
-         
-            return item;
-        })
-        return state = {
-            ...state,
-            totalPrice: totalPrice,
-            totalItem: itemInCart
-        }
-    }
+      return item;
+    });
+    return (state = {
+      ...state,
+      totalPrice: totalPrice,
+      totalItem: itemInCart,
+    });
+  }
 
-    // function SumTotalItem() {
-    //     let itemInCart = 0;
-    //     state.cart.map((item) => {
-      
-    //         itemInCart = itemInCart + item.qty;
-         
-    //         return itemInCart;
-    //     })
-    //     return itemInCart;
-    // }
+  // function SumTotalItem() {
+  //     let itemInCart = 0;
+  //     state.cart.map((item) => {
 
+  //         itemInCart = itemInCart + item.qty;
 
-    switch (action.type) {
+  //         return itemInCart;
+  //     })
+  //     return itemInCart;
+  // }
 
-        case 'ADD_TO_CART':
+  switch (action.type) {
+    case "ADD_TO_CART":
+      const thisLottery = action.data;
 
-            const thisLottery = action.data;
+      let inCart = undefined;
+      // inCart = true  มีอยู่ตะกร้า
+      // inCart = false  ไม่มีในตะกร้า
 
-            let inCart = undefined;
-            // inCart = true  มีอยู่ตะกร้า 
-            // inCart = false  ไม่มีในตะกร้า
+      if (state.cart.length > 0) {
+        // ตรวจสอบว่าเคย add แล้วหรือยัง
+        inCart = state.cart.find((item) => {
+          return item.id === thisLottery.id ? true : false;
+        });
+      } else {
+        //เพิ่มลงตะกร้าครั้งแรก
+        inCart = false;
+      }
 
-            if (state.cart.length > 0) {
+      state = {
+        ...state,
+        cart: inCart
+          ? //inCart = true มีอยู่ในตะกร้าแล้ว
+            state.cart.map((item) => {
+              //วนหา item ที่มี id ตรงกัน
+              return item.id === thisLottery.id
+                ? // เพิ่มจำนวน qty + 1
+                  { ...item, qty: item.qty + 1 }
+                : item;
+            })
+          : //inCart = false ไม่มีในตะกร้า
+            [
+              ...state.cart,
+              {
+                id: thisLottery.id,
+                number: thisLottery.number,
+                photoURL: thisLottery.photoURL,
+                qty: 1,
+              },
+            ],
+      };
 
-                // ตรวจสอบว่าเคย add แล้วหรือยัง 
-                inCart = state.cart.find((item) => {
-                    return item.id === thisLottery.id ? true : false;
-                })
+      SumTotal();
+      return state;
 
-            }
-            else {
-                //เพิ่มลงตะกร้าครั้งแรก
-                inCart = false;
-            }
+    case "ADJUST_QTY":
+      const id = action.id;
+      const _qty = action.qty;
 
-            state = {
-                ...state,
-                cart: inCart ?
+      state = {
+        ...state,
+        cart: state.cart.map((item) => {
+          return item.id === id ? { ...item, qty: item.qty + _qty } : item;
+        }),
+      };
 
-                    //inCart = true มีอยู่ในตะกร้าแล้ว
-                    state.cart.map((item) => {
-                        //วนหา item ที่มี id ตรงกัน
-                        return (
-                            item.id === thisLottery.id ?
-                                // เพิ่มจำนวน qty + 1
-                                { ...item, qty: item.qty + 1 }
+      SumTotal();
+      return state;
 
-                                :
-                                item
-                        )
-                    })
+    case "INCREASE_ITEM":
+      const id1 = action.id;
+      const qty1 = action.qty;
 
-                    :
-                    //inCart = false ไม่มีในตะกร้า
-                    [...state.cart,
-                        {
-                            id: thisLottery.id,
-                            number: thisLottery.number,
-                            photoURL: thisLottery.photoURL,
-                            qty: 1
-                        }
-                    ],
-            }
+      state = {
+        ...state,
+        cart: state.cart.map((item) => {
+          return item.id === id1
+            ? // เพิ่มจำนวน qty + 1
+              { ...item, qty: item.qty + 1 }
+            : item;
+        }),
+      };
 
-            SumTotal();
-            return state;
+      SumTotal();
+      return state;
 
-        case 'ADJUST_QTY':
+    case "REMOVE_FROM_CART":
+      const _id = action.data.id;
 
-            const id = action.id;
-            const _qty = action.qty;
+      state = {
+        ...state,
+        cart: state.cart.filter((item) => item.id !== _id),
+      };
 
-            state = {
-                ...state,
-                cart: state.cart.map((item) => {
-                    return (
-                        item.id === id ?
+      SumTotal();
+      return state;
 
-                            { ...item, qty: item.qty + _qty }
-                            :
-                            item
-                    )
+    case "CLEAR_CART":
+      state = initialState;
+      return state;
 
-                })
-            }
+    case "GET_CART":
+      return state;
 
-            SumTotal();
-            return state;
-
-        case 'REMOVE_FROM_CART':
-
-            const _id = action.data.id;
-
-            state = {
-                ...state,
-                cart: state.cart.filter((item => item.id !== _id))
-            }
-
-            SumTotal();
-            return state;
-
-        case 'CLEAR_CART':
-
-            state = initialState;
-            return state;
-
-        case 'GET_CART':
-            return state;
-
-        default:
-            return state;
-    }
+    default:
+      return state;
+  }
 }
 
 export default Cart;

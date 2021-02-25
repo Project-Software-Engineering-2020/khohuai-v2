@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
@@ -6,6 +7,13 @@ import "./cart.css";
 
 function CartitemTest({ item }) {
   const [qty, setQty] = useState(item.qty);
+  const dispatch = useDispatch();
+  const [increast, setIncrease] = useState();
+
+  const increaseItem = () => {
+    dispatch({ type: "INCREASE_ITEM" });
+    setIncrease(true);
+  };
 
   function DecreaseItem() {
     setQty(qty - 1);
@@ -42,7 +50,7 @@ function CartitemTest({ item }) {
             <FontAwesomeIcon icon={faMinus} />
           </button>
           <span>{item.qty}</span>
-          <button type="button" className="btnAdd" onClick={IncrementItem}>
+          <button type="button" className="btnAdd" onClick={increaseItem}>
             <FontAwesomeIcon icon={faPlus} />
           </button>
         </section>
