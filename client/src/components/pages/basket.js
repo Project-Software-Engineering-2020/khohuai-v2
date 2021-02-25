@@ -13,18 +13,10 @@ const Basket = () => {
   const [loading, setloading] = useState(true);
   // const [myCart, setmyCart] = useState();
   const [clearCart, setclearCart] = useState();
-
-    const myCart = useSelector(state => state.cart);
-    const Usernaw = useSelector(state => state.auth);
-    const dispatch = useDispatch();
-    const [charge, setcharge] = useState(undefined)
-    const [loading, setloading] = useState(true)
-    // const [myCart, setmyCart] = useState();
-    const [clearCart, setclearCart] = useState();
-
+  
     const createCreditCardCharge = async (email, name,macart ,amount,token) => {
 
-        console.log("Token Here ===>" + token)
+        console.log("Token Here ===>" + token);
         try {
             const res =  await axios.post('http://localhost:3001/checkout-credit-card',{
                     email,
@@ -35,7 +27,7 @@ const Basket = () => {
                 headers: {
                     "Content-Type": "application/json"
                 }
-            })
+            });
 
             const resData = res.data
             setcharge(resData)
@@ -43,15 +35,9 @@ const Basket = () => {
         } catch (err) {
             console.log("Error Checkoutpage" + err)
         }
-      );
+    } 
 
-      const resData = res.data;
-      setcharge(resData);
-      console.log("ส่งไปแล้ว");
-    } catch (err) {
-      console.log("Error Checkoutpage" + err);
-    }
-  };
+
   // const payfromcart = () => {
   //     alert("ชำระเงิน")
   // }
@@ -103,6 +89,5 @@ const Basket = () => {
       )}
     </div>
   );
-};
-
+}
 export default Basket;
