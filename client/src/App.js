@@ -1,11 +1,18 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+<<<<<<< HEAD
 import { BrowserRouter as Router, Switch, Route,useHistory } from "react-router-dom";
 import { useSelector } from 'react-redux'
 import { createBrowserHistory } from 'history'
 import PrivateRoute from './util/ProtectedRoute';
 import AdminRoute from './util/AdminRoute';
+=======
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+import PrivateRoute from "./util/ProtectedRoute";
+>>>>>>> main
 
 //page
 import Navbar from "./components/navbar/Navbar";
@@ -18,16 +25,17 @@ import SignUp from "./components/signup/SignUp";
 import Profile from "./components/profile/Profile";
 import Sign_in from "./components/signin/Sign_in";
 import LotteryDetail from "./components/shop/LottoDetail";
-import UploadLottery from './components/insert/insertLottery'
-import Error404 from './components/error/Error404'
-import UpdatePassword from './components/recover/Updatepassword';
-import ForgotPassword from './components/recover/Forgotpassword';
-import Basket from './components/pages/basket';
-import Sidebar from './components/admin/Sidebar';
+import UploadLottery from "./components/insert/insertLottery";
+import Error404 from "./components/error/Error404";
+import UpdatePassword from "./components/recover/Updatepassword";
+import ForgotPassword from "./components/recover/Forgotpassword";
+import Basket from "./components/pages/basket";
+import Sidebar from "./components/admin/Sidebar";
+import CartTest from "./components/cart/CartTest";
 // import Overview from './components/pages/Overview';
-import LotteryReports from './components/pages/LotteryReports';
-import Invoice from './components/pages/Invoice';
-import AdUser from './components/pages/AdUser';
+import LotteryReports from "./components/pages/LotteryReports";
+import Invoice from "./components/pages/Invoice";
+import AdUser from "./components/pages/AdUser";
 
 import NavberAdmin from './components/chon/NavbarAdmin';
 import Dashboard from './components/chon/Dashboard';
@@ -62,8 +70,21 @@ function App() {
         <PrivateRoute path="/cart" component={Basket} />
       </Switch>
 
+            {/* <Route path='/dashbord' exact component={Overview} /> */}
+            <PrivateRoute
+              path="/LotteryReports"
+              exact
+              component={LotteryReports}
+            />
+            <PrivateRoute path="/Invoice" exact component={Invoice} />
+            <PrivateRoute path="/AdUser" exact component={AdUser} />
+            <PrivateRoute path="/game" component={Game} />
+            <PrivateRoute path="/cart" component={Basket} />
+            <PrivateRoute path="/carttest" component={CartTest} />
+          </Switch>
+        </div>
+      )}
     </Router>
-
   );
 }
 

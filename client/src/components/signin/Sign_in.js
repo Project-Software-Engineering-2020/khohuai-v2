@@ -1,29 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
-import { GoogleLogin, GoogleLogout } from 'react-google-login'
-import {
-  auth,
-  firestore,
-  googleProvider,
-} from "../../firebase/firebase";
+import { GoogleLogin, GoogleLogout } from "react-google-login";
+import { auth, firestore, googleProvider } from "../../firebase/firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import "../../stylesheet/signin.css";
-import { useDispatch, useSelector } from 'react-redux';
-import { setloginWithEmail, setloginWithGoogle } from '../../redux/action/authAction';
-import Axios from 'axios'
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setloginWithEmail,
+  setloginWithGoogle,
+} from "../../redux/action/authAction";
+import Axios from "axios";
 
 const Sign_in = () => {
-  const stetus = useSelector(state => state.auth)
-  const [redirect, setredirect] = useState(null)
+  const stetus = useSelector((state) => state.auth);
+  const [redirect, setredirect] = useState(null);
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
 
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordErr] = useState("");
   const [UserError, setUserErr] = useState("");
-
-
 
   const dispatch = useDispatch();
 
@@ -34,10 +31,9 @@ const Sign_in = () => {
   
 
   function onEmaillogin(e) {
-
     setEmailError("");
-    setPasswordErr("")
-    setUserErr("")
+    setPasswordErr("");
+    setUserErr("");
     e.preventDefault();
 
     if (email === "" || password === "") {
@@ -83,8 +79,11 @@ const Sign_in = () => {
     const result = await auth.signInWithPopup(googleProvider);
     console.log(result);
     const token = result.credential.idToken;
-    await Axios.post("http://localhost:3001/auth/google", { token })
-      .then((res) => { dispatch(setloginWithGoogle(res, token)) })
+    await Axios.post("http://localhost:3001/auth/google", { token }).then(
+      (res) => {
+        dispatch(setloginWithGoogle(res, token));
+      }
+    );
 
     // console.log(result);
     // if (result) {
@@ -160,47 +159,60 @@ const Sign_in = () => {
                   <hr />
                 </h1>
               </div>
-              {UserError.length > 0 ?
+              {UserError.length > 0 ? (
                 <div className="alert alert-danger">{UserError}</div>
+<<<<<<< HEAD
                 :
                 null
               }
               <form onSubmit={onEmaillogin}>
+=======
+              ) : null}
+>>>>>>> main
               <div className="form-group">
                 <label htmlFor="username">อีเมล</label>
                 <input
                   type="email"
-                  className={emailError.length || UserError.length > 0 ? "form-control  is-invalid" : "form-control"}
+                  className={
+                    emailError.length || UserError.length > 0
+                      ? "form-control  is-invalid"
+                      : "form-control"
+                  }
                   name="email"
                   value={email}
                   onChange={(e) => setemail(e.target.value)}
                 />
+<<<<<<< HEAD
                 {emailError.length && UserError.length > 0 ?
+=======
+                {emailError.length || UserError.length > 0 ? (
+>>>>>>> main
                   <div className="text-danger mt-1">{emailError}</div>
-                  :
-                  null
-                }
-
+                ) : null}
               </div>
 
               <div className="form-group">
                 <label htmlFor="password">รหัสผ่าน</label>
                 <input
                   type="password"
-                  className={passwordError.length || UserError.length > 0 ? "form-control  is-invalid" : "form-control"}
+                  className={
+                    passwordError.length || UserError.length > 0
+                      ? "form-control  is-invalid"
+                      : "form-control"
+                  }
                   name="password"
                   value={password}
                   onChange={(e) => setpassword(e.target.value)}
                 />
-                {passwordError.length > 0 ?
+                {passwordError.length > 0 ? (
                   <div className="text-danger mt-1">{passwordError}</div>
-                  :
-                  null
-                }
+                ) : null}
               </div>
 
               <div>
-                <p>ลืมรหัสผ่าน? <a href="/forgotpassword" >คลิก</a></p>
+                <p>
+                  ลืมรหัสผ่าน? <a href="/forgotpassword">คลิก</a>
+                </p>
               </div>
 
               <div className="">
@@ -210,13 +222,18 @@ const Sign_in = () => {
                   onClick={onEmaillogin}
                 >
                   ลงชื่อเข้าใช้
-                  </button>
+                </button>
               </div>
 
+<<<<<<< HEAD
               <div className="text-center mt-1">
                 หรือ
               </div>
               </form>
+=======
+              <div className="text-center mt-1">หรือ</div>
+
+>>>>>>> main
               <div>
                 <button
                   type="button"
@@ -224,8 +241,8 @@ const Sign_in = () => {
                   className="btn-google my-3"
                 >
                   <FontAwesomeIcon icon={faGoogle} />
-                    &nbsp;&nbsp;ล็อคอินด้วยกูเกิ้ล
-                  </button>
+                  &nbsp;&nbsp;ล็อคอินด้วยกูเกิ้ล
+                </button>
               </div>
 
               {/* <GoogleLogin
@@ -245,17 +262,24 @@ const Sign_in = () => {
               </GoogleLogout> */}
 
               <div>
-                <p>หากคุณยังไม่มีบัญชีผู้ใช้งาน <a href="/signup"> สร้างบัญชีผู้ใช้</a> </p>
+                <p>
+                  หากคุณยังไม่มีบัญชีผู้ใช้งาน{" "}
+                  <a href="/signup"> สร้างบัญชีผู้ใช้</a>{" "}
+                </p>
               </div>
               {/* <Link to="">สร้างบัญชีผู้ใช้</Link> */}
+<<<<<<< HEAD
 
         
+=======
+            </form>
+>>>>>>> main
           </div>
         </div>
       ) : (
-          <Redirect to='/'></Redirect>
-        )}
+        <Redirect to="/"></Redirect>
+      )}
     </div>
   );
-}
+};
 export default Sign_in;
