@@ -32,11 +32,11 @@
 body {
   width: 100%;
   height: 100%;
-  /* background-repeat: no-repeat;
+  background-repeat: no-repeat;
   background-size: cover;
-  background-position: center; */
-  background-color: rgb(247, 234, 236);
-  /* background-image: url("https://wallpaperaccess.com/full/274228.jpg"); */
+  background-position: fixed;
+  /* background-color: rgb(247, 234, 236); */
+  background-image: url("https://png.pngtree.com/thumb_back/fw800/back_our/20190621/ourmid/pngtree-beautiful-romantic-singles-festival-single-party-blind-date-activities-image_176952.jpg");
 }
 
 .modal-open{

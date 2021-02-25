@@ -26,8 +26,9 @@ const Sign_in = () => {
 
   useEffect(() => {
     const stotus = stetus.status;
-    setredirect(stotus);
-  }, [stetus]);
+    setredirect(stotus)
+  }, [stetus])
+  
 
   function onEmaillogin(e) {
     setEmailError("");
@@ -35,30 +36,44 @@ const Sign_in = () => {
     setUserErr("");
     e.preventDefault();
 
-    try {
-      Axios.post("http://localhost:3001/auth/login", {
-        email,
-        password,
-      }).then((res) => {
-        if (res.status === 201) {
-          if (res.data === "auth/invalid-email") {
-            setEmailError("อีเมลไม่ถูกต้อง");
-            setUserErr("อีเมลไม่ถูกต้อง");
-          } else if (res.data === "auth/wrong-password") {
-            setPasswordErr("รหัสผ่านไม่ถูกต้อง");
-            setUserErr("รหัสผ่านไม่ถูกต้อง");
-          } else if (res.data === "auth/user-not-found") {
-            setUserErr("ไม่พบบัญชีผู้ใช้งาน");
-          } else if (res.data === "auth/too-many-requests") {
-            setUserErr("คุณใส่รหัสผ่านผิดเกิน 3 ครั้ง กรุณารอสักครู่");
-          }
-        } else if (res.status === 200) {
-          dispatch(setloginWithEmail(res));
-        }
-      });
-    } catch (error) {
-      console.log(error);
+    if (email === "" || password === "") {
+      setUserErr("โปรดกรอกอีเมลและรหัสผ่าน")
     }
+    else {
+      try {
+        Axios.post("http://localhost:3001/auth/login", {
+          email,
+          password
+        }).then((res) => {
+
+          if (res.status === 201) {
+            if (res.data === "auth/invalid-email") {
+              setEmailError("อีเมลไม่ถูกต้อง");
+              setUserErr("อีเมลไม่ถูกต้อง");
+            }
+            else if (res.data === "auth/wrong-password") {
+              setPasswordErr("รหัสผ่านไม่ถูกต้อง");
+              setUserErr("รหัสผ่านไม่ถูกต้อง");
+            }
+            else if (res.data === "auth/user-not-found") {
+              setUserErr("ไม่พบบัญชีผู้ใช้งาน");
+            }
+            else if (res.data === "auth/too-many-requests") {
+              setUserErr("คุณใส่รหัสผ่านผิดเกิน 3 ครั้ง กรุณารอสักครู่");
+            }
+          }
+          else if (res.status === 200) {
+
+            dispatch(setloginWithEmail(res));
+          }
+
+        })
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+
   }
   const onloginwithgoogle = async () => {
     const result = await auth.signInWithPopup(googleProvider);
@@ -137,7 +152,7 @@ const Sign_in = () => {
       {!redirect ? (
         <div className="signin">
           <div className="main-form">
-            <form>
+            
               <div className="d-flex justify-content-center">
                 <h1>
                   ลงชื่อเข้าใช้
@@ -146,7 +161,14 @@ const Sign_in = () => {
               </div>
               {UserError.length > 0 ? (
                 <div className="alert alert-danger">{UserError}</div>
+<<<<<<< HEAD
+                :
+                null
+              }
+              <form onSubmit={onEmaillogin}>
+=======
               ) : null}
+>>>>>>> main
               <div className="form-group">
                 <label htmlFor="username">อีเมล</label>
                 <input
@@ -160,7 +182,11 @@ const Sign_in = () => {
                   value={email}
                   onChange={(e) => setemail(e.target.value)}
                 />
+<<<<<<< HEAD
+                {emailError.length && UserError.length > 0 ?
+=======
                 {emailError.length || UserError.length > 0 ? (
+>>>>>>> main
                   <div className="text-danger mt-1">{emailError}</div>
                 ) : null}
               </div>
@@ -191,7 +217,7 @@ const Sign_in = () => {
 
               <div className="">
                 <button
-                  type="button"
+                  type="submit"
                   className="btn-signin"
                   onClick={onEmaillogin}
                 >
@@ -199,8 +225,15 @@ const Sign_in = () => {
                 </button>
               </div>
 
+<<<<<<< HEAD
+              <div className="text-center mt-1">
+                หรือ
+              </div>
+              </form>
+=======
               <div className="text-center mt-1">หรือ</div>
 
+>>>>>>> main
               <div>
                 <button
                   type="button"
@@ -235,7 +268,12 @@ const Sign_in = () => {
                 </p>
               </div>
               {/* <Link to="">สร้างบัญชีผู้ใช้</Link> */}
+<<<<<<< HEAD
+
+        
+=======
             </form>
+>>>>>>> main
           </div>
         </div>
       ) : (

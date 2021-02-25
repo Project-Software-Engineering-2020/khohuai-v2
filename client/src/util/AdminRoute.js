@@ -11,7 +11,7 @@ function AdminRoute({component: Component, ...rest}) {
             {...rest}
             component={(props) => {
                 // check login
-                if(auth.status === true && auth.role ===  "admin") {
+                if(auth.status === true && auth.role === "admin") {
                     return <Component {...props} />
                 }
                 else{

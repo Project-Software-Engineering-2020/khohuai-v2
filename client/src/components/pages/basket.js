@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { withRouter } from "react-router-dom";
-import BasketItem from "./basketItem";
-import CheckoutCreditcard from "../checkout/checkoutwithcard";
-
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios';
+import { withRouter } from 'react-router-dom'
+import BasketItem from './basketItem';
+import CheckoutCreditcard from '../checkout/checkoutwithcard';
+import './basket.css'
 const Basket = () => {
   const myCart = useSelector((state) => state.cart);
   const Usernaw = useSelector((state) => state.auth);

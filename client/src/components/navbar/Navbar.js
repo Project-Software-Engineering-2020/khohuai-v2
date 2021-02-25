@@ -68,7 +68,6 @@ function Navbar() {
               className='lottery-nav-links'
               onClick={(e) => closeMobileMenu}
             >
-              {/* {history.replace("?position=all&number=")} */}
               <i className="fas fa-store fa-1x"></i> ร้านค้าสลาก
             </Link>
             {dropdown && <Dropdown />}
