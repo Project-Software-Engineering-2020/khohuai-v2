@@ -1,9 +1,9 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route,useHistory } from "react-router-dom";
 import { useSelector } from 'react-redux'
-
+import { createBrowserHistory } from 'history'
 import PrivateRoute from './util/ProtectedRoute';
 import AdminRoute from './util/AdminRoute';
 
@@ -35,10 +35,12 @@ import USer from './components/chon/User';
 
 function App() {
 
+  let history = createBrowserHistory();
+
   const auth = useSelector(state => state.auth);
 
   return (
-    <Router>
+    <Router history={history}>
       <Navbar />
       <Switch>
         <Route path="/" exact={true} component={Home} />

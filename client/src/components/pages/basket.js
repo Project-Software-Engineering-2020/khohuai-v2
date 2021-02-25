@@ -4,7 +4,7 @@ import axios from 'axios';
 import { withRouter } from 'react-router-dom'
 import BasketItem from './basketItem';
 import CheckoutCreditcard from '../checkout/checkoutwithcard';
-
+import './basket.css'
 const Basket = () => {
 
     const myCart = useSelector(state => state.cart);
