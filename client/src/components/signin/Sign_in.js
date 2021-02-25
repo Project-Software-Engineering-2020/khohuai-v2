@@ -45,11 +45,14 @@ const Sign_in = () => {
         password
       }).then((res) => {
         dispatch(setloginWithEmail(res));
+        
       })
     } catch (error) {
       console.log(error);
     }
   }
+
+  
   const onloginwithgoogle = async () => {
     const result = await auth.signInWithPopup(googleProvider);
     console.log(result);
@@ -97,7 +100,6 @@ const Sign_in = () => {
   };
 
   const handleLogin = async (googleData) => {
-    alert("login")
     const res = await fetch("http://localhost:3001/auth/google", {
         method: "POST",
         body: JSON.stringify({

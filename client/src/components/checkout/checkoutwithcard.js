@@ -1,10 +1,18 @@
 import React, { useState } from "react";
+import { useSelector , useDispatch } from 'react-redux';
+import Axios from 'axios';
+import { storage, firestore } from '../../firebase/firebase'
+
+
 // import "./Checkout.css";
 
 
 const CheckoutCreditcard = ({cart,user,createCreditCardCharge}) => {
 
     let OmiseCard;
+    const dispatch = useDispatch();
+    // const macart = useSelector(state => state.cart);
+    const [clearCart, setclearCart] = useState()
     // const [cart, setcart] = useState(null);
     // setcart(Acart)
         OmiseCard = window.OmiseCard;
@@ -15,6 +23,11 @@ const CheckoutCreditcard = ({cart,user,createCreditCardCharge}) => {
             submitLabel: "Pay Now",
             buttomLabel: "Pay with Omise"
         })
+
+    const clearBasket = () => {
+            dispatch({ type: "CLEAR_CART" })
+            setclearCart(true);
+        }
 
     const creditCardConfigure = () => {
         OmiseCard.configure({
@@ -30,14 +43,14 @@ const CheckoutCreditcard = ({cart,user,createCreditCardCharge}) => {
         OmiseCard.open({
             amount: cart.totalPrice * 100,
             onCreateTokenSuccess: (token) => {
-                createCreditCardCharge(user.email, user.displayName, cart.totalPrice * 100, token)
-                console.log("Here =====>")
+                createCreditCardCharge(user.email, user.displayName,cart, cart.totalPrice * 100, token)
+                console.log("Here =====>",user.uid)
+                clearBasket()
             },
             onFormClosed: () => {
             },
         })
     }
-
     const handleClick = e => {
         e.preventDefault()
         creditCardConfigure()

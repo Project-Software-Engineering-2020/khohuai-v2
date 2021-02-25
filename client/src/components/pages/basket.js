@@ -15,13 +15,14 @@ const Basket = () => {
     // const [myCart, setmyCart] = useState();
     const [clearCart, setclearCart] = useState();
 
-    const createCreditCardCharge = async (email, name, amount, token) => {
+    const createCreditCardCharge = async (email, name,macart ,amount,token) => {
 
         console.log("Token Here ===>" + token)
         try {
             const res =  await axios.post('http://localhost:3001/checkout-credit-card',{
                     email,
                     name,
+                    macart,
                     amount,
                     token,
                 headers: {

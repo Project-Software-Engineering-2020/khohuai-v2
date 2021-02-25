@@ -3,6 +3,7 @@ const initialState = {
     displayName: null,
     photoURL: null,
     role: null,
+    email:null,
     provider: null,
     status:false
 };
@@ -18,6 +19,7 @@ function userAuth(state = initialState , action) {
                 displayName: action.data.displayName,
                 photoURL: action.data.photoURL,
                 role: action.data.role,
+                email: action.data.email,
                 provider: action.data.provider,
                 status:action.data.status
             };
