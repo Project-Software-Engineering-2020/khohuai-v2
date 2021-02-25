@@ -1,16 +1,16 @@
-body {
-    background-color: whitesmoke;
+/* body { */
+    /* background-color: whitesmoke; */
     /* background-image: url("../../images/img-0.jpg"); */
     /* background-image: url("../../images/light-violet.jpg"); */
 
-    background-position: center;
+    /* background-position: center;
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
 
     /* background-image: url("https://marilynscott.com/wp-content/uploads/2016/05/White-christmas-light-background.png"); */
     
     /* background-attachment: fixed; */
-}
+/* } */
 
 .home{
     padding: 20px 0;

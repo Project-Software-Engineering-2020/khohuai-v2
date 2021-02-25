@@ -11,7 +11,7 @@ import Axios from 'axios';
 
 
 
-export default function Button() {
+const Button = ({closeMenu}) => {
 
   const dispatch = useDispatch();
 
@@ -114,3 +114,5 @@ export default function Button() {
 
   );
 }
+
+export default Button;

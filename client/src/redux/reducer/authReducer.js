@@ -3,15 +3,16 @@ const initialState = {
     displayName: null,
     photoURL: null,
     role: null,
-    email:null,
+    email: null,
     provider: null,
-    status:false
+    status:false,
+    token:null
 };
 
 function userAuth(state = initialState , action) {
 
     switch (action.type) {
-        
+
         case 'SET_LOGIN':
             state = {
                 ...state,
@@ -21,7 +22,8 @@ function userAuth(state = initialState , action) {
                 role: action.data.role,
                 email: action.data.email,
                 provider: action.data.provider,
-                status:action.data.status
+                status: action.data.status,
+                token: action.data.token
             };
             return state;
 
@@ -32,8 +34,10 @@ function userAuth(state = initialState , action) {
                 displayName: action.displayName,
                 photoURL: action.photoURL,
                 role: action.role,
-                provider: state.provider,
-                status:action.status
+                email: action.data.email,
+                provider: action.data.provider,
+                status: action.data.status,
+                token: action.data.token
             };
             return state;
 
@@ -43,7 +47,7 @@ function userAuth(state = initialState , action) {
 
         default:
             return state;
-        
+
     }
 }
 

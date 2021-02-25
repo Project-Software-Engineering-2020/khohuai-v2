@@ -4,60 +4,36 @@ import Axios from 'axios';
 import './Profile.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { storage, firestore } from '../../firebase/firebase'
+import { updateUserProfile, getProfile } from "../../redux/action/profileAction"
 
 const Profile = () => {
 
     const dispatch = useDispatch();
     //status user login
-    const auth = useSelector(state => state.auth)
-    const status = auth.status;
+    const auth = useSelector(state => state.auth);
+    const UserProfile = useSelector(state => state.profile)
+    // const status = auth.status;
+    const uid = auth.uid;
 
     const [Profile, setProfile] = useState();
     const [newProfile, setNewProfile] = useState();
     const [updateImage, setUpdateImage] = useState(null);
     const [imagePreview, setImagePreview] = useState();
-    const [loading, setloading] = useState(false);
-
     const [editState, setEditState] = useState(false);
 
-
-    const [redirect, setredirect] = useState(true)
-
-    
-
-
-    const fetchUserProfile = async () => {
-        const id = auth.uid;
-        let profile = null;
-        await Axios.get("http://localhost:3001/api/profile/" + id).then((res) => {
-            profile = res.data
-        })
-
-        console.log(profile)
-
-        return profile;
-    }
-
     useEffect(async () => {
-        setredirect(status)
-        let pro = await fetchUserProfile();
-        await setProfile(pro);
-        await setloading(true);
-
-        // setProfile(
-        //     {   
-        //         id: "73847879",
-        //         firstname: "chon",
-        //         lastname: "last",
-        //         displayName: "Bosszaaa"
-        //     }
-        // )
-
-    }, [status]);
+        await dispatch(getProfile(uid));
+        // await setProfile(UserProfile.data);
+    }, []);
 
 
     const OnClickeditProfile = () => {
-        setNewProfile(Profile);
+        setNewProfile(UserProfile.data);
+        setEditState(!editState);
+    }
+
+    const CancelUpdate = () => {
+        // setNewProfile(Profile);
         setEditState(!editState);
     }
 
@@ -100,7 +76,7 @@ const Profile = () => {
         }
     };
     const UpdateProfile = async () => {
-        const uid = status.uid;
+        // const uid = status.uid;
         if (updateImage) {
             console.log("Update image")
             const uploadTask = storage.ref("images/" + uid).put(updateImage);
@@ -128,171 +104,167 @@ const Profile = () => {
                 }
             );
 
-            const pro = await fetchUserProfile();
-            await dispatch({
-                type: 'UPDATE_PROFILE',
-                uid: pro.uid,
-                displayName: pro.displayName,
-                photoURL: pro.photoURL,
-                email: pro.email,
-                role: "user",
-                status: true
-            });
+
+            // await dispatch({
+            //     type: 'UPDATE_PROFILE',
+            //     uid: pro.uid,
+            //     displayName: pro.displayName,
+            //     photoURL: pro.photoURL,
+            //     email: pro.email,
+            //     role: "user",
+            //     status: true
+            // });
         }
         else {
-            console.log("No image")
-            await Axios.put("http://localhost:3001/api/profile/" + uid, {
-                newProfile
-            }).then((res) => {
-                if (res) {
-                    setEditState(!editState);
-                    setProfile(newProfile);
+            dispatch(updateUserProfile(newProfile))
+                .then(() => {
+                    setEditState(!editState)
+                    setProfile(newProfile)
                 }
-            })
-            const pro = await fetchUserProfile();
-            await dispatch({
-                type: 'UPDATE_PROFILE',
-                uid: pro.uid,
-                displayName: pro.displayName,
-                photoURL: pro.photoURL,
-                email: pro.email,
-                role: "user",
-                status: true
-            });
-
+                )
+            // console.log("No image")
+            // await Axios.put("http://localhost:3001/api/profile",
+            //     {
+            //         uid,
+            //         newProfile,
+            //         token
+            //     }).then((res) => {
+            //         if (res.status === 200) {
+            //             setEditState(!editState);
+            //             setProfile(newProfile);
+            //         }
+            //     })
+            // const pro = await fetchUserProfile();
+            // await dispatch({
+            //     type: 'UPDATE_PROFILE',
+            //     uid: pro.uid,
+            //     displayName: pro.displayName,
+            //     photoURL: pro.photoURL,
+            //     email: pro.email,
+            //     role: "user",
+            //     status: true
+            // });
         }
-
-
-
     }
-    const CancelUpdate = () => {
-        setNewProfile(Profile);
-        setEditState(!editState);
-    }
+    
 
 
     return (
         <div>
-            {redirect ? (
-                <div className="bg-profile">
-                    { loading ?
+            <div className="bg-profile">
+                {UserProfile.loading ?
+                    <div className="loader">Loading...</div>
+                    :
+                    <div className="container profile-page">
 
-                        <div className="container profile-page">
-                            <h3>ข้อมูลส่วนตัว</h3>
-                            {editState ?
+                        <h3>ข้อมูลส่วนตัว</h3>
+                        {editState ?
 
-                                //before edit
-                                <div className="my-profile">
+                            //before edit
+                            <div className="my-profile">
 
-                                    <section>
-                                        <figure className="img-profile">
-                                            <img src={imagePreview || Profile.photoURL} alt="profile"></img>
+                                <section>
+                                    <figure className="img-profile">
+                                        <img src={imagePreview || UserProfile.data.photoURL} alt="profile"></img>
 
-                                        </figure>
-                                        <div className="upload-img-profile">
-                                            <p htmlFor="upploadimg" >เลือกรูปภาพ</p>
-                                            <input type="file" onChange={handleChangeImage} />
+                                    </figure>
+                                    <div className="upload-img-profile">
+                                        <p htmlFor="upploadimg" >เลือกรูปภาพ</p>
+                                        <input type="file" onChange={handleChangeImage} />
+                                    </div>
+
+                                </section>
+                                <section className="information-profile">
+                                    <div className="profile-data">
+                                        <label htmlFor="text"> ชื่อผู้ใช้ : </label>
+                                        <input type="text" className="form-control" value={newProfile.displayName} onChange={(event) => { ChangeDataProfile("displayName", event.target.value) }}></input>
+                                    </div>
+
+                                    <div className="profile-data">
+                                        <label htmlFor="text"> ชื่อจริง : </label>
+                                        <input type="text" className="form-control" value={newProfile.firstname} onChange={(event) => { ChangeDataProfile("firstname", event.target.value) }}></input>
+                                    </div>
+
+                                    <div className="profile-data">
+                                        <label htmlFor="text"> นามสกุล : </label>
+                                        <input type="text" className="form-control" value={newProfile.lastname} onChange={(event) => { ChangeDataProfile("lastname", event.target.value) }}></input>
+                                    </div>
+                                    <div className="profile-data">
+                                        <label> อีเมล : </label>
+                                        <span>{UserProfile.data.email}</span>
+                                    </div>
+
+                                    <div className="profile-data">
+                                        <label htmlFor="text"> เบอร์โทร : </label>
+                                        <input type="text" className="form-control" value={newProfile.phone} onChange={(event) => { ChangeDataProfile("phone", event.target.value) }}></input>
+                                    </div>
+                                    <div className="profile-data">
+                                        <div></div>
+                                        <div className="group-btn-profile">
+                                            <button type="button" className="btn-edit-profile" onClick={UpdateProfile}>บันทึก</button>
+                                            <button type="button" className="btn-cancel-updateprofile" onClick={CancelUpdate}> ยกเลิก </button>
                                         </div>
+                                    </div>
 
-                                    </section>
-                                    <section className="information-profile">
-                                        <div className="profile-data">
-                                            <label htmlFor="text"> ชื่อในแอป : </label>
-                                            <input type="text" className="form-control" value={newProfile.displayName} onChange={(event) => { ChangeDataProfile("displayName", event.target.value) }}></input>
+
+                                </section>
+                            </div>
+
+                            :
+                            <div className="my-profile">
+                                <section>
+                                    <figure className="img-profile">
+                                        <img src={imagePreview || UserProfile.data.photoURL} alt="profile"></img>
+                                    </figure>
+
+                                </section>
+                                <section className="information-profile">
+                                    <div className="profile-data">
+                                        <label htmlFor="text"> ชื่อผู้ใช้ : </label>
+                                        <span>{UserProfile.data.displayName}</span>
+                                    </div>
+
+                                    <div className="profile-data">
+                                        <label htmlFor="text"> ชื่อจริง : </label>
+                                        <span>{UserProfile.data.firstname}</span>
+                                    </div>
+
+                                    <div className="profile-data">
+                                        <label> นามสกุล : </label>
+                                        <span>{UserProfile.data.lastname}</span>
+                                    </div>
+
+                                    <div className="profile-data">
+                                        <label> อีเมล : </label>
+                                        <span>{UserProfile.data.email}</span>
+                                    </div>
+
+                                    <div className="profile-data">
+                                        <label> เบอร์โทร : </label>
+                                        <span>{UserProfile.data.phone}</span>
+                                    </div>
+                                    <div className="profile-data">
+                                        <div>
                                         </div>
+                                        <div className="group-btn-profile">
+                                            <button type="button" className="btn-edit-profile" onClick={OnClickeditProfile}> แก้ไขข้อมูล </button>
+                                            {auth.provider != "google" ?
+                                                <button type="button" className="btn-change-password" ><a href="/updatepassword">เปลี่ยนรหัสผ่าน</a></button>
+                                                :
+                                                null
+                                            }
 
-                                        <div className="profile-data">
-                                            <label htmlFor="text"> ชื่อ : </label>
-                                            <input type="text" className="form-control" value={newProfile.firstname} onChange={(event) => { ChangeDataProfile("firstname", event.target.value) }}></input>
                                         </div>
+                                    </div>
 
-                                        <div className="profile-data">
-                                            <label htmlFor="text"> นามสกุล : </label>
-                                            <input type="text" className="form-control" value={newProfile.lastname} onChange={(event) => { ChangeDataProfile("lastname", event.target.value) }}></input>
-                                        </div>
-                                        <div className="profile-data">
-                                            <label> อีเมล : </label>
-                                            <span>{Profile.email}</span>
-                                        </div>
+                                </section>
+                            </div>
+                        }
 
-                                        <div className="profile-data">
-                                            <label htmlFor="text"> เบอร์โทร : </label>
-                                            <input type="text" className="form-control" value={newProfile.phone} onChange={(event) => { ChangeDataProfile("phone", event.target.value) }}></input>
-                                        </div>
-                                        <div className="profile-data">
-                                            <div></div>
-                                            <div className="group-btn-profile">
-                                                <button type="button" className="btn-edit-profile" onClick={UpdateProfile}>บันทึก</button>
-                                                <button type="button" className="btn-cancel-updateprofile" onClick={CancelUpdate}> ยกเลิก </button>
-                                            </div>
-                                        </div>
+                    </div>
+                }
+            </div>
 
-
-                                    </section>
-                                </div>
-
-                                :
-                                <div className="my-profile">
-                                    <section>
-                                        <figure className="img-profile">
-                                            <img src={imagePreview || Profile.photoURL} alt="profile"></img>
-                                        </figure>
-
-                                    </section>
-                                    <section className="information-profile">
-                                        <div className="profile-data">
-                                            <label htmlFor="text"> ชื่อผู้ใช้ : </label>
-                                            <span>{Profile.displayName}</span>
-                                        </div>
-
-                                        <div className="profile-data">
-                                            <label htmlFor="text"> ชื่อ : </label>
-                                            <span>{Profile.firstname}</span>
-                                        </div>
-
-                                        <div className="profile-data">
-                                            <label> นามสกุล : </label>
-                                            <span>{Profile.lastname}</span>
-                                        </div>
-
-                                        <div className="profile-data">
-                                            <label> อีเมล : </label>
-                                            <span>{Profile.email}</span>
-                                        </div>
-
-                                        <div className="profile-data">
-                                            <label> เบอร์โทร : </label>
-                                            <span>{Profile.phone}</span>
-                                        </div>
-                                        <div className="profile-data">
-                                            <div>
-                                            </div>
-                                            <div className="group-btn-profile">
-                                                <button type="button" className="btn-edit-profile" onClick={OnClickeditProfile}> แก้ไขข้อมูล </button>
-                                                {status.provider != "google" ?
-                                                    <button type="button" className="btn-change-password" ><a href="/updatepassword">เปลี่ยนรหัสผ่าน</a></button>
-                                                    :
-                                                    null
-                                                }
-
-                                            </div>
-                                        </div>
-
-                                    </section>
-                                </div>
-
-
-
-                            }
-
-                        </div>
-                        :
-                        <div className="loader">Loading...</div>
-                    }
-                </div>
-            ) : (
-                    <Redirect to='/login'></Redirect>
-                )}
         </div>
 
     )

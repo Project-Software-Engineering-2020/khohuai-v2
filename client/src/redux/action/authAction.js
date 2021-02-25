@@ -10,21 +10,24 @@ export function setloginWithEmail(user) {
             role: user.data.role,
             email: user.data.email,
             provider: "email",
-            status: true
+            status: true,
+            token: ""
         }
     });
 }
 
-export function setloginWithGoogle(doc, uid) {
+export function setloginWithGoogle(user,token) {
     return store.dispatch({
         type: 'SET_LOGIN',
         data: {
-            uid: uid,
-            displayName: doc.data().displayName,
-            photoURL: doc.data().photoURL,
-            role: doc.data().role,
+            uid: user.data.uid,
+            displayName: user.data.displayName,
+            photoURL: user.data.photoURL,
+            role: user.data.role,
+            email: user.data.email,
             provider: "google",
-            status: true
+            status: true,
+            token: token
         }
     });
 

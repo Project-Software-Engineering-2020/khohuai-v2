@@ -1,10 +1,8 @@
-const {firestore,firebaseApp, auth}  = require('../firebaseDB');
-// const storage = require('firebase/storage');
+const { firestore, firebaseApp, auth, googleProvider } = require('../firebaseDB');
 
 //Models DB
 const User = require('../Models/User');
 
-//*****Function Query Database*****
 const addUser = async (req, res, next) => {
     try {
         const data = req.body;
@@ -56,35 +54,29 @@ const deleteUser = async (req, res, next) => {
 
 
 const getProfile = async (req, res, next) => {
+
+    const uid = req.params.id;
     try {
-        await auth.onAuthStateChanged(function(user) {
-            if (user) {
-              console.log("login แล้ว",user)
-            } else {
-              console.log("ยังไม่ login",user);
-            }
-          });
-        const uid = req.params.id;
         await firestore.collection('users').doc(uid).get().then((doc) => {
             console.log(doc.data());
-            res.send(doc.data())
+            res.status(200).send(doc.data())
         })
-
     } catch (error) {
         console.log(error);
     }
 }
 
 const updateProfile = async (req, res, next) => {
+
+    const data = req.body.newProfile;
+    // const token = req.body.token.toString();
+    // console.log(data);
+    // console.log(token);
+    // console.log(uid);
     try {
-        const uid = req.params.id;
-        const data = req.body.newProfile;
-        console.log(uid);
-        console.log(data);
-        // console.log(image); 
-        firestore.collection('users').doc(uid).update(data);
-        res.send();
-        
+        firestore.collection('users').doc(data.uid).update(data)
+            .then((result) => { res.status(200).send(result) })
+
     } catch (error) {
         console.log(error);
     }

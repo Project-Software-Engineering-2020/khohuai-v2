@@ -102,7 +102,7 @@ function Navbar() {
             </a>
           </li>
           <li className="nav-user">
-            <ButtonLogin className="btn-login" onClick={closeMobileMenu} />
+            <ButtonLogin className="btn-login" />
           </li>
 
         </ul>
