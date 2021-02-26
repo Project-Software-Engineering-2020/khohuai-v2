@@ -1,26 +1,39 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
 import "./cart.css";
+import { incrementQty, decrementQty, removeItemInCart,selectItem } from '../../redux/action/cartAction' 
 
 function CartitemTest({ item }) {
-  const [qty, setQty] = useState(item.qty);
+  // const [qty, setQty] = useState(item.qty);
   const dispatch = useDispatch();
-  const [increast, setIncrease] = useState();
+  // const [increast, setIncrease] = useState();
 
-  const increaseItem = () => {
-    dispatch({ type: "INCREASE_ITEM" });
-    setIncrease(true);
-  };
+  // const increaseItem = () => {
+  //   dispatch({ type: "INCREASE_ITEM" });
+  //   setIncrease(true);
+  // };
 
   function DecreaseItem() {
-    setQty(qty - 1);
+    if(item.qty-1 > 0) {
+        dispatch(decrementQty(item));
+    }
   }
 
   function IncrementItem() {
-    setQty(qty + 1);
+    dispatch(incrementQty(item));
+  }
+
+  function removeItem() {
+    dispatch(removeItemInCart(item.id))
+  }
+
+  const selectToggle = () => {
+
+    const select = !item.selected
+    dispatch(selectItem(item.id,select))
   }
 
   return (
@@ -31,8 +44,9 @@ function CartitemTest({ item }) {
             <input
               class="form-check-input"
               type="checkbox"
-              value=""
+              checked={item.selected}
               id="defaultCheck1"
+              onChange={selectToggle}
             />
             <figure>
               <img src={item.photoURL} width="200px" height="100px" />
@@ -42,7 +56,7 @@ function CartitemTest({ item }) {
 
         <section className="col-md-8">
           <h1>
-            1&nbsp;&nbsp;2&nbsp;&nbsp;3&nbsp;&nbsp;4&nbsp;&nbsp;5&nbsp;&nbsp;6
+            { item.id }
           </h1>
           <h5>งวดประจำวันที่ 1 กุมภาพันธ์ 2563</h5>
 
@@ -50,9 +64,10 @@ function CartitemTest({ item }) {
             <FontAwesomeIcon icon={faMinus} />
           </button>
           <span>{item.qty}</span>
-          <button type="button" className="btnAdd" onClick={increaseItem}>
+          <button type="button" className="btnAdd" onClick={IncrementItem}>
             <FontAwesomeIcon icon={faPlus} />
           </button>
+          <button type="button" onClick={removeItem}>ลบ</button>
         </section>
       </div>
     </div>
