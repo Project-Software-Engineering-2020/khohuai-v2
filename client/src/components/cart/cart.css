@@ -15,8 +15,7 @@
 }
 
 /* หน้า AddDel */
-
-section span {
+.item-qty {
   font-size: large;
   border-style: solid;
   border-width: thin;

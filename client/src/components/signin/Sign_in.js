@@ -159,16 +159,12 @@ const Sign_in = () => {
                   <hr />
                 </h1>
               </div>
-              {UserError.length > 0 ? (
+              {UserError.length > 0 ? 
                 <div className="alert alert-danger">{UserError}</div>
-<<<<<<< HEAD
                 :
                 null
               }
               <form onSubmit={onEmaillogin}>
-=======
-              ) : null}
->>>>>>> main
               <div className="form-group">
                 <label htmlFor="username">อีเมล</label>
                 <input
@@ -182,13 +178,9 @@ const Sign_in = () => {
                   value={email}
                   onChange={(e) => setemail(e.target.value)}
                 />
-<<<<<<< HEAD
                 {emailError.length && UserError.length > 0 ?
-=======
-                {emailError.length || UserError.length > 0 ? (
->>>>>>> main
                   <div className="text-danger mt-1">{emailError}</div>
-                ) : null}
+                 : null}
               </div>
 
               <div className="form-group">
@@ -225,15 +217,10 @@ const Sign_in = () => {
                 </button>
               </div>
 
-<<<<<<< HEAD
               <div className="text-center mt-1">
                 หรือ
               </div>
               </form>
-=======
-              <div className="text-center mt-1">หรือ</div>
-
->>>>>>> main
               <div>
                 <button
                   type="button"
@@ -268,12 +255,8 @@ const Sign_in = () => {
                 </p>
               </div>
               {/* <Link to="">สร้างบัญชีผู้ใช้</Link> */}
-<<<<<<< HEAD
 
         
-=======
-            </form>
->>>>>>> main
           </div>
         </div>
       ) : (

@@ -35,8 +35,8 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: fixed;
-  /* background-color: rgb(247, 234, 236); */
-  background-image: url("https://png.pngtree.com/thumb_back/fw800/back_our/20190621/ourmid/pngtree-beautiful-romantic-singles-festival-single-party-blind-date-activities-image_176952.jpg");
+  background-color: rgb(247, 234, 236);
+  /* background-image: url("https://png.pngtree.com/thumb_back/fw800/back_our/20190621/ourmid/pngtree-beautiful-romantic-singles-festival-single-party-blind-date-activities-image_176952.jpg"); */
 }
 
 .modal-open{

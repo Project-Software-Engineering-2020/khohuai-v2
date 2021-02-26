@@ -1,18 +1,11 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-<<<<<<< HEAD
 import { BrowserRouter as Router, Switch, Route,useHistory } from "react-router-dom";
 import { useSelector } from 'react-redux'
 import { createBrowserHistory } from 'history'
 import PrivateRoute from './util/ProtectedRoute';
 import AdminRoute from './util/AdminRoute';
-=======
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { useSelector } from "react-redux";
-
-import PrivateRoute from "./util/ProtectedRoute";
->>>>>>> main
 
 //page
 import Navbar from "./components/navbar/Navbar";
@@ -29,7 +22,7 @@ import UploadLottery from "./components/insert/insertLottery";
 import Error404 from "./components/error/Error404";
 import UpdatePassword from "./components/recover/Updatepassword";
 import ForgotPassword from "./components/recover/Forgotpassword";
-import Basket from "./components/pages/basket";
+import Basket from "./components/cart/CartTest";
 import Sidebar from "./components/admin/Sidebar";
 import CartTest from "./components/cart/CartTest";
 // import Overview from './components/pages/Overview';
@@ -68,22 +61,7 @@ function App() {
         <PrivateRoute path='/AdUser' exact component={AdUser} />
         <PrivateRoute path="/game" component={Game} />
         <PrivateRoute path="/cart" component={Basket} />
-      </Switch>
-
-            {/* <Route path='/dashbord' exact component={Overview} /> */}
-            <PrivateRoute
-              path="/LotteryReports"
-              exact
-              component={LotteryReports}
-            />
-            <PrivateRoute path="/Invoice" exact component={Invoice} />
-            <PrivateRoute path="/AdUser" exact component={AdUser} />
-            <PrivateRoute path="/game" component={Game} />
-            <PrivateRoute path="/cart" component={Basket} />
-            <PrivateRoute path="/carttest" component={CartTest} />
-          </Switch>
-        </div>
-      )}
+        </Switch>
     </Router>
   );
 }

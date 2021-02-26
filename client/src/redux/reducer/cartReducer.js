@@ -71,6 +71,7 @@ function Cart(state = initialState, action) {
                 number: thisLottery.number,
                 photoURL: thisLottery.photoURL,
                 qty: 1,
+                selected: false
               },
             ],
       };
@@ -127,6 +128,28 @@ function Cart(state = initialState, action) {
     case "GET_CART":
       return state;
 
+    case "SELECT_ITEM_CART":
+
+      // state.cart.find((item) => {
+      //   return item.id === thisLottery.id ? true : false;
+      // });
+
+      const id_item = action.data;
+      // console.log(id_item);
+      state = {
+        ...state,
+        cart: state.cart.map((item) => {
+          
+           return item.id === id_item ? 
+
+              { ...item, 
+                selected: !item.selected
+              }
+            : 
+            item
+        }),
+      };
+    
     default:
       return state;
   }
