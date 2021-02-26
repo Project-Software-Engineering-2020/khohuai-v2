@@ -7,31 +7,30 @@ const Lottery = require("../Models/Lottery");
 
 const getAllLottery = async (req, res, next) => {
 
-    const lotteryArray = [];
+    let lotteryArray = []
 
-    if (lotteryArray !== []) {
-        try {
-            const lottery = await firestore.collection('LotteriesAvailable').get()
-            if (lottery.empty) {
-                res.status(400).send("No lottery in record")
-            } else {
-                lottery.docs.forEach(doc => {
-                    //push into array
-                    const lot = new Lottery(
-                        doc.id,
-                        doc.data().photoURL,
-                    )
-                    lotteryArray.push(lot);
+    console.log("get Data")
+    try {
+        const lottery = await firestore.collection('LotteriesAvailable').get()
+        if (lottery.empty) {
+            res.status(400).send("No lottery in record")
+        } else {
+            lottery.docs.forEach(doc => {
+                //push into array
+                // const lot = new Lottery(
+                //     doc.id,
+                //     doc.data().photoURL,
+                // )
+                lotteryArray.push({
+                    id: doc.id,
+                    photoURL: doc.data().photoURL
                 });
-                res.send(lotteryArray);
-            }
-        } catch (error) {
-            console.log(error);
+            });
+            res.status(200).send(lotteryArray);
+            console.log(lotteryArray)
         }
-    }
-    else {
-        console.log(lotteryArray)
-        res.send(lotteryArray);
+    } catch (error) {
+        console.log(error);
     }
 }
 
@@ -55,7 +54,7 @@ const getRecommendedLottery = async (req, res, next) => {
         var user = firebase.auth().currentUser;
         //ยังไม่ได้สร้าง database ประวัติการซื้อ
         const history = await firestore.collection('invoices').get();
-        if(user){
+        if (user) {
             history.docs.forEach(hist => {
                 //หาประวัติการซื้อของ user นั้น
                 if (hist.data().userid === user.id) {
@@ -115,7 +114,7 @@ const getRecommendedLottery = async (req, res, next) => {
                 }
             }
         }
-        else{
+        else {
             const lottery = await firestore.collection('LotteriesAvailable').get();
             lottery.docs.forEach(doc => {
                 //push into array
@@ -185,11 +184,14 @@ const getSearchNumber = async (req, res, next) => {
         const lottery = await firestore.collection('LotteriesAvailable').get();
         lottery.docs.forEach(doc => {
             //push into array
-            const lot = new Lottery(
-                doc.id,
-                doc.data().photoURL,
-            )
-            lotteryArray.push(lot);
+            // const lot = new Lottery(
+            //     doc.id,
+            //     doc.data().photoURL,
+            // )
+            lotteryArray.push({
+                id:doc.id,
+                photoURL:doc.data().photoURL,
+            });
         });
         //instant find without any split
         if (position === "whole") {

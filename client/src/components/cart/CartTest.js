@@ -97,7 +97,7 @@ const Basket = () => {
                     <p class="text-left">จำนวน</p>
                   </div>
                   <div className="col-md-6">
-                    <p class="text-right">{myCart.totalItem} ใบ</p>
+                    <p class="text-right">{myCart.totalSelect} ใบ</p>
                   </div>
 
                   {/* ยอดรวม */}
