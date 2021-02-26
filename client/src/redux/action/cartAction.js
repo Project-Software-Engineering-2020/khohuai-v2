@@ -1,18 +1,30 @@
-import store from '../store';
+import { store } from '../store';
+import Axios from 'axios'
 
-export function updateProfile(user) {
-    return store.dispatch({
-        type: 'SET_LOGIN',
-        data: {
-            uid: user.data.uid,
-            displayName: user.data.displayName,
-            photoURL: user.data.photoURL,
-            role: user.data.role,
-            email: user.data.email,
-            provider: "google",
-            status: true,
-            token: token
-        }
-    });
+export function getMyCartFromDB() {
 
+    return function (dispatch) {
+        return Axios.get("http://localhost:3001/cart")
+            .then(result => {
+                const data = result.data
+                console.log(data);
+                dispatch({type: "ADD_CART", data})
+            });
+    }
+}
+
+// export function setMyCart() {
+
+// }
+
+export function addToCart(item) {
+
+    return function (dispatch) {
+        return Axios.post("http://localhost:3001/cart", {item})
+            .then(result => {
+                const data = result.data
+                console.log(data);
+                dispatch({type: "ADD_CART", data})
+            });
+    }
 }

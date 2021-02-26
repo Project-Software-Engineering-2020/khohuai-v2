@@ -55,8 +55,8 @@ function App() {
             <PrivateRoute path="/Invoice" exact component={Invoice} />
             <PrivateRoute path="/AdUser" exact component={AdUser} />
             <PrivateRoute path="/game" component={Game} />
-            <PrivateRoute path="/cart" component={Basket} />
-            <PrivateRoute path="/carttest" component={CartTest} />
+            <PrivateRoute path="/cart" component={CartTest} />
+            {/* <PrivateRoute path="/carttest" component={CartTest} /> */}
           </Switch>
     </Router>
   );

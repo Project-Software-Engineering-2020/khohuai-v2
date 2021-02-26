@@ -35,6 +35,15 @@ function Cart(state = initialState, action) {
   // }
 
   switch (action.type) {
+
+    case "ADD_CART":
+      state = {
+          ...state,
+          cart: action.data
+      }
+
+      return state
+
     case "ADD_TO_CART":
       const thisLottery = action.data;
 
