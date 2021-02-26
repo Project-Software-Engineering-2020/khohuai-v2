@@ -56,10 +56,9 @@ const getRecommendedLottery = async (req, res, next) => {
         const lotteryArray = [];
         const matchedArray = [];
         //ยังไม่ได้สร้าง database ประวัติการซื้อ
-        const history = await firestore.collection('purchaseHistory').get();
+        const history = await firestore.collection('invoices').get();
         history.docs.forEach(hist => {
             //หาประวัติการซื้อของ user นั้น
-            //ค่าตัวแปรของ user id และ date ยังไม่ถูก
             if (hist.uid === user.id && hist.date <= date - 31) {
                 //push ค่า lottery ที่เคยซื้อลง historyArray
                 const lot = new Lottery(
