@@ -43,7 +43,7 @@ const CheckoutCreditcard = ({cart,user,createCreditCardCharge}) => {
         OmiseCard.open({
             amount: cart.totalPrice * 100,
             onCreateTokenSuccess: (token) => {
-                createCreditCardCharge(user.email, user.displayName,cart, cart.totalPrice * 100, token)
+                createCreditCardCharge(user.email, user.uid,cart, cart.totalPrice * 100, token)
                 console.log("Here =====>",user.uid)
                 clearBasket()
             },
