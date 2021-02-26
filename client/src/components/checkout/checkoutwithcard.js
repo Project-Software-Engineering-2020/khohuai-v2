@@ -11,6 +11,8 @@ const CheckoutCreditcard = ({cart,user,createCreditCardCharge}) => {
 
     let OmiseCard;
     const dispatch = useDispatch();
+    // const [money, setmoney] = useState();
+    // setmoney(cart.totalPrice * 100)
     // const macart = useSelector(state => state.cart);
     const [clearCart, setclearCart] = useState()
     // const [cart, setcart] = useState(null);
@@ -45,7 +47,7 @@ const CheckoutCreditcard = ({cart,user,createCreditCardCharge}) => {
             onCreateTokenSuccess: (token) => {
                 createCreditCardCharge(user.email, user.uid,cart, cart.totalPrice * 100, token)
                 console.log("Here =====>",user.uid)
-                clearBasket()
+                // clearBasket()
             },
             onFormClosed: () => {
             },
@@ -60,7 +62,12 @@ const CheckoutCreditcard = ({cart,user,createCreditCardCharge}) => {
     return (
         <div className="own-form">
             <form>
-                <button id="creditcard" className="btn" type="button" onClick={handleClick}>
+                <button 
+                id="creditcard" 
+                className="btn" 
+                type="button" 
+                disabled={cart.totalPrice  === 0}
+                onClick={handleClick}>
                     Pay with Credit Card
           </button>
             </form>

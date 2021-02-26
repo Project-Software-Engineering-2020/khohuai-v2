@@ -38,7 +38,9 @@ const checkoutCreditCard = async (req, res, next) => {
 const createinvoice = async (data,doto,idUser) => {
   const charge = data;
   const Mycart = doto;
-  const uid = idUser;
+  const uid = idUser; 
+  // const paid_at = data.created_at;
+  const d = new Date();
   console.log("charge +++++++++++++++++++++", charge)
   try{
     if(charge.status === "successful"){
@@ -47,7 +49,11 @@ const createinvoice = async (data,doto,idUser) => {
       await invoice.set({
         invoiceid: charge.id,
         userid:uid,
-        lottery:Mycart.cart
+        lottery:Mycart.cart,
+        date:d,
+        totalprice:charge.amount / 100,
+        quantity:Mycart.cart.length,
+        nguad:"15",
       }).then((res) => {
         console.log("invoice เพิ่มแล้ว")
       })
