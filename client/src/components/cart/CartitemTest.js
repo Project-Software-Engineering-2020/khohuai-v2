@@ -42,7 +42,7 @@ function CartitemTest({ item }) {
 
         <section className="col-md-8">
           <h1>
-            1&nbsp;&nbsp;2&nbsp;&nbsp;3&nbsp;&nbsp;4&nbsp;&nbsp;5&nbsp;&nbsp;6
+            { item.id }
           </h1>
           <h5>งวดประจำวันที่ 1 กุมภาพันธ์ 2563</h5>
 

@@ -77,22 +77,26 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 // import Checkoutcerditcard from '../checkoutpage/creditcard';
 import './LotteryItem.css'
+import { addToCart } from '../../redux/action/cartAction'
 
 // let OmiseCard;
 
 const LotteryItem = ({data}) => {
 
-
-
     const dispatch = useDispatch();
 
     const addtoCart = () => {
-        dispatch({ type:"ADD_TO_CART", data: data })
+        // dispatch({ type:"ADD_TO_CART", data: data }
+        console.log(data);
+
+        const item = data;
+
+        dispatch(addToCart(item));
     }
-    useEffect(async ()  => {
-        // await setLottery(data)
-        // await setloading(false);
-    }, [])
+    // useEffect ()  => {
+    //     // await setLottery(data)
+    //     // await setloading(false);
+    // }, [])
 
     return (
 
