@@ -9,6 +9,12 @@ function CartitemTest({ item }) {
   const [qty, setQty] = useState(item.qty);
   const dispatch = useDispatch();
   const [increast, setIncrease] = useState();
+  const [clearCart, setclearCart] = useState();
+
+  const clearBasket = () => {
+    dispatch({ type: "CLEAR_CART" });
+    setclearCart(true);
+  };
 
   const increaseItem = () => {
     dispatch({ type: "INCREASE_ITEM" });
@@ -16,7 +22,7 @@ function CartitemTest({ item }) {
   };
 
   function DecreaseItem() {
-    setQty(qty - 1);
+    setQty(item.qty - 1);
   }
 
   function IncrementItem() {
@@ -34,24 +40,29 @@ function CartitemTest({ item }) {
               value=""
               id="defaultCheck1"
             />
-            <figure>
+            <figure className="d-flex justify-content-center ">
               <img src={item.photoURL} width="200px" height="100px" />
             </figure>
           </div>
         </section>
 
-        <section className="col-md-8">
-          <h1>
-            1&nbsp;&nbsp;2&nbsp;&nbsp;3&nbsp;&nbsp;4&nbsp;&nbsp;5&nbsp;&nbsp;6
-          </h1>
-          <h5>งวดประจำวันที่ 1 กุมภาพันธ์ 2563</h5>
-
+        <section className="col-md-3">
           <button type="button" className="btnDel" onClick={DecreaseItem}>
             <FontAwesomeIcon icon={faMinus} />
           </button>
-          <span>{item.qty}</span>
+          <span className="itemQty">{item.qty}</span>
           <button type="button" className="btnAdd" onClick={increaseItem}>
             <FontAwesomeIcon icon={faPlus} />
+          </button>
+        </section>
+
+        <section className="col-md-4">
+          <button
+            type="button"
+            className="btn btn-danger m-2"
+            onClick={clearBasket}
+          >
+            ลบ
           </button>
         </section>
       </div>

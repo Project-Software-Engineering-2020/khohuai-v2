@@ -110,16 +110,16 @@ const Basket = () => {
                   </div>
 
                   {/* โค้ดลด */}
-                  <div className="col-md-6">
+                  <div className="col-md-5 xs-3">
                     <p class="text-left">โค้ดส่วนลด</p>
                   </div>
 
-                  <div className="col-md-6">
-                    <div class="input-group-prepend">
+                  <div className="col-md-7">
+                    <div class="input-group mb-3">
                       <label class="input-group-text" for="inputGroupSelect01">
-                        โค้ด
+                        Options
                       </label>
-                      <select class="custom-select" id="inputGroupSelect01">
+                      <select class="form-select" id="inputGroupSelect01">
                         <option selected>Choose...</option>
                         <option value="1">One</option>
                         <option value="2">Two</option>
@@ -129,6 +129,7 @@ const Basket = () => {
                   </div>
 
                   {/* ยอดรวมทั้งสิ้น */}
+
                   <div className="col-md-6 mt-3">
                     <h5 class="text-left">ยอดรวมทั้งสิ้น</h5>
                   </div>
