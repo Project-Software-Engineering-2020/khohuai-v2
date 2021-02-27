@@ -4,7 +4,8 @@ import axios from "axios";
 import { withRouter } from "react-router-dom";
 import CartitemTest from "./CartitemTest";
 import CheckoutCreditcard from "../checkout/checkoutwithcard";
-import { getMyCartFromDB } from '../../redux/action/cartAction'
+import { getMyCartFromDB } from "../../redux/action/cartAction";
+import { selectAll } from "../../redux/action/cartAction";
 
 const Basket = () => {
   const myCart = useSelector((state) => state.cart);
@@ -15,7 +16,6 @@ const Basket = () => {
   // const [myCart, setmyCart] = useState();
   const [clearCart, setclearCart] = useState();
   const [removeFromCart, setremoveFromCart] = useState();
-  
 
   const createCreditCardCharge = async (email, name, amount, token) => {
     console.log("Token Here ===>" + token);
@@ -43,20 +43,14 @@ const Basket = () => {
   //     alert("ชำระเงิน")
   // }
 
-  const clearBasket = () => {
-    dispatch({ type: "CLEAR_CART" });
-    setclearCart(true);
-  };
-
-  const removeItem = () => {
-    dispatch({ type: "REMOVE_FROM_CART" });
-    setremoveFromCart(true);
-  };
-
   useEffect(async () => {
-    dispatch(getMyCartFromDB())
+    dispatch(getMyCartFromDB());
     await setloading(false);
   }, []);
+
+  const selectAllitem = () => {
+    dispatch(selectAll(myCart.check));
+  };
 
   return (
     <div className="container mt-3 p-3">
@@ -70,8 +64,9 @@ const Basket = () => {
                 <input
                   class="form-check-input"
                   type="checkbox"
-                  value=""
                   id="defaultCheck1"
+                  checked={myCart.check}
+                  onChange={selectAllitem}
                 />
                 <label class="form-check-label" for="defaultCheck1">
                   เลือกทั้งหมด
@@ -109,16 +104,16 @@ const Basket = () => {
                   </div>
 
                   {/* โค้ดลด */}
-                  <div className="col-md-6">
+                  <div className="col-md-5 xs-3">
                     <p class="text-left">โค้ดส่วนลด</p>
                   </div>
 
-                  <div className="col-md-6">
-                    <div class="input-group-prepend">
+                  <div className="col-md-7">
+                    <div class="input-group mb-3">
                       <label class="input-group-text" for="inputGroupSelect01">
-                        โค้ด
+                        Options
                       </label>
-                      <select class="custom-select" id="inputGroupSelect01">
+                      <select class="form-select" id="inputGroupSelect01">
                         <option selected>Choose...</option>
                         <option value="1">One</option>
                         <option value="2">Two</option>
@@ -128,6 +123,7 @@ const Basket = () => {
                   </div>
 
                   {/* ยอดรวมทั้งสิ้น */}
+
                   <div className="col-md-6 mt-3">
                     <h5 class="text-left">ยอดรวมทั้งสิ้น</h5>
                   </div>
