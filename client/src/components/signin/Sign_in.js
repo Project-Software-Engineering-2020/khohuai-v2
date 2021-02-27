@@ -60,6 +60,8 @@ const Sign_in = () => {
       console.log(error);
     }
   }
+
+
   const onloginwithgoogle = async () => {
     const result = await auth.signInWithPopup(googleProvider);
     console.log(result);

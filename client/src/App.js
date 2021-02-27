@@ -34,10 +34,6 @@ function App() {
 
   return (
     <Router>
-      {auth.role === "admin" ? (
-        console.log("32323")
-      ) : (
-        <div>
           <Navbar />
           <Switch>
             <Route path="/" exact={true} component={Home} />
@@ -51,9 +47,6 @@ function App() {
             <PrivateRoute path="/upload" component={UploadLottery} />
             <PrivateRoute path="/updatepassword" component={UpdatePassword} />
             <PrivateRoute path="/forgotpassword" component={ForgotPassword} />
-            {/* <Route component={Error404} /> */}
-
-            {/* <Route path='/dashbord' exact component={Overview} /> */}
             <PrivateRoute
               path="/LotteryReports"
               exact
@@ -62,11 +55,9 @@ function App() {
             <PrivateRoute path="/Invoice" exact component={Invoice} />
             <PrivateRoute path="/AdUser" exact component={AdUser} />
             <PrivateRoute path="/game" component={Game} />
-            <PrivateRoute path="/cart" component={Basket} />
-            <PrivateRoute path="/carttest" component={CartTest} />
+            <PrivateRoute path="/cart" component={CartTest} />
+            {/* <PrivateRoute path="/carttest" component={CartTest} /> */}
           </Switch>
-        </div>
-      )}
     </Router>
   );
 }

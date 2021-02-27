@@ -13,30 +13,30 @@ const Basket = () => {
   const [loading, setloading] = useState(true);
   // const [myCart, setmyCart] = useState();
   const [clearCart, setclearCart] = useState();
+  
+    const createCreditCardCharge = async (email, uid,macart ,amount,token) => {
 
-  const createCreditCardCharge = async (email, name, amount, token) => {
-    console.log("Token Here ===>" + token);
-    try {
-      const res = await axios.post(
-        "http://localhost:3001/checkout-credit-card",
-        {
-          email,
-          name,
-          amount,
-          token,
-          headers: {
-            "Content-Type": "application/json",
-          },
+        console.log("Token Here ===>" + token);
+        try {
+            const res =  await axios.post('http://localhost:3001/checkout-credit-card',{
+                    email,
+                    uid,
+                    macart,
+                    amount,
+                    token,
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            const resData = res.data
+            setcharge(resData)
+            console.log('ส่งไปแล้ว')
+        } catch (err) {
+            console.log("Error Checkoutpage" + err)
         }
-      );
+    } 
 
-      const resData = res.data;
-      setcharge(resData);
-      console.log("ส่งไปแล้ว");
-    } catch (err) {
-      console.log("Error Checkoutpage" + err);
-    }
-  };
+
   // const payfromcart = () => {
   //     alert("ชำระเงิน")
   // }
@@ -88,6 +88,5 @@ const Basket = () => {
       )}
     </div>
   );
-};
-
+}
 export default Basket;

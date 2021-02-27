@@ -4,6 +4,7 @@ import axios from "axios";
 import { withRouter } from "react-router-dom";
 import CartitemTest from "./CartitemTest";
 import CheckoutCreditcard from "../checkout/checkoutwithcard";
+import { getMyCartFromDB } from '../../redux/action/cartAction'
 
 const Basket = () => {
   const myCart = useSelector((state) => state.cart);
@@ -14,6 +15,7 @@ const Basket = () => {
   // const [myCart, setmyCart] = useState();
   const [clearCart, setclearCart] = useState();
   const [removeFromCart, setremoveFromCart] = useState();
+  
 
   const createCreditCardCharge = async (email, name, amount, token) => {
     console.log("Token Here ===>" + token);
@@ -33,7 +35,6 @@ const Basket = () => {
 
       const resData = res.data;
       setcharge(resData);
-      console.log("ส่งไปแล้ว");
     } catch (err) {
       console.log("Error Checkoutpage" + err);
     }
@@ -53,11 +54,9 @@ const Basket = () => {
   };
 
   useEffect(async () => {
-    // await setmyCart(cart);
-    // await setclearCart(false);
-    console.log(myCart);
+    dispatch(getMyCartFromDB())
     await setloading(false);
-  }, [myCart]);
+  }, []);
 
   return (
     <div className="container mt-3 p-3">
@@ -98,7 +97,7 @@ const Basket = () => {
                     <p class="text-left">จำนวน</p>
                   </div>
                   <div className="col-md-6">
-                    <p class="text-right">{myCart.totalItem} ใบ</p>
+                    <p class="text-right">{myCart.totalSelect} ใบ</p>
                   </div>
 
                   {/* ยอดรวม */}

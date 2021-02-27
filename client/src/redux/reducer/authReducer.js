@@ -12,7 +12,7 @@ const initialState = {
 function userAuth(state = initialState , action) {
 
     switch (action.type) {
-        
+
         case 'SET_LOGIN':
             state = {
                 ...state,
@@ -47,7 +47,7 @@ function userAuth(state = initialState , action) {
 
         default:
             return state;
-        
+
     }
 }
 

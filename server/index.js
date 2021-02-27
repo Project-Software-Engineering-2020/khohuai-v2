@@ -41,33 +41,6 @@ app.use('/lottery', lotteryRoutes);
 app.use('/cart', basketRouter);
 app.use(checkoutCreditCard)
 
-
-// app.post('/checkout-credit-card', async (req, res, next) => {
-//   const { email, name, amount, token } = req.body;
-//   console.log(amount)
-//   try {
-//     const customer = await omise.customers.create({
-//       email,
-//       description: name,
-//       card: token,
-//     })
-//     const charge = await omise.charges.create({
-//       amount,
-//       currency: "thb",
-//       customer: customer.id
-//     })
-//     console.log("Charge ========> " , charge)
-//     res.send({
-//       amount : charge.amount,
-//       status: charge.status,
-//     })
-//   } catch (err) {
-//     console.log("ตรงนี้")
-//     console.log(err)
-//   }
-//   next()
-// })
-
 // http://localhost:3001
 app.listen(config.port, () =>
     console.log("Server is running...")

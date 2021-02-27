@@ -1,40 +1,36 @@
 const { machineLearning } = require('firebase-admin');
 const { firestore } = require('../firebaseDB');
+const firebase = require('firebase');
 
 //Model
 const Lottery = require("../Models/Lottery");
 
 const getAllLottery = async (req, res, next) => {
 
-    const lotteryArray = [];
+    let lotteryArray = []
 
-    if (lotteryArray !== []) {
-        try {
-            const lottery = await firestore.collection('LotteriesAvailable').get()
-            if (lottery.empty) {
-                res.status(400).send("No lottery in record")
-            } else {
-                lottery.docs.forEach(doc => {
-                    //push into array
-                    const lot = new Lottery(
-                        doc.id,
-                        doc.data().number,
-                        doc.data().photoURL,
-                        doc.data().r,
-                        doc.data().s,
-                        doc.data().t
-                    )
-                    lotteryArray.push(lot);
+    console.log("get Data")
+    try {
+        const lottery = await firestore.collection('LotteriesAvailable').get()
+        if (lottery.empty) {
+            res.status(400).send("No lottery in record")
+        } else {
+            lottery.docs.forEach(doc => {
+                //push into array
+                // const lot = new Lottery(
+                //     doc.id,
+                //     doc.data().photoURL,
+                // )
+                lotteryArray.push({
+                    id: doc.id,
+                    photoURL: doc.data().photoURL
                 });
-                res.send(lotteryArray);
-            }
-        } catch (error) {
-            console.log(error);
+            });
+            res.status(200).send(lotteryArray);
+            console.log(lotteryArray)
         }
-    }
-    else {
-        console.log(lotteryArray)
-        res.send(lotteryArray);
+    } catch (error) {
+        console.log(error);
     }
 }
 
@@ -55,81 +51,89 @@ const getRecommendedLottery = async (req, res, next) => {
         const historyArray = [];
         const lotteryArray = [];
         const matchedArray = [];
+        var user = firebase.auth().currentUser;
         //ยังไม่ได้สร้าง database ประวัติการซื้อ
-        const history = await firestore.collection('purchaseHistory').get();
-        history.docs.forEach(hist => {
-            //หาประวัติการซื้อของ user นั้น
-            //ค่าตัวแปรของ user id และ date ยังไม่ถูก
-            if (hist.uid === user.id && hist.date <= date - 31) {
-                //push ค่า lottery ที่เคยซื้อลง historyArray
-                const lot = new Lottery(
-                    hist.id,
-                    hist.data().number,
-                    hist.data().photoURL,
-                    hist.data().r,
-                    hist.data().s,
-                    hist.data().t
-                );
-                historyArray.push(lot);
+        const history = await firestore.collection('invoices').get();
+        if (user) {
+            history.docs.forEach(hist => {
+                //หาประวัติการซื้อของ user นั้น
+                if (hist.data().userid === user.id) {
+                    //push ค่า lottery ที่เคยซื้อลง historyArray
+                    hist.data().lottery.forEach(i => {
+                        historyArray.push(i.id);
+                    });
+                }
+            });
+
+            const lottery = await firestore.collection('LotteriesAvailable').get();
+            lottery.docs.forEach(doc => {
+                //push into array
+                lotteryArray.push(doc.id);
+            });
+
+            let i = 0;
+            //ถ้าไม่เคยซื้อในช่วง 31 วันที่ผ่านมา
+            if (historyArray.Array === []) {
+                const count_lot = lotteryArray.length;
+                for (lot in lotteryArray) {
+                    let rand = (int)(Math.random() * count_lot) + 1;
+                    if (rand >= Math.ceil(count_lot / 4)) {
+                        matchedArray.push(lotteryArray[lot]);
+                        i++;
+                    }
+                    if (i === 4) break;
+                }
             }
-        });
-
-        const lottery = await firestore.collection('LotteriesAvailable').get();
-        lottery.docs.forEach(doc => {
-            //push into array
-            const lot = new Lottery(
-                doc.id,
-                doc.data().number,
-                doc.data().photoURL,
-                doc.data().r,
-                doc.data().s,
-                doc.data().t
-            )
-            lotteryArray.push(lot);
-        });
-
-        let i = 0;
-        //ถ้าไม่เคยซื้อในช่วง 31 วันที่ผ่านมา
-        if (hist.Array === []) {
+            else {
+                for (hist in historyArray) {
+                    let histNum = parseInt(historyArray[hist]);
+                    let histLastTwoDigit = histNum % 100;
+                    histLastTwoDigit = parseInt(histLastTwoDigit / 10) + ((histLastTwoDigit % 10) * 10)
+                    for (lot in lotteryArray) {
+                        let lotNum = parseInt(lotteryArray[lot]);
+                        let lotLastTwoDigit = lotNum % 100;
+                        if (lotLastTwoDigit === histLastTwoDigit) {
+                            matchedArray.push(lotteryArray[lot]);
+                            i++;
+                        }
+                        if (i === 4) break;
+                    }
+                }
+                if (i <= 4) {
+                    for (lot in lotteryArray) {
+                        let duplicated = false;
+                        for (match in matchedArray) {
+                            if (match === lot) duplicated = true;
+                        }
+                        if (duplicated === false) {
+                            matchedArray.push(lotteryArray[lot]);
+                            i++;
+                        }
+                        if (i === 4) break;
+                    }
+                }
+            }
+        }
+        else {
+            const lottery = await firestore.collection('LotteriesAvailable').get();
+            lottery.docs.forEach(doc => {
+                //push into array
+                lotteryArray.push(doc.id);
+            });
+            let i = 0;
             const count_lot = lotteryArray.length;
             for (lot in lotteryArray) {
                 let rand = (int)(Math.random() * count_lot) + 1;
                 if (rand >= Math.ceil(count_lot / 4)) {
-                    matchedArray.push(lot);
+                    matchedArray.push(lotteryArray[lot]);
                     i++;
                 }
                 if (i === 4) break;
             }
         }
-        else {
-            for (hist in historyArray) {
-                let histNum = parseInt(hist.number);
-                let histLastTwoDigit = histNum % 100;
-                histLastTwoDigit = parseInt(histLastTwoDigit / 10) + ((histLastTwoDigit % 10) * 10)
-                for (lot in lotteryArray) {
-                    let lotNum = parseInt(lot.number);
-                    let lotLastTwoDigit = lotNum % 100;
-                    if (lotLastTwoDigit === histLastTwoDigit) {
-                        matchedArray.push(lot);
-                        i++;
-                    }
-                    if (i === 4) break;
-                }
-            }
-            if (i <= 4) {
-                for (lot in lotteryArray) {
-                    let duplicated = false;
-                    for (match in matchedArray) {
-                        if (match.number === lot.number) duplicated = true;
-                    }
-                    if (duplicated === false) {
-                        matchedArray.push(lot);
-                        i++;
-                    }
-                    if (i === 4) break;
-                }
-            }
-        }
+        console.log("historyArray : ", historyArray);
+        console.log("lotteryArray : ", lotteryArray);
+        console.log("matchedArray : ", matchedArray);
     } catch (error) {
         console.log(error);
     }
@@ -180,27 +184,26 @@ const getSearchNumber = async (req, res, next) => {
         const lottery = await firestore.collection('LotteriesAvailable').get();
         lottery.docs.forEach(doc => {
             //push into array
-            const lot = new Lottery(
-                doc.id,
-                doc.data().number,
-                doc.data().photoURL,
-                doc.data().r,
-                doc.data().s,
-                doc.data().t
-            )
-            lotteryArray.push(lot);
+            // const lot = new Lottery(
+            //     doc.id,
+            //     doc.data().photoURL,
+            // )
+            lotteryArray.push({
+                id:doc.id,
+                photoURL:doc.data().photoURL,
+            });
         });
         //instant find without any split
         if (position === "whole") {
             lotteryArray.forEach(lot => {
-                let searchingNum = lot.number;
+                let searchingNum = lot.id;
                 if (findingNum === searchingNum) matchedLotteryArray.push(lot);
             });
         }
         //split and find
         else if (position === "last2" || position === "last3" || position === "front") {
             lotteryArray.forEach(lot => {
-                const num = lot.number.split("");
+                const num = lot.id.split("");
                 let searchingNum = "";
                 for (let i = lotK; i < maxLotK; i++) {
                     searchingNum += num[i];
