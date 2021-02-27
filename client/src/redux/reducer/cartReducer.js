@@ -10,8 +10,11 @@ function Cart(state = initialState, action) {
   function SumTotal() {
     let totalSelect = 0;
     let totalPrice = 0;
-
+    let totalItem = 0;
     state.cart.map((item) => {
+
+      totalItem = totalItem + item.qty;
+
       if (item.selected === true) 
       {
         const Currentprice = item.qty * 80;
@@ -26,7 +29,8 @@ function Cart(state = initialState, action) {
     return (state = {
       ...state,
       totalSelect: totalSelect,
-      totalPrice: totalPrice
+      totalPrice: totalPrice,
+      totalItem: totalItem
     });
   }
 
@@ -153,7 +157,7 @@ function Cart(state = initialState, action) {
       state = {
         ...state,
         cart: state.cart.map((item) => {
-
+          
           return item.id === id_item ?
             //เปลี่ยนค่า item ที่เลือก true และ false
             {
