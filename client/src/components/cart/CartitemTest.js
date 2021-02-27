@@ -73,16 +73,6 @@ function CartitemTest({ item }) {
             ลบ
           </button>
         </section>
-
-        <section className="col-md-4">
-          <button
-            type="button"
-            className="btn btn-danger m-2"
-            onClick={clearBasket}
-          >
-            ลบ
-          </button>
-        </section>
       </div>
     </div>
     // <div className="card p-3">
