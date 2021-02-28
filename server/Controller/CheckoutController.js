@@ -1,4 +1,4 @@
-const {firestore } = require('../firebaseDB');
+const { firestore } = require('../firebaseDB');
 
 const Invoice = require("../Models/Invoice");
 const omise = require('omise')({
@@ -48,14 +48,21 @@ const createinvoice = async (data,doto,idUser) => {
         invoiceid: charge.id,
         userid:uid,
         lottery:Mycart.cart
-      }).then((res) => {
-        console.log("invoice เพิ่มแล้ว")
+      })
+
+      Mycart.cart.map((item) => {
+        firestore.collection("users").doc(uid)
+        .collection("cart").doc(item.id).delete()
+        .then((seccess) => {console.log("clear ตะกร้าแล้ว")})
+        .catch((err) => console.log("ลบไม่ได้",err));
       })
     }
   }catch(err){
     console.log(err)
   }
 }
+
+
 
 module.exports = {
     checkoutCreditCard,
