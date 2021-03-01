@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Modal } from "react-bootstrap";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import CartitemTest from "./CartitemTest";
 import CheckoutCreditcard from "../checkout/checkoutwithcard";
+import Coupon from "./Coupon";
 import { getMyCartFromDB } from "../../redux/action/cartAction";
 import { selectAll } from "../../redux/action/cartAction";
 
@@ -11,30 +13,38 @@ const Basket = () => {
   const myCart = useSelector((state) => state.cart);
   const Usernaw = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const [charge, setcharge] = useState(undefined);
   const [loading, setloading] = useState(true);
   // const [myCart, setmyCart] = useState();
   const [clearCart, setclearCart] = useState();
   const [removeFromCart, setremoveFromCart] = useState();
+  const [success, setsuccess] = useState();
+  const [show, setShow] = useState(false);
 
-  const createCreditCardCharge = async (email, name, amount, token) => {
+  const createCreditCardCharge = async (email, uid, macart, amount, token) => {
+    const buyItem = myCart.selected;
+
     console.log("Token Here ===>" + token);
     try {
-      const res = await axios.post(
-        "http://localhost:3001/checkout-credit-card",
-        {
+      await axios
+        .post("http://localhost:3001/checkout-credit-card", {
           email,
-          name,
+          uid,
           amount,
           token,
+          buyItem,
           headers: {
             "Content-Type": "application/json",
           },
-        }
-      );
+        })
+        .then((res) => {
+          dispatch(getMyCartFromDB());
+          setsuccess(res.data.amount);
+          console.log(success);
+          setShow(true);
+        });
 
-      const resData = res.data;
-      setcharge(resData);
+      // const resData = res.data;
+      // setcharge(resData);
     } catch (err) {
       console.log("Error Checkoutpage" + err);
     }
@@ -88,11 +98,20 @@ const Basket = () => {
 
                 {/* จำนวน */}
                 <div className="row">
-                  <div className="col-md-6">
-                    <p class="text-left">จำนวน</p>
+                  <div className="col-md-12">
+                    <p class="float-left">จำนวน</p>
+                    <p class="float-right">{myCart.totalSelect} ใบ</p>
                   </div>
-                  <div className="col-md-6">
-                    <p class="text-right">{myCart.totalSelect} ใบ</p>
+
+                  {/* ยอดรวม */}
+                  <div className="col-md-12">
+                    <p class="float-left">ยอดรวม</p>
+                    <p class="float-right">{myCart.totalPrice} บาท</p>
+                  </div>
+
+                  {/* โค้ดลด */}
+                  <div className="col-md-12">
+                    <Coupon />
                   </div>
 
                   {/* ยอดรวม */}
@@ -103,23 +122,23 @@ const Basket = () => {
                     <p class="text-right">{myCart.totalPrice} บาท</p>
                   </div>
 
-                  {/* โค้ดลด */}
-                  <div className="col-md-5 xs-3">
-                    <p class="text-left">โค้ดส่วนลด</p>
+                  <div className="col-md-12 mt-3">
+                    <h5 class="float-left">ยอดรวมทั้งสิ้น</h5>
+                    <h5 class="float-right">{myCart.totalPrice} บาท</h5>
                   </div>
+                </div>
 
-                  <div className="col-md-7">
-                    <div class="input-group mb-3">
-                      <label class="input-group-text" for="inputGroupSelect01">
-                        Options
-                      </label>
-                      <select class="form-select" id="inputGroupSelect01">
-                        <option selected>Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
-                    </div>
+                <div className="col-md-7">
+                  <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupSelect01">
+                      Options
+                    </label>
+                    <select class="form-select" id="inputGroupSelect01">
+                      <option selected>Choose...</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
                   </div>
 
                   {/* ยอดรวมทั้งสิ้น */}
@@ -130,25 +149,44 @@ const Basket = () => {
                   <div className="col-md-6 mt-3">
                     <h5 class="text-right">{myCart.totalPrice} บาท</h5>
                   </div>
-                </div>
 
-                {/* <button
+                  {/* <button
                 type="button"
                 class="btn btn-primary btn-block mt-2"
                 onClick={payfromcart}
               >
                 ดำเนินการชำระเงิน
               </button> */}
-                <CheckoutCreditcard
-                  user={Usernaw}
-                  cart={myCart}
-                  createCreditCardCharge={createCreditCardCharge}
-                />
+                  <CheckoutCreditcard
+                    user={Usernaw}
+                    cart={myCart.selected}
+                    total={myCart.totalPrice}
+                    createCreditCardCharge={createCreditCardCharge}
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
       )}
+      <Modal
+        show={show}
+        onHide={() => setShow(false)}
+        size="md"
+        dialogClassName="modal-1"
+        aria-labelledby="example-custom-modal-styling-title"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="example-custom-modal-styling-title">
+            {/* <h4>ตรวจสลากของคุณ</h4> */}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h4>ชำระเงินสำเร็จ</h4>
+          <h5>จำนวนเงิน {success / 100} บาท</h5>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
