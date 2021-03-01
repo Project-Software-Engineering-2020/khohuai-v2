@@ -26,74 +26,90 @@ const CheckoutCreditcard = ({ cart, user, createCreditCardCharge }) => {
     setclearCart(true);
   };
 
-const CheckoutCreditcard = ({user,cart,total,createCreditCardCharge}) => {
-
-  const omiseHandler = () => {
-    // const { cart, createCreditCardCharge } = this.props;
-    OmiseCard.open({
-      amount: cart.totalPrice * 100,
-      onCreateTokenSuccess: (token) => {
-        createCreditCardCharge(
-          user.email,
-          user.uid,
-          cart,
-          cart.totalPrice * 100,
-          token
-        );
-        console.log("Here =====>", user.uid);
-        clearBasket();
-      },
-      onFormClosed: () => {},
-    });
-  };
-  const handleClick = (e) => {
-    e.preventDefault();
-    creditCardConfigure();
-    omiseHandler();
-  };
+  const CheckoutCreditcard = ({
+    user,
+    cart,
+    total,
+    createCreditCardCharge,
+  }) => {
+    const omiseHandler = () => {
+      // const { cart, createCreditCardCharge } = this.props;
+      OmiseCard.open({
+        amount: cart.totalPrice * 100,
+        onCreateTokenSuccess: (token) => {
+          createCreditCardCharge(
+            user.email,
+            user.uid,
+            cart,
+            cart.totalPrice * 100,
+            token
+          );
+          console.log("Here =====>", user.uid);
+          clearBasket();
+        },
+        onFormClosed: () => {},
+      });
+    };
+    const handleClick = (e) => {
+      e.preventDefault();
+      creditCardConfigure();
+      omiseHandler();
+    };
 
     const clearBasket = () => {
-            dispatch({ type: "CLEAR_CART" })
-            setclearCart(true);
-        }
+      dispatch({ type: "CLEAR_CART" });
+      setclearCart(true);
+    };
 
     const creditCardConfigure = () => {
-        OmiseCard.configure({
-            defaultPaymentMethod: "credit_card",
-            otherPaymentMethods: [],
-        })
-        OmiseCard.configureButton('#creditcard');
-        OmiseCard.attach();
-    }
+      OmiseCard.configure({
+        defaultPaymentMethod: "credit_card",
+        otherPaymentMethods: [],
+      });
+      OmiseCard.configureButton("#creditcard");
+      OmiseCard.attach();
+    };
 
     const omiseHandler = () => {
-        // const { cart, createCreditCardCharge } = this.props;
-        OmiseCard.open({
-            amount: total * 100,
-            onCreateTokenSuccess: (token) => {
-                createCreditCardCharge(user.email, user.uid, cart, total * 100, token)
-                console.log("Here =====>",user.uid)
-                clearBasket()
-            },
-            onFormClosed: () => {
-            },
-        })
-    }
-    const handleClick = e => {
-        e.preventDefault()
-        creditCardConfigure()
-        omiseHandler()
-    }
+      // const { cart, createCreditCardCharge } = this.props;
+      OmiseCard.open({
+        amount: total * 100,
+        onCreateTokenSuccess: (token) => {
+          createCreditCardCharge(
+            user.email,
+            user.uid,
+            cart,
+            total * 100,
+            token
+          );
+          console.log("Here =====>", user.uid);
+          clearBasket();
+        },
+        onFormClosed: () => {},
+      });
+    };
+    const handleClick = (e) => {
+      e.preventDefault();
+      creditCardConfigure();
+      omiseHandler();
+    };
 
     return (
-        <div className="own-form">
-            <form>
-                <button id="creditcard" className="btn" type="button" onClick={handleClick} disabled={total === 0}>
-                    Pay with Credit Card
+      <div className="own-form">
+        <form>
+          <button
+            id="creditcard"
+            className="btn"
+            type="button"
+            onClick={handleClick}
+            disabled={total === 0}
+          >
+            Pay with Credit Card
           </button>
-            </form>
-        </div>
+        </form>
+      </div>
     );
-}
+  };
+};
 
 export default CheckoutCreditcard;
