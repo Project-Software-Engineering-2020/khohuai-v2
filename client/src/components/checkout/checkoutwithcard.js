@@ -63,7 +63,7 @@ const CheckoutCreditcard = ({ user, cart, total, createCreditCardCharge }) => {
                 id="creditcard"
                 className="btn"
                 type="button"
-                disabled={cart.totalPrice  === 0}
+                disabled={total  === 0}
                 onClick={handleClick}>
                     Pay with Credit Card
           </button>
