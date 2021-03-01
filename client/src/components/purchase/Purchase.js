@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import './Purchase.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { getPurchase } from '../../redux/action/purchaseAction'
+import Moment from 'react-moment';
+import 'moment/locale/th';
 
 const Purchase = () => {
 
@@ -21,16 +23,34 @@ const Purchase = () => {
                 <Link to="/purchase" activeClassName="purchase-item-active" className="purchase-item">
                     ประวัติการซื้อ   
                 </Link>
-                <Link to="/reward" className="purchase-item">
+                <Link to="/reward" activeClassName="purchase-item-active" className="purchase-item">
                     การรับรางวัล
                 </Link>
             </header>
+            { purchase.loading ? 
+                <div className="text-center">กรุณารอสักครู่</div>
+            : null }
             <div className="history-user-buy">
-                {JSON.stringify(purchase,null,2)}
-                <div className="card">
-                    <div className="card-header">วันที่ซื้อ</div>
-                    <div className="card-body">สลาก</div>
-                </div>
+                {purchase.data.map((item,index) => {
+                    return (
+                        <div className="card" key={index}>
+                            <div className="card-header">
+                                <div>
+                                <Moment fromNow ago locale="th">{item.date}</Moment>
+                                </div>
+                            </div>
+                            <div className="card-body">
+                                {item.lottery.map((lottery,i) => {
+                                    return (
+                                        <div className="col-6" key={i}>
+                                            <img src={lottery.photoURL} className="w-100"></img>
+                                        </div>
+                                    )
+                                }) }
+                            </div>
+                        </div>
+                    )
+                })}
             </div>
         </div>
     )

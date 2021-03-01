@@ -21,8 +21,9 @@ const Foryou = () => {
         const FetchData = async () => {
 
             await Axios.get("http://localhost:3001/lottery/recommended").then((lot) => {
-                setData(lot.data);
-                datb = lot.data;
+                setData([]);
+                // console.log(lot.data);
+                // datb = lot.data;
             })
 
             await setloading(true);
@@ -42,7 +43,7 @@ const Foryou = () => {
                 datb.map((item, index) => {
                     
                     if (index < 4) {
-                        let itemNum = parseInt(item.number);
+                        let itemNum = parseInt(item);
                         itemNum = (10 * (itemNum % 10)) + parseInt((itemNum % 100) / 10)
                         recommendedArray.push(itemNum);
                     }
