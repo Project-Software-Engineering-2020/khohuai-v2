@@ -7,7 +7,7 @@ import { storage, firestore } from '../../firebase/firebase'
 // import "./Checkout.css";
 
 
-const CheckoutCreditcard = ({cart,user,createCreditCardCharge}) => {
+const CheckoutCreditcard = ({user,cart,total,createCreditCardCharge}) => {
 
     let OmiseCard;
     const dispatch = useDispatch();
@@ -41,9 +41,9 @@ const CheckoutCreditcard = ({cart,user,createCreditCardCharge}) => {
     const omiseHandler = () => {
         // const { cart, createCreditCardCharge } = this.props;
         OmiseCard.open({
-            amount: cart.totalPrice * 100,
+            amount: total * 100,
             onCreateTokenSuccess: (token) => {
-                createCreditCardCharge(user.email, user.uid,cart, cart.totalPrice * 100, token)
+                createCreditCardCharge(user.email, user.uid, cart, total * 100, token)
                 console.log("Here =====>",user.uid)
                 clearBasket()
             },
@@ -60,7 +60,7 @@ const CheckoutCreditcard = ({cart,user,createCreditCardCharge}) => {
     return (
         <div className="own-form">
             <form>
-                <button id="creditcard" className="btn" type="button" onClick={handleClick}>
+                <button id="creditcard" className="btn" type="button" onClick={handleClick} disabled={total === 0}>
                     Pay with Credit Card
           </button>
             </form>
