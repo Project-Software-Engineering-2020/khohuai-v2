@@ -30,32 +30,7 @@ const Foryou = () => {
 
         }
 
-        // const recommended = () => {
-        //     if (!stotus) {
-        //         //random
-        //     }
-        //     else {
-        //         //check bought
-        //         //...
-        //         //shuffle last 2 digit
-        //         let recommendedArray = [];
-        //         console.log('datb : ', datb);
-        //         datb.map((item, index) => {
-                    
-        //             if (index < 4) {
-        //                 let itemNum = parseInt(item.number);
-        //                 itemNum = (10 * (itemNum % 10)) + parseInt((itemNum % 100) / 10)
-        //                 recommendedArray.push(itemNum);
-        //             }
-        //             return item;
-        //         })
-        //         setRecommendedData(recommendedArray);
-        //         console.log("recommendedData : ", recommendedArray);
-        //     }
-        // }
-
         FetchData();
-        //recommended();
     }, [stotus])
 
     return (
