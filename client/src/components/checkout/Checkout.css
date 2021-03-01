@@ -1,0 +1,12 @@
+.cardBtn {
+  border-style: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  width: 100%;
+  background-color: rgb(111, 90, 233);
+  color: white;
+}
+
+.cardBtn:hover {
+  background-color: rgb(117, 102, 201);
+}

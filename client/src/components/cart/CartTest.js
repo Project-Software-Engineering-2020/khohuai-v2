@@ -4,6 +4,7 @@ import axios from "axios";
 import { withRouter } from "react-router-dom";
 import CartitemTest from "./CartitemTest";
 import CheckoutCreditcard from "../checkout/checkoutwithcard";
+import Coupon from "./Coupon";
 import { getMyCartFromDB } from "../../redux/action/cartAction";
 import { selectAll } from "../../redux/action/cartAction";
 
@@ -88,47 +89,27 @@ const Basket = () => {
 
                 {/* จำนวน */}
                 <div className="row">
-                  <div className="col-md-6">
-                    <p class="text-left">จำนวน</p>
-                  </div>
-                  <div className="col-md-6">
-                    <p class="text-right">{myCart.totalSelect} ใบ</p>
+                  <div className="col-md-12">
+                    <p class="float-left">จำนวน</p>
+                    <p class="float-right">{myCart.totalSelect} ใบ</p>
                   </div>
 
                   {/* ยอดรวม */}
-                  <div className="col-md-6">
-                    <p class="text-left">ยอดรวม</p>
-                  </div>
-                  <div className="col-md-6">
-                    <p class="text-right">{myCart.totalPrice} บาท</p>
+                  <div className="col-md-12">
+                    <p class="float-left">ยอดรวม</p>
+                    <p class="float-right">{myCart.totalPrice} บาท</p>
                   </div>
 
                   {/* โค้ดลด */}
-                  <div className="col-md-5 xs-3">
-                    <p class="text-left">โค้ดส่วนลด</p>
-                  </div>
-
-                  <div className="col-md-7">
-                    <div class="input-group mb-3">
-                      <label class="input-group-text" for="inputGroupSelect01">
-                        Options
-                      </label>
-                      <select class="form-select" id="inputGroupSelect01">
-                        <option selected>Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
-                    </div>
+                  <div className="col-md-12">
+                    <Coupon />
                   </div>
 
                   {/* ยอดรวมทั้งสิ้น */}
 
-                  <div className="col-md-6 mt-3">
-                    <h5 class="text-left">ยอดรวมทั้งสิ้น</h5>
-                  </div>
-                  <div className="col-md-6 mt-3">
-                    <h5 class="text-right">{myCart.totalPrice} บาท</h5>
+                  <div className="col-md-12 mt-3">
+                    <h5 class="float-left">ยอดรวมทั้งสิ้น</h5>
+                    <h5 class="float-right">{myCart.totalPrice} บาท</h5>
                   </div>
                 </div>
 
