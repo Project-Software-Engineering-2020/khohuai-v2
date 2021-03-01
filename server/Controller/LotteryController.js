@@ -69,10 +69,13 @@ const getRecommendedLottery = async (req, res, next) => {
                 }
             });
 
-            
             lottery.docs.forEach(doc => {
                 //push into array
-                lotteryArray.push(doc.id);
+                lotteryArray.push({
+                    id:doc.id,
+                    photoURL:doc.data().photoURL,
+                    nguad: doc.data().nguad
+                });
             });
 
             let i = 0;
@@ -81,7 +84,7 @@ const getRecommendedLottery = async (req, res, next) => {
                 const count_lot = lotteryArray.length;
                 for (lot in lotteryArray) {
                     let rand = parseInt(Math.random() * count_lot) + 1;
-                    if (rand >= Math.ceil(count_lot / 4)) {
+                    if (rand >= Math.ceil((count_lot - lot) / 4)) {
                         matchedArray.push(lotteryArray[lot]);
                         i++;
                     }
@@ -94,7 +97,7 @@ const getRecommendedLottery = async (req, res, next) => {
                     let histLastTwoDigit = histNum % 100;
                     histLastTwoDigit = parseInt(histLastTwoDigit / 10) + ((histLastTwoDigit % 10) * 10);
                     for (lot in lotteryArray) {
-                        let lotNum = parseInt(lotteryArray[lot]);
+                        let lotNum = parseInt(lotteryArray[lot].id);
                         let lotLastTwoDigit = lotNum % 100;
                         if (lotLastTwoDigit === histLastTwoDigit) {
                             matchedArray.push(lotteryArray[lot]);
@@ -121,24 +124,67 @@ const getRecommendedLottery = async (req, res, next) => {
         else {
             lottery.docs.forEach(doc => {
                 //push into array
-                lotteryArray.push(doc.id);
+                lotteryArray.push({
+                    id:doc.id,
+                    photoURL:doc.data().photoURL,
+                    nguad: doc.data().nguad,
+                    stock: doc.data().stock
+                });
             });
             let i = 0;
             const count_lot = lotteryArray.length;
             for (lot in lotteryArray) {
                 let rand = parseInt(Math.random() * count_lot) + 1;
-                if (rand >= Math.ceil(count_lot / 4)) {
+                if (rand >= Math.ceil((count_lot - lot) / 4)) {
                     matchedArray.push(lotteryArray[lot]);
                     i++;
                 }
                 if (i === 4) break;
             }
         }
+
+        // console.log("historyArray : ", historyArray);
+        // console.log("lotteryArray : ", lotteryArray);
+        // console.log("matchedArray : ", matchedArray);
         res.send(matchedArray);
-        console.log("historyArray : ", historyArray);
-        console.log("lotteryArray : ", lotteryArray);
-        console.log("matchedArray : ", matchedArray);
     } catch (error) {
+        console.log(error);
+    }
+}
+
+const getAlmostOutOfStock = async (req, res, next) => {
+    try{
+        const lotteryArray = [];
+        const almostOutOfStockLotteryArray = [];
+        const lottery = await firestore.collection('LotteriesAvailable').get();
+        let i;
+        for(i=0; i<=10; i++){
+            lotteryArray.push([i]);
+        }
+        lottery.docs.forEach(doc => {
+            //push into array
+            lotteryArray[doc.data().stock].push({
+                id:doc.id,
+                photoURL:doc.data().photoURL,
+                nguad: doc.data().nguad,
+                stock: doc.data().stock
+            });
+        });
+        let count = 0;
+        for(i=0; i<=10; i++){
+            for(let j=1;;j++){
+                if(lotteryArray[i][j] === undefined) break;
+                almostOutOfStockLotteryArray.push(lotteryArray[i][j]);
+                count++;
+                if(count === 8) break;
+            }
+            if(count === 8) break;
+        }
+        // console.log("lotteryArray : ", lotteryArray);
+        // console.log("almostOutOfStockLotteryArray : ", almostOutOfStockLotteryArray);
+        res.send(almostOutOfStockLotteryArray);
+    }
+    catch(error){
         console.log(error);
     }
 }
@@ -195,6 +241,8 @@ const getSearchNumber = async (req, res, next) => {
             lotteryArray.push({
                 id:doc.id,
                 photoURL:doc.data().photoURL,
+                nguad: doc.data().nguad,
+                stock: doc.data().stock
             });
         });
         //instant find without any split
@@ -227,5 +275,6 @@ module.exports = {
     getAllLottery,
     getDetailLottery,
     getRecommendedLottery,
+    getAlmostOutOfStock,
     getSearchNumber
 }
