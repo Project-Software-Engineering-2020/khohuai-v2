@@ -69,10 +69,13 @@ const getRecommendedLottery = async (req, res, next) => {
                 }
             });
 
-            
             lottery.docs.forEach(doc => {
                 //push into array
-                lotteryArray.push(doc.id);
+                lotteryArray.push({
+                    id:doc.id,
+                    photoURL:doc.data().photoURL,
+                    nguad: doc.data().nguad
+                });
             });
 
             let i = 0;
@@ -80,8 +83,8 @@ const getRecommendedLottery = async (req, res, next) => {
             if (historyArray.Array === []) {
                 const count_lot = lotteryArray.length;
                 for (lot in lotteryArray) {
-                    let rand = (int)(Math.random() * count_lot) + 1;
-                    if (rand >= Math.ceil(count_lot / 4)) {
+                    let rand = parseInt(Math.random() * count_lot) + 1;
+                    if (rand >= Math.ceil((count_lot - lot) / 4)) {
                         matchedArray.push(lotteryArray[lot]);
                         i++;
                     }
@@ -94,7 +97,7 @@ const getRecommendedLottery = async (req, res, next) => {
                     let histLastTwoDigit = histNum % 100;
                     histLastTwoDigit = parseInt(histLastTwoDigit / 10) + ((histLastTwoDigit % 10) * 10);
                     for (lot in lotteryArray) {
-                        let lotNum = parseInt(lotteryArray[lot]);
+                        let lotNum = parseInt(lotteryArray[lot].id);
                         let lotLastTwoDigit = lotNum % 100;
                         if (lotLastTwoDigit === histLastTwoDigit) {
                             matchedArray.push(lotteryArray[lot]);
@@ -121,22 +124,28 @@ const getRecommendedLottery = async (req, res, next) => {
         else {
             lottery.docs.forEach(doc => {
                 //push into array
-                lotteryArray.push(doc.id);
+                lotteryArray.push({
+                    id:doc.id,
+                    photoURL:doc.data().photoURL,
+                    nguad: doc.data().nguad
+                });
             });
             let i = 0;
             const count_lot = lotteryArray.length;
             for (lot in lotteryArray) {
-                let rand = (int)(Math.random() * count_lot) + 1;
-                if (rand >= Math.ceil(count_lot / 4)) {
+                let rand = parseInt(Math.random() * count_lot) + 1;
+                if (rand >= Math.ceil((count_lot - lot) / 4)) {
                     matchedArray.push(lotteryArray[lot]);
                     i++;
                 }
                 if (i === 4) break;
             }
         }
+
         console.log("historyArray : ", historyArray);
         console.log("lotteryArray : ", lotteryArray);
         console.log("matchedArray : ", matchedArray);
+        res.send(matchedArray);
     } catch (error) {
         console.log(error);
     }
@@ -194,6 +203,7 @@ const getSearchNumber = async (req, res, next) => {
             lotteryArray.push({
                 id:doc.id,
                 photoURL:doc.data().photoURL,
+                nguad: doc.data().nguad
             });
         });
         //instant find without any split
