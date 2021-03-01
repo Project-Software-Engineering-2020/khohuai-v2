@@ -179,7 +179,7 @@ const Basket = () => {
         </Modal.Header>
         <Modal.Body>
           <h4>ชำระเงินสำเร็จ</h4>
-          <h5>จำนวนเงิน {success} บาท</h5>
+          <h5>จำนวนเงิน {success / 100} บาท</h5>
         </Modal.Body>
       </Modal>
     </div>
