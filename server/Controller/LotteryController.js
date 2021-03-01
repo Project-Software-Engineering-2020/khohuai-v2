@@ -1,6 +1,5 @@
 const { machineLearning } = require('firebase-admin');
-const { firestore,auth } = require('../firebaseDB');
-
+const { firestore, auth } = require('../firebaseDB');
 
 //Model
 const Lottery = require("../Models/Lottery");
@@ -51,29 +50,13 @@ const getRecommendedLottery = async (req, res, next) => {
         const historyArray = [];
         const lotteryArray = [];
         const matchedArray = [];
-
-        const uid = "T6NMBO1XbscTWBeUsUCTy9ymrg82";
-
-        
-        // const uid = auth.currentUser.uid;
+        var user = auth.currentUser;
         //ยังไม่ได้สร้าง database ประวัติการซื้อ
         //const history = await firestore.collection('invoices').get();
         
+        const history = await firestore.collection('invoices').get();
         const lottery = await firestore.collection('LotteriesAvailable').get();
-        const docRef = await firestore.collection('invoices');
-        if (uid) {
-            const history = await docRef.where("userid", "==", uid).get();
-            history.docs.forEach(hist => {
-                console.log(hist.data())
-                //หาประวัติการซื้อของ user นั้น
-                //if (hist.data().userid === user.id && lottery[0].data().nguad >= hist.data().nguad - 2) {
-                // if (lottery[0].data().nguad >= hist.data().nguad - 2) {
-                //     //push ค่า lottery ที่เคยซื้อลง historyArray
-                //     hist.data().lottery.forEach(i => {
-                //         historyArray.push(i.id);
-                //     });
-                // }
-            });
+        if (user) {
 
             lottery.docs.forEach(doc => {
                 //push into array
@@ -83,6 +66,23 @@ const getRecommendedLottery = async (req, res, next) => {
                     nguad: doc.data().nguad
                 });
             });
+
+            history.docs.forEach(hist => {
+                //หาประวัติการซื้อของ user นั้น
+                console.log("nguad : ", lotteryArray[0].nguad);
+                console.log("user.id : ", user.uid);
+                
+                if (hist.data().userid === user.uid && lotteryArray[0].nguad >= hist.data().nguad - 2) {
+                    if (lotteryArray[0].nguad >= hist.data().nguad - 2) {
+                        //push ค่า lottery ที่เคยซื้อลง historyArray
+                        hist.data().lottery.forEach(i => {
+                            historyArray.push(i.id);
+                        });
+                    }
+                }
+            });
+
+            
 
             let i = 0;
             //ถ้าไม่เคยซื้อในช่วง 31 วันที่ผ่านมา
