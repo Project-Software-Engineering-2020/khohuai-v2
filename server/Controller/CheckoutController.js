@@ -1,4 +1,4 @@
-const {firestore } = require('../firebaseDB');
+const { firestore } = require('../firebaseDB');
 
 const Invoice = require("../Models/Invoice");
 const omise = require('omise')({
@@ -8,8 +8,12 @@ const omise = require('omise')({
 
 const checkoutCreditCard = async (req, res, next) => {
   // console.log("เข้ามาแล้ว")
-    const { email, uid ,macart,amount, token} = req.body;
-    console.log("Test =========>" , token)
+    const { email, uid ,amount,token,buyItem } = req.body;
+    console.log("email" , email)
+    console.log("uid" , uid)
+    console.log("amount" , amount)
+    console.log("token" , token)
+    console.log("buyItem" , buyItem);
     try {
       const customer = await omise.customers.create({
         email,
@@ -21,27 +25,32 @@ const checkoutCreditCard = async (req, res, next) => {
         currency: "thb",
         customer: customer.id
       })
-      createinvoice(charge,macart,uid)
+      createinvoice(charge,buyItem,uid)
       console.log("Charge ========> " , charge)
       res.send({
         amount : amount,
         status: charge.status,
       })
-      
+
     } catch (err) {
       console.log("ตรงนี้")
       console.log(err)
     }
     next()
 }
-
 const createinvoice = async (data,doto,idUser) => {
   const charge = data;
   const Mycart = doto;
-  const uid = idUser; 
-  // const paid_at = data.created_at;
-  const d = new Date();
-  console.log("charge +++++++++++++++++++++", charge)
+  const uid = idUser;
+
+  console.log("charge", charge);
+  console.log("mycart", Mycart)
+  console.log("uid", uid);
+
+  const date = new Date();
+
+  console.log("สลากที่ซื้อ", Mycart);
+
   try{
     if(charge.status === "successful"){
       console.log("เข้ามานะ")
@@ -49,19 +58,55 @@ const createinvoice = async (data,doto,idUser) => {
       await invoice.set({
         invoiceid: charge.id,
         userid:uid,
-        lottery:Mycart.cart,
-        date:d,
+        lottery:Mycart,
+        date:date,
         totalprice:charge.amount / 100,
-        quantity:Mycart.cart.length,
+        quantity:Mycart.length,
         nguad:15,
       }).then((res) => {
         console.log("invoice เพิ่มแล้ว")
+
+        //ลบ item ในตะกร้า
+        Mycart.map((item) => {
+          firestore.collection("users").doc(uid)
+          .collection("cart").doc(item.id).delete()
+          .then((success) => {console.log("clear ตะกร้าแล้ว")})
+          .catch((err) => console.log("ลบไม่ได้",err));
+        })
       })
     }
   }catch(err){
     console.log(err)
   }
 }
+// const createinvoice = async (data,doto,idUser) => {
+//   const charge = data;
+//   const Mycart = doto;
+//   const uid = idUser;
+//   console.log("charge +++++++++++++++++++++", charge)
+//   try{
+//     if(charge.status === "successful"){
+//       console.log("เข้ามานะ")
+//       const invoice = firestore.collection("invoices").doc(charge.id);
+//       await invoice.set({
+//         invoiceid: charge.id,
+//         userid:uid,
+//         lottery:Mycart.cart
+//       })
+
+//       Mycart.cart.map((item) => {
+//         firestore.collection("users").doc(uid)
+//         .collection("cart").doc(item.id).delete()
+//         .then((success) => {console.log("clear ตะกร้าแล้ว")})
+//         .catch((err) => console.log("ลบไม่ได้",err));
+//       })
+//     }
+//   }catch(err){
+//     console.log(err)
+//   }
+// }
+
+
 
 module.exports = {
     checkoutCreditCard,

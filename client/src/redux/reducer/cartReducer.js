@@ -6,27 +6,33 @@ const initialState = {
   totalPrice: 0,
   check: false,
   cart: [],
+  selected: []
 };
 
 function Cart(state = initialState, action) {
   function SumTotal() {
     let totalSelect = 0;
     let totalPrice = 0;
+    let totalItem = 0;
+    let ArraySelected = [];
 
     state.cart.map((item) => {
-      if (item.selected === true) {
+      totalItem += item.qty;
+
+      if (item.selected === true) 
+      {
         const Currentprice = item.qty * 80;
-        totalPrice = totalPrice + Currentprice;
-
-        totalSelect = totalSelect + item.qty;
+        totalPrice += Currentprice;
+        totalSelect += item.qty;
+        ArraySelected.push(item);
       }
-
-      return item;
     });
     return (state = {
       ...state,
       totalSelect: totalSelect,
       totalPrice: totalPrice,
+      totalItem: totalItem,
+      selected: ArraySelected
     });
   }
 

@@ -27,7 +27,7 @@ const getAllLottery = async (req, res, next) => {
                 });
             });
             res.status(200).send(lotteryArray);
-            console.log(lotteryArray)
+    
         }
     } catch (error) {
         console.log(error);

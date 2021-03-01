@@ -14,7 +14,9 @@
   background-color: rgb(117, 102, 201);
 }
 
-/* หน้า AddDel */
+.input-group {
+  float: right;
+}
 
 section .itemQty {
   font-size: large;
@@ -46,4 +48,25 @@ section .itemQty {
   padding-left: 8px;
   background-color: white;
   color: black;
+}
+
+.remove_button {
+  float: right;
+  padding: 4px 15px;
+  background-color: none;
+  color: rgb(133, 125, 125);
+  border-style: none;
+  border-radius: 5px;
+}
+
+.item-detail input {
+  margin-top: 45px;
+}
+
+.couponBtn {
+  border-style: solid;
+  border-color: rgb(111, 90, 233);
+  float: right;
+  background-color: rgba(202, 197, 197, 0);
+  color: rgb(111, 90, 233);
 }
