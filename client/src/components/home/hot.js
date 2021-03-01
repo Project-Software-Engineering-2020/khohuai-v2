@@ -15,7 +15,7 @@ const Hot = () => {
     useEffect(() => {
 
         const FetchData = async () => {
-            await Axios.get("http://localhost:3001/lottery").then((lot) => {
+            await Axios.get("http://localhost:3001/lottery/aos").then((lot) => {
                 setData(lot.data);
             })
             await setloading(true);

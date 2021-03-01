@@ -8,14 +8,21 @@ const BeforePurchase = async (req, res, next) => {
         .get()
         .then((result) => {
             result.forEach((doc) => {
-                ArrayPurchase.push(doc.data());
-                console.log(doc.data())
-            })
-            res.send(ArrayPurchase);
+                ArrayPurchase.push({
+                    date: doc.data().date.toDate(),
+                    nguad: doc.data().nguad,
+                    totalprice: doc.data().totalprice,
+                    invoiceid: doc.data().invoiceid,
+                    quantity: doc.data().quantity,
+                    lottery: doc.data().lottery
+                });
+            console.log(doc.data())
         })
-        .catch((err) => {
-            console.log(err)
-        })
+    res.send(ArrayPurchase);
+})
+        .catch ((err) => {
+    console.log(err)
+})
 }
 
 module.exports = {

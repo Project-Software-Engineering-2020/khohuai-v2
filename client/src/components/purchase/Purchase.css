@@ -5,6 +5,12 @@
 .header-purchase-page {
     margin: 10px 0;
 }
+.card-header-purchase {
+    background-color: whitesmoke;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    padding: 15px 35px;
+}
 .purchase-item {
     text-align: center;
     font-size: medium;
@@ -21,7 +27,7 @@ a.purchase-item:hover {
 }
 .purchase-item-active {
     font-weight: bolder;
-
-    border-bottom: 10px solid rebeccapurple;
-    color: rebeccapurple;
+    border-bottom: 10px solid rgb(160, 84, 236);
+    color: rgb(121, 59, 184);
+    background-color: rgb(248, 233, 248);
 }
