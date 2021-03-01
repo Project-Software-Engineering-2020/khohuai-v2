@@ -24,7 +24,7 @@ import ForgotPassword from "./components/recover/Forgotpassword";
 import Basket from "./components/pages/basket";
 import Sidebar from "./components/admin/Sidebar";
 import CartTest from "./components/cart/CartTest";
-// import Overview from './components/pages/Overview';
+import Purchase from './components/purchase/Purchase';
 import LotteryReports from "./components/pages/LotteryReports";
 import Invoice from "./components/pages/Invoice";
 import AdUser from "./components/pages/AdUser";
@@ -56,7 +56,7 @@ function App() {
             <PrivateRoute path="/AdUser" exact component={AdUser} />
             <PrivateRoute path="/game" component={Game} />
             <PrivateRoute path="/cart" component={CartTest} />
-            {/* <PrivateRoute path="/carttest" component={CartTest} /> */}
+            <PrivateRoute path="/purchase" component={Purchase} />
           </Switch>
     </Router>
   );

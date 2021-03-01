@@ -47,7 +47,7 @@ const createinvoice = async (data,doto,idUser) => {
   console.log("mycart", Mycart)
   console.log("uid", uid);
 
-  const d = new Date();
+  const date = new Date();
   
   console.log("สลากที่ซื้อ", Mycart);
 
@@ -58,8 +58,8 @@ const createinvoice = async (data,doto,idUser) => {
       await invoice.set({
         invoiceid: charge.id,
         userid:uid,
-        lottery:Mycart.cart,
-        date:d,
+        lottery:Mycart,
+        date:date,
         totalprice:charge.amount / 100,
         quantity:Mycart.length,
         nguad:15,
