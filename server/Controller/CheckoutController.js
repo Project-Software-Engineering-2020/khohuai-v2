@@ -8,8 +8,8 @@ const omise = require('omise')({
 
 const checkoutCreditCard = async (req, res, next) => {
   // console.log("เข้ามาแล้ว")
-    const { email, uid ,macart,amount,token } = req.body;
-    console.log("Test =========>" , email)
+    const { email, uid ,macart,amount, token} = req.body;
+    console.log("Test =========>" , token)
     try {
       const customer = await omise.customers.create({
         email,
@@ -24,7 +24,7 @@ const checkoutCreditCard = async (req, res, next) => {
       createinvoice(charge,macart,uid)
       console.log("Charge ========> " , charge)
       res.send({
-        amount : charge.amount,
+        amount : amount,
         status: charge.status,
       })
       
@@ -53,7 +53,7 @@ const createinvoice = async (data,doto,idUser) => {
         date:d,
         totalprice:charge.amount / 100,
         quantity:Mycart.cart.length,
-        nguad:"15",
+        nguad:15,
       }).then((res) => {
         console.log("invoice เพิ่มแล้ว")
       })

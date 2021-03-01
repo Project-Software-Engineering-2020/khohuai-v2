@@ -23,10 +23,10 @@ const Basket = () => {
         uid,
         macart,
         amount,
-        token,
-        headers: {
-          "Content-Type": "application/json"
-        }
+        token
+        // headers: {
+        //   "Content-Type": "application/json"
+        // }
       });
       const resData = res.data
       if (resData) {
