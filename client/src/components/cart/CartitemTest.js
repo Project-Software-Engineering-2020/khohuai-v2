@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./cart.css";
 import {
   incrementQty,
@@ -44,33 +45,35 @@ function CartitemTest({ item }) {
     <div className="card p-3 mt-3">
       <div className="row">
         <section className="col-md-4">
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              checked={item.selected}
-              id="defaultCheck1"
-              onChange={selectToggle}
-            />
-            <figure className="d-flex justify-content-center ">
-              <img src={item.photoURL} width="200px" height="100px" />
-            </figure>
+          <div className="item-detail">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                checked={item.selected}
+                id="defaultCheck1"
+                onChange={selectToggle}
+              />
+              <div className="picture">
+                <img src={item.photoURL} width="200px" height="100px" />
+              </div>
+            </div>
           </div>
         </section>
 
-        <section className="col-md-8">
+        <section className="col-md-7">
           <h1>{item.id}</h1>
-          <h5>งวดประจำวันที่ 1 กุมภาพันธ์ 2563</h5>
+          <h5>งวดประจำวันที่ 1 มีนาคม 2564</h5>
 
           <button type="button" className="btnDel" onClick={DecreaseItem}>
             <FontAwesomeIcon icon={faMinus} />
           </button>
-          <span>{item.qty}</span>
+          <span className="itemQty">{item.qty}</span>
           <button type="button" className="btnAdd" onClick={IncrementItem}>
             <FontAwesomeIcon icon={faPlus} />
           </button>
-          <button type="button" onClick={removeItem}>
-            ลบ
+          <button type="button" onClick={removeItem} className="remove_button">
+            <FontAwesomeIcon icon={faTrash} /> ลบ
           </button>
         </section>
       </div>

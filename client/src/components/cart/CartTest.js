@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Modal } from 'react-bootstrap';
+import { Modal } from "react-bootstrap";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import CartitemTest from "./CartitemTest";
 import CheckoutCreditcard from "../checkout/checkoutwithcard";
+import Coupon from "./Coupon";
 import { getMyCartFromDB } from "../../redux/action/cartAction";
 import { selectAll } from "../../redux/action/cartAction";
 
@@ -17,19 +18,15 @@ const Basket = () => {
   const [clearCart, setclearCart] = useState();
   const [removeFromCart, setremoveFromCart] = useState();
   const [success, setsuccess] = useState();
-  const [show, setShow] = useState(false)
-
-
+  const [show, setShow] = useState(false);
 
   const createCreditCardCharge = async (email, uid, macart, amount, token) => {
-
-    const buyItem = myCart.selected
+    const buyItem = myCart.selected;
 
     console.log("Token Here ===>" + token);
     try {
-      await axios.post(
-        "http://localhost:3001/checkout-credit-card",
-        {
+      await axios
+        .post("http://localhost:3001/checkout-credit-card", {
           email,
           uid,
           amount,
@@ -38,14 +35,13 @@ const Basket = () => {
           headers: {
             "Content-Type": "application/json",
           },
-        }
-      ).then((res) => {
-        dispatch(getMyCartFromDB())
-        setsuccess(res.data.amount);
-        console.log(success);
-        setShow(true);
-      }
-      )
+        })
+        .then((res) => {
+          dispatch(getMyCartFromDB());
+          setsuccess(res.data.amount);
+          console.log(success);
+          setShow(true);
+        });
 
       // const resData = res.data;
       // setcharge(resData);
@@ -71,99 +67,108 @@ const Basket = () => {
       {loading ? (
         <div>loading...</div>
       ) : (
-          <div className="row">
-            <div className="col-md-8 mt-4">
-              <div class="card-header all">
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="defaultCheck1"
-                    checked={myCart.check}
-                    onChange={selectAllitem}
-                  />
-                  <label class="form-check-label" for="defaultCheck1">
-                    เลือกทั้งหมด
+        <div className="row">
+          <div className="col-md-8 mt-4">
+            <div class="card-header all">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="defaultCheck1"
+                  checked={myCart.check}
+                  onChange={selectAllitem}
+                />
+                <label class="form-check-label" for="defaultCheck1">
+                  เลือกทั้งหมด
                 </label>
-                </div>
               </div>
-              {myCart.cart.map((item, index) => {
-                return <CartitemTest key={index} item={item} />;
-              })}
-
-              {/* {JSON.stringify(myCart, null, 2)} */}
             </div>
+            {myCart.cart.map((item, index) => {
+              return <CartitemTest key={index} item={item} />;
+            })}
 
-            {/* สรุปรายการสั่งซื้อ */}
-            <div className="col-md-4 mt-4">
-              <div class="card cartSum">
-                <div class="card-body">
-                  <h5 class="card-title">สรุปรายการสั่งซื้อ</h5>
+            {/* {JSON.stringify(myCart, null, 2)} */}
+          </div>
 
-                  {/* จำนวน */}
-                  <div className="row">
-                    <div className="col-md-6">
-                      <p class="text-left">จำนวน</p>
-                    </div>
-                    <div className="col-md-6">
-                      <p class="text-right">{myCart.totalSelect} ใบ</p>
-                    </div>
+          {/* สรุปรายการสั่งซื้อ */}
+          <div className="col-md-4 mt-4">
+            <div class="card cartSum">
+              <div class="card-body">
+                <h5 class="card-title">สรุปรายการสั่งซื้อ</h5>
 
-                    {/* ยอดรวม */}
-                    <div className="col-md-6">
-                      <p class="text-left">ยอดรวม</p>
-                    </div>
-                    <div className="col-md-6">
-                      <p class="text-right">{myCart.totalPrice} บาท</p>
-                    </div>
+                {/* จำนวน */}
+                <div className="row">
+                  <div className="col-md-12">
+                    <p class="float-left">จำนวน</p>
+                    <p class="float-right">{myCart.totalSelect} ใบ</p>
+                  </div>
 
-                    {/* โค้ดลด */}
-                    <div className="col-md-5 xs-3">
-                      <p class="text-left">โค้ดส่วนลด</p>
-                    </div>
+                  {/* ยอดรวม */}
+                  <div className="col-md-12">
+                    <p class="float-left">ยอดรวม</p>
+                    <p class="float-right">{myCart.totalPrice} บาท</p>
+                  </div>
 
-                    <div className="col-md-7">
-                      <div class="input-group mb-3">
-                        <label class="input-group-text" for="inputGroupSelect01">
-                          Options
-                      </label>
-                        <select class="form-select" id="inputGroupSelect01">
-                          <option selected>Choose...</option>
-                          <option value="1">One</option>
-                          <option value="2">Two</option>
-                          <option value="3">Three</option>
-                        </select>
-                      </div>
+                  {/* โค้ดลด */}
+                  <div className="col-md-12">
+                    <Coupon />
+                  </div>
 
-                      {/* ยอดรวมทั้งสิ้น */}
+                  {/* ยอดรวม */}
+                  <div className="col-md-6">
+                    <p class="text-left">ยอดรวม</p>
+                  </div>
+                  <div className="col-md-6">
+                    <p class="text-right">{myCart.totalPrice} บาท</p>
+                  </div>
 
-                      <div className="col-md-6 mt-3">
-                        <h5 class="text-left">ยอดรวมทั้งสิ้น</h5>
-                      </div>
-                      <div className="col-md-6 mt-3">
-                        <h5 class="text-right">{myCart.totalPrice} บาท</h5>
-                      </div>
+                  <div className="col-md-12 mt-3">
+                    <h5 class="float-left">ยอดรวมทั้งสิ้น</h5>
+                    <h5 class="float-right">{myCart.totalPrice} บาท</h5>
+                  </div>
+                </div>
 
-                      {/* <button
+                <div className="col-md-7">
+                  <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupSelect01">
+                      Options
+                    </label>
+                    <select class="form-select" id="inputGroupSelect01">
+                      <option selected>Choose...</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+
+                  {/* ยอดรวมทั้งสิ้น */}
+
+                  <div className="col-md-6 mt-3">
+                    <h5 class="text-left">ยอดรวมทั้งสิ้น</h5>
+                  </div>
+                  <div className="col-md-6 mt-3">
+                    <h5 class="text-right">{myCart.totalPrice} บาท</h5>
+                  </div>
+
+                  {/* <button
                 type="button"
                 class="btn btn-primary btn-block mt-2"
                 onClick={payfromcart}
               >
                 ดำเนินการชำระเงิน
               </button> */}
-                      <CheckoutCreditcard
-                        user={Usernaw}
-                        cart={myCart.selected}
-                        total={myCart.totalPrice}
-                        createCreditCardCharge={createCreditCardCharge}
-                      />
-                    </div>
-                  </div>
+                  <CheckoutCreditcard
+                    user={Usernaw}
+                    cart={myCart.selected}
+                    total={myCart.totalPrice}
+                    createCreditCardCharge={createCreditCardCharge}
+                  />
                 </div>
               </div>
             </div>
           </div>
-        )}
+        </div>
+      )}
       <Modal
         show={show}
         onHide={() => setShow(false)}
