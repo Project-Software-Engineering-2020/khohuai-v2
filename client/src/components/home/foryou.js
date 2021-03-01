@@ -20,7 +20,7 @@ const Foryou = () => {
         let datb = [];
         const FetchData = async () => {
 
-            await Axios.get("http://localhost:3001/lottery").then((lot) => {
+            await Axios.get("http://localhost:3001/lottery/recommended").then((lot) => {
                 setData(lot.data);
                 datb = lot.data;
             })

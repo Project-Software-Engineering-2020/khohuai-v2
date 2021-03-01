@@ -21,7 +21,6 @@ a.purchase-item:hover {
 }
 .purchase-item-active {
     font-weight: bolder;
-
-    border-bottom: 10px solid rebeccapurple;
+    border-bottom: 7px solid rebeccapurple;
     color: rebeccapurple;
 }

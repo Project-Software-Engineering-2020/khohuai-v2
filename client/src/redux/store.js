@@ -7,20 +7,22 @@ import thunk from "redux-thunk";
 import authReducer from "./reducer/authReducer";
 import mycart from "./reducer/cartReducer";
 import profile from "./reducer/profileReducer";
+import purchase from "./reducer/purchaseReducer";
 
 // ******Combine Reducers******
 const rootReducer = combineReducers({
   auth: authReducer,
   cart: mycart,
   profile: profile,
+  purchase: purchase
 });
 
+//redux persit manage local storage
 const PersistConfig = {
   key: "root",
   storage: storage,
   whitelist: ["auth","cart"],
 };
-
 const persitReducer = persistReducer(PersistConfig, rootReducer);
 
 // ******Create Store******
@@ -29,5 +31,4 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(thunk))
 );
 const persister = persistStore(store);
-
 export { store, persister };

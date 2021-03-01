@@ -25,6 +25,7 @@ import Basket from "./components/pages/basket";
 import Sidebar from "./components/admin/Sidebar";
 import CartTest from "./components/cart/CartTest";
 import Purchase from './components/purchase/Purchase';
+import Reward from './components/reward/Reward';
 import LotteryReports from "./components/pages/LotteryReports";
 import Invoice from "./components/pages/Invoice";
 import AdUser from "./components/pages/AdUser";
@@ -57,6 +58,7 @@ function App() {
             <PrivateRoute path="/game" component={Game} />
             <PrivateRoute path="/cart" component={CartTest} />
             <PrivateRoute path="/purchase" component={Purchase} />
+            <PrivateRoute path="/reward" component={Reward} />
           </Switch>
     </Router>
   );
