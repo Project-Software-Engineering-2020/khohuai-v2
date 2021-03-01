@@ -1,10 +1,11 @@
 const { firestore, auth } = require('../firebaseDB');
 
 const BeforePurchase = async (req, res, next) => {
+
     const docRef = firestore.collection("invoices");
     let ArrayPurchase = [];
     const uid = auth.currentUser.uid;
-    const query = await docRef.where("userid", "==", uid)
+    await docRef.where("userid", "==", uid)
         .get()
         .then((result) => {
             result.forEach((doc) => {

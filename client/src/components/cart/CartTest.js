@@ -22,6 +22,7 @@ const Basket = () => {
 
   const createCreditCardCharge = async (email, uid, macart, amount, token) => {
     const buyItem = myCart.selected;
+    const totalItem = myCart.totalSelect;
 
     console.log("Token Here ===>" + token);
     try {
@@ -32,6 +33,7 @@ const Basket = () => {
           amount,
           token,
           buyItem,
+          totalItem,
           headers: {
             "Content-Type": "application/json",
           },
@@ -115,12 +117,12 @@ const Basket = () => {
                   </div>
 
                   {/* ยอดรวม */}
-                  <div className="col-md-6">
+                  {/* <div className="col-md-6">
                     <p class="text-left">ยอดรวม</p>
                   </div>
                   <div className="col-md-6">
                     <p class="text-right">{myCart.totalPrice} บาท</p>
-                  </div>
+                  </div> */}
 
                   <div className="col-md-12 mt-3">
                     <h5 class="float-left">ยอดรวมทั้งสิ้น</h5>
@@ -128,8 +130,8 @@ const Basket = () => {
                   </div>
                 </div>
 
-                <div className="col-md-7">
-                  <div class="input-group mb-3">
+                <div className="">
+                  {/* <div class="input-group mb-3">
                     <label class="input-group-text" for="inputGroupSelect01">
                       Options
                     </label>
@@ -139,16 +141,17 @@ const Basket = () => {
                       <option value="2">Two</option>
                       <option value="3">Three</option>
                     </select>
-                  </div>
+                  </div> */}
+                  {/*  */}
 
                   {/* ยอดรวมทั้งสิ้น */}
 
-                  <div className="col-md-6 mt-3">
+                  {/* <div className="col-md-6">
                     <h5 class="text-left">ยอดรวมทั้งสิ้น</h5>
                   </div>
-                  <div className="col-md-6 mt-3">
+                  <div className="col-md-6">
                     <h5 class="text-right">{myCart.totalPrice} บาท</h5>
-                  </div>
+                  </div> */}
 
                   {/* <button
                 type="button"

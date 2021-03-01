@@ -29,6 +29,7 @@ import Reward from './components/reward/Reward';
 import LotteryReports from "./components/pages/LotteryReports";
 import Invoice from "./components/pages/Invoice";
 import AdUser from "./components/pages/AdUser";
+import PurchaseDetail from "./components/purchase/PurchaseDetail";
 
 function App() {
   const auth = useSelector((state) => state.auth);
@@ -57,7 +58,8 @@ function App() {
             <PrivateRoute path="/AdUser" exact component={AdUser} />
             <PrivateRoute path="/game" component={Game} />
             <PrivateRoute path="/cart" component={CartTest} />
-            <PrivateRoute path="/purchase" component={Purchase} />
+            <PrivateRoute path="/purchase" exact={true} component={Purchase} />
+            <PrivateRoute path="/purchase/:id" component={PurchaseDetail} />
             <PrivateRoute path="/reward" component={Reward} />
           </Switch>
     </Router>

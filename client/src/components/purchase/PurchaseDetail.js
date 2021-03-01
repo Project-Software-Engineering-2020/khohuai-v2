@@ -1,21 +1,16 @@
 import React, { useEffect } from 'react'
-import { NavLink,useHistory } from 'react-router-dom'
+import { NavLink,useParams } from 'react-router-dom'
 import './Purchase.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { getPurchase } from '../../redux/action/purchaseAction'
 import Moment from 'react-moment';
 import 'moment/locale/th';
 
-const Purchase = () => {
-    
-    const history = useHistory();
+const PurchaseDetail = (props) => {
 
+    const invoice = props.match.params.id;
     let purchase = useSelector(state => state.purchase)
-    const dispatch = useDispatch()
-
-    const showDetail = (invoiceid) => {
-        history.push("/purchase/"+ invoiceid);
-    }
+    const dispatch = useDispatch();
 
     useEffect(async () => {
 
@@ -53,18 +48,25 @@ const Purchase = () => {
                             <div className="card-body">
                                 {item.lottery.map((lottery, i) => {
                                     return (
-                                        <div className="mt-2">
-                                            <div className="number-lottery-list" key={i}>
-                                                <div className="text-info-perchase">{lottery.id}</div>
-                                                <div className="text-info-perchase">฿80</div>
-                                                <div className="text-info-perchase">{lottery.qty} ใบ</div>
+                                        <div className="mt-3">
+                                            <div className="row">
+                                                <div className="col-lg-4 col-6" key={i}>
+                                                    <span>{lottery.id}</span>
+                                                    {/* <img src={lottery.photoURL} className="w-100"></img> */}
+                                                </div>
+                                                <div className="col-lg-8 col-6">
+                                                    <div className="text-info-perchase">฿80</div>
+                                                    <div className="text-info-perchase">{lottery.qty} ใบ</div>
+                                                    <div className="text-info-perchase">สถานะ : รอการประกาศผล</div>
+                                                </div>
                                             </div>
-                                            <hr/>
+
                                         </div>
+
                                     )
                                 })}
+                                <hr />
                                 <div className="summary-purchase-item">
-                                    <div className="text-info-perchase">สถานะ : รอการประกาศผล</div>
                                     <div>
                                         จำนวนทั้งหมด {item.quantity} ใบ
 
@@ -72,12 +74,12 @@ const Purchase = () => {
                                     <div>
                                         ยอดคำสั่งซื้อทั้งหมด {item.totalprice} บาท
                                     </div>
-                                    <button onClick={(e) => showDetail(item.invoiceid)} className="btn btn-primary mt-2 p-2">ดูเพิ่มเติม</button>
+                                    <button className="btn btn-primary mt-2 p-2">ดูเพิ่มเติม</button>
                                 </div>
 
                             </div>
-
-
+                            
+                            
                         </div>
                     )
                 })}
@@ -86,5 +88,4 @@ const Purchase = () => {
     )
 }
 
-export default Purchase
-
+export default PurchaseDetail

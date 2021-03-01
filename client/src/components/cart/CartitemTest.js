@@ -55,15 +55,17 @@ function CartitemTest({ item }) {
                 onChange={selectToggle}
               />
               <div className="picture">
-                <img src={item.photoURL} width="200px" height="100px" />
+                <img src={item.photoURL} className="w-100" />
               </div>
             </div>
           </div>
         </section>
 
-        <section className="col-md-7">
-          <h1>{item.id}</h1>
-          <h5>งวดประจำวันที่ 1 มีนาคม 2564</h5>
+        <section className="col-md-8">
+          <div className="col-6"></div>
+            <h3 className="lottery-number-in-cart">{item.id}</h3>
+            <h6>งวดประจำวันที่ 1 มีนาคม 2564</h6>
+ 
 
           <button type="button" className="btnDel" onClick={DecreaseItem}>
             <FontAwesomeIcon icon={faMinus} />
@@ -72,6 +74,7 @@ function CartitemTest({ item }) {
           <button type="button" className="btnAdd" onClick={IncrementItem}>
             <FontAwesomeIcon icon={faPlus} />
           </button>
+
           <button type="button" onClick={removeItem} className="remove_button">
             <FontAwesomeIcon icon={faTrash} /> ลบ
           </button>

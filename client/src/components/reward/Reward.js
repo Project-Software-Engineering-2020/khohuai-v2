@@ -14,10 +14,10 @@ const Reward = () => {
                 </NavLink>
             </header>
             <div className="history-user-buy">
-                <div className="card">
-                    <div className="card-header">วันที่ซื้อ</div>
-                    <div className="card-body">สลาก</div>
+                <div className="text-center">
+                        ไม่พบข้อมูล
                 </div>
+           
             </div>
         </div>
     )
