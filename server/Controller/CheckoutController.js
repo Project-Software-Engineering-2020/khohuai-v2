@@ -1,4 +1,4 @@
-const {firestore } = require('../firebaseDB');
+const { firestore } = require('../firebaseDB');
 
 const Invoice = require("../Models/Invoice");
 const omise = require('omise')({
@@ -8,7 +8,7 @@ const omise = require('omise')({
 
 const checkoutCreditCard = async (req, res, next) => {
   // console.log("เข้ามาแล้ว")
-    const { email, uid ,macart,amount,token } = req.body;
+    const { email, uid ,buyItem,amount,token } = req.body;
     console.log("Test =========>" , email)
     try {
       const customer = await omise.customers.create({
@@ -21,7 +21,7 @@ const checkoutCreditCard = async (req, res, next) => {
         currency: "thb",
         customer: customer.id
       })
-      createinvoice(charge,macart,uid)
+      createinvoice(charge,buyItem,uid)
       console.log("Charge ========> " , charge)
       res.send({
         amount : charge.amount,
@@ -48,14 +48,21 @@ const createinvoice = async (data,doto,idUser) => {
         invoiceid: charge.id,
         userid:uid,
         lottery:Mycart.cart
-      }).then((res) => {
-        console.log("invoice เพิ่มแล้ว")
+      })
+
+      Mycart.cart.map((item) => {
+        firestore.collection("users").doc(uid)
+        .collection("cart").doc(item.id).delete()
+        .then((success) => {console.log("clear ตะกร้าแล้ว")})
+        .catch((err) => console.log("ลบไม่ได้",err));
       })
     }
   }catch(err){
     console.log(err)
   }
 }
+
+
 
 module.exports = {
     checkoutCreditCard,

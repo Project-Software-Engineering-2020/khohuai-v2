@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
-import Axios from 'axios';
 import './Profile.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { storage, firestore } from '../../firebase/firebase'
@@ -15,7 +13,7 @@ const Profile = () => {
     // const status = auth.status;
     const uid = auth.uid;
 
-    const [Profile, setProfile] = useState();
+    // const [Profile, setProfile] = useState();
     const [newProfile, setNewProfile] = useState();
     const [updateImage, setUpdateImage] = useState(null);
     const [imagePreview, setImagePreview] = useState();
@@ -23,7 +21,6 @@ const Profile = () => {
 
     useEffect(async () => {
         await dispatch(getProfile(uid));
-        // await setProfile(UserProfile.data);
     }, []);
 
 
@@ -103,50 +100,17 @@ const Profile = () => {
                         });
                 }
             );
-
-
-            // await dispatch({
-            //     type: 'UPDATE_PROFILE',
-            //     uid: pro.uid,
-            //     displayName: pro.displayName,
-            //     photoURL: pro.photoURL,
-            //     email: pro.email,
-            //     role: "user",
-            //     status: true
-            // });
         }
         else {
             dispatch(updateUserProfile(newProfile))
                 .then(() => {
                     setEditState(!editState)
-                    setProfile(newProfile)
+                    // setProfile(newProfile)
                 }
                 )
-            // console.log("No image")
-            // await Axios.put("http://localhost:3001/api/profile",
-            //     {
-            //         uid,
-            //         newProfile,
-            //         token
-            //     }).then((res) => {
-            //         if (res.status === 200) {
-            //             setEditState(!editState);
-            //             setProfile(newProfile);
-            //         }
-            //     })
-            // const pro = await fetchUserProfile();
-            // await dispatch({
-            //     type: 'UPDATE_PROFILE',
-            //     uid: pro.uid,
-            //     displayName: pro.displayName,
-            //     photoURL: pro.photoURL,
-            //     email: pro.email,
-            //     role: "user",
-            //     status: true
-            // });
         }
     }
-    
+
 
 
     return (

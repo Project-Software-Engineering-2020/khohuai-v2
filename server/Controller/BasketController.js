@@ -1,7 +1,8 @@
-const { firestore } = require('../firebaseDB');
+const { firestore,auth } = require('../firebaseDB');
 
 const getMyCart = async (req, res) => {
-    const uid = "AaAkI4SPVtefTCE5OGmMdlrcN3k2";
+    const uid = auth.currentUser.uid;
+    console.log(uid);
     let MyCart = []
     try {
         await firestore.collection("users").doc(uid)
@@ -26,7 +27,7 @@ const getMyCart = async (req, res) => {
 }
 
 const addMyCart = async (req, res) => {
-    const uid = "AaAkI4SPVtefTCE5OGmMdlrcN3k2";
+    const uid = auth.currentUser.uid;
     const data = req.body.item;
     let MyCart = []
     try {
@@ -60,7 +61,7 @@ const addMyCart = async (req, res) => {
 }
 
 const adjustMyCart = async (req, res) => {
-    const uid = "AaAkI4SPVtefTCE5OGmMdlrcN3k2";
+    const uid = auth.currentUser.uid;
     const data = req.body.item;
 
     //เป็น +1 และ -1
@@ -110,7 +111,7 @@ const adjustMyCart = async (req, res) => {
 }
 
 const removeMyCart = async (req, res) => {
-    const uid = "AaAkI4SPVtefTCE5OGmMdlrcN3k2";
+    const uid = auth.currentUser.uid;
     const id = req.params.id;
     let MyCart = []
     try {
