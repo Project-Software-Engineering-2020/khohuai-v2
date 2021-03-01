@@ -11,7 +11,7 @@ function ProtectedRoute({component: Component, ...rest}) {
             {...rest}
             component={(props) => {
                 // check login
-                if(auth.status === true && auth.role === "user" || "admin") {
+                if(auth.status === true && auth.role === "user") {
                     return <Component {...props} />
                 }
                 else{
