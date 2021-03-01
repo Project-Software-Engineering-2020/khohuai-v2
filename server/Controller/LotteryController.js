@@ -53,11 +53,15 @@ const getRecommendedLottery = async (req, res, next) => {
         const matchedArray = [];
         var user = firebase.auth().currentUser;
         //ยังไม่ได้สร้าง database ประวัติการซื้อ
-        const history = await firestore.collection('invoices').get();
+        //const history = await firestore.collection('invoices').get();
+        
+        const lottery = await firestore.collection('LotteriesAvailable').get();
         if (user) {
+            const history = await docRef.where("userid", "==", user.id);
             history.docs.forEach(hist => {
                 //หาประวัติการซื้อของ user นั้น
-                if (hist.data().userid === user.id) {
+                //if (hist.data().userid === user.id && lottery[0].data().nguad >= hist.data().nguad - 2) {
+                if (lottery[0].data().nguad >= hist.data().nguad - 2) {
                     //push ค่า lottery ที่เคยซื้อลง historyArray
                     hist.data().lottery.forEach(i => {
                         historyArray.push(i.id);
@@ -65,7 +69,7 @@ const getRecommendedLottery = async (req, res, next) => {
                 }
             });
 
-            const lottery = await firestore.collection('LotteriesAvailable').get();
+            
             lottery.docs.forEach(doc => {
                 //push into array
                 lotteryArray.push(doc.id);
@@ -88,7 +92,7 @@ const getRecommendedLottery = async (req, res, next) => {
                 for (hist in historyArray) {
                     let histNum = parseInt(historyArray[hist]);
                     let histLastTwoDigit = histNum % 100;
-                    histLastTwoDigit = parseInt(histLastTwoDigit / 10) + ((histLastTwoDigit % 10) * 10)
+                    histLastTwoDigit = parseInt(histLastTwoDigit / 10) + ((histLastTwoDigit % 10) * 10);
                     for (lot in lotteryArray) {
                         let lotNum = parseInt(lotteryArray[lot]);
                         let lotLastTwoDigit = lotNum % 100;
@@ -115,7 +119,6 @@ const getRecommendedLottery = async (req, res, next) => {
             }
         }
         else {
-            const lottery = await firestore.collection('LotteriesAvailable').get();
             lottery.docs.forEach(doc => {
                 //push into array
                 lotteryArray.push(doc.id);

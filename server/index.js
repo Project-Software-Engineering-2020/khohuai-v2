@@ -10,6 +10,7 @@ const userRouter = require('./Routes/User');
 const checkoutCreditCard = require('./Routes/Checkout');
 const authentication = require('./Routes/Auth');
 const basketRouter = require('./Routes/Basket');
+const PurchaseRouter = require('./Routes/Purchase');
 
 const app = express();
 
@@ -39,6 +40,7 @@ app.use('/user', userRouter);
 app.use('/auth', authentication);
 app.use('/lottery', lotteryRoutes);
 app.use('/cart', basketRouter);
+app.use('/purchase',PurchaseRouter)
 app.use(checkoutCreditCard)
 
 // http://localhost:3001

@@ -28,10 +28,10 @@ const checkoutCreditCard = async (req, res, next) => {
       createinvoice(charge,buyItem,uid)
       console.log("Charge ========> " , charge)
       res.send({
-        amount : charge.amount,
+        amount : amount,
         status: charge.status,
       })
-      
+
     } catch (err) {
       console.log("ตรงนี้")
       console.log(err)
@@ -41,14 +41,14 @@ const checkoutCreditCard = async (req, res, next) => {
 const createinvoice = async (data,doto,idUser) => {
   const charge = data;
   const Mycart = doto;
-  const uid = idUser; 
+  const uid = idUser;
 
   console.log("charge", charge);
   console.log("mycart", Mycart)
   console.log("uid", uid);
 
   const date = new Date();
-  
+
   console.log("สลากที่ซื้อ", Mycart);
 
   try{

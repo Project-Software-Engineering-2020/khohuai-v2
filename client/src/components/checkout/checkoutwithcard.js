@@ -8,6 +8,8 @@ import "./Checkout.css";
 const CheckoutCreditcard = ({ user, cart, total, createCreditCardCharge }) => {
     let OmiseCard;
     const dispatch = useDispatch();
+    // const [money, setmoney] = useState();
+    // setmoney(cart.totalPrice * 100)
     // const macart = useSelector(state => state.cart);
     const [clearCart, setclearCart] = useState();
     // const [cart, setcart] = useState(null);
@@ -36,13 +38,13 @@ const CheckoutCreditcard = ({ user, cart, total, createCreditCardCharge }) => {
             amount: total * 100,
             onCreateTokenSuccess: (token) => {
                 createCreditCardCharge(
-                    user.email, 
-                    user.uid, 
-                    cart, 
-                    total * 100, 
+                    user.email,
+                    user.uid,
+                    cart,
+                    total * 100,
                     token)
                 console.log("Here =====>", user.uid);
-    
+
             },
             onFormClosed: () => { },
         });
@@ -58,12 +60,11 @@ const CheckoutCreditcard = ({ user, cart, total, createCreditCardCharge }) => {
         <div className="own-form">
             <form>
                 <button
-                    id="creditcard"
-                    className="btn"
-                    type="button"
-                    onClick={handleClick}
-                    disabled={total === 0}
-                >
+                id="creditcard"
+                className="btn"
+                type="button"
+                disabled={total  === 0}
+                onClick={handleClick}>
                     Pay with Credit Card
           </button>
             </form>

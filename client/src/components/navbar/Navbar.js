@@ -13,7 +13,7 @@ function Navbar() {
   const history = useHistory()
 
   const stetus = useSelector(state => state.auth)
-  let cart = useSelector(state => state.cart)
+  let Mycart = useSelector((state) => state.cart)
   // const stotus = stetus.status;
 
   const [click, setClick] = useState(false);
@@ -98,7 +98,7 @@ function Navbar() {
                   </NotificationBadge> */}
                   
               <i className="fas fa-shopping-cart fa-lg"></i>
-               <span className="badge-cart">{cart.totalItem}</span>
+               <span className="badge-cart">{Mycart.cart.length}</span>
             </a>
           </li>
           <li className="nav-user">
