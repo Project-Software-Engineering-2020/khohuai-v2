@@ -8,20 +8,22 @@ import authReducer from "./reducer/authReducer";
 import mycart from "./reducer/cartReducer";
 import profile from "./reducer/profileReducer";
 import purchase from "./reducer/purchaseReducer";
+import purchase_Detail from "./reducer/purchaseDetailReducer";
 
 // ******Combine Reducers******
 const rootReducer = combineReducers({
   auth: authReducer,
   cart: mycart,
   profile: profile,
-  purchase: purchase
+  purchase: purchase,
+  purchase_detail:purchase_Detail
 });
 
 //redux persit manage local storage
 const PersistConfig = {
   key: "root",
   storage: storage,
-  whitelist: ["auth","cart"],
+  whitelist: ["auth","cart","purchase_detail"],
 };
 const persitReducer = persistReducer(PersistConfig, rootReducer);
 

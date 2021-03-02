@@ -1,20 +1,22 @@
 import React, { useEffect } from 'react'
-import { NavLink,useHistory } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 import './Purchase.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { getPurchase } from '../../redux/action/purchaseAction'
+import { getPurchase } from '../../redux/action/purchaseAction';
+import { setPurchaseDetail } from '../../redux/action/purchaseDetailAction';
 import Moment from 'react-moment';
 import 'moment/locale/th';
 
 const Purchase = () => {
-    
+
     const history = useHistory();
 
     let purchase = useSelector(state => state.purchase)
     const dispatch = useDispatch()
 
-    const showDetail = (invoiceid) => {
-        history.push("/purchase/"+ invoiceid);
+    const showDetail = (data) => {
+        history.push("/purchase/" + data.invoiceid);
+        dispatch(setPurchaseDetail(data));
     }
 
     useEffect(async () => {
@@ -34,7 +36,7 @@ const Purchase = () => {
                 </NavLink>
             </header>
             { purchase.loading ?
-                <div className="text-center">กรุณารอสักครู่</div>
+                <div className="text-center loader">กรุณารอสักครู่</div>
                 : null}
             <div className="history-user-buy">
                 {purchase.data.map((item, index) => {
@@ -51,30 +53,48 @@ const Purchase = () => {
                                 </div>
                             </div>
                             <div className="card-body">
+                                <div className="number-lottery-list">
+                                    <div className="text-info-perchase-head">เลขสลาก</div>
+                                    <div className="text-info-perchase-head">ราคา</div>
+                                    <div className="text-info-perchase-head">จำนวน</div>
+                                    <hr />
+                                </div>
                                 {item.lottery.map((lottery, i) => {
                                     return (
                                         <div className="mt-2">
-                                            <div className="number-lottery-list" key={i}>
-                                                <div className="text-info-perchase">{lottery.id}</div>
-                                                <div className="text-info-perchase">฿80</div>
-                                                <div className="text-info-perchase">{lottery.qty} ใบ</div>
-                                            </div>
-                                            <hr/>
+                                            {i < 3 ?
+                                                <div className="number-lottery-list" key={i}>
+                                                    <div className="text-info-perchase space-number-purchase">{lottery.id}</div>
+                                                    <div className="text-info-perchase">฿80</div>
+                                                    <div className="text-info-perchase">{lottery.qty} ใบ</div>
+                                                    <hr />
+                                                </div>
+                                                :
+                                                null
+                                            }
+
                                         </div>
                                     )
                                 })}
+                                {item.lottery.length > 3 ? <div onClick={(e) => showDetail(item)} className="text-center"><a href="">ดูเพิ่มเติม</a></div> : null}
                                 <div className="summary-purchase-item">
-                                    <div className="text-info-perchase">สถานะ : รอการประกาศผล</div>
                                     <div>
-                                        จำนวนทั้งหมด {item.quantity} ใบ
+                                        <div>สถานะ : รอการประกาศผล</div>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            จำนวนทั้งหมด {item.quantity} ใบ
 
+                                        </div>
+                                        <div>
+                                            ยอดคำสั่งซื้อทั้งหมด {item.totalprice} บาท
+                                        </div>
                                     </div>
-                                    <div>
-                                        ยอดคำสั่งซื้อทั้งหมด {item.totalprice} บาท
-                                    </div>
-                                    <button onClick={(e) => showDetail(item.invoiceid)} className="btn btn-primary mt-2 p-2">ดูเพิ่มเติม</button>
+
                                 </div>
-
+                                <div>
+                                    <button onClick={(e) => showDetail(item)} className="btn-purchase-detail">ดูเพิ่มเติม</button>
+                                </div>
                             </div>
 
 

@@ -61,7 +61,7 @@ const CheckoutCreditcard = ({ user, cart, total, createCreditCardCharge }) => {
             <form>
                 <button
                 id="creditcard"
-                className="btn btn-block btn-success"
+                className="btn btn-block btn-primary"
                 type="button"
                 disabled={total  === 0}
                 onClick={handleClick}>

@@ -64,7 +64,7 @@ function CartitemTest({ item }) {
         <section className="col-md-8">
           <div className="col-6"></div>
             <h3 className="lottery-number-in-cart">{item.id}</h3>
-            <h6>งวดประจำวันที่ 1 มีนาคม 2564</h6>
+            <h6>งวดประจำวันที่ 16 มีนาคม 2564</h6>
  
 
           <button type="button" className="btnDel" onClick={DecreaseItem}>
