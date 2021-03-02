@@ -90,7 +90,6 @@ const getRecommendedLottery = async (req, res, next) => {
                 const count_lot = lotteryArray.length;
                 let randArr = [];
                 let check = 1;
-                let lot;
                 for (; ;) {
                     let rand = parseInt(Math.random() * (count_lot)) + 0;
                     for (k in randArr) {
@@ -101,7 +100,6 @@ const getRecommendedLottery = async (req, res, next) => {
                     }
                     if (check === 1) {
                         randArr.push(rand);
-                        console.log(randArr);
                         matchedArray.push(lotteryArray[rand]);
                         i++;
                     }
@@ -153,7 +151,6 @@ const getRecommendedLottery = async (req, res, next) => {
             const count_lot = lotteryArray.length;
             let randArr = [];
             let check = 1;
-            let lot;
             for (; ;) {
                 let rand = parseInt(Math.random() * (count_lot)) + 0;
                 for (k in randArr) {
@@ -164,7 +161,6 @@ const getRecommendedLottery = async (req, res, next) => {
                 }
                 if (check === 1) {
                     randArr.push(rand);
-                    console.log(randArr);
                     matchedArray.push(lotteryArray[rand]);
                     i++;
                 }
