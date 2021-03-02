@@ -59,7 +59,7 @@ const UploadLottery = () => {
             </div>
             <div>
                 <label htmlFor="">งวดที่</label>
-                <input type="number" onChange={(e) => { setS({ s: + e.target.value})}} required></input>
+                <input type="number" onChange={(e) => { setS(parseInt(e.target.value))}} required></input>
             </div>
             {/* <div>
                 <label htmlFor="">ชุดที่</label>
@@ -68,7 +68,7 @@ const UploadLottery = () => {
             </div> */}
             <div>
                 <label htmlFor="">จำนวน</label>
-                <input type="number" onChange={(e) => { setR({r: + e.target.value}) }} required></input>
+                <input type="number" onChange={(e) => { setR(parseInt(e.target.value))}} required></input>
 
             </div>
 

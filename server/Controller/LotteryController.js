@@ -26,7 +26,7 @@ const getAllLottery = async (req, res, next) => {
                 });
             });
             res.status(200).send(lotteryArray);
-    
+
         }
     } catch (error) {
         console.log(error);
@@ -53,7 +53,7 @@ const getRecommendedLottery = async (req, res, next) => {
         var user = auth.currentUser;
         //ยังไม่ได้สร้าง database ประวัติการซื้อ
         //const history = await firestore.collection('invoices').get();
-        
+
         const history = await firestore.collection('invoices').get();
         const lottery = await firestore.collection('LotteriesAvailable').get();
         if (user) {
@@ -61,8 +61,8 @@ const getRecommendedLottery = async (req, res, next) => {
             lottery.docs.forEach(doc => {
                 //push into array
                 lotteryArray.push({
-                    id:doc.id,
-                    photoURL:doc.data().photoURL,
+                    id: doc.id,
+                    photoURL: doc.data().photoURL,
                     nguad: doc.data().nguad
                 });
             });
@@ -71,7 +71,7 @@ const getRecommendedLottery = async (req, res, next) => {
                 //หาประวัติการซื้อของ user นั้น
                 console.log("nguad : ", lotteryArray[0].nguad);
                 console.log("user.id : ", user.uid);
-                
+
                 if (hist.data().userid === user.uid && lotteryArray[0].nguad >= hist.data().nguad - 2) {
                     if (lotteryArray[0].nguad >= hist.data().nguad - 2) {
                         //push ค่า lottery ที่เคยซื้อลง historyArray
@@ -82,18 +82,28 @@ const getRecommendedLottery = async (req, res, next) => {
                 }
             });
 
-            
+
 
             let i = 0;
             //ถ้าไม่เคยซื้อในช่วง 31 วันที่ผ่านมา
             if (historyArray.Array === []) {
                 const count_lot = lotteryArray.length;
-                for (lot in lotteryArray) {
-                    let rand = parseInt(Math.random() * count_lot) + 1;
-                    if (rand >= Math.ceil((count_lot - lot) / 4)) {
-                        matchedArray.push(lotteryArray[lot]);
+                let randArr = [];
+                let check = 1;
+                for (; ;) {
+                    let rand = parseInt(Math.random() * (count_lot)) + 0;
+                    for (k in randArr) {
+                        if (rand === randArr[k]) {
+                            check = 0;
+                            break;
+                        }
+                    }
+                    if (check === 1) {
+                        randArr.push(rand);
+                        matchedArray.push(lotteryArray[rand]);
                         i++;
                     }
+                    check = 1;
                     if (i === 4) break;
                 }
             }
@@ -131,20 +141,30 @@ const getRecommendedLottery = async (req, res, next) => {
             lottery.docs.forEach(doc => {
                 //push into array
                 lotteryArray.push({
-                    id:doc.id,
-                    photoURL:doc.data().photoURL,
+                    id: doc.id,
+                    photoURL: doc.data().photoURL,
                     nguad: doc.data().nguad,
                     stock: doc.data().stock
                 });
             });
             let i = 0;
             const count_lot = lotteryArray.length;
-            for (lot in lotteryArray) {
-                let rand = parseInt(Math.random() * count_lot) + 1;
-                if (rand >= Math.ceil((count_lot - lot) / 4)) {
-                    matchedArray.push(lotteryArray[lot]);
+            let randArr = [];
+            let check = 1;
+            for (; ;) {
+                let rand = parseInt(Math.random() * (count_lot)) + 0;
+                for (k in randArr) {
+                    if (rand === randArr[k]) {
+                        check = 0;
+                        break;
+                    }
+                }
+                if (check === 1) {
+                    randArr.push(rand);
+                    matchedArray.push(lotteryArray[rand]);
                     i++;
                 }
+                check = 1;
                 if (i === 4) break;
             }
         }
@@ -159,38 +179,38 @@ const getRecommendedLottery = async (req, res, next) => {
 }
 
 const getAlmostOutOfStock = async (req, res, next) => {
-    try{
+    try {
         const lotteryArray = [];
         const almostOutOfStockLotteryArray = [];
         const lottery = await firestore.collection('LotteriesAvailable').get();
         let i;
-        for(i=0; i<=10; i++){
+        for (i = 0; i <= 10; i++) {
             lotteryArray.push([i]);
         }
         lottery.docs.forEach(doc => {
             //push into array
             lotteryArray[doc.data().stock].push({
-                id:doc.id,
-                photoURL:doc.data().photoURL,
+                id: doc.id,
+                photoURL: doc.data().photoURL,
                 nguad: doc.data().nguad,
                 stock: doc.data().stock
             });
         });
         let count = 0;
-        for(i=0; i<=10; i++){
-            for(let j=1;;j++){
-                if(lotteryArray[i][j] === undefined) break;
+        for (i = 0; i <= 10; i++) {
+            for (let j = 1; ; j++) {
+                if (lotteryArray[i][j] === undefined) break;
                 almostOutOfStockLotteryArray.push(lotteryArray[i][j]);
                 count++;
-                if(count === 8) break;
+                if (count === 8) break;
             }
-            if(count === 8) break;
+            if (count === 8) break;
         }
         // console.log("lotteryArray : ", lotteryArray);
         // console.log("almostOutOfStockLotteryArray : ", almostOutOfStockLotteryArray);
         res.send(almostOutOfStockLotteryArray);
     }
-    catch(error){
+    catch (error) {
         console.log(error);
     }
 }
@@ -245,8 +265,8 @@ const getSearchNumber = async (req, res, next) => {
             //     doc.data().photoURL,
             // )
             lotteryArray.push({
-                id:doc.id,
-                photoURL:doc.data().photoURL,
+                id: doc.id,
+                photoURL: doc.data().photoURL,
                 nguad: doc.data().nguad,
                 stock: doc.data().stock
             });
