@@ -98,7 +98,7 @@ const Button = ({closeMenu}) => {
           <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components" />
           <Dropdown.Menu as={CustomMenu}>
             <Dropdown.Item eventKey="1" href="/me"><i className="fas fa-user"></i> ข้อมูลส่วนตัว</Dropdown.Item>
-            <Dropdown.Item eventKey="3" href="/Invoice"><i className="fas fa-file-invoice">ประวัติการซื้อ</i></Dropdown.Item>
+            <Dropdown.Item eventKey="3" href="/purchase"><i className="fas fa-file-invoice"></i> ประวัติการซื้อ</Dropdown.Item>
             <Dropdown.Item eventKey="2" onClick={signouthandle}><i className="fas fa-sign-out-alt"></i> ออกจากระบบ</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>

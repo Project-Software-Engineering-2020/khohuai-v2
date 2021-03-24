@@ -8,12 +8,8 @@ const omise = require('omise')({
 
 const checkoutCreditCard = async (req, res, next) => {
   // console.log("เข้ามาแล้ว")
-    const { email, uid ,amount,token,buyItem } = req.body;
-    console.log("email" , email)
-    console.log("uid" , uid)
-    console.log("amount" , amount)
-    console.log("token" , token)
-    console.log("buyItem" , buyItem);
+    const { email, uid ,amount,token,buyItem,totalItem } = req.body;
+
     try {
       const customer = await omise.customers.create({
         email,
@@ -25,31 +21,31 @@ const checkoutCreditCard = async (req, res, next) => {
         currency: "thb",
         customer: customer.id
       })
-      createinvoice(charge,buyItem,uid)
-      console.log("Charge ========> " , charge)
+      createinvoice(charge,buyItem,uid,totalItem)
+      // console.log("Charge ========> " , charge)
       res.send({
-        amount : charge.amount,
+        amount : amount,
         status: charge.status,
       })
-      
+
     } catch (err) {
       console.log("ตรงนี้")
       console.log(err)
     }
     next()
 }
-const createinvoice = async (data,doto,idUser) => {
+const createinvoice = async (data,doto,idUser,totalItem) => {
   const charge = data;
   const Mycart = doto;
-  const uid = idUser; 
+  const uid = idUser;
 
-  console.log("charge", charge);
-  console.log("mycart", Mycart)
-  console.log("uid", uid);
+  // console.log("charge", charge);
+  // console.log("mycart", Mycart)
+  // console.log("uid", uid);
 
-  const d = new Date();
-  
-  console.log("สลากที่ซื้อ", Mycart);
+  const date = new Date();
+
+  // console.log("สลากที่ซื้อ", Mycart);
 
   try{
     if(charge.status === "successful"){
@@ -58,10 +54,10 @@ const createinvoice = async (data,doto,idUser) => {
       await invoice.set({
         invoiceid: charge.id,
         userid:uid,
-        lottery:Mycart.cart,
-        date:d,
+        lottery:Mycart,
+        date:date,
         totalprice:charge.amount / 100,
-        quantity:Mycart.length,
+        quantity:totalItem,
         nguad:15,
       }).then((res) => {
         console.log("invoice เพิ่มแล้ว")

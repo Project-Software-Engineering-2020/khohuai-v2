@@ -1,0 +1,86 @@
+.header-purchase-page {
+    display: grid;
+    grid-template-columns: repeat(2,1fr); 
+}
+.header-purchase-page {
+    margin: 10px 0;
+}
+.card-header-purchase {
+    background-color: rgb(233, 233, 233);
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    padding: 15px 28px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.purchase-item {
+    text-align: center;
+    font-size: medium;
+    font-weight: normal;
+    color: gray;
+    padding: 10px;
+    border: 1px solid rgb(199, 199, 199);
+    text-decoration: none;
+    cursor: pointer;
+}
+a.purchase-item:hover {
+    color: rebeccapurple;
+    text-decoration: none;
+}
+.purchase-item-active {
+    font-weight: bolder;
+    border-bottom: 5px solid rgb(166, 96, 236);
+    color: rgb(137, 76, 199);
+    background-color: whitesmoke;
+}
+.summary-purchase-item {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    font-size: 20px;
+    padding: 10px 20px 10px 10px;
+}
+.summary-purchase-item div:nth-child(1) {
+    font-size: 16px;
+}
+.summary-purchase-item div:nth-child(2) {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: right;
+}
+.summary-purchase-item div:nth-child(2) div {
+    margin: 10px 0;
+}
+
+.text-info-perchase {
+    font-size: 16px;
+}
+.space-number-purchase {
+    font-weight: bold;
+    letter-spacing: 5px;
+    font-family: sans-serif;
+    font-size: 18px;
+}
+.text-info-perchase-head {
+    font-size: 18px;
+    font-weight: normal;
+}
+.number-lottery-list {
+    margin: 0 10px;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+.btn-purchase-detail {
+    margin-left: auto;
+    border-radius: 3px; 
+    border: none;
+    background-color: mediumpurple;
+    color: white;
+    padding: 8px 30px;
+    font-size: 16px;
+    display: flex;
+}
+.text-detail-perchase {
+    font-size: 18px;
+    margin: 10px 0;
+    font-weight: normal;
+}

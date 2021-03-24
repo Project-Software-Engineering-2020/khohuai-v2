@@ -1,0 +1,26 @@
+.header-purchase-page {
+    display: grid;
+    grid-template-columns: repeat(2,1fr); 
+}
+.header-purchase-page {
+    margin: 10px 0;
+}
+.purchase-item {
+    text-align: center;
+    font-size: medium;
+    font-weight: normal;
+    color: gray;
+    padding: 10px;
+    border: 1px solid rgb(199, 199, 199);
+    text-decoration: none;
+    cursor: pointer;
+}
+a.purchase-item:hover {
+    color: rebeccapurple;
+    text-decoration: none;
+}
+.purchase-item-active {
+    font-weight: bolder;
+    border-bottom: 7px solid rebeccapurple;
+    color: rebeccapurple;
+}

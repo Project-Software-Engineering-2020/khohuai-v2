@@ -3,6 +3,7 @@ const { firestore,auth } = require('../firebaseDB');
 const getMyCart = async (req, res) => {
     const uid = auth.currentUser.uid;
     console.log(uid);
+    console.log("getMycart")
     let MyCart = []
     try {
         await firestore.collection("users").doc(uid)

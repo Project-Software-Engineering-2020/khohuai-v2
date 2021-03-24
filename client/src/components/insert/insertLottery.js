@@ -8,9 +8,10 @@ const UploadLottery = () => {
 
     const [image, setImage] = useState(null);
     const [number, setNumber] = useState();
-    const [s, setS] = useState();
-    const [t, setT] = useState();
-    const [r, setR] = useState();
+    const [s, setS] = useState(0);
+    const [r, setR] = useState(0);
+    // const lek = 123123;
+    // const ngauad = 16;
 
     const handleChange = (e) => {
         if (e.target.files[0]) {
@@ -38,12 +39,10 @@ const UploadLottery = () => {
                     .then((url) => {
                         // setImgUrl(url);
                         // console.log(url);
-                        firestore.collection("LotteriesAvailable").doc().set({
-                            number: number,
-                            s: s,
-                            t: t,
-                            r: r,
+                        firestore.collection("LotteriesAvailable").doc(number).set({
+                            nguad: s,
                             photoURL: url,
+                            stock: r,
                         });
                     });
                 alert("upload complete")
@@ -56,20 +55,20 @@ const UploadLottery = () => {
         <div>
             <div>
                 <label htmlFor="">เลขสลาก</label>
-                <input type="text" onChange={(e) => { setNumber(e.target.value) }} required></input>
+                <input type="number" onChange={(e) => { setNumber(e.target.value) }} required></input>
             </div>
             <div>
                 <label htmlFor="">งวดที่</label>
-                <input type="text" onChange={(e) => { setS(e.target.value) }} required></input>
+                <input type="number" onChange={(e) => { setS(parseInt(e.target.value))}} required></input>
             </div>
-            <div>
+            {/* <div>
                 <label htmlFor="">ชุดที่</label>
                 <input type="text" onChange={(e) => { setT(e.target.value) }} required></input>
 
-            </div>
+            </div> */}
             <div>
-                <label htmlFor="">Ref.</label>
-                <input type="text" onChange={(e) => { setR(e.target.value) }} required></input>
+                <label htmlFor="">จำนวน</label>
+                <input type="number" onChange={(e) => { setR(parseInt(e.target.value))}} required></input>
 
             </div>
 
