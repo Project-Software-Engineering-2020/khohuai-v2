@@ -4,6 +4,7 @@ import * as PIXI from "pixi.js";
 import { default as PIXI_SOUND } from "pixi-sound";
 
 function Game() {
+
   let app;
   let keys = {};
   let speed = 8;
@@ -642,7 +643,14 @@ function Game() {
     //keyboard event handler
     window.addEventListener("keydown", keysDown);
     window.addEventListener("keyup", keysUp);
+
+    window.addEventListener("beforeunload", function (event) {
+      console.log("destroy by unload");
+      app.destroy(true);
+    });
+
   }, []);
+
 
   function keysDown(e) {
     keys[e.keyCode] = true;
