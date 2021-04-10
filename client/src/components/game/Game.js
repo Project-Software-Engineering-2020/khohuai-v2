@@ -46,7 +46,7 @@ function Game() {
     },
     {
       name: "ANGELIC ANGEL",
-      path: "sounds/Angelic_Angel.ogg",
+      path: "sounds/Angelic_Angel.mp3",
       time: 109,
       rank: 7,
     },
@@ -132,6 +132,7 @@ function Game() {
   let missTap = 0;
   let accuracy = 0;
   let accuracy_score = 0;
+  let candleArray = [];
 
   let rainbowGradient = [
     "#b00b0b",
@@ -300,6 +301,10 @@ function Game() {
         missTap = 0;
         playTime--;
         performancePlay = [];
+        while(candleArray.length > 0) {
+          resultScreen.removeChild(candleArray[0]);
+          candleArray.shift();
+        }
         ticker.start();
         //song
         let song = new PIXI_SOUND.sound.Sound.from({
@@ -353,6 +358,7 @@ function Game() {
                   graphHeight / 4
                 );
                 resultScreen.addChild(candle);
+                candleArray.push(candle);
               }
             }, 8000);
           },
