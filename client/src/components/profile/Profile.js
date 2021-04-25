@@ -10,6 +10,7 @@ const Profile = () => {
     //status user login
     const auth = useSelector(state => state.auth);
     const UserProfile = useSelector(state => state.profile)
+
     // const status = auth.status;
     const uid = auth.uid;
 

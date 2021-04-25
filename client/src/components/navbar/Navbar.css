@@ -7,6 +7,7 @@ div.navbar-bg{
   z-index: 20;
   top: 0;
   position: sticky;
+  box-shadow: 3px 3px 10px #777777;
 }
 .lottery-navbar {
   height: 70px;
@@ -111,6 +112,11 @@ a.lottery-nav-links {
 
 
 @media screen and (max-width: 1010px) {
+  .lottery-logo{
+    margin-left: 10px;
+    height: 60px;
+    width: auto;
+  }
 
   div.navbar-bg {
     z-index: 20;
@@ -169,7 +175,7 @@ a.lottery-nav-links {
     top: 0;
     right: 0;
     transform: translate(-100%, 60%);
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     cursor: pointer;
   }
 

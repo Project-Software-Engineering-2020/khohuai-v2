@@ -24,6 +24,8 @@ const UploadLottery = () => {
     const handleUpload = (e) => {
 
         const imageName = image.name;
+
+        console.log(image);
         const uploadTask = storage.ref("lotterys/" + imageName).put(image);
         uploadTask.on(
             "state_change",

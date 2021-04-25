@@ -13,10 +13,10 @@ function Coupon() {
   return (
     <div>
       ส่วนลด
-      <Button variant="primary" onClick={handleShow} className="couponBtn">
+      {/* <Button variant="primary" onClick={handleShow} className="couponBtn">
         <FontAwesomeIcon icon={faTags} />
         เลือกคูปอง
-      </Button>
+      </Button> */}
       <Modal
         show={show}
         onHide={handleClose}

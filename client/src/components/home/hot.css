@@ -52,7 +52,7 @@
     }
     .hot-header span {
       
-      font-size: 16px;
+      font-size: 14px;
     }
     .hot-body {
       padding: 6px;
@@ -63,7 +63,7 @@
       width: 30%;
     }
     .hot span {
-      font-size: 16px;
+      font-size: 14px;
     }
   }
 
@@ -74,7 +74,7 @@
       width: 45%;
     }
     .hot-header span {
-      font-size: 16px;
+      font-size: 14px;
     }
     .hot-body {
       grid-template-columns: repeat(2,1fr);
@@ -89,11 +89,11 @@
   @media screen and (max-width: 720px) {
     .hot-header{
      
-      width: 50%;
+      width: 45%;
     }
     
     .hot-header span {
-      font-size: 18px;
+      font-size: 14px;
     }
     .hot-body {
         grid-template-columns: repeat(2,1fr);

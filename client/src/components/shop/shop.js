@@ -11,7 +11,7 @@ const Shop = ({ }) => {
     const [loading, setloading] = useState(true);
 
     const [numberState, setNumber] = useState("");
-    const [positionState, setPosition] = useState("all");
+    const [positionState, setPosition] = useState("last2");
     const [data, setData] = useState();
 
     //params from url
@@ -96,7 +96,7 @@ const Shop = ({ }) => {
                                             </figure>
                                         </div>
                                         <div className="header-shop-text">
-                                            <h3>สลากงวดประจำวันที่ 16 มีนาคม 2564</h3>
+                                            <h3>สลากงวดประจำวันที่ 16 เมษายน 2564</h3>
                                             <h5>ราคาใบละ 80 บาท</h5>
                                         </div>
                                     </section>
@@ -105,7 +105,7 @@ const Shop = ({ }) => {
                                         <div>
                                             <Form.Control as="select" custom onChange={(e) => {setPosition(e.target.value); setNumber("");}} className="form-search" value={positionState}>
                                                 <option value="all">แสดงทั้งหมด</option>
-                                                <option value="last2">เลขท้าย 2 ตัว</option>
+                                                <option value="last2" selected>เลขท้าย 2 ตัว</option>
                                                 <option value="last3">เลขท้าย 3 ตัว</option>
                                                 <option value="front">เลขหน้า 3 ตัว</option>
                                                 <option value="whole">ทุกตัว</option>

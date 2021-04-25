@@ -36,7 +36,7 @@
     }
     .recommend-header span {
       
-      font-size: 16px;
+      font-size: 14px;
     }
   }
   @media screen and (max-width: 812px) {
@@ -55,7 +55,7 @@
       width: 45%;
     }
     .recommend-header span {
-      font-size: 18px;
+      font-size: 14px;
     }
     .recommend-body {
       grid-template-columns: repeat(2,1fr);
@@ -68,11 +68,11 @@
   @media screen and (max-width: 720px) {
     .recommend-header{
      
-      width: 50%;
+      width: 45%;
     }
     
     .recommend-header span {
-      font-size: 18px;
+      font-size: 14px;
     }
      
     .recommend-body {

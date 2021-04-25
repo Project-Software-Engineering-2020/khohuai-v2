@@ -1,7 +1,6 @@
 import { store } from '../store';
 import Axios from 'axios';
 
-
 export function setProfile(user) {
     return {
         type: 'SET_PROFILE',
@@ -16,13 +15,11 @@ export function setProfile(user) {
         }
     }
 }
-
 export function loadingProfile() {
     return {
         type: 'LOADING_PROFILE'
     }
 }
-
 export function getProfile(uid) {
 
     store.dispatch(loadingProfile());

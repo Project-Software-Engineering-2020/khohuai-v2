@@ -13,11 +13,10 @@ const BeforePurchase = async (req, res, next) => {
                     date: doc.data().date.toDate(),
                     nguad: doc.data().nguad,
                     totalprice: doc.data().totalprice,
-                    invoiceid: doc.data().invoiceid,
+                    invoiceid: doc.id,
                     quantity: doc.data().quantity,
                     lottery: doc.data().lottery
                 });
-            console.log(doc.data())
         })
     res.send(ArrayPurchase);
 })

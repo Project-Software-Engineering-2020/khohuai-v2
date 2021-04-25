@@ -44,7 +44,7 @@ const Foryou = () => {
                     {data.map((item, k) => {
                         if (k < 4) {
                             return (
-                                <Lottoryitem key={k} data={item} />
+                                <Lottoryitem key={k} data={item} number={2} />
                             )
                         }
                     })}

@@ -57,6 +57,8 @@ const Purchase = () => {
                                     <div className="text-info-perchase-head">เลขสลาก</div>
                                     <div className="text-info-perchase-head">ราคา</div>
                                     <div className="text-info-perchase-head">จำนวน</div>
+                                    <div className="text-info-perchase-head">สถานะ</div>
+                                    <div className="text-info-perchase-head">ผลรางวัล</div>
                                     <hr />
                                 </div>
                                 {item.lottery.map((lottery, i) => {
@@ -64,9 +66,25 @@ const Purchase = () => {
                                         <div className="mt-2">
                                             {i < 3 ?
                                                 <div className="number-lottery-list" key={i}>
-                                                    <div className="text-info-perchase space-number-purchase">{lottery.id}</div>
+                                                    <div className="text-info-perchase space-number-purchase">{lottery.number}</div>
                                                     <div className="text-info-perchase">฿80</div>
                                                     <div className="text-info-perchase">{lottery.qty} ใบ</div>
+
+                                                    <div className="text-info-perchase">
+                                                        {lottery.status ?
+                                                            <span className="badge badge-success">ตรวจรางวัลแล้ว</span>
+                                                            :
+                                                            <span className="badge badge-warning">รอการประการผล</span>
+                                                        }
+
+                                                    </div>
+
+                                                    <div className="text-info-perchase">{lottery.prize.map((p) => {
+                                                        return (
+                                                            <p>{p}</p>
+                                                        )
+                                                    })}
+                                                    </div>
                                                     <hr />
                                                 </div>
                                                 :
@@ -79,7 +97,7 @@ const Purchase = () => {
                                 {item.lottery.length > 3 ? <div onClick={(e) => showDetail(item)} className="text-center"><a href="">ดูเพิ่มเติม</a></div> : null}
                                 <div className="summary-purchase-item">
                                     <div>
-                                        <div>สถานะ : รอการประกาศผล</div>
+                                        <div></div>
                                     </div>
                                     <div>
                                         <div>
@@ -90,11 +108,20 @@ const Purchase = () => {
                                             ยอดคำสั่งซื้อทั้งหมด {item.totalprice} บาท
                                         </div>
                                     </div>
+            
 
                                 </div>
+                                {item.lottery.reward > 0 ? 
+                                     <button className="btn-purchase-detail">รับเงินรางวัล</button>
+                                : 
+                                    null
+                                }
                                 <div>
-                                    <button onClick={(e) => showDetail(item)} className="btn-purchase-detail">ดูเพิ่มเติม</button>
+
                                 </div>
+                                {/* <div>
+                                    <button onClick={(e) => showDetail(item)} className="btn-purchase-detail">ดูเพิ่มเติม</button>
+                                </div> */}
                             </div>
 
 
