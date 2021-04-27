@@ -22,8 +22,9 @@
 .carousel{
     padding: 0;
     margin: 20px 0px;
-    border: rgba(202, 202, 202, 0.651) 1px solid;
-    /* box-shadow: 7px 7px 25px rgb(231, 231, 231); */
+    /* border: rgba(202, 202, 202, 0.651) 1px solid; */
+
+    box-shadow: 2px 2px 15px rgb(194, 182, 199);
     z-index: 1 !important;
 } 
 .img-carousel {

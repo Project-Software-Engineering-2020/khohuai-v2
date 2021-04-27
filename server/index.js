@@ -41,7 +41,7 @@ app.use('/auth', authentication);
 app.use('/lottery', lotteryRoutes);
 app.use('/cart', basketRouter);
 app.use('/purchase',PurchaseRouter)
-app.use(checkoutCreditCard)
+app.use('/checkout-credit-card',checkoutCreditCard)
 
 // http://localhost:3001
 app.listen(config.port, () =>

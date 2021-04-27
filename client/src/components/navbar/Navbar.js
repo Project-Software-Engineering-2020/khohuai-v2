@@ -20,7 +20,10 @@ function Navbar() {
   const [dropdown, setDropdown] = useState(false);
 
   const handleClick = () => setClick(!click);
-  const closeMobileMenu = () => setClick(false);
+  const closeMobileMenu = async () => {
+    await setClick(false);
+    await document.location.reload(true);
+  };
 
   const onMouseEnter = () => {
     if (window.innerWidth < 960) {
@@ -40,6 +43,7 @@ function Navbar() {
 
   useEffect(() => {
     // const stotus = stetus.status;
+    
   }, [stetus])
 
   return (

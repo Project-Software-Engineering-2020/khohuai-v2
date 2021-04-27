@@ -81,7 +81,7 @@ import { addToCart } from '../../redux/action/cartAction'
 
 // let OmiseCard;
 
-const LotteryItem = ({data}) => {
+const LotteryItem = ({data,number}) => {
 
     const dispatch = useDispatch();
 

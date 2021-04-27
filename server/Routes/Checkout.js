@@ -1,8 +1,9 @@
 const express = require('express');
-const {checkoutCreditCard} = require('../Controller/CheckoutController')
+const {checkoutCreditCard,romoveInStock} = require('../Controller/CheckoutController')
 
 const router = express.Router();
 
-router.post('/checkout-credit-card',checkoutCreditCard);
+router.post('/',checkoutCreditCard);
+router.get("/remove",romoveInStock);
 
 module.exports = router;

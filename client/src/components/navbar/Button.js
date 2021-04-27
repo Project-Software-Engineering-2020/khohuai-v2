@@ -110,8 +110,7 @@ const Button = ({closeMenu}) => {
           
         )
       }
-    </div >
-
+    </div>
   );
 }
 

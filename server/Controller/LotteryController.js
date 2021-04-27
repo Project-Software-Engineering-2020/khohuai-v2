@@ -10,16 +10,12 @@ const getAllLottery = async (req, res, next) => {
 
     console.log("get Data")
     try {
-        const lottery = await firestore.collection('LotteriesAvailable').get()
+        const lottery = await firestore.collection('lottery').get()
         if (lottery.empty) {
             res.status(400).send("No lottery in record")
         } else {
             lottery.docs.forEach(doc => {
-                //push into array
-                // const lot = new Lottery(
-                //     doc.id,
-                //     doc.data().photoURL,
-                // )
+
                 lotteryArray.push({
                     id: doc.id,
                     photoURL: doc.data().photoURL
@@ -36,7 +32,7 @@ const getAllLottery = async (req, res, next) => {
 const getDetailLottery = async (req, res, next) => {
     try {
         const id = req.params.id;
-        await firestore.collection('LotteriesAvailable').doc(id).get().then((doc) => {
+        await firestore.collection('lottery').doc(id).get().then((doc) => {
             res.send(doc.data())
         })
 
@@ -55,7 +51,7 @@ const getRecommendedLottery = async (req, res, next) => {
         //const history = await firestore.collection('invoices').get();
 
         const history = await firestore.collection('invoices').get();
-        const lottery = await firestore.collection('LotteriesAvailable').get();
+        const lottery = await firestore.collection('lottery').get();
         if (user) {
 
             lottery.docs.forEach(doc => {
@@ -182,18 +178,18 @@ const getAlmostOutOfStock = async (req, res, next) => {
     try {
         const lotteryArray = [];
         const almostOutOfStockLotteryArray = [];
-        const lottery = await firestore.collection('LotteriesAvailable').get();
+        const lottery = await firestore.collection('lottery').get();
         let i;
         for (i = 0; i <= 10; i++) {
             lotteryArray.push([i]);
         }
         lottery.docs.forEach(doc => {
             //push into array
-            lotteryArray[doc.data().stock].push({
+            lotteryArray[doc.data().photoURL.length].push({
                 id: doc.id,
                 photoURL: doc.data().photoURL,
                 nguad: doc.data().nguad,
-                stock: doc.data().stock
+                stock: doc.data().photoURL.length
             });
         });
         let count = 0;

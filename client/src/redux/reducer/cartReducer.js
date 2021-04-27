@@ -1,10 +1,8 @@
-import { faTicketAlt } from "@fortawesome/free-solid-svg-icons";
-
 const initialState = {
   totalItem: 0,
   totalSelect: 0,
   totalPrice: 0,
-  check: false,
+  check: true,
   cart: [],
   selected: []
 };
