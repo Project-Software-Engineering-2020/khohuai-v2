@@ -12,8 +12,7 @@ const CheckoutCreditcard = ({ user, cart, total, createCreditCardCharge }) => {
     // setmoney(cart.totalPrice * 100)
     // const macart = useSelector(state => state.cart);
     const [clearCart, setclearCart] = useState();
-    // const [cart, setcart] = useState(null);
-    // setcart(Acart)
+
     OmiseCard = window.OmiseCard;
     OmiseCard.configure({
         publicKey: "pkey_test_5noeh4lp1k7qqkioftf",

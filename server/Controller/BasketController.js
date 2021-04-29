@@ -1,9 +1,7 @@
-const { firestore, auth } = require('../firebaseDB');
+const { firestore } = require('../firebaseDB');
 
-const getMyCart = async (req, res) => {
-    const uid = "T6NMBO1XbscTWBeUsUCTy9ymrg82"
-    console.log(uid);
-    console.log("getMycart")
+const getCart = async (uid, res) => {
+
     let MyCart = []
     try {
         await firestore.collection("users").doc(uid)
@@ -14,120 +12,162 @@ const getMyCart = async (req, res) => {
                         {
                             id: item.id,
                             photoURL: item.data().photoURL,
-                            qty: item.data().qty
+                            qty: item.data().photoURL.length
                         }
                     )
                 });
 
-                // console.log(MyCart)
-                res.status(200).send(MyCart)
+                res.send(MyCart)
             })
     } catch (err) {
         console.log(err);
     }
 }
 
+const getMyCart = async (req, res) => {
+    const uid = "T6NMBO1XbscTWBeUsUCTy9ymrg82"
+    getCart(uid, res);
+
+}
+
 const addMyCart = async (req, res) => {
+
     const uid = "T6NMBO1XbscTWBeUsUCTy9ymrg82";
     const lottery = req.body.item;
-    let MyCart = []
-    let inStock = true;
+    const lottery_number = lottery.id;
+    let MyCart = {};
+    let newMyCart = [];
+    let inStock = false;
+    let stock = 0;
+    let haveInMyCart = false;
+    let photoLotteryBuy = "";
 
     try {
 
         //check lottery in stock 
-        await firestore.collection("lottery").doc(lottery.id).get()
+        await firestore.collection("lottery").doc(lottery_number).get()
             .then((doc) => {
-                if (doc.data().photoURL.lenth > 0) {
-                    inStock = true
+
+                console.log("instock  == ", doc.data().photoURL.length)
+
+                if (doc.data().photoURL.length > 0) {
+                    stock = doc.data().photoURL.length;
+                    photoLotteryBuy = doc.data().photoURL[0];
+                    inStock = true;
                 }
             })
-        
-        console.log(inStock)
 
+        await firestore.collection("users").doc(uid)
+            .collection("cart").doc(lottery_number).get()
+            .then((doc) => {
+
+                if (doc.data() === undefined) {
+                    //first insert
+                    haveInMyCart = false;
+
+                }
+                else {
+                    //havedata
+                    haveInMyCart = true;
+                    MyCart =
+                    {
+                        id: doc.id,
+                        photoURL: doc.data().photoURL,
+                        qty: doc.data().photoURL.length
+                    }
+                }
+            })
+
+        //stock มีเพียงพอ
         if (inStock === true) {
 
-            //add item into cart user
-            await firestore.collection("users").doc(uid)
-                .collection("cart").doc(lottery.id)
-                .set(
-                    { id: lottery.id, photoURL: lottery.photoURL, qty: 1 }
-                );
+            if (haveInMyCart === true) {
 
-            //get current cart 
-            await firestore.collection("users").doc(uid)
-                .collection("cart").get()
-                .then((doc) => {
-                    doc.docs.forEach(element => {
-                        MyCart.push(
-                            {
-                                id: element.id,
-                                photoURL: element.data().photoURL,
-                                qty: 1
-                            }
-                        )
-                    });
-                    res.status(200).send({data:MyCart,message:"สำเร็จ"})
-                })
+                console.log("ในสต็อกมีอยู่ ", stock, "และในตระกร้าของคุณ ", MyCart.qty);
 
+                if (stock > MyCart.qty) {
+
+                    console.log("จำนวนคงเหลือในสต็อกเพียงพอ ยังสามารถเพิ่มได้อีกเรื่อยๆ");
+
+                    let newData = {
+                        number: lottery_number,
+                        photoURL: [...MyCart.photoURL, photoLotteryBuy],
+                        qty: MyCart.qty + 1
+                    }
+
+                    //update item into cart user
+                    await firestore.collection("users").doc(uid)
+                        .collection("cart").doc(lottery_number)
+                        .update(newData);
+
+                    //ดึงข้อมูลตะกร้าล่าสุด
+                    await getCart(uid, res);
+
+                }
+                else {
+                    console.log("จำนวนคงเหลือในสต็อกไม่มีเพียงพอ ให้คุณเพิ่มลงในตะกร้า")
+                    res.status(200).send({ data: MyCart, message: "จำนวนคงเหลือในสต็อกไม่มีเพียงพอ ให้คุณเพิ่มลงในตะกร้า" })
+                }
+            }
+            else {
+
+                //first this lottery insert
+                console.log("ยังไม่มีสลากใบนี้อยู่ในตระกร้างั้นหรอ ใส่ลงไป")
+
+                await firestore.collection("users").doc(uid)
+                    .collection("cart").doc(lottery_number)
+                    .set(
+                        { number: lottery_number, photoURL: [photoLotteryBuy], qty: 1 }
+                    );
+
+                //ดึงข้อมูลตะกร้าล่าสุด
+                await getCart(uid.res);
+            }
         }
         else {
-            res.status(200).send({data:MyCart,message:"stock not enough"})
+            console.log("สลากในสต็อกไม่เพียงพอ")
+            res.status(200).send({ data: MyCart, message: "สลากในสต็อกไม่เพียงพอ" })
         }
 
     } catch (error) {
         console.log(error)
     }
 }
+const decreateItemMyCart = async (req, res) => {
 
-const adjustMyCart = async (req, res) => {
     const uid = "T6NMBO1XbscTWBeUsUCTy9ymrg82";
-    const data = req.body.item;
+    const lottery = req.body.item;
+    let data = {}
+    let newDataPhoto = []
 
-    //เป็น +1 และ -1
-    const qty = req.body.qty;
-    let MyCart = []
+    await firestore.collection("users").doc(uid)
+        .collection("cart").doc(lottery.id).get()
+        .then((doc) => {
 
-    try {
-        //ค้นหาว่ามีสลาใบนี้ยังเหลืออยู่ในระบบหรือไม่
-        let inStock;
-        await firestore.collection("LotteriesAvailable").doc(data.id)
-            .get().then((doc) => { inStock = doc.data() })
+            data = {
+                number: doc.data().number,
+                photoURL: doc.data().photoURL,
+                qty: doc.data().photoURL.length
+            }
 
-        console.log("stock =", inStock.stock, " add", data.qty + qty);
-        if ((data.qty + qty) <= inStock.stock) {
-            //อัพเดดในตะกร้า
-            await firestore.collection("users").doc(uid)
-                .collection("cart").doc(data.id)
-                .update(
-                    { qty: data.qty + qty }
-                );
-            //ดึงข้อมูลตะกร้าสินค้าล่าสุด
-            await firestore.collection("users").doc(uid)
-                .collection("cart").get()
-                .then((doc) => {
-                    doc.docs.forEach(element => {
-                        if (element.data().qty > 0) {
-                            MyCart.push(
-                                {
-                                    id: element.id,
-                                    photoURL: element.data().photoURL,
-                                    qty: element.data().qty
-                                }
-                            )
-                        }
-                    });
-                    console.log(MyCart)
-                    res.status(200).send(MyCart)
-                })
-        }
-        else {
-            console.log("ไม่มีสลากใบนี้อยู่")
-        }
+        })
 
-    } catch (error) {
-        console.log(error)
+
+    newDataPhoto = [...data.photoURL];
+    newDataPhoto.pop();
+
+    data = {
+        ...data,
+        photoURL: newDataPhoto,
+        qty: data.qty - 1
     }
+
+    await firestore.collection("users").doc(uid)
+        .collection("cart").doc(lottery.id)
+        .update(data);
+
+    await getCart(uid, res);
+
 }
 
 const removeMyCart = async (req, res) => {
@@ -143,20 +183,7 @@ const removeMyCart = async (req, res) => {
             .catch((err) => console.log("ลบไม่ได้ ไม่รู้เป็นไร ดู error เอาเอง", err))
 
         //ดึงข้อมูลล่าสุดมา
-        await firestore.collection("users").doc(uid)
-            .collection("cart").get()
-            .then((doc) => {
-                doc.docs.forEach(element => {
-                    MyCart.push(
-                        {
-                            id: element.id,
-                            photoURL: element.data().photoURL,
-                            qty: element.data().qty
-                        }
-                    )
-                });
-                res.status(200).send(MyCart)
-            })
+        getCart(uid, res)
 
     } catch (error) {
         console.log(error)
@@ -167,6 +194,6 @@ const removeMyCart = async (req, res) => {
 module.exports = {
     getMyCart,
     addMyCart,
-    adjustMyCart,
+    decreateItemMyCart,
     removeMyCart
 }
