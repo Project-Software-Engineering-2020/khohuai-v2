@@ -38,11 +38,16 @@ a.purchase-item:hover {
   }
 
   .box{
-      border-radius: 13px;
-      background-color: rgb(19, 184, 19);
+      border-radius: 10px;
       color: white;
-      padding: 10px ;
-      font-size: 13px;
+      padding: 7px ;
+      font-size: 12px;
+  }
+  .success {
+     background-color: rgb(19, 184, 19);
+  }
+  .waiting {
+    background-color: rgb(149, 40, 238);
   }
   .info-summary {
     display: grid;

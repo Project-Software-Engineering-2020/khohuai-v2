@@ -9,14 +9,16 @@ import mycart from "./reducer/cartReducer";
 import profile from "./reducer/profileReducer";
 import purchase from "./reducer/purchaseReducer";
 import purchase_Detail from "./reducer/purchaseDetailReducer";
-
+import reward from "./reducer/rewardReducer";
+ 
 // ******Combine Reducers******
 const rootReducer = combineReducers({
   auth: authReducer,
   cart: mycart,
   profile: profile,
   purchase: purchase,
-  purchase_detail:purchase_Detail
+  purchase_detail:purchase_Detail,
+  reward: reward
 });
 
 //redux persit manage local storage

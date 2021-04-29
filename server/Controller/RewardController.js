@@ -10,7 +10,18 @@ const getRewardLotteryOfUser = async (req, res, next) => {
         .get()
         .then((result) => {
             result.forEach((doc) => {
-                MyReward.push(doc.data());
+                MyReward.push(
+                    {
+                        id: doc.id,
+                        lottery: doc.data().lottery,
+                        uid: doc.data().userid,
+                        success: doc.data().success,
+                        win_total: doc.data().win_total,
+                        win_chart: doc.data().win_chart,
+                        win_amount: doc.data().win_amount,
+                        update_date: doc.data().update_date
+                    }
+                );
             })
             res.status(200).send(MyReward);
         })
