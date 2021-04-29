@@ -3,7 +3,7 @@ function Checkout() {
 
     OmiseCard = window.OmiseCard;
     OmiseCard.configure({
-        publicKey: "pkey_test_5mr6tkdorlixflztwxu",
+        publicKey: "pkey_test_5noeh4lp1k7qqkioftf",
         currency: "thb",
         frameLabel: "Khohuai",
         submitLabel: "Pay Now",

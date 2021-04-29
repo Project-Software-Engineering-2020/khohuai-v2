@@ -5,12 +5,12 @@ const { firestore } = require('../firebaseDB');
 
 const Invoice = require("../Models/Invoice");
 const omise = require('omise')({
-  'publicKey': process.env.OMISE_PUBLIC_KEY,
-  'secretKey': process.env.OMISE_SECRET_KEY,
+  'publicKey': "pkey_test_5noeh4lp1k7qqkioftf",
+  'secretKey': "skey_test_5mrnjk7xfebmeu7w5o1",
 })
 
 const checkoutCreditCard = async (req, res, next) => {
-  // console.log("เข้ามาแล้ว")
+  console.log("เข้ามาแล้ว")
   const { email, uid, amount, token, buyItem, totalItem } = req.body;
 
   try {
@@ -40,16 +40,6 @@ const checkoutCreditCard = async (req, res, next) => {
 
 const romoveInStock = async (item_buy) => {
 
-  // const item_buy = [
-  //   {
-  //     number: "123456",
-  //     qty: 2
-  //   },
-  //   {
-  //     number: "001111",
-  //     qty: 1
-  //   }
-  // ]
   console.log(item_buy);
 
   let lottery_instock = [];
@@ -57,12 +47,12 @@ const romoveInStock = async (item_buy) => {
   let cut_stock = [];
 
   //ดึงข้อมูล stock
-  const instock = await firestore.collection("lot").get()
+  const instock = await firestore.collection("lottery").get()
   instock.docs.forEach(item => {
     lottery_instock.push(
       {
         number: item.id,
-        lottery_img: item.data().lottery,
+        lottery_img: item.data().photoURL,
       }
     );
   });
@@ -77,7 +67,6 @@ const romoveInStock = async (item_buy) => {
   for (i = 0; i < item_buy.length; i++) {
 
     for (j = 0; j < lottery_instock.length; j++) {
-
 
       if (item_buy[i].id === lottery_instock[j].number) {
 
@@ -100,7 +89,7 @@ const romoveInStock = async (item_buy) => {
 
             lottery_each_number.pop(target_lottery);
 
-            await firestore.collection("lot").doc(lottery_instock[j].number)
+            await firestore.collection("lottery").doc(lottery_instock[j].number)
               .update({
                 lottery: lottery_each_number
               })

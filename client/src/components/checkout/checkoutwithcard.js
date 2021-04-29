@@ -16,7 +16,7 @@ const CheckoutCreditcard = ({ user, cart, total, createCreditCardCharge }) => {
     // setcart(Acart)
     OmiseCard = window.OmiseCard;
     OmiseCard.configure({
-        publicKey: "pkey_test_5mrnjjlemwhhner4xgt",
+        publicKey: "pkey_test_5noeh4lp1k7qqkioftf",
         currency: "thb",
         frameLabel: "Khohuai",
         submitLabel: "Pay Now",
