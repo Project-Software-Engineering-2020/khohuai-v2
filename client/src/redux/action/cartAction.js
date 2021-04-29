@@ -3,7 +3,7 @@ import Axios from "axios";
 
 export function getMyCartFromDB() {
   return function (dispatch) {
-    return Axios.get("http://localhost:3001/cart").then((result) => {
+    return Axios.get("https://khohuai-server.herokuapp.com:3001/cart").then((result) => {
       const data = result.data;
       console.log(data);
       dispatch({ type: "SET_CART", data });
@@ -14,15 +14,10 @@ export function getMyCartFromDB() {
 export function addToCart(item) {
   return function (dispatch) {
     return Axios.post("http://localhost:3001/cart", { item }).then((result) => {
-      console.log(result)
-      // const data = result.data.data;
-      // const message = result.data.message;
-      // if (result.status === 200) {
-      //   console.log(data);
-      //   dispatch({ type: "SET_CART", data, message });
-      // } else if (result.status === 201) {
-      //   dispatch({ type: "SET_CART", data, message });
-      // }
+      console.log(result);
+      const data = result.data.data;
+      console.log(data);
+      dispatch({ type: "SET_CART", data });
     });
   };
 }
@@ -31,7 +26,7 @@ export function incrementQty(item) {
   const qty = 1;
 
   return function (dispatch) {
-    return Axios.put("http://localhost:3001/cart", { item, qty }).then(
+    return Axios.put("https://khohuai-server.herokuapp.com/cart", { item, qty }).then(
       (result) => {
         const data = result.data;
 
@@ -45,7 +40,7 @@ export function decrementQty(item) {
   const qty = -1;
 
   return function (dispatch) {
-    return Axios.put("http://localhost:3001/cart", { item, qty }).then(
+    return Axios.put("https://khohuai-server.herokuapp.com/cart", { item, qty }).then(
       (result) => {
         const data = result.data;
 

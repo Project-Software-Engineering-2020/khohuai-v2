@@ -25,7 +25,7 @@ export function getProfile(uid) {
     store.dispatch(loadingProfile());
 
     return function (dispatch) {
-        return Axios.get("http://localhost:3001/user/profile/" + uid)
+        return Axios.get("https://khohuai-server.herokuapp.com/user/profile/" + uid)
             .then(user => {
                 console.log(user.data)
                 dispatch(setProfile(user.data))
@@ -35,7 +35,7 @@ export function getProfile(uid) {
 
 export function updateUserProfile(newProfile) {
 
-    const user = Axios.put("http://localhost:3001/user/profile", { newProfile })
+    const user = Axios.put("https://khohuai-server.herokuapp.com/user/profile", { newProfile })
         .then((res) => {
             if (res.status === 200) {
               

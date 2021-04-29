@@ -20,7 +20,7 @@ const Foryou = () => {
         let datb = [];
         const FetchData = async () => {
 
-            await Axios.get("http://localhost:3001/lottery/recommended").then((lot) => {
+            await Axios.get("https://khohuai-server.herokuapp.com/lottery/recommended").then((lot) => {
                 console.log(lot);
                 setData(lot.data);
                 datb = lot.data;

@@ -1,16 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
+import { getReward } from "../../redux/action/rewardAction";
+import { useDispatch, useSelector } from "react-redux"
 import "./Reward.css";
 const Reward = () => {
-  const [show, setShow] = useState(false);
 
+  const dispatch = useDispatch();
+  const reward = useSelector(state => state.reward)
+
+  const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const [comfirm, setConfirm] = useState(false);
   const handleCloseconfirm = () => setConfirm(false);
   const handleShowconfirm = () => setConfirm(true);
+
+  const [showLottery, setshowLottery] = useState(false);
+  const [lotterydate, setlotterydate] = useState([])
+  const handleLotteryClose = () => setshowLottery(false);
+  const handleShowLottery = (item) => {
+    setshowLottery(true);
+    setlotterydate(item)
+  }
+
+
+
+  useEffect(() => {
+    dispatch(getReward());
+  }, [])
 
   return (
     <div className="container mt-3 p-3 bg-white">
@@ -34,10 +53,15 @@ const Reward = () => {
         <div className="card">
           <div className="card-header">
             <h5 className="card-title">
-              หมายเลขรับรางวัล : {/* {invoice.data.invoiceid} */}
+              หมายเลขรับรางวัล : {reward.data.id}
             </h5>
             <div>
-              <span className="box">รับเงินรางวัลแล้ว</span>
+              {reward.data.success ?
+                <span className="box success">รับเงินรางวัลแล้ว</span>
+                :
+                <span className="box waiting">กำลังดำเนินการ</span>
+              }
+
             </div>
           </div>
           {/* /.card-header */}
@@ -45,15 +69,9 @@ const Reward = () => {
             <div className="tab-content p-0">
               {/* Morris chart - Sales */}
               <p>
-                สั่งซื้อวันที่{" "}
-                {/* <Moment format="DD MMMM YYYY" locale="th">
-                  {invoice.data.date}
-                </Moment> */}
-              </p>
-              <p>
                 งวดประจำวันที่{" "}
                 {/* <Moment format="DD MMMM YYYY" locale="th">
-                  {invoice.data.ngud_date}
+                  {reward.data.ngud_date}
                 </Moment> */}
               </p>
               <p>เลขที่บัญชีสำหรับรับรางวัล</p>
@@ -65,24 +83,28 @@ const Reward = () => {
                 <thead>
                   <tr>
                     <th>เลขสลาก</th>
-                    <th>จำนวนใบ (ใบ)</th>
+                    <th>รางวัลที่ถูก</th>
                     <th>จำนวน (ใบ)</th>
                     <th>เงินรางวัลรวม (บาท)</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {/* {console.log(detail.lottery)}
-                  {invoice.data.lottery
-                    ? invoice.data.lottery.map((item, index) => {
-                        return (
-                          <tr key={index}>
-                            <td>{item.id}</td>
-                            <td>{item.qty}</td>
-                            <td>{item.qty * 80}</td>
-                          </tr>
-                        );
-                      })
-                    : null} */}
+                  {reward.data.lottery
+                    ? reward.data.lottery.map((item, index) => {
+                      return (
+                        <tr key={index}>
+                          <td onClick={e => handleShowLottery(item.lottery)} >{item.number}</td>
+                          <td>
+                            {item.prize.map((pz) => {
+                              return <p>{pz}</p>
+                            })}
+                          </td>
+                          <td>{item.qty}</td>
+                          <td>{item.qty * item.reward}</td>
+                        </tr>
+                      );
+                    })
+                    : null}
                 </tbody>
               </table>
               <div className="section-summary-invoice">
@@ -90,20 +112,20 @@ const Reward = () => {
                 <div>
                   <div className="summary-invoice">
                     <div className="info-summary">
-                      <div>เงินรางวัลรวมทั้งสิ้น</div>
-                      <div>200,000</div>
+                      <div>เงินรางวัลรวม</div>
+                      <div>{reward.data.win_total}</div>
                       <div>บาท</div>
                     </div>
 
                     <div className="info-summary">
                       <div>หักค่าบริการ 1.5%</div>
-                      <div>240</div>
+                      <div>{reward.data.win_chart}</div>
                       <div>บาท</div>
                     </div>
 
                     <div className="info-summary">
-                      <div>เงินรางวัลที่ได้รับ</div>
-                      <div>197,000</div>
+                      <div>เงินรางวัลที่ได้รับทั้งสิ้น</div>
+                      <div>{reward.data.win_amount}</div>
                       <div>บาท</div>
                     </div>
                   </div>
@@ -113,13 +135,36 @@ const Reward = () => {
                 <div className="txt">
                   **โปรดตรวจสอบเลขที่บัญชีให้ถูกต้องเพื่อรักษาผลประโยชน์ของท่าน**
                 </div>
-                <Button  onClick={handleShowconfirm}>ยืนยัน</Button>
+                <Button onClick={handleShowconfirm}>ยืนยัน</Button>
               </div>
             </div>
           </div>
           {/* /.card-body */}
         </div>
       </div>
+
+      {/*    แสดงสลาก */}
+      <Modal size="md" show={showLottery} onHide={handleLotteryClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>รูปสลาก</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {
+            lotterydate ?
+              lotterydate.map((lottery) => {
+                return <img
+                  className="slip"
+                  src={lottery}
+                />
+              })
+              :
+              null
+          }
+
+        </Modal.Body>
+
+      </Modal>
+
       <Modal size="sm" show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>หลักฐานการรับรางวัล</Modal.Title>
@@ -140,7 +185,7 @@ const Reward = () => {
         </Modal.Footer>
       </Modal>
 
-      <Modal size="sm" show={comfirm} onHide={handleCloseconfirm}>
+      <Modal size="md" show={comfirm} onHide={handleCloseconfirm}>
         <Modal.Header closeButton>
           <Modal.Title>ยืนยันข้อมูลการรับรางวัล</Modal.Title>
         </Modal.Header>
@@ -149,15 +194,14 @@ const Reward = () => {
           <p>เลขที่บัญชี</p>
           <p>ธนาคาร</p>
           <div className="footer-final">
-          <div>เงินรางวัลที่ได้รับ</div>
-          <div className="bold">197,000</div>
-          <div>บาท</div>
-
-</div>
+            <div>เงินรางวัลที่ได้รับ</div>
+            <div className="bold">{reward.data.win_amount}</div>
+            <div>บาท</div>
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseconfirm}>
-            แก้ไขข้อมูล  
+            แก้ไขข้อมูล
           </Button>
           <Button variant="primary" onClick={handleCloseconfirm}>
             ยืนยัน

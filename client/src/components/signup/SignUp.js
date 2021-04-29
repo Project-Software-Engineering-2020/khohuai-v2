@@ -194,7 +194,7 @@ const SignUp = () => {
     e.preventDefault();
     const valid = await formValidation();
     if (valid === true) {
-      Axios.post("http://localhost:3001/auth/sigup", {
+      Axios.post("https://khohuai-server.herokuapp.com/auth/sigup", {
         firstname: firstname,
         lastname: lastname,
         phone: phone,

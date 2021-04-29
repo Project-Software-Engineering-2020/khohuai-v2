@@ -29,12 +29,12 @@ const LottoDetail = (props) => {
         const fetchData = async () => {
 
             //get detail
-            await Axios.get("http://localhost:3001/lottery/" + lotteryID).then((lot) => {
+            await Axios.get("https://khohuai-server.herokuapp.com/lottery/" + lotteryID).then((lot) => {
                 setLottery(lot.data);
             })
 
             //get recommended 
-            await Axios.get("http://localhost:3001/lottery").then((lot) => {
+            await Axios.get("https://khohuai-server.herokuapp.com/lottery").then((lot) => {
                 setRecommended(lot.data);
             })
 

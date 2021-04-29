@@ -1,4 +1,4 @@
-const { firestore, auth } = require("../firebaseDB");
+const { firestore, auth } = require('../firebaseDB');
 
 const getMyCart = async (req, res) => {
   const uid = auth.currentUser.uid;
@@ -44,12 +44,52 @@ const addMyCart = async (req, res) => {
                     inStock = true
                 }
             })
-
+        
         console.log(inStock)
 
         if (inStock === true) {
 
             //add item into cart user
+            await firestore.collection("users").doc(uid)
+                .collection("cart").doc(lottery.id)
+                .set(
+                    { id: lottery.id, photoURL: lottery.photoURL, qty: 1 }
+                );
+
+            //get current cart 
+            await firestore.collection("users").doc(uid)
+                .collection("cart").get()
+                .then((doc) => {
+                    doc.docs.forEach(element => {
+                        MyCart.push(
+                            {
+                                id: element.id,
+                                photoURL: element.data().photoURL,
+                                qty: 1
+                            }
+                        )
+                    });
+                    res.status(200).send({data:MyCart,message:"สำเร็จ"})
+                })
+
+        }
+        else {
+            res.status(200).send({data:MyCart,message:"stock not enough"})
+        }
+
+        console.log(inStock)
+
+        if (inStock === true) {
+
+    try {
+        //ค้นหาว่ามีสลาใบนี้ยังเหลืออยู่ในระบบหรือไม่
+        let inStock;
+        await firestore.collection("LotteriesAvailable").doc(data.id)
+            .get().then((doc) => { inStock = doc.data() })
+
+        console.log("stock =", inStock.stock, " add", data.qty + qty);
+        if ((data.qty + qty) <= inStock.stock) {
+            //อัพเดดในตะกร้า
             await firestore.collection("users").doc(uid)
                 .collection("cart").doc(lottery.id)
                 .set(
@@ -179,8 +219,8 @@ const removeMyCart = async (req, res) => {
 };
 
 module.exports = {
-  getMyCart,
-  addMyCart,
-  adjustMyCart,
-  removeMyCart,
-};
+    getMyCart,
+    addMyCart,
+    adjustMyCart,
+    removeMyCart
+}

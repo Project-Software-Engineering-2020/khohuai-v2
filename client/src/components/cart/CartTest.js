@@ -28,7 +28,7 @@ const Basket = () => {
     console.log("Token Here ===>" + token);
     try {
       await axios
-        .post("http://localhost:3001/checkout-credit-card", {
+        .post("https://khohuai-server.herokuapp.com/checkout-credit-card", {
           email,
           uid,
           amount,

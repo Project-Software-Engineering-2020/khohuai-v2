@@ -17,12 +17,12 @@ const BeforePurchase = async (req, res, next) => {
                     quantity: doc.data().quantity,
                     lottery: doc.data().lottery
                 });
+            })
+            res.send(ArrayPurchase);
         })
-    res.send(ArrayPurchase);
-})
-        .catch ((err) => {
-    console.log(err)
-})
+        .catch((err) => {
+            console.log(err)
+        })
 }
 
 module.exports = {
