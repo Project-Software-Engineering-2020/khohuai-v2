@@ -3,7 +3,7 @@ import Axios from "axios";
 
 export function getMyCartFromDB() {
   return function (dispatch) {
-    return Axios.get("https://khohuai-server.herokuapp.com:3001/cart").then((result) => {
+    return Axios.get("http://localhost:3001/cart").then((result) => {
       const data = result.data;
       console.log(data);
       dispatch({ type: "SET_CART", data });
@@ -26,7 +26,7 @@ export function incrementQty(item) {
   const qty = 1;
 
   return function (dispatch) {
-    return Axios.put("https://khohuai-server.herokuapp.com/cart", { item, qty }).then(
+    return Axios.put("http://localhost:3001/cart", { item, qty }).then(
       (result) => {
         const data = result.data;
 
@@ -40,7 +40,7 @@ export function decrementQty(item) {
   const qty = -1;
 
   return function (dispatch) {
-    return Axios.put("https://khohuai-server.herokuapp.com/cart", { item, qty }).then(
+    return Axios.put("http://localhost:3001/cart", { item, qty }).then(
       (result) => {
         const data = result.data;
 
