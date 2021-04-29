@@ -14,9 +14,15 @@ export function getMyCartFromDB() {
 export function addToCart(item) {
   return function (dispatch) {
     return Axios.post("http://localhost:3001/cart", { item }).then((result) => {
-      const data = result.data;
-      console.log(data);
-      dispatch({ type: "SET_CART", data });
+      console.log(result)
+      // const data = result.data.data;
+      // const message = result.data.message;
+      // if (result.status === 200) {
+      //   console.log(data);
+      //   dispatch({ type: "SET_CART", data, message });
+      // } else if (result.status === 201) {
+      //   dispatch({ type: "SET_CART", data, message });
+      // }
     });
   };
 }

@@ -73,46 +73,44 @@
 // }
 
 // export default LotteryItem;
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 // import Checkoutcerditcard from '../checkoutpage/creditcard';
-import './LotteryItem.css'
-import { addToCart } from '../../redux/action/cartAction'
+import "./LotteryItem.css";
+import { addToCart } from "../../redux/action/cartAction";
 
 // let OmiseCard;
 
-const LotteryItem = ({data,number}) => {
+const LotteryItem = ({ data, number }) => {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
+  const addtoCart = () => {
+    // dispatch({ type:"ADD_TO_CART", data: data }
+    console.log(data);
 
-    const addtoCart = () => {
-        // dispatch({ type:"ADD_TO_CART", data: data }
-        console.log(data);
+    const item = data;
 
-        const item = data;
+    dispatch(addToCart(item));
+  };
+  // useEffect ()  => {
+  //     // await setLottery(data)
+  //     // await setloading(false);
+  // }, [])
 
-        dispatch(addToCart(item));
-    }
-    // useEffect ()  => {
-    //     // await setLottery(data)
-    //     // await setloading(false);
-    // }, [])
-
-    return (
-
-        <div className="lottery-item">
-
-            <figure className="lottery-item-image">
-                <a href={"/product/" + data.id} >
-                    <img src={data.photoURL}></img>
-                </a>
-            </figure>
-            <form>
-                <button className="add-to-cart" type="button" onClick={addtoCart}><i className="fas fa-cart-plus"> </i> เพิ่มลงในตะกร้า</button>
-            </form>
-        </div>
-
-    )
-}
+  return (
+    <div className="lottery-item">
+      <figure className="lottery-item-image">
+        <a href={"/product/" + data.id}>
+          <img src={data.photoURL}></img>
+        </a>
+      </figure>
+      <form>
+        <button className="add-to-cart" type="button" onClick={addtoCart}>
+          <i className="fas fa-cart-plus"> </i> เพิ่มลงในตะกร้า
+        </button>
+      </form>
+    </div>
+  );
+};
 
 export default LotteryItem;
