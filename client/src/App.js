@@ -60,7 +60,7 @@ function App() {
             <PrivateRoute path="/cart" component={CartTest} />
             <PrivateRoute path="/purchase" exact={true} component={Purchase} />
             <PrivateRoute path="/purchase/:id" component={PurchaseDetail} />
-            <PrivateRoute path="/reward" component={Reward} />
+            <Route path="/reward" component={Reward} />
           </Switch>
     </Router>
   );
