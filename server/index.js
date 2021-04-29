@@ -1,8 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParder = require('body-parser');
-const config = require('./config')
-require('dotenv').config()
+const PORT = process.env.PORT || 3001;
 
 //import route
 const lotteryRoutes = require('./Routes/Lottery');
@@ -11,11 +10,11 @@ const checkoutCreditCard = require('./Routes/Checkout');
 const authentication = require('./Routes/Auth');
 const basketRouter = require('./Routes/Basket');
 const PurchaseRouter = require('./Routes/Purchase');
+const rewardRoute = require('./Routes/Reward');
 
 const app = express();
 
 var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
 var session = require('express-session');
 
 app.use(session({
@@ -40,10 +39,11 @@ app.use('/user', userRouter);
 app.use('/auth', authentication);
 app.use('/lottery', lotteryRoutes);
 app.use('/cart', basketRouter);
-app.use('/purchase',PurchaseRouter)
-app.use('/checkout-credit-card',checkoutCreditCard)
+app.use('/purchase',PurchaseRouter);
+app.use('/checkout-credit-card',checkoutCreditCard);
+app.use('/reward', rewardRoute);
 
 // http://localhost:3001
-app.listen(config.port, () =>
+app.listen(PORT, () =>
     console.log("Server is running...")
 )

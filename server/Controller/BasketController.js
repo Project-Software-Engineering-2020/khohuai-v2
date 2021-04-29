@@ -1,4 +1,4 @@
-const { firestore,auth } = require('../firebaseDB');
+const { firestore, auth } = require('../firebaseDB');
 
 const getMyCart = async (req, res) => {
     const uid = auth.currentUser.uid;
@@ -28,33 +28,52 @@ const getMyCart = async (req, res) => {
 }
 
 const addMyCart = async (req, res) => {
-    const uid = auth.currentUser.uid;
-    const data = req.body.item;
+    const uid = "88NeSH3BBVNydmDSYtnQNyvSusq1";
+    const lottery = req.body.item;
     let MyCart = []
+    let inStock = true;
+
     try {
 
-        await firestore.collection("users").doc(uid)
-            .collection("cart").doc(data.id)
-            .set(
-                { id: data.id, photoURL: data.photoURL, qty: 1 }
-            );
-
-        await firestore.collection("users").doc(uid)
-            .collection("cart").get()
+        //check lottery in stock 
+        await firestore.collection("lottery").doc(lottery.id).get()
             .then((doc) => {
-                doc.docs.forEach(element => {
-                    MyCart.push(
-                        {
-                            id: element.id,
-                            photoURL: element.data().photoURL,
-                            qty: 1
-                        }
-                    )
-                });
-
-                // console.log(MyCart)
-                res.status(200).send(MyCart)
+                if (doc.data().photoURL.lenth > 0) {
+                    inStock = true
+                }
             })
+        
+        console.log(inStock)
+
+        if (inStock === true) {
+
+            //add item into cart user
+            await firestore.collection("users").doc(uid)
+                .collection("cart").doc(lottery.id)
+                .set(
+                    { id: lottery.id, photoURL: lottery.photoURL, qty: 1 }
+                );
+
+            //get current cart 
+            await firestore.collection("users").doc(uid)
+                .collection("cart").get()
+                .then((doc) => {
+                    doc.docs.forEach(element => {
+                        MyCart.push(
+                            {
+                                id: element.id,
+                                photoURL: element.data().photoURL,
+                                qty: 1
+                            }
+                        )
+                    });
+                    res.status(200).send({data:MyCart,message:"สำเร็จ"})
+                })
+
+        }
+        else {
+            res.status(200).send({data:MyCart,message:"stock not enough"})
+        }
 
     } catch (error) {
         console.log(error)
@@ -75,7 +94,7 @@ const adjustMyCart = async (req, res) => {
         await firestore.collection("LotteriesAvailable").doc(data.id)
             .get().then((doc) => { inStock = doc.data() })
 
-        console.log("stock =",inStock.stock ," add", data.qty + qty);
+        console.log("stock =", inStock.stock, " add", data.qty + qty);
         if ((data.qty + qty) <= inStock.stock) {
             //อัพเดดในตะกร้า
             await firestore.collection("users").doc(uid)
@@ -150,4 +169,4 @@ module.exports = {
     addMyCart,
     adjustMyCart,
     removeMyCart
-} 
+}

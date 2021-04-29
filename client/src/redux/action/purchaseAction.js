@@ -8,7 +8,7 @@ export function getPurchase() {
 
     //get data 
     return function (dispatch) {
-        return Axios.get("http://localhost:3001/purchase")
+        return Axios.get("https://khohuai-server.herokuapp.com/purchase")
             .then(purchase => {
                 dispatch({type:"FETCHED_PURCHASE",data:purchase.data})
             });
