@@ -38,25 +38,21 @@ export function updateUserProfile(newProfile) {
     const user = Axios.put("https://khohuai-server.herokuapp.com/user/profile", { newProfile })
         .then((res) => {
             if (res.status === 200) {
-              
             }
         })
 
-    return function(dispatch) {
-        return dispatch(getProfile(newProfile.uid));
+    const data_alert = {
+        title: "อัพเดพข้อมูลสำเร็จ",
+        text: "",
+        type: "success"
     }
-    // console.log(user);
-    // return store.dispatch({
-    //     type: 'UPDATE_PROFILE',
-    //     data: {
-    //         uid: user.uid,
-    //         displayName: user.displayName,
-    //         photoURL: user.photoURL,
-    //         role: user.role,
-    //         email: user.data.email,
-    //         provider: "google",
-    //         status: true,
-    //     }
-    // });
+    store.dispatch({ type: "OPEN_ALERT", data: data_alert });
+
+    return function (dispatch) {
+
+        return (
+            dispatch(getProfile(newProfile.uid))
+        )
+    }
 
 }
