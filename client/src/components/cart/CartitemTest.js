@@ -10,6 +10,7 @@ import {
   decrementQty,
   removeItemInCart,
   selectItem,
+  addToCart
 } from "../../redux/action/cartAction";
 
 function CartitemTest({ item }) {
@@ -29,7 +30,7 @@ function CartitemTest({ item }) {
   }
 
   function IncrementItem() {
-    dispatch(incrementQty(item));
+    dispatch(addToCart(item));
   }
 
   function removeItem() {

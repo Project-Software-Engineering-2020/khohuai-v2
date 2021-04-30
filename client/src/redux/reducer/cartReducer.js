@@ -15,17 +15,17 @@ function Cart(state = initialState, action) {
     let totalItem = 0;
     let ArraySelected = [];
 
-    state.cart.map((item) => {
-      totalItem += item.qty;
+      state.cart.map((item) => {
+        totalItem += item.qty;
 
-      if (item.selected === true) 
-      {
-        const Currentprice = item.qty * 80;
-        totalPrice += Currentprice;
-        totalSelect += item.qty;
-        ArraySelected.push(item);
-      }
-    });
+        if (item.selected === true) {
+          const Currentprice = item.qty * 80;
+          totalPrice += Currentprice;
+          totalSelect += item.qty;
+          ArraySelected.push(item);
+        }
+      })
+
     return (state = {
       ...state,
       totalSelect: totalSelect,
@@ -36,13 +36,17 @@ function Cart(state = initialState, action) {
   }
 
   switch (action.type) {
+
+    case "CALCULATE_CART": 
+
+      return SumTotal();
+
     case "SET_CART":
       state = {
         ...state,
         cart: action.data,
         message: action.message
       };
-      SumTotal();
 
       return state;
 
@@ -55,10 +59,10 @@ function Cart(state = initialState, action) {
         cart: state.cart.map((item) => {
           return item.id === id_item
             ? //เปลี่ยนค่า item ที่เลือก true และ false
-              {
-                ...item,
-                selected: tik,
-              }
+            {
+              ...item,
+              selected: tik,
+            }
             : item;
         }),
       };
