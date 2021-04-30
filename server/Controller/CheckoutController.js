@@ -234,6 +234,11 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
     console.log(err)
   }
 }
+
+const checkCompleteProfile = () => {
+  
+}
+
 // const createinvoice = async (data,doto,idUser) => {
 //   const charge = data;
 //   const Mycart = doto;

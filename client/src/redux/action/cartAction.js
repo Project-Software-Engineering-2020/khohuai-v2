@@ -4,9 +4,11 @@ import Axios from "axios";
 export function getMyCartFromDB() {
   return function (dispatch) {
     return Axios.get("http://localhost:3001/cart").then((result) => {
-      const data = result.data;
-      console.log(data);
+
+      const data = result.data.data;
+      const message = result.data.message;
       dispatch({ type: "SET_CART", data });
+      dispatch({ type: "CALCULATE_CART" });
     });
   };
 }
@@ -14,37 +16,25 @@ export function getMyCartFromDB() {
 export function addToCart(item) {
   return function (dispatch) {
     return Axios.post("http://localhost:3001/cart", { item }).then((result) => {
-      console.log(result);
+
       const data = result.data.data;
-      console.log(data);
+      const message = result.data.message;
       dispatch({ type: "SET_CART", data });
+      dispatch({ type: "CALCULATE_CART" });
     });
   };
 }
 
-export function incrementQty(item) {
-  const qty = 1;
-
-  return function (dispatch) {
-    return Axios.put("http://localhost:3001/cart", { item, qty }).then(
-      (result) => {
-        const data = result.data;
-
-        dispatch({ type: "SET_CART", data });
-      }
-    );
-  };
-}
-
 export function decrementQty(item) {
-  const qty = -1;
 
   return function (dispatch) {
-    return Axios.put("http://localhost:3001/cart", { item, qty }).then(
+    return Axios.put("http://localhost:3001/cart", { item }).then(
       (result) => {
-        const data = result.data;
-
+        const data = result.data.data;
+        const message = result.data.message;
+        console.log(data);
         dispatch({ type: "SET_CART", data });
+        dispatch({ type: "CALCULATE_CART" });
       }
     );
   };
@@ -54,7 +44,8 @@ export function removeItemInCart(id) {
   console.log(id);
   return function (dispatch) {
     return Axios.delete("http://localhost:3001/cart/" + id).then((result) => {
-      const data = result.data;
+      const data = result.data.data;
+      const message = result.data.message;
       dispatch({ type: "SET_CART", data });
     });
   };

@@ -104,7 +104,7 @@ function Navbar() {
                   </NotificationBadge> */}
 
                 <i className="fas fa-shopping-cart fa-lg"></i>
-                <span className="badge-cart">{Mycart.cart.length}</span>
+                <span className="badge-cart">{Mycart.totalItem}</span>
               </a>
 
               :

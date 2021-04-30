@@ -1,9 +1,13 @@
 const { firestore } = require('../firebaseDB');
 
-const getCart = async (uid, res) => {
+const getCart = async (uid) => {
 
-    let MyCart = []
+    let MyCart = new Array();
+    let Lottery = [];
+
     try {
+
+        //get item ในตะกร้าของฉัน
         await firestore.collection("users").doc(uid)
             .collection("cart").get()
             .then((doc) => {
@@ -12,21 +16,88 @@ const getCart = async (uid, res) => {
                         {
                             id: item.id,
                             photoURL: item.data().photoURL,
-                            qty: item.data().photoURL.length
+                            qty: item.data().photoURL.length,
+                            selected: true
                         }
                     )
                 });
 
-                res.send(MyCart)
+
             })
+
+        //จำนวนสลากในระบบ ณ ปัจจุบัน
+        await firestore.collection("lottery").get().then((doc) => {
+            doc.docs.forEach(item => {
+                Lottery.push(
+                    {
+                        id: item.id,
+                        photoURL: item.data().photoURL,
+                        qty: item.data().photoURL.length
+                    }
+                )
+            })
+        })
+
+        let want_to_check = []
+
+        await MyCart.map(async (item, index) => {
+
+            want_to_check = [];
+            want_to_check = Lottery.filter((lotto) => { return lotto.id === item.id })
+
+            if (want_to_check.length > 0) {
+
+                if (item.id === want_to_check[0].id) {
+
+                    console.log("ยังมีเหลืออยู๋");
+
+                    if (item.qty > want_to_check[0].qty) {
+
+                        let newData= {
+                            id: item.id,
+                            photoURL: want_to_check[0].photoURL,
+                            qty: want_to_check[0].qty
+                        }
+
+                        MyCart[index] = newData
+                        console.log("ลดจำนวนในตระกร้าลง");
+                        await firestore.collection("users").doc(uid)
+                            .collection("cart").doc(item.id)
+                            .update(newData);
+
+                        return MyCart;
+                    }
+                    else {
+                        console.log("สลากในสต็อกเหลืออยู่ มากกว่าจำนวนในตะกร้า");
+                        return MyCart;
+                    }
+                }
+            }
+            else {
+
+                console.log("สลากใบสุดท้ายถูกซื้อไปแล้ว")
+                await firestore.collection("users").doc(uid)
+                    .collection("cart").doc(item.id)
+                    .delete()
+                    .then(MyCart.splice(index, 1))
+                    .catch((err) => console.log("ลบไม่ได้ ไม่รู้เป็นไร ดู error เอาเอง", err))
+
+                await MyCart.splice(index, 1);
+               
+            }
+        })
+
     } catch (err) {
         console.log(err);
     }
+    return MyCart
 }
 
 const getMyCart = async (req, res) => {
-    const uid = "T6NMBO1XbscTWBeUsUCTy9ymrg82"
-    getCart(uid, res);
+    const uid = "T6NMBO1XbscTWBeUsUCTy9ymrg82";
+
+    const MyCart = await getCart(uid)
+    await res.status(200).send({ data: MyCart, message: "ข้อมูลตะกร้าสินค้าของคุณ" })
 
 }
 
@@ -83,7 +154,7 @@ const addMyCart = async (req, res) => {
 
             if (haveInMyCart === true) {
 
-                console.log("ในสต็อกมีอยู่ ", stock, "และในตระกร้าของคุณ ", MyCart.qty);
+                console.log("ในสต็อกมีอยู่ ", stock, "และในตะกร้าของคุณ ", MyCart.qty);
 
                 if (stock > MyCart.qty) {
 
@@ -101,12 +172,13 @@ const addMyCart = async (req, res) => {
                         .update(newData);
 
                     //ดึงข้อมูลตะกร้าล่าสุด
-                    await getCart(uid, res);
+                    const newMyCart = await getCart(uid)
+                    await res.status(200).send({ data: newMyCart, message: "ข้อมูลตะกร้าสินค้าของคุณ" })
 
                 }
                 else {
                     console.log("จำนวนคงเหลือในสต็อกไม่มีเพียงพอ ให้คุณเพิ่มลงในตะกร้า")
-                    res.status(200).send({ data: MyCart, message: "จำนวนคงเหลือในสต็อกไม่มีเพียงพอ ให้คุณเพิ่มลงในตะกร้า" })
+                    res.status(200).send({ data: getCart(uid), message: "จำนวนคงเหลือในสต็อกไม่มีเพียงพอ ให้คุณเพิ่มลงในตะกร้า" })
                 }
             }
             else {
@@ -121,18 +193,20 @@ const addMyCart = async (req, res) => {
                     );
 
                 //ดึงข้อมูลตะกร้าล่าสุด
-                await getCart(uid.res);
+                const newMyCart = await getCart(uid)
+                await res.status(200).send({ data: newMyCart, message: "เพิ่มลงตะกร้าสำเจ็จ" })
             }
         }
         else {
             console.log("สลากในสต็อกไม่เพียงพอ")
-            res.status(200).send({ data: MyCart, message: "สลากในสต็อกไม่เพียงพอ" })
+            res.status(200).send({ data: getCart(uid), message: "สลากในสต็อกไม่เพียงพอ" })
         }
 
     } catch (error) {
         console.log(error)
     }
 }
+
 const decreateItemMyCart = async (req, res) => {
 
     const uid = "T6NMBO1XbscTWBeUsUCTy9ymrg82";
@@ -166,7 +240,8 @@ const decreateItemMyCart = async (req, res) => {
         .collection("cart").doc(lottery.id)
         .update(data);
 
-    await getCart(uid, res);
+        const newMyCart = await getCart(uid)
+        res.status(200).send({ data: newMyCart, message: "ลดจำนวนสินค้าในตะกร้าสำเร็จ" })
 
 }
 
@@ -183,7 +258,8 @@ const removeMyCart = async (req, res) => {
             .catch((err) => console.log("ลบไม่ได้ ไม่รู้เป็นไร ดู error เอาเอง", err))
 
         //ดึงข้อมูลล่าสุดมา
-        getCart(uid, res)
+        const newMyCart = await getCart(uid)
+        res.status(200).send({ data:newMyCart, message: "ลบสินค้าในตะกร้าสำเร็จ" })
 
     } catch (error) {
         console.log(error)
