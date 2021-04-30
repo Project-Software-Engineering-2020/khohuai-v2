@@ -3,18 +3,19 @@ import './Profile.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { storage, firestore } from '../../firebase/firebase'
 import { updateUserProfile, getProfile } from "../../redux/action/profileAction"
+import SweetAlert from 'react-bootstrap-sweetalert';
+import { closeAlert } from '../../redux/action/alertAction'
 
 const Profile = () => {
 
     const dispatch = useDispatch();
-    //status user login
-    const auth = useSelector(state => state.auth);
-    const UserProfile = useSelector(state => state.profile)
 
-    // const status = auth.status;
+    const auth = useSelector(state => state.auth);
+    const UserProfile = useSelector(state => state.profile);
+    const alert = useSelector(state => state.alert);
+
     const uid = auth.uid;
 
-    // const [Profile, setProfile] = useState();
     const [newProfile, setNewProfile] = useState();
     const [updateImage, setUpdateImage] = useState(null);
     const [imagePreview, setImagePreview] = useState();
@@ -111,8 +112,6 @@ const Profile = () => {
                 )
         }
     }
-
-
 
     return (
         <div>
@@ -230,6 +229,17 @@ const Profile = () => {
                 }
             </div>
 
+            {/* <SweetAlert
+                show={alert.open}
+                title={alert.title}
+                text={alert.text}
+                onConfirm={e => dispatch(closeAlert())}
+                type={alert.types}
+                timeout={1800}
+                showConfirm={alert.showCloseButton}
+                hideOverlay={alert.overlay}
+            >
+            </SweetAlert> */}
         </div>
 
     )

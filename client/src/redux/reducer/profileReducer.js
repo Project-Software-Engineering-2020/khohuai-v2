@@ -1,6 +1,6 @@
 const initialState = {
     loading: false,
-    data: {}
+    data: {},
 };
 
 function profile(state = initialState, action) {

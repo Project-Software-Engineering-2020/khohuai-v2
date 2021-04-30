@@ -235,41 +235,44 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
   }
 }
 
-const checkCompleteProfile = () => {
-  
+const checkCompleteProfile = async (req,res) => {
+
+  const uid = "T6NMBO1XbscTWBeUsUCTy9ymrg82";
+  let userData = {};
+  let complete = true;
+
+  try {
+      await firestore.collection('users').doc(uid).get().then((doc) => {
+
+        userData = {
+          firstname:doc.data().firstname,
+          lastname:doc.data().lastname,
+          phone:doc.data().phone,
+          bank_name: doc.data().bank_name,
+          bank_number: doc.data().bank_number,
+          bank_provider: doc.data().bank_provider
+        }
+      })
+
+      console.log(userData);
+
+      if(userData.firstname === "" || userData.firstname === undefined || userData.firstname === null) { complete = false }
+      if(userData.lastname === "" || userData.lastname === undefined || userData.lastname === null) { complete = false }
+      if(userData.phone === "" || userData.phone === undefined || userData.phone === null) { complete = false }
+      if(userData.bank_name === "" || userData.bank_name === undefined || userData.bank_name === null) { complete = false }
+      if(userData.bank_number === "" || userData.bank_number ===  undefined || userData.bank_number ===  null) { complete = false }
+      if(userData.bank_provider === "" || userData.bank_provider === undefined || userData.bank_provider === null) { complete = false }
+
+      res.send(complete);
+
+  } catch (error) {
+      console.log(error);
+  }
 }
-
-// const createinvoice = async (data,doto,idUser) => {
-//   const charge = data;
-//   const Mycart = doto;
-//   const uid = idUser;
-//   console.log("charge +++++++++++++++++++++", charge)
-//   try{
-//     if(charge.status === "successful"){
-//       console.log("เข้ามานะ")
-//       const invoice = firestore.collection("invoices").doc(charge.id);
-//       await invoice.set({
-//         invoiceid: charge.id,
-//         userid:uid,
-//         lottery:Mycart.cart
-//       })
-
-//       Mycart.cart.map((item) => {
-//         firestore.collection("users").doc(uid)
-//         .collection("cart").doc(item.id).delete()
-//         .then((success) => {console.log("clear ตะกร้าแล้ว")})
-//         .catch((err) => console.log("ลบไม่ได้",err));
-//       })
-//     }
-//   }catch(err){
-//     console.log(err)
-//   }
-// }
-
-
 
 module.exports = {
   checkoutCreditCard,
   createinvoice,
-  romoveInStock
+  romoveInStock,
+  checkCompleteProfile
 }

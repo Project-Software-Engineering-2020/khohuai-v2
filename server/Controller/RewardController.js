@@ -30,6 +30,22 @@ const getRewardLotteryOfUser = async (req, res, next) => {
         })
 }
 
+const getRewardDetail = async (req,res) => {
+
+    const id = req.params.id;
+    
+    try {
+        const id = req.params.id;
+        await firestore.collection('rewards').doc(id).get().then((doc) => {
+            res.send(doc.data())
+        })
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
-    getRewardLotteryOfUser
+    getRewardLotteryOfUser,
+    getRewardDetail
 }

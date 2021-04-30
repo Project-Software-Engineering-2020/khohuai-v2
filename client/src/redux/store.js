@@ -10,6 +10,7 @@ import profile from "./reducer/profileReducer";
 import purchase from "./reducer/purchaseReducer";
 import purchase_Detail from "./reducer/purchaseDetailReducer";
 import reward from "./reducer/rewardReducer";
+import alertReducer from "./reducer/alertReducer";
  
 // ******Combine Reducers******
 const rootReducer = combineReducers({
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   profile: profile,
   purchase: purchase,
   purchase_detail:purchase_Detail,
-  reward: reward
+  reward: reward,
+  alert: alertReducer
 });
 
 //redux persit manage local storage
