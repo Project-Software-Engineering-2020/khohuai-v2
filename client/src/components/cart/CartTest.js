@@ -42,8 +42,7 @@ const Basket = () => {
         .then((res) => {
           dispatch(getMyCartFromDB());
           setsuccess(res.data.amount);
-          // console.log(success);
-          // setShow(true);
+
           history.push("/purchase");
         });
 
