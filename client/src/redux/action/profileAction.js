@@ -41,12 +41,12 @@ export function updateUserProfile(newProfile) {
             }
         })
 
-    // const data_alert = {
-    //     title: "อัพเดพข้อมูลสำเร็จ",
-    //     text: "",
-    //     type: "success"
-    // }
-    //store.dispatch({ type: "OPEN_ALERT", data: data_alert });
+    const data_alert = {
+        title: "อัพเดพข้อมูลสำเร็จ",
+        text: "เกิดข้อผิดพลาด",
+        type: 'success'
+    }
+    store.dispatch({ type: "OPEN_ALERT", data: data_alert });
 
     return function (dispatch) {
 

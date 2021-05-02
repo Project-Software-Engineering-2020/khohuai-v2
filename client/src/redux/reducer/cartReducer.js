@@ -5,7 +5,8 @@ const initialState = {
   discount: 0,
   check: true,
   cart: [],
-  selected: []
+  selected: [],
+  message: ""
 };
 
 function Cart(state = initialState, action) {
@@ -57,6 +58,7 @@ function Cart(state = initialState, action) {
       state = {
         ...state,
         cart: action.data,
+        message: action.message
       };
 
       return state;

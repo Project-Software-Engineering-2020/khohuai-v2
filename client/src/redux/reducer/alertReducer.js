@@ -1,40 +1,51 @@
 const initialState = {
-    open: false,
-    title: "",
-    text: "",
-    types: "",
-    overlay: true,
-    showCloseButton:false
+  open: false,
+  title: "",
+  text: "",
+  types: "",
+  time: 0,
+  overlay: true,
+  CancelButton: false,
+  showCloseButton:false
 };
 function Alert(state = initialState, action) {
+  switch (action.type) {
+    case "OPEN_ALERT":
+      console.log(action.data);
+      state = {
+        ...state,
+        open: true,
+        title: action.data.title,
+        text: action.data.text,
+        types: action.data.type,
+        time: 1800,
+      };
+      return state;
 
-    switch (action.type) {
+    case "CLOSE_ALERT":
+      state = {
+        ...state,
+        open: false,
+        title: "",
+        text: "",
+        types: "",
+      };
+      return state;
 
-        case 'OPEN_ALERT':
+    case "REMOVE_ALERT":
+      state = {
+        ...state,
+        open: true,
+        title: action.data.title,
+        text: action.data.text,
+        types: action.data.type,
+        CancelButton: true,
+        showCloseButton:true
+      };
 
-            console.log(action.data);
-            state = {
-                ...state,
-                open: true,
-                title: action.data.title,
-                text: action.data.text,
-                types: action.data.type,
-            }
-            return state;
-
-        case 'CLOSE_ALERT':
-            state = {
-                ...state,
-                open: false,
-                title: "",
-                text: "",
-                types: ""
-            }
-
-        default:
-            return state;
-
-    }
+    default:
+      return state;
+  }
 }
 
 export default Alert;

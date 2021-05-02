@@ -17,7 +17,8 @@ const getCart = async (uid) => {
                             id: item.id,
                             photoURL: item.data().photoURL,
                             qty: item.data().photoURL.length,
-                            selected: true
+                            selected: true,
+                            check: true
                         }
                     )
                 });
@@ -107,7 +108,6 @@ const addMyCart = async (req, res) => {
     const lottery = req.body.item;
     const lottery_number = lottery.id;
     let MyCart = {};
-    let newMyCart = [];
     let inStock = false;
     let stock = 0;
     let haveInMyCart = false;
@@ -178,7 +178,8 @@ const addMyCart = async (req, res) => {
                 }
                 else {
                     console.log("จำนวนคงเหลือในสต็อกไม่มีเพียงพอ ให้คุณเพิ่มลงในตะกร้า")
-                    res.status(200).send({ data: getCart(uid), message: "จำนวนคงเหลือในสต็อกไม่มีเพียงพอ ให้คุณเพิ่มลงในตะกร้า" })
+                    const newMyCart = await getCart(uid)
+                    res.status(200).send({ data: newMyCart, message: "จำนวนคงเหลือในสต็อกไม่มีเพียงพอ ให้คุณเพิ่มลงในตะกร้า" })
                 }
             }
             else {
@@ -199,7 +200,8 @@ const addMyCart = async (req, res) => {
         }
         else {
             console.log("สลากในสต็อกไม่เพียงพอ")
-            res.status(200).send({ data: getCart(uid), message: "สลากในสต็อกไม่เพียงพอ" })
+            const newMyCart = await getCart(uid)
+            res.status(200).send({ data: newMyCart, message: "สลากในสต็อกไม่เพียงพอ" })
         }
 
     } catch (error) {
