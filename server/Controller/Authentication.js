@@ -1,11 +1,18 @@
-const { auth, firebaseApp, admin, firestore, googleProvider } = require('../firebaseDB');
-const { OAuth2Client } = require('google-auth-library')
-const client = new OAuth2Client("909598832056-4e7km1tuqnqp1k8l5mghsk912rsf3j93.apps.googleusercontent.com")
-const User = require('../Models/User');
-const { getProfile } = require('./UserController');
+const {
+  auth,
+  firebaseApp,
+  admin,
+  firestore,
+  googleProvider,
+} = require("../firebaseDB");
+const { OAuth2Client } = require("google-auth-library");
+const client = new OAuth2Client(
+  "909598832056-4e7km1tuqnqp1k8l5mghsk912rsf3j93.apps.googleusercontent.com"
+);
+const User = require("../Models/User");
+const { getProfile } = require("./UserController");
 
 const googleLogin = async (req, res) => {
-
   // Sign in with credential from the Google user.
   const tokenID = req.body.token;
   const credential = googleProvider.credential(tokenID);
@@ -17,8 +24,7 @@ const googleLogin = async (req, res) => {
 
   const userRef = firestore.collection("users").doc(result.user.uid);
 
-  await userRef.get().then((doc) => {
-
+  await userRef.get().then(async (doc) => {
     if (!doc.data()) {
       //ผู้ใช้งานใหม่
       console.log("New user");
@@ -33,45 +39,52 @@ const googleLogin = async (req, res) => {
         role: "user",
         provider: "google",
         status: true,
-        token: tokenID
-      })
+        token: tokenID,
+      });
+
+      let inventory = await firestore.collection("inventorys").get();
+      await inventory.docs.forEach(async (item) => {
+        await userRef.collection("inventory").doc().set({
+          id: item.id,
+          name: item.data().name,
+          in_stock: item.data().in_stock,
+        });
+      });
 
       let user_1 = new User(
-        uid = result.user.uid,
-        firstname = "",
-        lastname = "",
-        displayName = result.user.displayName,
-        photoURL = result.user.photoURL,
-        email = result.user.email,
-        role = "user",
-        provider = "google",
-        token = tokenID
-      )
+        (uid = result.user.uid),
+        (firstname = ""),
+        (lastname = ""),
+        (displayName = result.user.displayName),
+        (photoURL = result.user.photoURL),
+        (email = result.user.email),
+        (role = "user"),
+        (provider = "google"),
+        (token = tokenID)
+      );
       res.status(200).send(user_1);
       //ดึงข้อมูล
-    }
-    else {
+    } else {
       //ผู้ใช้ปัจจุบัน
-      console.log("Present", doc.data())
+      console.log("Present", doc.data());
       // u.then((doc) => {
       const user = new User(
-        uid = doc.data().uid,
-        firstname = doc.data().firstname,
-        lastname = doc.data().lastname,
-        displayName = doc.data().displayName,
-        photoURL = doc.data().photoURL,
-        email = doc.data().email,
-        role = doc.data().role,
-        provider = doc.data().provider,
-        token = tokenID
-      )
+        (uid = doc.data().uid),
+        (firstname = doc.data().firstname),
+        (lastname = doc.data().lastname),
+        (displayName = doc.data().displayName),
+        (photoURL = doc.data().photoURL),
+        (email = doc.data().email),
+        (role = doc.data().role),
+        (provider = doc.data().provider),
+        (token = tokenID)
+      );
+
       // console.log(user);
       res.status(200).send(user);
       // })
     }
-
-  })
-
+  });
 
   // .catch((error) => {
   //   console.log("error")
@@ -85,9 +98,7 @@ const googleLogin = async (req, res) => {
   //   // ...
   // });
 
-
   // req.session.userId = user.id
-
 
   //   // Get the ID token passed and the CSRF token.
   //   const idToken = req.body.tokenn.toString();
@@ -99,47 +110,47 @@ const googleLogin = async (req, res) => {
   //   .then(r => console.log(r))
   //   .catch((error) => {
   //   });
-}
-
+};
 
 const signin = async (req, res) => {
   const _email = req.body.email;
   const _password = req.body.password;
   try {
-    auth.signInWithEmailAndPassword(_email, _password)
-      .then((result) => { 
+    auth
+      .signInWithEmailAndPassword(_email, _password)
+      .then((result) => {
         console.log(result);
         const user = firestore.collection("users").doc(result.user.uid);
         user.get().then((doc) => {
           const user = new User(
-            uid = doc.data().uid,
-            firstname = doc.data().firstname,
-            lastname = doc.data().lastname,
-            displayName = doc.data().displayName,
-            photoURL = doc.data().photoURL,
-            email = doc.data().email,
-            role = doc.data().role,
-            provider = doc.data().provider
-          )
+            (uid = doc.data().uid),
+            (firstname = doc.data().firstname),
+            (lastname = doc.data().lastname),
+            (displayName = doc.data().displayName),
+            (photoURL = doc.data().photoURL),
+            (email = doc.data().email),
+            (role = doc.data().role),
+            (provider = doc.data().provider)
+          );
           res.status(200).send(user);
-        })
-      }).catch((error) => {
-        res.status(201).send(error.code);
+        });
       })
+      .catch((error) => {
+        res.status(201).send(error.code);
+      });
   } catch (error) {
     console.log(error);
   }
-
-}
+};
 
 const signup = (req, res) => {
-
   const email = req.body.email;
   const password = req.body.password;
   const firstname = req.body.firstname;
   const lastname = req.body.lastname;
   const phone = req.body.phone;
-  const photoURL = "https://img2.thaipng.com/20180523/tha/kisspng-businessperson-computer-icons-avatar-clip-art-lattice-5b0508dc6a3a10.0013931115270566044351.jpg";
+  const photoURL =
+    "https://img2.thaipng.com/20180523/tha/kisspng-businessperson-computer-icons-avatar-clip-art-lattice-5b0508dc6a3a10.0013931115270566044351.jpg";
   const role = "user";
   const provider = "hotmail";
 
@@ -147,31 +158,38 @@ const signup = (req, res) => {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then(async (result) => {
-       
         if (result.additionalUserInfo.isNewUser === true) {
-
           const userRef = firestore.collection("users").doc(result.user.uid);
           const doc = await userRef.get();
           if (!doc.data()) {
-            await userRef.set({
-              uid: result.user.uid,
-              displayName: firstname,
-              firstname: firstname,
-              lastname: lastname,
-              phone: phone,
-              photoURL: photoURL,
-              email: result.user.email,
-              role: role,
-              provider: provider,
-            }).then((r) => {
-              res.status(200).send(result.user.uid);
-            });
+            await userRef
+              .set({
+                uid: result.user.uid,
+                displayName: firstname,
+                firstname: firstname,
+                lastname: lastname,
+                phone: phone,
+                photoURL: photoURL,
+                email: result.user.email,
+                role: role,
+                provider: provider,
+              })
+              .then((r) => {
+                res.status(200).send(result.user.uid);
+              });
+
+              let inventory = await firestore.collection("inventorys").get();
+              await inventory.docs.forEach(async (item) => {
+                await userRef.collection("inventory").doc().set({
+                  id: item.id,
+                  name: item.data().name,
+                  in_stock: item.data().in_stock,
+                });
+              });
           }
-        }
-        else {
+        } else {
           console.log("มีผู้ใช้อยู่แล้ว");
         }
-
       })
       .catch((err) => {
         console.log(err);
@@ -179,24 +197,21 @@ const signup = (req, res) => {
         //   setRegisterErr("อีเมลนี้ถูกใช้งานแล้ว");
         // }
       });
-
-  }
-  catch (error) {
+  } catch (error) {
     console.error(error);
   }
-}
+};
 
 const logout = async (req, res) => {
   await auth.signOut();
   await req.session.destroy();
-  console.log("logout",req.session);
+  console.log("logout", req.session);
   res.status(200).send("logout_success");
-}
-
+};
 
 module.exports = {
   signin,
   logout,
   signup,
-  googleLogin
-}
+  googleLogin,
+};

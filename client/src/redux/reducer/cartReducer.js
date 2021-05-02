@@ -2,6 +2,7 @@ const initialState = {
   totalItem: 0,
   totalSelect: 0,
   totalPrice: 0,
+  discount: 0,
   check: true,
   cart: [],
   selected: []
@@ -25,12 +26,24 @@ function Cart(state = initialState, action) {
         }
       })
 
+
     return (state = {
       ...state,
       totalSelect: totalSelect,
       totalPrice: totalPrice,
       totalItem: totalItem,
       selected: ArraySelected
+    });
+  }
+
+  function RemoveDiscount() {
+    let price = state.totalPrice;
+    let discount = state.discount;
+    price += discount;
+    return (state = {
+      ...state,
+      totalPrice: price,
+      discount: 0
     });
   }
 
@@ -84,6 +97,21 @@ function Cart(state = initialState, action) {
       SumTotal();
 
       return state;
+
+    case "USE_COIN":
+      const coin = action.coin;
+
+      state = {
+        ...state,
+        totalPrice: state.totalPrice - coin,
+        discount: coin
+      }
+
+      return state;
+
+    case "UNUSE_COIN":
+
+      return RemoveDiscount();
 
     default:
       return state;
