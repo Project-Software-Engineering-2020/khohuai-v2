@@ -26,6 +26,7 @@ import Sidebar from "./components/admin/Sidebar";
 import CartTest from "./components/cart/CartTest";
 import Purchase from './components/purchase/Purchase';
 import Reward from './components/reward/Reward';
+import RewardDetail from './components/reward/RewardDetail'
 import LotteryReports from "./components/pages/LotteryReports";
 import Invoice from "./components/pages/Invoice";
 import AdUser from "./components/pages/AdUser";
@@ -40,6 +41,7 @@ function App() {
 
   const auth = useSelector((state) => state.auth);
   const alert = useSelector(state => state.alert)
+  const removealert = useSelector(state => state.alert)
 
   return (
 
@@ -69,7 +71,8 @@ function App() {
           <PrivateRoute path="/cart" component={CartTest} />
           <PrivateRoute path="/purchase" exact={true} component={Purchase} />
           <PrivateRoute path="/purchase/:id" component={PurchaseDetail} />
-          <Route path="/reward" component={Reward} />
+          <Route path="/reward" exact={true} component={Reward} />
+          <Route path="/reward/detail/:id" component={RewardDetail} />
         </Switch>
 
 
@@ -81,11 +84,14 @@ function App() {
         text={alert.text}
         onConfirm={e => dispatch(closeAlert())}
         type={alert.types}
-        timeout={2000}
+        timeout={alert.time}
         showConfirm={alert.showCloseButton}
+        showCancel={alert.CancelButton}
         hideOverlay={alert.overlay}
+        onCancel={e => dispatch(closeAlert())}
       >
       </SweetAlert>
+
     </Fragment>
   );
 }
