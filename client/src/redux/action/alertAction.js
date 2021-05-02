@@ -12,3 +12,10 @@ export function closeAlert() {
         dispatch({ type: "CLOSE_ALERT" })
     }
 }
+
+export function removeAlert(data) {
+
+    return function (dispatch) {
+        dispatch({ type: "REMOVE_ALERT", data: data })
+    }
+}
