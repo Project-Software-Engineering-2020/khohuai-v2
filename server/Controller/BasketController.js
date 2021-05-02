@@ -107,7 +107,6 @@ const addMyCart = async (req, res) => {
     const lottery = req.body.item;
     const lottery_number = lottery.id;
     let MyCart = {};
-    let newMyCart = [];
     let inStock = false;
     let stock = 0;
     let haveInMyCart = false;
@@ -178,7 +177,8 @@ const addMyCart = async (req, res) => {
                 }
                 else {
                     console.log("จำนวนคงเหลือในสต็อกไม่มีเพียงพอ ให้คุณเพิ่มลงในตะกร้า")
-                    res.status(200).send({ data: getCart(uid), message: "จำนวนคงเหลือในสต็อกไม่มีเพียงพอ ให้คุณเพิ่มลงในตะกร้า" })
+                    const newMyCart = await getCart(uid)
+                    res.status(200).send({ data: newMyCart, message: "จำนวนคงเหลือในสต็อกไม่มีเพียงพอ ให้คุณเพิ่มลงในตะกร้า" })
                 }
             }
             else {

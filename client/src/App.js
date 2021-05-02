@@ -81,7 +81,7 @@ function App() {
         text={alert.text}
         onConfirm={e => dispatch(closeAlert())}
         type={alert.types}
-        timeout={1800}
+        timeout={2000}
         showConfirm={alert.showCloseButton}
         hideOverlay={alert.overlay}
       >
