@@ -28,10 +28,10 @@ function Coupon() {
     });
   }
 
-  async function setInvent(token, chon) {
+  async function setInvent(tokens, update_value) {
     await Axios.post("http://localhost:3001/game/set", {
-      token,
-      chon
+      tokens,
+      update_value
     });
   }
 
@@ -45,17 +45,20 @@ function Coupon() {
       if(totalPrice - 20 >= chon){
         dispatch({type: "USE_COIN", coin : chon});
         setChon(0);
-        //setInvent("Chonalsit coin", chon);
+        setInvent("Chonlasit coin", 0);
       }
       else{
         dispatch({type: "USE_COIN", coin : totalPrice - 20});
         setChon(chon - totalPrice + 20);
+        setInvent("Chonlasit coin", chon - totalPrice + 20);
       }
     }
     else{
       setChon(chon + cart.discount);
       dispatch({type: "UNUSE_COIN"});
+      setInvent("Chonlasit coin", chon + cart.discount);
     }
+    
   }
 
 

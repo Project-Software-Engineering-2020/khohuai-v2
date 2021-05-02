@@ -53,14 +53,14 @@ function Game() {
     }
   };
 
-  async function setTokenValue(token, update_value) {
+  async function setTokenValue(tokens, update_value) {
     for (let i in inventory) {
-      if (inventory[i].name === token) {
+      if (inventory[i].name === tokens) {
         inventory[i].in_stock = update_value;
       }
     }
     await Axios.post("http://localhost:3001/game/set", {
-      token,
+      tokens,
       update_value,
     });
   };

@@ -1,8 +1,8 @@
 const { firestore } = require("../firebaseDB");
 
 const getInventory = async (req, res) => {
-  //const uid = auth.currentUser.uid;
-  const uid = "MEi2CKybAkZYfAFhkerLUqO0EYR2";
+  const uid = auth.currentUser.uid;
+  //const uid = "MEi2CKybAkZYfAFhkerLUqO0EYR2";
   let inventory = [];
   await firestore
     .collection("inventorys")
@@ -30,10 +30,10 @@ const getInventory = async (req, res) => {
 };
 
 const setInventory = async (req, res) => {
-  let token = req.body.token;
+  let token = req.body.tokens;
   let updateValue = req.body.update_value;
-  //const uid = auth.currentUser.uid;
-  const uid = "MEi2CKybAkZYfAFhkerLUqO0EYR2";
+  const uid = auth.currentUser.uid;
+  //const uid = "MEi2CKybAkZYfAFhkerLUqO0EYR2";
   let inventory = [];
   try {
     await firestore
@@ -45,7 +45,6 @@ const setInventory = async (req, res) => {
         docs.forEach((doc) => {
           inventory.push({ id: doc.id, name: doc.data().name });
         });
-        res.send(inventory);
       });
     let tokenID;
     for (let i in inventory) {
@@ -61,7 +60,7 @@ const setInventory = async (req, res) => {
       .update({
         in_stock: updateValue,
       });
-  } catch (error) {}
+  } catch (error) { console.log(error); }
 };
 
 module.exports = { getInventory, setInventory };
