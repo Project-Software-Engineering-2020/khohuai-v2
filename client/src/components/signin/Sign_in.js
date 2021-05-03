@@ -36,7 +36,7 @@ const Sign_in = () => {
     e.preventDefault();
 
     try {
-      Axios.post("https://khohuai-server.herokuapp.com/auth/login", {
+      Axios.post("http://localhost:3001/auth/login", {
         email,
         password,
       }).then((res) => {
@@ -66,7 +66,7 @@ const Sign_in = () => {
     const result = await auth.signInWithPopup(googleProvider);
     console.log(result);
     const token = result.credential.idToken;
-    await Axios.post("https://khohuai-server.herokuapp.com/auth/google", { token }).then(
+    await Axios.post("http://localhost:3001/auth/google", { token }).then(
       (res) => {
         dispatch(setloginWithGoogle(res, token));
       }

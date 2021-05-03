@@ -21,12 +21,12 @@ const Shop = ({ }) => {
     //get Data from Database
     const getData = async () => {
         if (position === "all") {
-            await Axios.get("https://khohuai-server.herokuapp.com/lottery").then((lot) => {
+            await Axios.get("http://localhost:3001/lottery").then((lot) => {
                 setData(lot.data);
             })
         }
         else {
-            await Axios.get("https://khohuai-server.herokuapp.com/lottery/search?position=" + position + "&keyword=" + number).then((lot) => {
+            await Axios.get("http://localhost:3001/lottery/search?position=" + position + "&keyword=" + number).then((lot) => {
                 setData(lot.data);
             })
         }

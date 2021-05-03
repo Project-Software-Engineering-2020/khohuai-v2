@@ -5,7 +5,8 @@ const { firestore, auth } = require('../firebaseDB');
 const Lottery = require("../Models/Lottery");
 
 const getAllLottery = async (req, res, next) => {
-
+    const CurUser = auth.currentUser;
+    console.log("Current User : = = = == = = = == ",CurUser)
     let lotteryArray = []
 
     console.log("get Data")

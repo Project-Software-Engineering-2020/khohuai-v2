@@ -55,22 +55,22 @@ function App() {
           {/* <Route path="/game" component={Game} /> */}
           <Route path="/login" component={Sign_in} />
           <Route path="/signup" component={SignUp} />
-          <PrivateRoute path="/product/:id" component={LotteryDetail} />
-          <PrivateRoute path="/me" component={Profile} />
-          <PrivateRoute path="/upload" component={UploadLottery} />
-          <PrivateRoute path="/updatepassword" component={UpdatePassword} />
-          <PrivateRoute path="/forgotpassword" component={ForgotPassword} />
-          <PrivateRoute
+          <Route path="/product/:id" component={LotteryDetail} />
+          <Route path="/me" component={Profile} />
+          <Route path="/upload" component={UploadLottery} />
+          <Route path="/updatepassword" component={UpdatePassword} />
+          <Route path="/forgotpassword" component={ForgotPassword} />
+          <Route
             path="/LotteryReports"
             exact
             component={LotteryReports}
           />
-          <PrivateRoute path="/Invoice" exact component={Invoice} />
-          <PrivateRoute path="/AdUser" exact component={AdUser} />
-          <PrivateRoute path="/game" component={Game} />
-          <PrivateRoute path="/cart" component={CartTest} />
-          <PrivateRoute path="/purchase" exact={true} component={Purchase} />
-          <PrivateRoute path="/purchase/:id" component={PurchaseDetail} />
+          <Route path="/Invoice" exact component={Invoice} />
+          <Route path="/AdUser" exact component={AdUser} />
+          <Route path="/game" component={Game} />
+          <Route path="/cart" component={CartTest} />
+          <Route path="/purchase" exact={true} component={Purchase} />
+          <Route path="/purchase/:id" component={PurchaseDetail} />
           <Route path="/reward" exact={true} component={Reward} />
           <Route path="/reward/detail/:id" component={RewardDetail} />
         </Switch>

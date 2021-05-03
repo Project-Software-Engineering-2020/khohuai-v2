@@ -23,7 +23,6 @@ const googleLogin = async (req, res) => {
   // console.log(JSON.stringify(result, null, 2));
 
   const userRef = firestore.collection("users").doc(result.user.uid);
-
   await userRef.get().then(async (doc) => {
     if (!doc.data()) {
       //ผู้ใช้งานใหม่
@@ -119,7 +118,6 @@ const signin = async (req, res) => {
     auth
       .signInWithEmailAndPassword(_email, _password)
       .then((result) => {
-        console.log(result);
         const user = firestore.collection("users").doc(result.user.uid);
         user.get().then((doc) => {
           const user = new User(
@@ -158,6 +156,8 @@ const signup = (req, res) => {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then(async (result) => {
+        const user = auth.currentUser();
+        console.log("Current User ++++++++++++++++++++++++++++++",user);
         if (result.additionalUserInfo.isNewUser === true) {
           const userRef = firestore.collection("users").doc(result.user.uid);
           const doc = await userRef.get();
