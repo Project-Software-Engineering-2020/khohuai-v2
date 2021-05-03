@@ -293,6 +293,7 @@ function Game() {
     gachaEffectScreen = new PIXI.Container();
     gachaResultScreen = new PIXI.Container();
     inventoryScreen = new PIXI.Container();
+    tutorialScreen = new PIXI.Container();
     songSelectScreen = new PIXI.Container();
     playScreen = new PIXI.Container();
     resultScreen = new PIXI.Container();
@@ -302,6 +303,7 @@ function Game() {
     app.stage.addChild(gachaScreen);
     app.stage.addChild(gachaEffectScreen);
     app.stage.addChild(gachaResultScreen);
+    app.stage.addChild(tutorialScreen);
     app.stage.addChild(inventoryScreen);
     app.stage.addChild(songSelectScreen);
     app.stage.addChild(playScreen);
@@ -312,6 +314,7 @@ function Game() {
     gachaScreen.visible = false;
     gachaEffectScreen.visible = false;
     gachaResultScreen.visible = false;
+    tutorialScreen.visible = false;
     inventoryScreen.visible = false;
     songSelectScreen.visible = false;
     playScreen.visible = false;
@@ -435,7 +438,7 @@ function Game() {
       0.5
     );
     tutorialButton.on("pointerdown", function () {
-      interactiveSwitch(titleScreen, false);
+      titleScreen.visible = false;
       tutorialScreen.visible = true;
     });
 
@@ -479,6 +482,64 @@ function Game() {
     titleScreen.addChild(inventoryButton);
 
     //tutorial screen
+    let tutorial_page = 0;
+    let tutorial_texture = [];
+    let exitTutorialButton = new PIXI.Text("BACK", Menustyle);
+    adjObj(exitTutorialButton, tutorialScreen, appX, appY, true);
+    exitTutorialButton.on('pointerdown', function() {
+      tutorial_page = 0;
+      tutorialPage.texture = tutorial_texture[0];
+      tutorialText.text = tutorialTextArray[0];
+
+      tutorialScreen.visible = false;
+      titleScreen.visible = true;
+    });
+
+    for(let i=1; i<=6; i++){
+      let tutorialTexture = new PIXI.Texture.from("images/tutorial/" + i + ".png");
+      tutorial_texture.push(tutorialTexture);
+    }
+    let tutorialPage = new PIXI.Sprite(tutorial_texture[0]);
+    adjSprite(tutorialPage, tutorialScreen, appX + appWidth * 0.5, appY + appHeight * 0.35, appWidth * 0.6, appHeight * 0.5, false, 0.5);
+
+    let tutorialTextArray = [
+      "กดที่เพลงเพื่อเลือกเล่นเพลง หมายเหตุ: หากท่านไม่มีตั๋วเล่นเกมจะเข้าเล่นเกมไม่ได้ ท่านสามารถหาตั๋วเล่นเกมได้จากการซื้อสลาก",
+      "กดปรับความเร็วและกดใช้ตั๋วเพื่อเริ่มเล่น หมายเหตุ: ยิ่งเพิ่มความเร็วมากเท่าไหร่จะยิ่งมีโอกาส เล่นโน้ตมากขึ้นและทำคะแนนได้มากขึ้น",
+      "กดปุ่ม S, D, K, L ให้ตรงตามโน้ตเพลง หากโน้ตเป็นแถบยาวให้กดค้างและปล่อยเมื่อ โน้ตสิ้นสุดพอดี หากเล่นในโทรศัพท์ สามารถใช้มือกดปุ่มได้เลย",
+      "เมื่อเล่นเสร็จจะได้รับ Boss coin ตามคะแนนและเกรดที่ได้รับ",
+      "กดสัญลักษณ์กาชาในหน้า Home เพื่อใช้ Boss coin ที่ได้รับ",
+      "ใช้ Boss coin เพื่อเล่นกาชา ทุกครั้งที่เล่นอาจจะได้รับ Chonlasit coin ไปใช้เป็นส่วนลดในการซื้อสลาก ก็ได้นะ!"
+    ];
+
+    let tutorialText = new PIXI.Text(tutorialTextArray[0], {
+      fontFamily: "Courier New",
+      fontSize: smallFontSize,
+      wordWrap: true,
+      //breakWords: true,
+      wordWrapWidth: appWidth * 0.9
+    });
+    adjObj(tutorialText, tutorialScreen, appX + appWidth * 0.05, appY + appHeight * 0.65, false);
+
+
+    let backTutorialButton = new PIXI.Text("<-", Headerstyle);
+    adjObj(backTutorialButton, tutorialScreen, appX + appWidth * 0.25, appY + appHeight * 0.9, true, 0.5);
+    backTutorialButton.on('pointerdown', function() {
+      if(tutorial_page > 0){
+        tutorial_page--;
+        tutorialPage.texture = tutorial_texture[tutorial_page];
+        tutorialText.text = tutorialTextArray[tutorial_page];
+      }
+    });
+
+    let nextTutorialButton = new PIXI.Text("->", Headerstyle);
+    adjObj(nextTutorialButton, tutorialScreen, appX + appWidth * 0.75, appY + appHeight * 0.9, true, 0.5);
+    nextTutorialButton.on('pointerdown', function() {
+      if(tutorial_page < 5){
+        tutorial_page++;
+        tutorialPage.texture = tutorial_texture[tutorial_page];
+        tutorialText.text = tutorialTextArray[tutorial_page];
+      }
+    });
 
     //gacha effect screen
     gachaEffectScreen.buttonMode = true;
