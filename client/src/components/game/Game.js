@@ -216,7 +216,7 @@ function Game() {
     }
 
     var appX = windowWidth / 2 - appWidth / 2;
-    var appY = windowHeight / 2 - appHeight / 2;
+    var appY = windowHeight / 2 - appHeight / 2 - 70;
 
     perfromanceGraphProp.x = appX + appWidth * 0.2;
     perfromanceGraphProp.y = appY + appHeight * 0.5;
