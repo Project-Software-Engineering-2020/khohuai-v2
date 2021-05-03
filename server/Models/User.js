@@ -10,6 +10,7 @@ class User {
         this.role = role;
         this.provider = provider;
         this.token = token;
+        // this.localToken = localToken;
     }
 }
 

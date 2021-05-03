@@ -131,7 +131,7 @@ const Reward = (props) => {
                 <div className="txt">
                   **โปรดตรวจสอบเลขที่บัญชีให้ถูกต้องเพื่อรักษาผลประโยชน์ของท่าน**
                 </div>
-                <Button onClick={handleShowconfirm}>ยืนยัน</Button>
+                {/* <Button onClick={handleShowconfirm}>ยืนยัน</Button> */}
               </div>
             </div>
           </div>

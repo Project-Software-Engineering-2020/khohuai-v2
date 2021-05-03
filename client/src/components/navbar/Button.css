@@ -23,6 +23,15 @@
 {
   justify-self: flex-end;
 } */
+.element {
+  display: inline-block;
+  width: 70px;
+  overflow: hidden;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+  max-height: 16px;
+  line-height: 16px;
+}
 
 .btn-user-menu {
   text-align: right;

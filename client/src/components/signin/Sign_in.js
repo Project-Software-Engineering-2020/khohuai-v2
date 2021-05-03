@@ -53,6 +53,7 @@ const Sign_in = () => {
             setUserErr("คุณใส่รหัสผ่านผิดเกิน 3 ครั้ง กรุณารอสักครู่");
           }
         } else if (res.status === 200) {
+          // localStorage.setItem('token', res.data.localToken)
           dispatch(setloginWithEmail(res));
         }
       });

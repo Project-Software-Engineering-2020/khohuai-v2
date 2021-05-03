@@ -33,8 +33,8 @@ import AdUser from "./components/pages/AdUser";
 import PurchaseDetail from "./components/purchase/PurchaseDetail";
 import SweetAlert from 'react-bootstrap-sweetalert';
 import { closeAlert } from './redux/action/alertAction';
-import { removeItemInCart } from "./redux/action/cartAction";
 import { Fragment } from "react";
+import UpdateProfile from "./components/profile/UpdateProfile";
 
 function App() {
 
@@ -73,9 +73,8 @@ function App() {
           <PrivateRoute path="/purchase/:id" component={PurchaseDetail} />
           <Route path="/reward" exact={true} component={Reward} />
           <Route path="/reward/detail/:id" component={RewardDetail} />
+          <Route path="/updateprofile" component={UpdateProfile} />
         </Switch>
-
-
       </Router>
 
       <SweetAlert

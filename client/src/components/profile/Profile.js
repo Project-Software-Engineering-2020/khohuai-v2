@@ -3,8 +3,6 @@ import './Profile.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { storage, firestore } from '../../firebase/firebase'
 import { updateUserProfile, getProfile } from "../../redux/action/profileAction"
-import SweetAlert from 'react-bootstrap-sweetalert';
-import { closeAlert } from '../../redux/action/alertAction'
 
 const Profile = () => {
 
@@ -12,7 +10,6 @@ const Profile = () => {
 
     const auth = useSelector(state => state.auth);
     const UserProfile = useSelector(state => state.profile);
-    const alert = useSelector(state => state.alert);
 
     const uid = auth.uid;
 
@@ -62,6 +59,24 @@ const Profile = () => {
                 phone: newData
             })
         }
+        if (key == "book_name") {
+            setNewProfile({
+                ...newProfile,
+                book_name: newData
+            })
+        }
+        if (key == "book_number") {
+            setNewProfile({
+                ...newProfile,
+                book_number: newData
+            })
+        }
+        if (key == "book_provider") {
+            setNewProfile({
+                ...newProfile,
+                book_provider: newData
+            })
+        }
     }
     const handleChangeImage = (e) => {
         let file = e.target.files[0];
@@ -91,11 +106,14 @@ const Profile = () => {
                         .child(uid)
                         .getDownloadURL()
                         .then((url) => {
-                            // setImgUrl(url);
+                     
                             firestore.collection("users").doc(uid).update({
                                 firstname: newProfile.firstname,
                                 lastname: newProfile.lastname,
                                 phone: newProfile.phone,
+                                book_name: newProfile.book_name,
+                                book_number: newProfile.book_number,
+                                book_provider: newProfile.book_provider,
                                 photoURL: url,
                             });
                             setEditState(!editState);
@@ -162,6 +180,26 @@ const Profile = () => {
                                         <label htmlFor="text"> เบอร์โทร : </label>
                                         <input type="text" className="form-control" value={newProfile.phone} onChange={(event) => { ChangeDataProfile("phone", event.target.value) }}></input>
                                     </div>
+
+                                    <div className="profile-data">
+                                        <label htmlFor="text"> ชื่อบัญชี : </label>
+                                        <input type="text" className="form-control"value={newProfile.book_name} onChange={(event) => { ChangeDataProfile("book_name", event.target.value) }}></input>
+                                    </div>
+                                    <div className="profile-data">
+                                        <label htmlFor="text"> เลขที่บัญชี : </label>
+                                        <input type="text" className="form-control" value={newProfile.book_number} onChange={(event) => { ChangeDataProfile("book_number", event.target.value) }}></input>
+                                    </div>
+                                    <div className="profile-data">
+                                        <label htmlFor="text"> ธนาคาร : </label>
+                                        <select className="form-control" value={newProfile.book_provider} onChange={(event) => { ChangeDataProfile("book_provider", event.target.value) }}>
+                                            <option selected></option>
+                                            <option value="ไทยพาณิชย์">ไทยพาณิชย์</option>
+                                            <option value="กสิกรไทย">กสิกร</option>
+                                            <option value="กรุงไทย">กรุงไทย</option>
+                                            <option value="กรุงเทพ">กรุงเทพ</option>
+                                        </select>
+                                    </div>
+
                                     <div className="profile-data">
                                         <div></div>
                                         <div className="group-btn-profile">

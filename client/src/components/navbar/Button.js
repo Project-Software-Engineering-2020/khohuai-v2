@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import './Button.css';
 import { Link } from 'react-router-dom';
@@ -6,12 +6,12 @@ import { Dropdown } from 'react-bootstrap'
 import { auth } from "../../firebase/firebase";
 import { useSelector, useDispatch } from 'react-redux';
 import { setlogout } from '../../redux/action/authAction';
-import Axios from 'axios'; 
+import Axios from 'axios';
 
 
 
 
-const Button = ({closeMenu}) => {
+const Button = ({ closeMenu }) => {
 
   const dispatch = useDispatch();
 
@@ -36,11 +36,14 @@ const Button = ({closeMenu}) => {
       }}
     >
       {children}
-      
+
       <span>
         <img src={stetus.photoURL} className="img-profile-nav" alt="" />
       </span>
-      <span>&nbsp;{stetus.displayName} <i className="fas fa-angle-down" ></i> </span>
+      <span className="element">
+        <span>&nbsp;{stetus.displayName} </span>
+        <i className="fas fa-angle-down" ></i>
+      </span>
 
     </span>
   ));
@@ -69,23 +72,22 @@ const Button = ({closeMenu}) => {
     },
   );
 
-  useEffect( () => {
+  useEffect(() => {
     setuser(stotus);
-  }, [stetus,stotus2,stotus3]);
-  
+  }, [stetus, stotus2, stotus3]);
+
   const signouthandle = () => {
 
     Axios.post("http://localhost:3001/auth/logout")
-    .then((res) => {
-      if(res.data === "logout_success")
-      {
-        dispatch(setlogout())
-      }
-    })
+      .then((res) => {
+        if (res.data === "logout_success") {
+          dispatch(setlogout())
+        }
+      })
 
     // auth.signOut().then(() => {
     //   dispatch(setlogout());
-      
+
     // })
     //   .catch((err) => {
     //     console.log("Logout Not work" + err)
@@ -97,18 +99,18 @@ const Button = ({closeMenu}) => {
         <Dropdown className="btn-user-menu" >
           <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components" />
           <Dropdown.Menu as={CustomMenu}>
-            <Dropdown.Item eventKey="1" href="/me"><i className="fas fa-user"></i> ข้อมูลส่วนตัว</Dropdown.Item>
-            <Dropdown.Item eventKey="3" href="/purchase"><i className="fas fa-file-invoice"></i> ประวัติการซื้อ</Dropdown.Item>
-            <Dropdown.Item eventKey="2" onClick={signouthandle}><i className="fas fa-sign-out-alt"></i> ออกจากระบบ</Dropdown.Item>
+            <Dropdown.Item onClick={closeMenu} eventKey="1" href="/me"><i className="fas fa-user"></i> ข้อมูลส่วนตัว</Dropdown.Item>
+            <Dropdown.Item onClick={closeMenu} eventKey="3" href="/purchase"><i className="fas fa-file-invoice"></i> ประวัติการซื้อ</Dropdown.Item>
+            <Dropdown.Item onClick={closeMenu} eventKey="2" onClick={signouthandle}><i className="fas fa-sign-out-alt"></i> ออกจากระบบ</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       ) : (
-          
-            <Link to='/login'>
-              <button className='signup-btn'>ลงชื่อเข้าใช้</button>
-            </Link>
-          
-        )
+
+        <Link to='/login'>
+          <button className='signup-btn'>ลงชื่อเข้าใช้</button>
+        </Link>
+
+      )
       }
     </div>
   );

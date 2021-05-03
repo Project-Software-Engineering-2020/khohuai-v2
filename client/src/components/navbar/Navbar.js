@@ -72,7 +72,6 @@ function Navbar() {
               className='lottery-nav-links'
               onClick={(e) => closeMobileMenu}
             >
-              {/* {history.replace("?position=all&number=")} */}
               <i className="fas fa-store fa-1x"></i> ร้านค้าสลาก
             </Link>
             {dropdown && <Dropdown />}
@@ -97,24 +96,16 @@ function Navbar() {
           </li>
           <li className="cart-on-nav">
             {stetus.status === true ?
-
               <a href="/cart" className="text-white">
-                {/* <NotificationBadge count={cart.totalItem} effect={Effect.SCALE} >
-                  <i class="fas fa-shopping-cart"></i>
-                  </NotificationBadge> */}
-
                 <i className="fas fa-shopping-cart fa-lg"></i>
                 <span className="badge-cart">{Mycart.totalItem}</span>
               </a>
-
               :
-            
                   null
             }
-
           </li>
           <li className="nav-user">
-            <ButtonLogin className="btn-login" />
+            <ButtonLogin closeMenu={closeMobileMenu} className="btn-login" />
           </li>
 
         </ul>

@@ -33,6 +33,7 @@ facebookProvider.addScope('user_birthday');
 const storage = firebase.storage();
 
 export {
+  firebase,
     firebaseApp,
     firestore,
     auth,
