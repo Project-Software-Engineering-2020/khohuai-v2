@@ -33,8 +33,8 @@ import AdUser from "./components/pages/AdUser";
 import PurchaseDetail from "./components/purchase/PurchaseDetail";
 import SweetAlert from 'react-bootstrap-sweetalert';
 import { closeAlert } from './redux/action/alertAction';
-import { removeItemInCart } from "./redux/action/cartAction";
 import { Fragment } from "react";
+import UpdateProfile from "./components/profile/UpdateProfile";
 
 function App() {
 
@@ -55,12 +55,12 @@ function App() {
           {/* <Route path="/game" component={Game} /> */}
           <Route path="/login" component={Sign_in} />
           <Route path="/signup" component={SignUp} />
-          <Route path="/product/:id" component={LotteryDetail} />
-          <Route path="/me" component={Profile} />
-          <Route path="/upload" component={UploadLottery} />
-          <Route path="/updatepassword" component={UpdatePassword} />
-          <Route path="/forgotpassword" component={ForgotPassword} />
-          <Route
+          <PrivateRoute path="/product/:id" component={LotteryDetail} />
+          <PrivateRoute path="/me/:complete" component={Profile} />
+          <PrivateRoute path="/upload" component={UploadLottery} />
+          <PrivateRoute path="/updatepassword" component={UpdatePassword} />
+          <PrivateRoute path="/forgotpassword" component={ForgotPassword} />
+          <PrivateRoute
             path="/LotteryReports"
             exact
             component={LotteryReports}
@@ -73,9 +73,8 @@ function App() {
           <Route path="/purchase/:id" component={PurchaseDetail} />
           <Route path="/reward" exact={true} component={Reward} />
           <Route path="/reward/detail/:id" component={RewardDetail} />
+          <Route path="/updateprofile" component={UpdateProfile} />
         </Switch>
-
-
       </Router>
 
       <SweetAlert

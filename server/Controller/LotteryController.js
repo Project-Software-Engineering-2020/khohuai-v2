@@ -4,13 +4,36 @@ const { firestore, auth } = require('../firebaseDB');
 //Model
 const Lottery = require("../Models/Lottery");
 
-const getAllLottery = async (req, res, next) => {
-    const CurUser = auth.currentUser;
-    console.log("Current User : = = = == = = = == ",CurUser)
-    let lotteryArray = []
+const getNgudShop = async (req,res) => {
 
-    console.log("get Data")
+    let ngud = [];
+    const ngudDB = await firestore.collection('ngud').orderBy("end", "desc").get()
+    await ngudDB.docs.forEach(doc => {
+        ngud.push({
+            ngud: doc.id,
+            end: doc.data().end.toDate(),
+            start: doc.data().start,
+        })
+    });
+    console.log(ngud[0].end)
+    res.send(ngud[0].end);
+}
+
+const getAllLottery = async (req, res, next) => {
+
+    let lotteryArray = [];;
+    let ngud = []
+
     try {
+        const ngudDB = await firestore.collection('ngud').orderBy("end", "desc").get()
+        await ngudDB.docs.forEach(doc => {
+            ngud.push({
+                ngud: doc.id,
+                end: doc.data().end.toDate(),
+                start: doc.data().start,
+            })
+        });
+
         const lottery = await firestore.collection('lottery').get()
         if (lottery.empty) {
             res.status(400).send("No lottery in record")
@@ -19,7 +42,8 @@ const getAllLottery = async (req, res, next) => {
 
                 lotteryArray.push({
                     id: doc.id,
-                    photoURL: doc.data().photoURL
+                    photoURL: doc.data().photoURL,
+                    ngud: ngud[0].end
                 });
             });
             res.status(200).send(lotteryArray);
@@ -254,8 +278,8 @@ const getSearchNumber = async (req, res, next) => {
         for (let i = findK; i < maxK; i++) {
             findingNum += finding[i];
         }
-        const lottery = await firestore.collection('LotteriesAvailable').get();
-        lottery.docs.forEach(doc => {
+        const lottery = await firestore.collection('lottery').get();
+        await lottery.docs.forEach(doc => {
             //push into array
             // const lot = new Lottery(
             //     doc.id,
@@ -264,20 +288,21 @@ const getSearchNumber = async (req, res, next) => {
             lotteryArray.push({
                 id: doc.id,
                 photoURL: doc.data().photoURL,
-                nguad: doc.data().nguad,
-                stock: doc.data().stock
+                // nguad: doc.data().nguad,
+                stock: doc.data().photoURL.length
             });
+
         });
         //instant find without any split
         if (position === "whole") {
-            lotteryArray.forEach(lot => {
+            await lotteryArray.forEach(lot => {
                 let searchingNum = lot.id;
                 if (findingNum === searchingNum) matchedLotteryArray.push(lot);
             });
         }
         //split and find
         else if (position === "last2" || position === "last3" || position === "front") {
-            lotteryArray.forEach(lot => {
+            await lotteryArray.forEach(lot => {
                 const num = lot.id.split("");
                 let searchingNum = "";
                 for (let i = lotK; i < maxLotK; i++) {
@@ -299,5 +324,6 @@ module.exports = {
     getDetailLottery,
     getRecommendedLottery,
     getAlmostOutOfStock,
-    getSearchNumber
+    getSearchNumber,
+    getNgudShop
 }

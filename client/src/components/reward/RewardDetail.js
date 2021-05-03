@@ -71,10 +71,17 @@ const Reward = (props) => {
                 </Moment>
               </p>
               <p>เลขที่บัญชีสำหรับรับรางวัล</p>
-              <p className="line">สถานะ :</p>{" "}
-              <a className="linecolor" style={{cursor:'pointer'}} onClick={handleShow}>
+              <p className="line">สถานะ :
+              {reward.data.success ? 
+               <a className="linecolor" style={{cursor:'pointer'}} onClick={handleShow}>
                 ดูหลักฐานการรับรางวัล
               </a>
+              :
+              
+                <span> กำลังดำเนินการ</span>
+            }
+              </p>
+             
               <table className="table m-0">
                 <thead>
                   <tr>
@@ -131,7 +138,7 @@ const Reward = (props) => {
                 <div className="txt">
                   **โปรดตรวจสอบเลขที่บัญชีให้ถูกต้องเพื่อรักษาผลประโยชน์ของท่าน**
                 </div>
-                <Button onClick={handleShowconfirm}>ยืนยัน</Button>
+                {/* <Button onClick={handleShowconfirm}>ยืนยัน</Button> */}
               </div>
             </div>
           </div>

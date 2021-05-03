@@ -237,7 +237,7 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
 
 const checkCompleteProfile = async (req,res) => {
 
-  const uid = "T6NMBO1XbscTWBeUsUCTy9ymrg82";
+  const uid = auth.currentUser.id;
   let userData = {};
   let complete = true;
 
@@ -248,9 +248,9 @@ const checkCompleteProfile = async (req,res) => {
           firstname:doc.data().firstname,
           lastname:doc.data().lastname,
           phone:doc.data().phone,
-          bank_name: doc.data().bank_name,
-          bank_number: doc.data().bank_number,
-          bank_provider: doc.data().bank_provider
+          bank_name: doc.data().book_name,
+          bank_number: doc.data().book_number,
+          bank_provider: doc.data().book_provider
         }
       })
 

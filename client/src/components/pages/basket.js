@@ -4,7 +4,7 @@ import axios from "axios";
 import { withRouter } from "react-router-dom";
 import BasketItem from "./basketItem";
 import CheckoutCreditcard from "../checkout/checkoutwithcard";
-
+import { api } from '../../environment'
 const Basket = () => {
   const myCart = useSelector((state) => state.cart);
   const Usernaw = useSelector((state) => state.auth);
@@ -18,8 +18,7 @@ const Basket = () => {
     console.log("Token Here ===>" + token);
     try {
       let resData;
-      await axios.post(
-        "http://localhost:3001/checkout-credit-card",
+      await axios.post(api + "/checkout-credit-card",
         {
           email,
           uid,

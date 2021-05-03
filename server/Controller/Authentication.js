@@ -1,4 +1,5 @@
 const {
+  firebase,
   auth,
   firebaseApp,
   admin,
@@ -114,24 +115,29 @@ const googleLogin = async (req, res) => {
 const signin = async (req, res) => {
   const _email = req.body.email;
   const _password = req.body.password;
+  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
   try {
-    auth
+    firebase.auth()
       .signInWithEmailAndPassword(_email, _password)
       .then((result) => {
-        const user = firestore.collection("users").doc(result.user.uid);
-        user.get().then((doc) => {
-          const user = new User(
-            (uid = doc.data().uid),
-            (firstname = doc.data().firstname),
-            (lastname = doc.data().lastname),
-            (displayName = doc.data().displayName),
-            (photoURL = doc.data().photoURL),
-            (email = doc.data().email),
-            (role = doc.data().role),
-            (provider = doc.data().provider)
-          );
-          res.status(200).send(user);
-        });
+        result.result.getIdToken().then((UserToken) => {
+          console.log("UserTOken ++++++++++++++++++++++++++++++++",UserToken);
+          const user = firestore.collection("users").doc(result.user.uid);
+          user.get().then((doc) => {
+            const user = new User(
+              (uid = doc.data().uid),
+              (firstname = doc.data().firstname),
+              (lastname = doc.data().lastname),
+              (displayName = doc.data().displayName),
+              (photoURL = doc.data().photoURL),
+              (email = doc.data().email),
+              (role = doc.data().role),
+              (provider = doc.data().provider)
+              // (localToken = UserToken)
+            );
+            res.status(200).send(user);
+          });
+        })
       })
       .catch((error) => {
         res.status(201).send(error.code);

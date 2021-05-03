@@ -5,7 +5,9 @@ import { Redirect, useHistory, useLocation, useParams } from 'react-router-dom';
 import Lottoryitem from "./LotteryItem";
 import './shop.css';
 import Axios from "axios";
-
+import Moment from 'react-moment';
+import 'moment/locale/th';
+import { api } from '../../environment'
 const Shop = ({ }) => {
     const history = useHistory()
     const [loading, setloading] = useState(true);
@@ -14,6 +16,8 @@ const Shop = ({ }) => {
     const [positionState, setPosition] = useState("last2");
     const [data, setData] = useState();
 
+    const [ngud, setNgud] = useState();
+
     //params from url
     const { search } = useLocation();
     let { number, position } = queryString.parse(search);
@@ -21,12 +25,12 @@ const Shop = ({ }) => {
     //get Data from Database
     const getData = async () => {
         if (position === "all") {
-            await Axios.get("http://localhost:3001/lottery").then((lot) => {
+            await Axios.get(api + "/lottery").then((lot) => {
                 setData(lot.data);
             })
         }
         else {
-            await Axios.get("http://localhost:3001/lottery/search?position=" + position + "&keyword=" + number).then((lot) => {
+            await Axios.get(api + "/lottery/search?position=" + position + "&keyword=" + number).then((lot) => {
                 setData(lot.data);
             })
         }
@@ -45,16 +49,16 @@ const Shop = ({ }) => {
             if (pattern.test(num)) {
 
                 if (positionState === "last2") {
-                    if(num.length <= 2 ) {setNumber(num) }
+                    if (num.length <= 2) { setNumber(num) }
                 }
                 else if (positionState === "last3") {
-                    if(num.length <= 3 ) {setNumber(num) }
+                    if (num.length <= 3) { setNumber(num) }
                 }
                 else if (positionState === "front") {
-                    if(num.length <= 3 ) {setNumber(num) }
+                    if (num.length <= 3) { setNumber(num) }
                 }
                 else if (positionState === "whole") {
-                    if(num.length <= 6 ) {setNumber(num) }
+                    if (num.length <= 6) { setNumber(num) }
                 }
             }
         }
@@ -68,12 +72,16 @@ const Shop = ({ }) => {
         history.push("/shop?position=" + positionState + "&number=" + numberState);
     }
 
+
+    const getNgudShop = () => {
+        Axios.get(api + "/lottery/currentngud").then((res) => setNgud(res.data))
+    }
+
     useEffect(async () => {
 
-        //setState dafault, position and number params from url
-        // await setPosition(position);
-        // await setNumber(number);
         await getData();
+
+        await getNgudShop()
 
         await setloading(false);
 
@@ -85,63 +93,67 @@ const Shop = ({ }) => {
                 {loading ? (
                     <div className="loader">Loading...</div>
                 ) : (
-                        <div className="container">
-                            <div className="shop">
-                                <section className="section-search">
+                    <div className="container">
+                        <div className="shop">
+                            <section className="section-search">
 
-                                    <section className="header-shop">
-                                        <div>
-                                            <figure className="header-shop-img">
-                                                <img src="./images/store.png"></img>
-                                            </figure>
-                                        </div>
-                                        <div className="header-shop-text">
-                                            <h3>สลากงวดประจำวันที่ 16 เมษายน 2564</h3>
-                                            <h5>ราคาใบละ 80 บาท</h5>
-                                        </div>
-                                    </section>
-                                    <Form className="box-search-lottery" onSubmit={onClickSearch}>
-                                        <p>ค้นหาสลาก</p>
-                                        <div>
-                                            <Form.Control as="select" custom onChange={(e) => {setPosition(e.target.value); setNumber("");}} className="form-search" value={positionState}>
-                                                <option value="all">แสดงทั้งหมด</option>
-                                                <option value="last2" selected>เลขท้าย 2 ตัว</option>
-                                                <option value="last3">เลขท้าย 3 ตัว</option>
-                                                <option value="front">เลขหน้า 3 ตัว</option>
-                                                <option value="whole">ทุกตัว</option>
-                                            </Form.Control>
-                                            <Form.Group >
-                                                {/* <Form.Label>.</Form.Label> */}
-                                                {positionState === "all" || null || "" ?
-                                                    <Form.Control type="text" className="form-search" value=" " disabled />
-                                                    :
-                                                    <Form.Control type="text" placeholder="เลขที่ต้องการ" maxLength="6" className="form-search" onChange={(e) => handleInputNumber(e.target.value)} value={numberState} />
-                                                }
-
-                                            </Form.Group>
-
-                                            <Form.Group>
-
-                                                <button type="button" className="btn btn-success" onClick={onClickSearch}>ค้นหา</button>
-                                            </Form.Group>
-
-                                        </div>
-                                        {/* </Form.Group> */}
-                                    </Form>
+                                <section className="header-shop">
+                                    <div>
+                                        <figure className="header-shop-img">
+                                            <img src="./images/store.png"></img>
+                                        </figure>
+                                    </div>
+                                    <div className="header-shop-text">
+                                        <h3>สลากงวดประจำวันที่
+                                            <Moment format=" DD MMMM YYYY ">
+                                                {ngud}
+                                            </Moment>
+                                        </h3>
+                                        <h5>ราคาใบละ 80 บาท</h5>
+                                    </div>
                                 </section>
-                                {data.length > 0 ? null : <div className="text-center"><h3>ไม่พบสลาก</h3></div>}
-                                <section className="lottery-shop">
-                                    {data.map((item, index) => {
-                                        return (
-                                            <Lottoryitem key={index} data={item} ></Lottoryitem>
-                                        )
-                                    }
+                                <Form className="box-search-lottery" onSubmit={onClickSearch}>
+                                    <p>ค้นหาสลาก</p>
+                                    <div>
+                                        <Form.Control as="select" custom onChange={(e) => { setPosition(e.target.value); setNumber(""); }} className="form-search" value={positionState}>
+                                            <option value="all">แสดงทั้งหมด</option>
+                                            <option value="last2" selected>เลขท้าย 2 ตัว</option>
+                                            <option value="last3">เลขท้าย 3 ตัว</option>
+                                            <option value="front">เลขหน้า 3 ตัว</option>
+                                            <option value="whole">ทุกตัว</option>
+                                        </Form.Control>
+                                        <Form.Group >
+                                            {/* <Form.Label>.</Form.Label> */}
+                                            {positionState === "all" || null || "" ?
+                                                <Form.Control type="text" className="form-search" value=" " disabled />
+                                                :
+                                                <Form.Control type="text" placeholder="เลขที่ต้องการ" maxLength="6" className="form-search" onChange={(e) => handleInputNumber(e.target.value)} value={numberState} />
+                                            }
 
-                                    )}
-                                </section>
-                            </div>
+                                        </Form.Group>
+
+                                        <Form.Group>
+
+                                            <button type="button" className="btn btn-success" onClick={onClickSearch}>ค้นหา</button>
+                                        </Form.Group>
+
+                                    </div>
+                                    {/* </Form.Group> */}
+                                </Form>
+                            </section>
+                            {data.length > 0 ? null : <div className="text-center"><h3>ไม่พบสลาก</h3></div>}
+                            <section className="lottery-shop">
+                                {data.map((item, index) => {
+                                    return (
+                                        <Lottoryitem key={index} data={item} ></Lottoryitem>
+                                    )
+                                }
+
+                                )}
+                            </section>
                         </div>
-                    )}
+                    </div>
+                )}
             </div>
         </div>
     )

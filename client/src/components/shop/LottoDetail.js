@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import './LottoDetail.css';
 import Lottoryitem from "./LotteryItem";
-
+import { api } from '../../environment'
 const LottoDetail = (props) => {
 
     //รับค่า id จาก URL
@@ -29,12 +29,12 @@ const LottoDetail = (props) => {
         const fetchData = async () => {
 
             //get detail
-            await Axios.get("https://khohuai-server.herokuapp.com/lottery/" + lotteryID).then((lot) => {
+            await Axios.get(api + "/lottery/" + lotteryID).then((lot) => {
                 setLottery(lot.data);
             })
 
             //get recommended 
-            await Axios.get("https://khohuai-server.herokuapp.com/lottery").then((lot) => {
+            await Axios.get(api + "/lottery").then((lot) => {
                 setRecommended(lot.data);
             })
 

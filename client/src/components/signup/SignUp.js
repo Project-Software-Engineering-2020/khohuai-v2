@@ -4,6 +4,7 @@ import "../../stylesheet/signup.css";
 import Axios from 'axios';
 // import { firestore, auth } from "../../firebase/firebase";
 import { useDispatch, useSelector } from 'react-redux';
+import { api } from '../../environment'
 const SignUp = () => {
 
   //check status user
@@ -194,7 +195,7 @@ const SignUp = () => {
     e.preventDefault();
     const valid = await formValidation();
     if (valid === true) {
-      Axios.post("https://khohuai-server.herokuapp.com/auth/sigup", {
+      Axios.post(api + "/auth/sigup", {
         firstname: firstname,
         lastname: lastname,
         phone: phone,

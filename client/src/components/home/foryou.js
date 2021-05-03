@@ -3,7 +3,7 @@ import Lottoryitem from "../shop/LotteryItem"
 import './foryou.css';
 import Axios from "axios";
 import { useSelector } from 'react-redux';
-
+import { api } from '../../environment'
 const Foryou = () => {
 
     const stetus = useSelector(state => state.auth)
@@ -20,7 +20,7 @@ const Foryou = () => {
         let datb = [];
         const FetchData = async () => {
 
-            await Axios.get("https://khohuai-server.herokuapp.com/lottery/recommended").then((lot) => {
+            await Axios.get(api + "/lottery/recommended").then((lot) => {
                 console.log(lot);
                 setData(lot.data);
                 datb = lot.data;

@@ -1,4 +1,4 @@
-const { firestore } = require('../firebaseDB');
+const { firestore,auth } = require('../firebaseDB');
 
 const getCart = async (uid) => {
 
@@ -95,7 +95,7 @@ const getCart = async (uid) => {
 }
 
 const getMyCart = async (req, res) => {
-    const uid = "T6NMBO1XbscTWBeUsUCTy9ymrg82";
+    const uid = auth.currentUser.id;
 
     const MyCart = await getCart(uid)
     await res.status(200).send({ data: MyCart, message: "ข้อมูลตะกร้าสินค้าของคุณ" })
@@ -104,7 +104,7 @@ const getMyCart = async (req, res) => {
 
 const addMyCart = async (req, res) => {
 
-    const uid = "T6NMBO1XbscTWBeUsUCTy9ymrg82";
+    const uid = auth.currentUser.id;
     const lottery = req.body.item;
     const lottery_number = lottery.id;
     let MyCart = {};
@@ -211,7 +211,7 @@ const addMyCart = async (req, res) => {
 
 const decreateItemMyCart = async (req, res) => {
 
-    const uid = "T6NMBO1XbscTWBeUsUCTy9ymrg82";
+    const uid = auth.currentUser.id;
     const lottery = req.body.item;
     let data = {}
     let newDataPhoto = []
@@ -248,7 +248,7 @@ const decreateItemMyCart = async (req, res) => {
 }
 
 const removeMyCart = async (req, res) => {
-    const uid = "T6NMBO1XbscTWBeUsUCTy9ymrg82";
+    const uid = auth.currentUser.id;
     const id = req.params.id;
     let MyCart = []
     try {

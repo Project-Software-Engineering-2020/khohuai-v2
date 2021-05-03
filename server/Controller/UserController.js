@@ -55,6 +55,7 @@ const deleteUser = async (req, res, next) => {
 const getProfile = async (req, res, next) => {
 
     const uid = req.params.id;
+
     try {
         await firestore.collection('users').doc(uid).get().then((doc) => {
             console.log(doc.data());
@@ -63,6 +64,7 @@ const getProfile = async (req, res, next) => {
     } catch (error) {
         console.log(error);
     }
+    
 }
 
 const updateProfile = async (req, res, next) => {

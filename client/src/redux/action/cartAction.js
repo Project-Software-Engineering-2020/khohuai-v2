@@ -1,10 +1,11 @@
 import { store } from "../store";
 import Axios from "axios";
-import swal from 'sweetalert'
+import swal from 'sweetalert';
+import { api } from '../../environment'
 
 export function getMyCartFromDB() {
   return function (dispatch) {
-    return Axios.get("http://localhost:3001/cart").then((result) => {
+    return Axios.get(api + "/cart").then((result) => {
 
       const data = result.data.data;
       const message = result.data.message;
@@ -16,7 +17,7 @@ export function getMyCartFromDB() {
 
 export function addToCart(item) {
   return function (dispatch) {
-    return Axios.post("http://localhost:3001/cart", { item }).then((result) => {
+    return Axios.post(api + "/cart", { item }).then((result) => {
       if (result.status === 200) {
         const data_alert = {
         title: "เพิ่มลงตระกร้าสำเร็จ",

@@ -3,7 +3,7 @@ import "../../App.css";
 import * as PIXI from "pixi.js";
 import { default as PIXI_SOUND } from "pixi-sound";
 import Axios from "axios";
-
+import { api } from '../../environment'
 function Game() {
   //database
   let inventory = [];
@@ -41,7 +41,7 @@ function Game() {
   ];
 
   async function getInventory() {
-    await Axios.get("http://localhost:3001/game/get").then((i) => {
+    await Axios.get(api + "/game/get").then((i) => {
       inventory = i.data;
     });
   };
@@ -59,7 +59,7 @@ function Game() {
         inventory[i].in_stock = update_value;
       }
     }
-    await Axios.post("http://localhost:3001/game/set", {
+    await Axios.post(api + "/game/set", {
       tokens,
       update_value,
     });
@@ -216,7 +216,7 @@ function Game() {
     }
 
     var appX = windowWidth / 2 - appWidth / 2;
-    var appY = windowHeight / 2 - appHeight / 2;
+    var appY = windowHeight / 2 - appHeight / 2 - 70;
 
     perfromanceGraphProp.x = appX + appWidth * 0.2;
     perfromanceGraphProp.y = appY + appHeight * 0.5;
