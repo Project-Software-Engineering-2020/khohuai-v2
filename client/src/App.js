@@ -33,6 +33,7 @@ import AdUser from "./components/pages/AdUser";
 import PurchaseDetail from "./components/purchase/PurchaseDetail";
 import SweetAlert from 'react-bootstrap-sweetalert';
 import { closeAlert } from './redux/action/alertAction';
+import { removeItemInCart } from "./redux/action/cartAction";
 import { Fragment } from "react";
 
 function App() {
@@ -41,7 +42,6 @@ function App() {
 
   const auth = useSelector((state) => state.auth);
   const alert = useSelector(state => state.alert)
-  const removealert = useSelector(state => state.alert)
 
   return (
 
