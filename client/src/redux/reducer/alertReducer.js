@@ -6,7 +6,9 @@ const initialState = {
   time: 0,
   overlay: true,
   CancelButton: false,
-  showCloseButton:false
+  showCloseButton:false,
+  onConfirm: false,
+  dataDel: ""
 };
 function Alert(state = initialState, action) {
   switch (action.type) {
@@ -42,6 +44,20 @@ function Alert(state = initialState, action) {
         CancelButton: true,
         showCloseButton:true
       };
+      return state
+
+      case "DATA_DEL":
+        state = {
+          ...state,
+          open: true,
+          title: action.data.title,
+          text: action.data.text,
+          types: action.data.type,
+          CancelButton: true,
+          showCloseButton:true,
+          dataDel: action.data.dataDel
+        };
+        return state
 
     default:
       return state;

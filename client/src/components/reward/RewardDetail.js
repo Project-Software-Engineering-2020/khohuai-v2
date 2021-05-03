@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { getReward, getRewardDetail } from "../../redux/action/rewardAction";
 import { useDispatch, useSelector } from "react-redux"
 import Moment from 'react-moment';
+import NumberFormat from 'react-number-format';
 import 'moment/locale/th';
 import "./Reward.css";
 const Reward = (props) => {
@@ -62,7 +63,7 @@ const Reward = (props) => {
             <a href={"/reward"} class="backBtn"><i class="fa fa-chevron-left" aria-hidden="true"></i>  ย้อนกลับ</a>
             </div>  
               {/* Morris chart - Sales */}
-              <h3> หมายเลขรับรางวัล : {reward_id} </h3>
+              <h3 className="rewardIdDetail"> หมายเลขรับรางวัล : {reward_id} </h3>
               <p>
                 งวดประจำวันที่{" "}
                 <Moment format="DD MMMM YYYY" locale="th">
@@ -71,7 +72,7 @@ const Reward = (props) => {
               </p>
               <p>เลขที่บัญชีสำหรับรับรางวัล</p>
               <p className="line">สถานะ :</p>{" "}
-              <a className="linecolor" onClick={handleShow}>
+              <a className="linecolor" style={{cursor:'pointer'}} onClick={handleShow}>
                 ดูหลักฐานการรับรางวัล
               </a>
               <table className="table m-0">
@@ -88,14 +89,14 @@ const Reward = (props) => {
                     ? reward.data.lottery.map((item, index) => {
                       return (
                         <tr key={index}>
-                          <td onClick={e => handleShowLottery(item.lottery)} >{item.number}</td>
+                          <td style={{cursor:'pointer', textDecoration:'underline'}} onClick={e => handleShowLottery(item.lottery)} >{item.number}</td>
                           <td>
                             {item.prize.map((pz) => {
                               return <p>{pz}</p>
                             })}
                           </td>
                           <td>{item.qty}</td>
-                          <td>{item.qty * item.reward}</td>
+                          <td><NumberFormat value={item.qty * item.reward} displayType={'text'} thousandSeparator={true}>{item.qty * item.reward}</NumberFormat></td>
                         </tr>
                       );
                     })
@@ -108,20 +109,20 @@ const Reward = (props) => {
                   <div className="summary-invoice">
                     <div className="info-summary">
                       <div>เงินรางวัลรวม</div>
-                      <div>{reward.data.win_total}</div>
-                      <div>บาท</div>
+                      <NumberFormat value={reward.data.win_total} displayType={'text'} thousandSeparator={true} className="winNumber"><div>{reward.data.win_total}</div></NumberFormat>
+                      <div className="baht">บาท</div>
                     </div>
 
                     <div className="info-summary">
                       <div>หักค่าบริการ 1.5%</div>
-                      <div>{reward.data.win_chart}</div>
-                      <div>บาท</div>
+                      <NumberFormat value={reward.data.win_chart} displayType={'text'} thousandSeparator={true} className="winNumber"><div>{reward.data.win_chart}</div></NumberFormat>
+                      <div className="baht">บาท</div>
                     </div>
 
                     <div className="info-summary">
                       <div>เงินรางวัลที่ได้รับทั้งสิ้น</div>
-                      <div>{reward.data.win_amount}</div>
-                      <div>บาท</div>
+                      <NumberFormat value={reward.data.win_amount} displayType={'text'} thousandSeparator={true} className="winNumber"><div>{reward.data.win_amount}</div></NumberFormat>
+                      <div className="baht">บาท</div>
                     </div>
                   </div>
                 </div>

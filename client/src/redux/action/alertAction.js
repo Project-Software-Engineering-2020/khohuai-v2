@@ -14,8 +14,16 @@ export function closeAlert() {
 }
 
 export function removeAlert(data) {
-
+    
     return function (dispatch) {
-        dispatch({ type: "REMOVE_ALERT", data: data })
+          const data_alert = {
+          title: "คุณต้องการที่จะลบสลากออกจากตะกร้าใช่ไหม",
+          text: "",
+          type: "warning",
+          dataDel: data 
+      }
+      dispatch({ type: "DATA_DEL", data: data_alert });
+       
     }
 }
+

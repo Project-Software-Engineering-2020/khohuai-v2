@@ -51,7 +51,7 @@ a.purchase-item:hover {
   }
   .info-summary {
     display: grid;
-    grid-template-columns: 1fr 80px 80px;
+    grid-template-columns: 170px 100px 35px;
     align-items: center;
     font-size: 17px;
   }
@@ -106,6 +106,10 @@ a.purchase-item:hover {
       font-weight: bold;
   }
 
+  .rewardIdDetail{
+    color: rgb(125, 125, 126);
+  }
+
   .rewardMoredetail {
     color: rgb(109, 96, 96);
     text-decoration: underline;
@@ -114,6 +118,16 @@ a.purchase-item:hover {
   .backBtn {
     color: rgb(109, 96, 96);
     text-decoration: underline;
+  }
+
+  .winNumber{
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .baht {
+    display: flex;
+    justify-content: flex-end;
   }
   
   @media screen and (max-width: 760px) {

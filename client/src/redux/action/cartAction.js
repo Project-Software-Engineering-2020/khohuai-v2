@@ -1,5 +1,6 @@
 import { store } from "../store";
 import Axios from "axios";
+import swal from 'sweetalert'
 
 export function getMyCartFromDB() {
   return function (dispatch) {
@@ -61,12 +62,13 @@ export function removeItemInCart(id) {
     return Axios.delete("http://localhost:3001/cart/" + id).then((result) => {
       if (result.status === 200) {
         const data_alert = {
-          title: "ลบสลากออกจากตระกร้าเรียบร้อย",
+          title: "ลบสลากออกจากตะกร้าสำเร็จ",
           text: "",
-          type: "warning"
+          type: "success"
       }
-      store.dispatch({ type: "REMOVE_ALERT", data: data_alert });
+      store.dispatch({ type: "OPEN_ALERT", data: data_alert });
       }
+      console.log(result)
       const data = result.data.data;
       const message = result.data.message;
       dispatch({ type: "SET_CART", data });
