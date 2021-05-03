@@ -1,4 +1,4 @@
-const { firestore } = require("../firebaseDB");
+const { firestore, auth } = require("../firebaseDB");
 
 const getInventory = async (req, res) => {
   const uid = auth.currentUser.uid;
