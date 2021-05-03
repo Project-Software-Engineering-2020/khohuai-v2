@@ -4,6 +4,10 @@ const { firestore, auth } = require('../firebaseDB');
 //Model
 const Lottery = require("../Models/Lottery");
 
+// const checkOpenSell = () => {
+//     await firestore.collection("ngud").get()
+// } 
+
 const getNgudShop = async (req,res) => {
 
     let ngud = [];
@@ -13,11 +17,13 @@ const getNgudShop = async (req,res) => {
             ngud: doc.id,
             end: doc.data().end.toDate(),
             start: doc.data().start,
+            open: doc.data().open
         })
     });
-    console.log(ngud[0].end)
-    res.send(ngud[0].end);
+    console.log(ngud[0]);
+    res.send(ngud[0]);
 }
+
 
 const getAllLottery = async (req, res, next) => {
 
@@ -71,13 +77,21 @@ const getRecommendedLottery = async (req, res, next) => {
         const historyArray = [];
         const lotteryArray = [];
         const matchedArray = [];
-        var user = auth.currentUser;
+        
+        let uid;
+
+        await auth.onAuthStateChanged(function (user) {
+            if (user) {
+                uid = user.uid;
+            }
+        });
+
         //ยังไม่ได้สร้าง database ประวัติการซื้อ
         //const history = await firestore.collection('invoices').get();
 
         const history = await firestore.collection('invoices').get();
         const lottery = await firestore.collection('lottery').get();
-        if (user) {
+        if (uid) {
 
             lottery.docs.forEach(doc => {
                 //push into array

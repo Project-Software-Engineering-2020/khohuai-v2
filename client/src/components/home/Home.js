@@ -4,18 +4,17 @@ import Foryou from "./foryou";
 import Hot from "./hot";
 import Carousel from "./carousel";
 import Footer from "../footer/Footer";
-import { useSelector } from "react-redux";
 import { getMyCartFromDB } from '../../redux/action/cartAction';
-import { useDispatch } from 'react-redux'
-
+import { useDispatch, useSelector } from 'react-redux'
+import { getCurrent } from '../../redux/action/ngud'
 const Home = () => {
 
   const dispatch = useDispatch();
+  const ngud = useSelector(state => state.ngud);
 
-  useEffect(() => {
-
-    dispatch(getMyCartFromDB);
-
+  useEffect(async () => {
+    await dispatch(getCurrent());
+    await dispatch(getMyCartFromDB())
   }, [])
 
   const mycart = useSelector((state) => state.cart);
@@ -25,8 +24,16 @@ const Home = () => {
       <div className="home">
         <div className="container">
           <Carousel />
-          <Foryou />
-          <Hot />
+
+          {ngud.open ?
+            <div>
+              <Foryou />
+              <Hot />
+            </div>
+            :
+            <div>ไม่อยู่ในช่วงเวลาขาย</div>
+          }
+
         </div>
       </div>
 

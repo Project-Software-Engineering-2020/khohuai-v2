@@ -12,7 +12,7 @@ const Hot = () => {
 
     
 
-    useEffect(() => {
+    useEffect(async() => {
 
         const FetchData = async () => {
             await Axios.get(api + "/lottery/aos").then((lot) => {
@@ -21,7 +21,7 @@ const Hot = () => {
             await setloading(true);
         }
 
-        FetchData();
+        await FetchData();
     }, [])
 
 

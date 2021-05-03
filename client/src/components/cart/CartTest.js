@@ -58,7 +58,7 @@ const Basket = () => {
   // }
 
   useEffect(async () => {
-    dispatch(getMyCartFromDB());
+    await dispatch(getMyCartFromDB());
     await setloading(false);
   }, []);
 

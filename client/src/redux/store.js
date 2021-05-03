@@ -11,7 +11,7 @@ import purchase from "./reducer/purchaseReducer";
 import purchase_Detail from "./reducer/purchaseDetailReducer";
 import reward from "./reducer/rewardReducer";
 import alertReducer from "./reducer/alertReducer";
- 
+import ngudReducer from "./reducer/ngudReducer";
 // ******Combine Reducers******
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -20,7 +20,8 @@ const rootReducer = combineReducers({
   purchase: purchase,
   purchase_detail:purchase_Detail,
   reward: reward,
-  alert: alertReducer
+  alert: alertReducer,
+  ngud: ngudReducer
 });
 
 //redux persit manage local storage

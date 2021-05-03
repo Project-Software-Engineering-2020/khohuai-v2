@@ -5,12 +5,15 @@ import Axios from "axios";
 import { storage, firestore } from "../../firebase/firebase";
 import { api } from '../../environment'
 import "./Checkout.css";
+import { Modal, Button } from 'react-bootstrap'
 
 const CheckoutCreditcard = ({ user, cart, total, createCreditCardCharge }) => {
     let OmiseCard;
     const dispatch = useDispatch();
 
     const history = useHistory()
+
+    const [warn, setwarn] = useState(false)
     // const [money, setmoney] = useState();
     // setmoney(cart.totalPrice * 100)
     // const macart = useSelector(state => state.cart);
@@ -54,17 +57,25 @@ const CheckoutCreditcard = ({ user, cart, total, createCreditCardCharge }) => {
 
     const handleClick = async (e) => {
 
+        e.preventDefault();
+
         await Axios.get(api + "/checkout-credit-card/checkprofilecomplete").then(async (res) => {
+            console.log(res);
             if (res.data === true) {
-                e.preventDefault();
+
                 await creditCardConfigure();
                 await omiseHandler();
             }
             else {
-                history.push("/me/false")
+                setwarn(true);
             }
         })
     };
+
+    const redirect = () => { 
+        history.push("/me/false")
+    }
+
 
     return (
         <div className="own-form">
@@ -78,6 +89,19 @@ const CheckoutCreditcard = ({ user, cart, total, createCreditCardCharge }) => {
                     ชำระเงินด้วย credit card
           </button>
             </form>
+            <Modal show={warn}>
+                <Modal.Header closeButton>
+                    <Modal.Title>คำเตือน</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+                    <p>ข้อมูลส่วนตัวของคุณยังไม่สมบูรณ์   โปรดกรอกข้อมูลให้ครบถ้วน</p>
+                </Modal.Body>
+
+                <Modal.Footer>
+                    <Button variant="primary" type="button" onClick={redirect}>ไปหน้าข้อมูลส่วนตัว</Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
 };

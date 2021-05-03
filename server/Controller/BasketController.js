@@ -1,4 +1,4 @@
-const { firestore,auth } = require('../firebaseDB');
+const { firestore, auth } = require('../firebaseDB');
 
 const getCart = async (uid) => {
 
@@ -12,6 +12,7 @@ const getCart = async (uid) => {
             .collection("cart").get()
             .then((doc) => {
                 doc.docs.forEach(item => {
+                    console.log("item in cart", item)
                     MyCart.push(
                         {
                             id: item.id,
@@ -54,7 +55,7 @@ const getCart = async (uid) => {
 
                     if (item.qty > want_to_check[0].qty) {
 
-                        let newData= {
+                        let newData = {
                             id: item.id,
                             photoURL: want_to_check[0].photoURL,
                             qty: want_to_check[0].qty
@@ -84,7 +85,7 @@ const getCart = async (uid) => {
                     .catch((err) => console.log("ลบไม่ได้ ไม่รู้เป็นไร ดู error เอาเอง", err))
 
                 await MyCart.splice(index, 1);
-               
+
             }
         })
 
@@ -95,16 +96,32 @@ const getCart = async (uid) => {
 }
 
 const getMyCart = async (req, res) => {
-    const uid = auth.currentUser.id;
+
+    let uid = "";
+
+    await auth.onAuthStateChanged(function (user) {
+        if (user) {
+            uid = user.uid;
+        }
+    });
 
     const MyCart = await getCart(uid)
+    console.log("cart", uid)
+    console.log(MyCart)
     await res.status(200).send({ data: MyCart, message: "ข้อมูลตะกร้าสินค้าของคุณ" })
 
 }
 
 const addMyCart = async (req, res) => {
 
-    const uid = auth.currentUser.id;
+    let uid = "";
+
+    await auth.onAuthStateChanged(function (user) {
+        if (user) {
+            uid = user.uid;
+        }
+    });
+
     const lottery = req.body.item;
     const lottery_number = lottery.id;
     let MyCart = {};
@@ -211,7 +228,14 @@ const addMyCart = async (req, res) => {
 
 const decreateItemMyCart = async (req, res) => {
 
-    const uid = auth.currentUser.id;
+    let uid = "";
+
+    await auth.onAuthStateChanged(function (user) {
+        if (user) {
+            uid = user.uid;
+        }
+    });
+
     const lottery = req.body.item;
     let data = {}
     let newDataPhoto = []
@@ -242,13 +266,20 @@ const decreateItemMyCart = async (req, res) => {
         .collection("cart").doc(lottery.id)
         .update(data);
 
-        const newMyCart = await getCart(uid)
-        res.status(200).send({ data: newMyCart, message: "ลดจำนวนสินค้าในตะกร้าสำเร็จ" })
+    const newMyCart = await getCart(uid)
+    res.status(200).send({ data: newMyCart, message: "ลดจำนวนสินค้าในตะกร้าสำเร็จ" })
 
 }
 
 const removeMyCart = async (req, res) => {
-    const uid = auth.currentUser.id;
+    let uid = "";
+
+    await auth.onAuthStateChanged(function (user) {
+        if (user) {
+            uid = user.uid;
+        }
+    });
+    
     const id = req.params.id;
     let MyCart = []
     try {
@@ -261,7 +292,7 @@ const removeMyCart = async (req, res) => {
 
         //ดึงข้อมูลล่าสุดมา
         const newMyCart = await getCart(uid)
-        res.status(200).send({ data:newMyCart, message: "ลบสินค้าในตะกร้าสำเร็จ" })
+        res.status(200).send({ data: newMyCart, message: "ลบสินค้าในตะกร้าสำเร็จ" })
 
     } catch (error) {
         console.log(error)

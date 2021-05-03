@@ -15,7 +15,7 @@ const Foryou = () => {
 
     const [data, setData] = useState();
 
-    useEffect(() => {
+    useEffect(async() => {
 
         let datb = [];
         const FetchData = async () => {
@@ -30,7 +30,7 @@ const Foryou = () => {
 
         }
 
-        FetchData();
+        await FetchData();
     }, [stotus])
 
     return (

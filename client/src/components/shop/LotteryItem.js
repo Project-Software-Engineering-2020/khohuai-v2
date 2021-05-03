@@ -100,9 +100,9 @@ const LotteryItem = ({ data, number }) => {
   return (
     <div className="lottery-item">
       <figure className="lottery-item-image">
-        <a href={"/product/" + data.id}>
-          <img src={data.photoURL}></img>
-        </a>
+
+          <img src={data.photoURL} alt={data.id}></img>
+ 
       </figure>
       <form>
         <button className="add-to-cart" type="button" onClick={addtoCart}>

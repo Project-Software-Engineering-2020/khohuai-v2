@@ -3,7 +3,7 @@ const { firestore, auth } = require('../firebaseDB');
 const getRewardLotteryOfUser = async (req, res, next) => {
 
     let MyReward = [];
-    const uid = auth.currentUser.id;
+    const uid = await auth.currentUser.uid;
 
     const docRef = firestore.collection("rewards");
     await docRef.where("uid", "==", uid).orderBy("update_date", "desc")

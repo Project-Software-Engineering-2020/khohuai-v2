@@ -2897,8 +2897,10 @@ function Game() {
         }
       }
     }
-    
-  });
+    return () => {
+      console.log("cleaned up");
+    };
+  },[]);
 
   return <div></div>;
 }
