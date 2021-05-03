@@ -4,6 +4,9 @@ import "../../stylesheet/signup.css";
 import Axios from 'axios';
 // import { firestore, auth } from "../../firebase/firebase";
 import { useDispatch, useSelector } from 'react-redux';
+import {
+  setloginAfterSignup,
+} from "../../redux/action/authAction";
 import { api } from '../../environment'
 const SignUp = () => {
 
@@ -202,17 +205,18 @@ const SignUp = () => {
         email: email,
         password: password,
       }).then((res) => {
-        console.log(res);
-        dispatch({
-          type: 'SET_LOGIN',
-          uid: res.data,
-          displayName: firstname,
-          photoURL: "https://img2.thaipng.com/20180523/tha/kisspng-businessperson-computer-icons-avatar-clip-art-lattice-5b0508dc6a3a10.0013931115270566044351.jpg",
-          email: email,
-          role: "user",
-          provider: "hotmail",
-          status: true
-        })
+        // console.log(res);
+        dispatch(setloginAfterSignup(res));
+        // dispatch({
+        //   type: 'SET_LOGIN',
+        //   uid: res.data,
+        //   displayName: firstname,
+        //   photoURL: "https://img2.thaipng.com/20180523/tha/kisspng-businessperson-computer-icons-avatar-clip-art-lattice-5b0508dc6a3a10.0013931115270566044351.jpg",
+        //   email: email,
+        //   role: "user",
+        //   provider: "hotmail",
+        //   status: true
+        // })
       }
       )
     }

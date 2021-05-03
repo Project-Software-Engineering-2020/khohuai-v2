@@ -78,11 +78,11 @@ const getRecommendedLottery = async (req, res, next) => {
         const lotteryArray = [];
         const matchedArray = [];
         
-        let uid;
+        let user;
 
-        await auth.onAuthStateChanged(function (user) {
-            if (user) {
-                uid = user.uid;
+        await auth.onAuthStateChanged(function (u) {
+            if (u) {
+                user = user;
             }
         });
 
@@ -91,7 +91,7 @@ const getRecommendedLottery = async (req, res, next) => {
 
         const history = await firestore.collection('invoices').get();
         const lottery = await firestore.collection('lottery').get();
-        if (uid) {
+        if (user) {
 
             lottery.docs.forEach(doc => {
                 //push into array

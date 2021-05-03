@@ -32,7 +32,10 @@ function profile(state = initialState, action) {
                 displayName: action.data.displayName,
                 photoURL: action.data.photoURL,
                 email: action.data.email,
-                phone: action.data.phone
+                phone: action.data.phone,
+                book_name: action.data.book_name,
+                book_number: action.data.book_number,
+                book_provider: action.data.book_provider
             };
             return state;
         default:

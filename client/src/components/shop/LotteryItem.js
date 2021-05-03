@@ -74,41 +74,41 @@
 
 // export default LotteryItem;
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 // import Checkoutcerditcard from '../checkoutpage/creditcard';
 import "./LotteryItem.css";
 import { addToCart } from "../../redux/action/cartAction";
-
+import { useHistory } from 'react-router-dom'
 // let OmiseCard;
 
 const LotteryItem = ({ data, number }) => {
+  const history = useHistory()
   const dispatch = useDispatch();
+  const auth = useSelector(state => state.auth)
 
   const addtoCart = () => {
-    // dispatch({ type:"ADD_TO_CART", data: data }
-    console.log(data);
 
     const item = data;
 
-    dispatch(addToCart(item));
+    if (auth.status === true) {
+      dispatch(addToCart(item));
+    }
+    else {
+      history.push('/login');
+    }
+
   };
-  // useEffect ()  => {
-  //     // await setLottery(data)
-  //     // await setloading(false);
-  // }, [])
 
   return (
     <div className="lottery-item">
       <figure className="lottery-item-image">
 
-          <img src={data.photoURL} alt={data.id}></img>
- 
+        <img src={data.photoURL} alt={data.id}></img>
+
       </figure>
-      <form>
-        <button className="add-to-cart" type="button" onClick={addtoCart}>
-          <i className="fas fa-cart-plus"> </i> เพิ่มลงในตะกร้า
+      <button className="add-to-cart" type="button" onClick={addtoCart}>
+        <i className="fas fa-cart-plus"> </i> เพิ่มลงในตะกร้า
         </button>
-      </form>
     </div>
   );
 };

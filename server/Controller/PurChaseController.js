@@ -4,7 +4,13 @@ const BeforePurchase = async (req, res, next) => {
 
     const docRef = firestore.collection("invoices");
     let ArrayPurchase = [];
-    const uid = await auth.currentUser.uid;
+    let uid = "";
+
+    await auth.onAuthStateChanged(function (user) {
+        if (user) {
+            uid = user.uid;
+        }
+    });
     await docRef.where("userid", "==", uid).orderBy("date", "desc")
         .get()
         .then((result) => {

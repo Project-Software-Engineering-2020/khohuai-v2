@@ -116,13 +116,13 @@ const googleLogin = async (req, res) => {
 const signin = async (req, res) => {
   const _email = req.body.email;
   const _password = req.body.password;
-  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+  auth.setPersistence(firebase.auth.Auth.Persistence.NONE);
   try {
-    firebase.auth()
+    auth
       .signInWithEmailAndPassword(_email, _password)
       .then((result) => {
-        result.result.getIdToken().then((UserToken) => {
-          console.log("UserTOken ++++++++++++++++++++++++++++++++",UserToken);
+        // result.result.getIdToken().then((UserToken) => {
+          // console.log("UserTOken ++++++++++++++++++++++++++++++++",UserToken);
           const user = firestore.collection("users").doc(result.user.uid);
           user.get().then((doc) => {
             const user = new User(
@@ -138,7 +138,7 @@ const signin = async (req, res) => {
             );
             res.status(200).send(user);
           });
-        })
+        // })
       })
       .catch((error) => {
         res.status(201).send(error.code);
@@ -177,10 +177,11 @@ const signup = (req, res) => {
                 photoURL: photoURL,
                 email: result.user.email,
                 role: role,
+                status:true,
                 provider: provider,
               })
               .then((r) => {
-                res.status(200).send(result.user.uid);
+                res.status(200).send(result);
               });
 
               let inventory = await firestore.collection("inventorys").get();

@@ -29,8 +29,6 @@ const Reward = (props) => {
     setlotterydate(item)
   }
 
-
-
   useEffect(() => {
     dispatch(getRewardDetail(reward_id));
   }, [])
@@ -168,24 +166,16 @@ const Reward = (props) => {
 
       </Modal>
 
-      <Modal size="sm" show={show} onHide={handleClose}>
+      <Modal size="md" show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>หลักฐานการรับรางวัล</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <img
             className="slip"
-            src="https://obs.line-scdn.net/0hd_rioZEKO3BPEBPqvuFEJ3VGOB98fChzKyZqcxN-ZUQ2dylxISZzHmxFYElqKXwuISJwHm0SIEEwIiwlcX5z/w644"
+            src={reward.data.slip}
           />
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            ปิด
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            ยืนยัน
-          </Button>
-        </Modal.Footer>
       </Modal>
 
       <Modal size="md" show={comfirm} onHide={handleCloseconfirm}>
