@@ -84,3 +84,5 @@ export function selectItem(id, select) {
 export function selectAll(check) {
   return store.dispatch({ type: "SELECT_ALL", check });
 }
+
+

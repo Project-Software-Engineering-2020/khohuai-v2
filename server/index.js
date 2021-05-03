@@ -11,6 +11,7 @@ const authentication = require('./Routes/Auth');
 const basketRouter = require('./Routes/Basket');
 const PurchaseRouter = require('./Routes/Purchase');
 const rewardRoute = require('./Routes/Reward');
+const gameRouter = require('./Routes/Game');
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use('/cart', basketRouter);
 app.use('/purchase',PurchaseRouter);
 app.use('/checkout-credit-card',checkoutCreditCard);
 app.use('/reward', rewardRoute);
+app.use('/game', gameRouter);
 
 // http://localhost:3001
 app.listen(PORT, () =>

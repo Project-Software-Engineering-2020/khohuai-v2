@@ -23,7 +23,6 @@ const getAllUser = async (req, res, next) => {
             res.status(404).send("No User in record")
         } else {
             usersdata.docs.forEach(doc => {
-
                 //push into array
                 const user = new User(
                     doc.id,
