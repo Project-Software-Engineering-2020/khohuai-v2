@@ -1,5 +1,5 @@
 import { store } from '../store';
-
+import { api } from '../../environment'
 
 export function setPurchaseDetail(detail) {
 

@@ -8,6 +8,7 @@ import CheckoutCreditcard from "../checkout/checkoutwithcard";
 import Coupon from "./Coupon";
 import { getMyCartFromDB } from "../../redux/action/cartAction";
 import { selectAll } from "../../redux/action/cartAction";
+import { api } from '../../environment'
 
 const Basket = () => {
   const myCart = useSelector((state) => state.cart);
@@ -28,7 +29,7 @@ const Basket = () => {
     console.log("Token Here ===>" + token);
     try {
       await axios
-        .post("http://localhost:3001/checkout-credit-card", {
+        .post(api +"/checkout-credit-card", {
           email,
           uid,
           amount,
@@ -39,11 +40,11 @@ const Basket = () => {
             "Content-Type": "application/json",
           },
         })
-        .then((res) => {
-          dispatch(getMyCartFromDB());
-          setsuccess(res.data.amount);
+        .then(async(res) => { 
+          await dispatch(getMyCartFromDB());
+          await setsuccess(res.data.amount);
 
-          history.push("/purchase");
+          await history.push("/purchase");
         });
 
       // const resData = res.data;

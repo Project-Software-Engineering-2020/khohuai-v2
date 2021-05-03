@@ -3,6 +3,7 @@ import { NavLink, useHistory } from 'react-router-dom'
 import './Purchase.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { getPurchase } from '../../redux/action/purchaseAction';
+import { getMyCartFromDB } from '../../redux/action/cartAction'
 import { setPurchaseDetail } from '../../redux/action/purchaseDetailAction';
 import Moment from 'react-moment';
 import 'moment/locale/th';
@@ -20,7 +21,7 @@ const Purchase = () => {
     }
 
     useEffect(async () => {
-
+        await dispatch(getMyCartFromDB());
         await dispatch(getPurchase());
 
     }, [])

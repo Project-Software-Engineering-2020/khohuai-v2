@@ -1,5 +1,6 @@
 import { store } from '../store';
 import Axios from 'axios';
+import { api } from '../../environment'
 
 export function setProfile(user) {
     return {
@@ -11,7 +12,10 @@ export function setProfile(user) {
             displayName: user.displayName,
             photoURL: user.photoURL,
             email: user.email,
-            phone: user.phone
+            phone: user.phone,
+            book_name: user.book_name,
+            book_number: user.book_number,
+            book_provider: user.book_provider
         }
     }
 }
@@ -25,7 +29,7 @@ export function getProfile(uid) {
     store.dispatch(loadingProfile());
 
     return function (dispatch) {
-        return Axios.get("https://khohuai-server.herokuapp.com/user/profile/" + uid)
+        return Axios.get(api + "/user/profile/" + uid)
             .then(user => {
                 console.log(user.data)
                 dispatch(setProfile(user.data))
@@ -35,7 +39,7 @@ export function getProfile(uid) {
 
 export function updateUserProfile(newProfile) {
 
-    const user = Axios.put("https://khohuai-server.herokuapp.com/user/profile", { newProfile })
+    const user = Axios.put(api + "/user/profile", { newProfile })
         .then((res) => {
             if (res.status === 200) {
             }

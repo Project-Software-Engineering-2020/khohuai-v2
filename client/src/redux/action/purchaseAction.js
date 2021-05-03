@@ -1,6 +1,6 @@
 import { store } from '../store';
 import Axios from 'axios';
-
+import { api } from '../../environment'
 export function getPurchase() {
 
     //set loading
@@ -8,7 +8,7 @@ export function getPurchase() {
 
     //get data 
     return function (dispatch) {
-        return Axios.get("https://khohuai-server.herokuapp.com/purchase")
+        return Axios.get(api + "/purchase")
             .then(purchase => {
                 dispatch({type:"FETCHED_PURCHASE",data:purchase.data})
             });

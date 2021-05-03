@@ -56,7 +56,7 @@ function App() {
           <Route path="/login" component={Sign_in} />
           <Route path="/signup" component={SignUp} />
           <PrivateRoute path="/product/:id" component={LotteryDetail} />
-          <PrivateRoute path="/me" component={Profile} />
+          <PrivateRoute path="/me/:complete" component={Profile} />
           <PrivateRoute path="/upload" component={UploadLottery} />
           <PrivateRoute path="/updatepassword" component={UpdatePassword} />
           <PrivateRoute path="/forgotpassword" component={ForgotPassword} />

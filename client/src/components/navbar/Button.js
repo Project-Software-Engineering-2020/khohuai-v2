@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setlogout } from '../../redux/action/authAction';
 import Axios from 'axios';
 
-
+import { api } from '../../environment'
 
 
 const Button = ({ closeMenu }) => {
@@ -78,7 +78,7 @@ const Button = ({ closeMenu }) => {
 
   const signouthandle = () => {
 
-    Axios.post("http://localhost:3001/auth/logout")
+    Axios.post(api + "/auth/logout")
       .then((res) => {
         if (res.data === "logout_success") {
           dispatch(setlogout())
@@ -99,7 +99,7 @@ const Button = ({ closeMenu }) => {
         <Dropdown className="btn-user-menu" >
           <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components" />
           <Dropdown.Menu as={CustomMenu}>
-            <Dropdown.Item onClick={closeMenu} eventKey="1" href="/me"><i className="fas fa-user"></i> ข้อมูลส่วนตัว</Dropdown.Item>
+            <Dropdown.Item onClick={closeMenu} eventKey="1" href="/me/profile"><i className="fas fa-user"></i> ข้อมูลส่วนตัว</Dropdown.Item>
             <Dropdown.Item onClick={closeMenu} eventKey="3" href="/purchase"><i className="fas fa-file-invoice"></i> ประวัติการซื้อ</Dropdown.Item>
             <Dropdown.Item onClick={closeMenu} eventKey="2" onClick={signouthandle}><i className="fas fa-sign-out-alt"></i> ออกจากระบบ</Dropdown.Item>
           </Dropdown.Menu>

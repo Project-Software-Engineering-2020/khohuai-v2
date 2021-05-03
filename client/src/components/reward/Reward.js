@@ -80,7 +80,7 @@ const Reward = () => {
               </a>
             </div>
           </div> */}
-          {reward.loading?
+          {!reward.data?
           <div>wait</div> : reward.data.map((item, index) => {
           return (
             <div key={index}>

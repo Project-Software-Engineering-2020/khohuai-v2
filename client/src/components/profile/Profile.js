@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import './Profile.css';
+import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { storage, firestore } from '../../firebase/firebase'
 import { updateUserProfile, getProfile } from "../../redux/action/profileAction"
+import { api } from '../../environment';
 
-const Profile = () => {
+const Profile = (props) => {
+
+    let completeProfile = props.match.params.complete;
+
+    const history = useHistory();
 
     const dispatch = useDispatch();
 
@@ -18,8 +24,18 @@ const Profile = () => {
     const [imagePreview, setImagePreview] = useState();
     const [editState, setEditState] = useState(false);
 
+    const checkComplete = async () => {
+        // console.log(completeProfile);
+        if(completeProfile == "false") {
+            await setEditState(true)
+        }
+    } 
+
     useEffect(async () => {
+       
         await dispatch(getProfile(uid));
+        // await checkComplete();
+        
     }, []);
 
 
@@ -92,7 +108,7 @@ const Profile = () => {
     const UpdateProfile = async () => {
         // const uid = status.uid;
         if (updateImage) {
-            console.log("Update image")
+          
             const uploadTask = storage.ref("images/" + uid).put(updateImage);
             uploadTask.on(
                 "state_change",
@@ -117,6 +133,9 @@ const Profile = () => {
                                 photoURL: url,
                             });
                             setEditState(!editState);
+                            if(completeProfile === "false") {
+                                history.push("/cart")
+                            }
                         });
                 }
             );

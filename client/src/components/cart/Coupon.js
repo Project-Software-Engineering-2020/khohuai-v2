@@ -6,7 +6,7 @@ import { faTags } from "@fortawesome/free-solid-svg-icons";
 import "./cart.css"
 import Axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-
+import { api } from '../../environment'
 function Coupon() {
   const [show, setShow] = useState(false);
 
@@ -17,9 +17,11 @@ function Coupon() {
   const cart = useSelector(state => state.cart)
 
   const dispatch = useDispatch();
+
+  
   
   async function getInvent() {
-    await Axios.get("http://localhost:3001/game/get").then((inventory) => {
+    await Axios.get(api + "/game/get").then((inventory) => {
       for (let i in inventory.data) {
         if (inventory.data[i].name === "Chonlasit coin") {
           setChon(inventory.data[i].in_stock);
@@ -29,7 +31,7 @@ function Coupon() {
   }
 
   async function setInvent(tokens, update_value) {
-    await Axios.post("http://localhost:3001/game/set", {
+    await Axios.post(api + "/game/set", {
       tokens,
       update_value
     });

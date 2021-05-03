@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import Lottoryitem from "../shop/LotteryItem"
 import './hot.css';
 import Axios from "axios";
-
+import { api } from '../../environment'
 
 const Hot = () => {
 
@@ -15,7 +15,7 @@ const Hot = () => {
     useEffect(() => {
 
         const FetchData = async () => {
-            await Axios.get("https://khohuai-server.herokuapp.com/lottery/aos").then((lot) => {
+            await Axios.get(api + "/lottery/aos").then((lot) => {
                 setData(lot.data);
             })
             await setloading(true);

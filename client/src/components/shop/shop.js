@@ -7,7 +7,7 @@ import './shop.css';
 import Axios from "axios";
 import Moment from 'react-moment';
 import 'moment/locale/th';
-
+import { api } from '../../environment'
 const Shop = ({ }) => {
     const history = useHistory()
     const [loading, setloading] = useState(true);
@@ -25,12 +25,12 @@ const Shop = ({ }) => {
     //get Data from Database
     const getData = async () => {
         if (position === "all") {
-            await Axios.get("http://localhost:3001/lottery").then((lot) => {
+            await Axios.get(api + "/lottery").then((lot) => {
                 setData(lot.data);
             })
         }
         else {
-            await Axios.get("http://localhost:3001/lottery/search?position=" + position + "&keyword=" + number).then((lot) => {
+            await Axios.get(api + "/lottery/search?position=" + position + "&keyword=" + number).then((lot) => {
                 setData(lot.data);
             })
         }
@@ -74,7 +74,7 @@ const Shop = ({ }) => {
 
 
     const getNgudShop = () => {
-        Axios.get("http://localhost:3001/lottery/currentngud").then((res) => setNgud(res.data))
+        Axios.get(api + "/lottery/currentngud").then((res) => setNgud(res.data))
     }
 
     useEffect(async () => {

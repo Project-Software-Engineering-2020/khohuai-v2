@@ -11,7 +11,7 @@ import {
   setloginWithGoogle,
 } from "../../redux/action/authAction";
 import Axios from "axios";
-
+import { api } from '../../environment'
 const Sign_in = () => {
   const stetus = useSelector((state) => state.auth);
   const [redirect, setredirect] = useState(null);
@@ -36,7 +36,7 @@ const Sign_in = () => {
     e.preventDefault();
 
     try {
-      Axios.post("https://khohuai-server.herokuapp.com/auth/login", {
+      Axios.post(api + "/auth/login", {
         email,
         password,
       }).then((res) => {
@@ -67,7 +67,7 @@ const Sign_in = () => {
     const result = await auth.signInWithPopup(googleProvider);
     console.log(result);
     const token = result.credential.idToken;
-    await Axios.post("https://khohuai-server.herokuapp.com/auth/google", { token }).then(
+    await Axios.post(api + "/auth/google", { token }).then(
       (res) => {
         dispatch(setloginWithGoogle(res, token));
       }
