@@ -88,7 +88,6 @@ const Shop = ({ }) => {
 
     return (
         <div className="container">
-            {ngud.open ? 
             <div>
                 {loading ? (
                     <div className="loader">Loading...</div>
@@ -155,11 +154,7 @@ const Shop = ({ }) => {
                     </div>
                 )}
             </div>
-            : 
-            <div className="no-time-lottery">
-                   <p>ไม่ได้อยู่ในช่วงวันและเวลาในการขายสลาก</p>
-            </div>
-            }
+          
         </div>
     )
 

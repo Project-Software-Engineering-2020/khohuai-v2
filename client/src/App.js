@@ -58,8 +58,8 @@ function App() {
           <PrivateRoute path="/product/:id" component={LotteryDetail} />
           <PrivateRoute path="/me/:complete" component={Profile} />
           <PrivateRoute path="/upload" component={UploadLottery} />
-          <PrivateRoute path="/updatepassword" component={UpdatePassword} />
-          <PrivateRoute path="/forgotpassword" component={ForgotPassword} />
+          <Route path="/updatepassword" component={UpdatePassword} />
+          <Route path="/forgotpassword" component={ForgotPassword} />
           <PrivateRoute
             path="/LotteryReports"
             exact

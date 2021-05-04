@@ -24,19 +24,10 @@ const Home = () => {
       <div className="home">
         <div className="container">
           <Carousel />
-
-          {ngud.open ?
             <div>
               <Foryou />
               <Hot />
             </div>
-            :
-            <div className="no-lottery">
-              <p>ไม่ได้อยู่ในช่วงวันและเวลาในการขายสลาก</p>
-              
-            </div>
-          }
-
         </div>
       </div>
 

@@ -1,6 +1,7 @@
 const initialState = {
     loading: false,
-    data: []
+    data: [],
+    wait: 0
 };
 
 function Purchase(state = initialState, action) {
@@ -16,10 +17,14 @@ function Purchase(state = initialState, action) {
             return state
 
         case "FETCHED_PURCHASE":
+
+            const result = action.data.filter(r => r.result !== true);
+
             state = {
                 ...state,
                 loading: false,
-                data: action.data
+                data: action.data,
+                wait: result.length
             }
             return state
 

@@ -48,7 +48,7 @@ const Widget = () => {
                     <div className="small-box bg-warning">
                         <div className="inner">
                             <p>รอการประกาศผล</p>
-                            <h3>{reward.wait}</h3>
+                            <h3>{purchase.wait}</h3>
                         </div>
                         <div className="icon">
                             <i className="ion ion-stats-bars" />

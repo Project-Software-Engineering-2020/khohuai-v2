@@ -21,7 +21,8 @@ const BeforePurchase = async (req, res, next) => {
                     totalprice: doc.data().totalprice,
                     invoiceid: doc.id,
                     quantity: doc.data().quantity,
-                    lottery: doc.data().lottery
+                    lottery: doc.data().lottery,
+                    result: doc.data().result
                 });
             })
             res.send(ArrayPurchase);

@@ -14,6 +14,7 @@ function Navbar() {
 
   const stetus = useSelector(state => state.auth)
   let Mycart = useSelector((state) => state.cart)
+  const ngud = useSelector(state => state.ngud)
   // const stotus = stetus.status;
 
   const [click, setClick] = useState(false);

@@ -26,10 +26,11 @@ const Basket = () => {
     const buyItem = myCart.selected;
     const totalItem = myCart.totalSelect;
 
+
     console.log("Token Here ===>" + token);
     try {
       await axios
-        .post(api +"/checkout-credit-card", {
+        .post(api + "/checkout-credit-card", {
           email,
           uid,
           amount,
@@ -40,7 +41,7 @@ const Basket = () => {
             "Content-Type": "application/json",
           },
         })
-        .then(async(res) => { 
+        .then(async (res) => {
           await dispatch(getMyCartFromDB());
           await setsuccess(res.data.amount);
 
@@ -97,8 +98,11 @@ const Basket = () => {
           {/* สรุปรายการสั่งซื้อ */}
           <div className="col-md-4 mt-4">
             <div class="card cartSum">
-              <div class="card-body">
-                <h5 class="card-title">สรุปรายการสั่งซื้อ</h5>
+              <div class="card-body s">
+                <div>
+                  <h5 class="card-title">สรุปรายการสั่งซื้อ</h5>
+                </div>
+
 
                 {/* จำนวน */}
                 <div className="row">
