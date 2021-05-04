@@ -15,7 +15,7 @@ const getNgudShop = async (req,res) => {
     await ngudDB.docs.forEach(doc => {
         ngud.push({
             ngud: doc.id,
-            end: doc.data().end.toDate(),
+            end: doc.data().end,
             start: doc.data().start,
             open: doc.data().open
         })
@@ -35,7 +35,7 @@ const getAllLottery = async (req, res, next) => {
         await ngudDB.docs.forEach(doc => {
             ngud.push({
                 ngud: doc.id,
-                end: doc.data().end.toDate(),
+                end: doc.data().end,
                 start: doc.data().start,
             })
         });

@@ -7,6 +7,8 @@ import s from '../userdashboard/widget'
 import Moment from "react-moment";
 import "moment/locale/th";
 import "./Reward.css";
+import Widget from '../userdashboard/widget';
+
 const Reward = () => {
   const dispatch = useDispatch();
   const reward = useSelector((state) => state.reward);

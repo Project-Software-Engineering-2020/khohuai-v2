@@ -133,6 +133,7 @@ const Profile = (props) => {
                                 photoURL: url,
                             });
                             setEditState(!editState);
+                            
                             if(completeProfile === "false") {
                                 history.push("/cart")
                             }
@@ -153,7 +154,9 @@ const Profile = (props) => {
             });
         
             await setEditState(!editState)
-            // await setProfile(newProfile)
+            if(completeProfile === "false") {
+                history.push("/cart")
+            }
                 
         }
     }

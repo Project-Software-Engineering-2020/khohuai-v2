@@ -1,7 +1,6 @@
 const initialState = {
     loading: false,
     data: [],
-    wait: 0
 };
 
 function Reward(state = initialState, action) {
@@ -20,13 +19,12 @@ function Reward(state = initialState, action) {
 
         case "FETCHED_REWARD":
 
-            const result = action.data.filter(r => r.success === false);
+            // const result = action.data.filter(r => r.success === false);
 
             state = {
                 ...state,
                 loading: false,
                 data: action.data,
-                wait: result.length
             }
             return state
 

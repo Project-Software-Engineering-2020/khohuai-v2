@@ -1,4 +1,4 @@
-const { firestore,auth } = require('../firebaseDB');
+const { firestore, auth } = require('../firebaseDB');
 // const FieldValue = firestore.FieldValue;
 // const admin = require('firebase-admin')
 // const FieldValue = admin.firestore.FieldValue;
@@ -11,7 +11,7 @@ const omise = require('omise')({
 
 const checkoutCreditCard = async (req, res, next) => {
   console.log("เข้ามาแล้ว")
-  const { email, uid, amount, token, buyItem, totalItem } = req.body;
+  const { email, uid, amount, token, buyItem, totalItem, book_name, book_number, book_provider, name } = req.body;
 
   try {
     const customer = await omise.customers.create({
@@ -120,6 +120,7 @@ const romoveInStock = async (item_buy) => {
 
 
 const createinvoice = async (data, doto, idUser, totalItem) => {
+
   const charge = data;
   const Mycart = doto;
   const uid = idUser;
@@ -127,21 +128,33 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
   let lottery_instock = [];
   let item_buy = doto;
   let ngud = [];
-  
+
 
   try {
     const ngudDB = await firestore.collection('ngud').orderBy("end", "desc").get()
-        await ngudDB.docs.forEach(doc => {
-            ngud.push({
-                ngud: doc.id,
-                end: doc.data().end.toDate(),
-                start: doc.data().start,
-                total_onhand: doc.data().total_onhand
-            })
-        });
+    await ngudDB.docs.forEach(doc => {
+      ngud.push({
+        ngud: doc.id,
+        end: doc.data().end,
+        start: doc.data().start,
+        total_onhand: doc.data().total_onhand
+      })
+    });
 
 
     if (charge.status === "successful") {
+
+      let userData = [];
+
+      await firestore.collection("users").doc(uid).get().then((doc) => {
+        userData.push({
+          book_name: doc.data().book_name,
+          book_number: doc.data().book_number,
+          book_provider: doc.data().book_provider,
+          firstname: doc.data().firstname,
+          lastname: doc.data().lastname
+        })
+      })
 
       // const item_bought = await romoveInStock(Mycart);
       let lottery_instock = [];
@@ -188,14 +201,23 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
 
                 img.push(target_lottery);
 
-                console.log(lottery_each_number);
-
+              
                 lottery_each_number.pop(target_lottery);
 
-                await firestore.collection("lottery").doc(lottery_instock[j].number)
+                 console.log(lottery_each_number.length);
+                 console.log(lottery_instock[j].number)
+
+                if(lottery_each_number.length == 0){
+                  await firestore.collection("lottery").doc(lottery_instock[j].number).delete()
+                }
+                else {
+                  await firestore.collection("lottery").doc(lottery_instock[j].number)
                   .update({
                     photoURL: lottery_each_number
                   })
+                }
+
+                
               }
 
               buy.push(
@@ -219,17 +241,27 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
       }
       console.log(buy);
 
-      const invoice = firestore.collection("invoices").doc();
-      await invoice.set({
+      console.log("ngud   ",ngud)
+
+      let datainsert = {
         charge_id: charge.id,
         userid: uid,
         lottery: buy,
         date: date,
         totalprice: charge.amount / 100,
         quantity: totalItem,
-        ngud: ngud[0].id,
-        ngud_date: ngud[0].end
-      }).then((res) => {
+        ngud: ngud[0].ngud,
+        ngud_date: ngud[0].end,
+        book_name: userData[0].book_name,
+        book_number: userData[0].book_number,
+        book_provider: userData[0].book_provider,
+        firstname: userData[0].firstname,
+        lastname: userData[0].lastname
+      }
+
+      console.log("dataInsrt  ",datainsert);
+
+      const invoice = await firestore.collection("invoices").doc().set(datainsert).then((res) => {
         console.log("invoice เพิ่มแล้ว")
 
         //ลบ item ในตะกร้า
@@ -240,7 +272,7 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
             .catch((err) => console.log("ลบไม่ได้", err));
         })
       })
-      await firestore.collection("ngud").doc(ngud[0].id).update({total_onhand: ngud.total_onhand - totalItem})
+      await firestore.collection("ngud").doc(ngud[0].id).update({ total_onhand: ngud.total_onhand - totalItem })
       // await romoveInStock()
     }
   } catch (err) {
