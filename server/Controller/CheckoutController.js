@@ -136,6 +136,7 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
                 ngud: doc.id,
                 end: doc.data().end.toDate(),
                 start: doc.data().start,
+                total_onhand: doc.data().total_onhand
             })
         });
 
@@ -239,6 +240,7 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
             .catch((err) => console.log("ลบไม่ได้", err));
         })
       })
+      await firestore.collection("ngud").doc(ngud[0].id).update({total_onhand: ngud.total_onhand - totalItem})
       // await romoveInStock()
     }
   } catch (err) {

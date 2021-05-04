@@ -202,3 +202,14 @@
     }
 }
 
+.no-time-lottery {
+    background-color: rgb(224, 224, 224);
+    font-size: 20px;
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    min-height: 300px;
+    box-shadow: 2px 2px 5px rgb(192, 192, 192);
+}

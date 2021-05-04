@@ -31,7 +31,10 @@ const Home = () => {
               <Hot />
             </div>
             :
-            <div>ไม่อยู่ในช่วงเวลาขาย</div>
+            <div className="no-lottery">
+              <p>ไม่ได้อยู่ในช่วงวันและเวลาในการขายสลาก</p>
+              
+            </div>
           }
 
         </div>

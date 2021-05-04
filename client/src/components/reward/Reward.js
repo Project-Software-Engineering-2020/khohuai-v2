@@ -3,6 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import { getReward } from "../../redux/action/rewardAction";
 import { useDispatch, useSelector } from "react-redux";
+import s from '../userdashboard/widget'
 import Moment from "react-moment";
 import "moment/locale/th";
 import "./Reward.css";
@@ -32,6 +33,9 @@ const Reward = () => {
 
   return (
     <div className="container mt-3 p-3 bg-white">
+
+
+
       <header className="header-purchase-page">
         <NavLink
           to="/purchase"

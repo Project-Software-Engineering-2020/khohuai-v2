@@ -76,11 +76,6 @@ const Shop = ({ }) => {
         history.push("/shop?position=" + positionState + "&number=" + numberState);
     }
 
-
-    // const getNgudShop = () => {
-    //     Axios.get(api + "/lottery/currentngud").then((res) => setNgud(res.data))
-    // }
-
     useEffect(async () => {
 
         await getData();
@@ -92,12 +87,13 @@ const Shop = ({ }) => {
     }, [search])
 
     return (
-        <div>
+        <div className="container">
+            {ngud.open ? 
             <div>
                 {loading ? (
                     <div className="loader">Loading...</div>
                 ) : (
-                    <div className="container">
+                    <div >
                         <div className="shop">
                             <section className="section-search">
 
@@ -159,6 +155,11 @@ const Shop = ({ }) => {
                     </div>
                 )}
             </div>
+            : 
+            <div className="no-time-lottery">
+                   <p>ไม่ได้อยู่ในช่วงวันและเวลาในการขายสลาก</p>
+            </div>
+            }
         </div>
     )
 
