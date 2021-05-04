@@ -69,7 +69,7 @@ function Game() {
     let app;
     let keys = {};
     let speed = 8;
-    let volumn = 10;
+    let volumn = 20;
     let ticker_count = 0;
     let foschan_ticker = 0;
     let isEnd = false;
@@ -1030,7 +1030,7 @@ function Game() {
           let testSound = new PIXI_SOUND.sound.Sound.from({
             url: "sounds/poi.mp3",
             autoPlay: true,
-            volume: volumn / 100,
+            volume: volumn / 50,
           });
         }
       });
@@ -1050,7 +1050,7 @@ function Game() {
           let testSound = new PIXI_SOUND.sound.Sound.from({
             url: "sounds/poi.mp3",
             autoPlay: true,
-            volume: volumn / 100,
+            volume: volumn / 50,
           });
         }
       });
@@ -1366,7 +1366,7 @@ function Game() {
           song = new PIXI_SOUND.sound.Sound.from({
             url: songDict[i].path,
             autoPlay: true,
-            volume: volumn / 10,
+            volume: volumn / 50,
             complete: function () {
               isEnd = true;
               setTimeout(function () {
