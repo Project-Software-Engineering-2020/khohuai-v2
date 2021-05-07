@@ -10,9 +10,6 @@ function Game() {
   WebFont.load({
     google: {
         families: ['Sarabun']
-    },
-    active:e=>{
-        console.log("font loaded!");
     }
   });
 
@@ -105,7 +102,7 @@ function Game() {
     let modifier = 0;
     let bossCoinConverted = 0;
 
-    var cheatMode = false;
+    var cheatMode = true;
 
     let tempGachaCache = [];
 
@@ -228,7 +225,8 @@ function Game() {
     }
 
     var appX = windowWidth / 2 - appWidth / 2;
-    var appY = windowHeight / 2 - appHeight / 2;
+    var appY = 20;
+    //var appY = windowHeight / 2 - appHeight / 2;
 
     perfromanceGraphProp.x = appX + appWidth * 0.2;
     perfromanceGraphProp.y = appY + appHeight * 0.5;
@@ -2639,7 +2637,7 @@ function Game() {
             if (cheatMode && isPerfect(SButton, noteS)) {
               keys["83"] = true;
             }
-            if (noteS.y < appY + appHeight)
+            if (noteS.y < appY + appHeight + noteS.height)
               noteS.y += Math.ceil(speed * (appHeight / 800));
             else {
               combo = 0;
@@ -2652,7 +2650,7 @@ function Game() {
             if (cheatMode && isPerfect(DButton, noteD)) {
               keys["68"] = true;
             }
-            if (noteD.y < appY + appHeight)
+            if (noteD.y < appY + appHeight + noteD.height)
               noteD.y += Math.ceil(speed * (appHeight / 800));
             else {
               combo = 0;
@@ -2665,7 +2663,7 @@ function Game() {
             if (cheatMode && isPerfect(KButton, noteK)) {
               keys["75"] = true;
             }
-            if (noteK.y < appY + appHeight)
+            if (noteK.y < appY + appHeight + noteK.height)
               noteK.y += Math.ceil(speed * (appHeight / 800));
             else {
               combo = 0;
@@ -2678,7 +2676,7 @@ function Game() {
             if (cheatMode && isPerfect(LButton, noteL)) {
               keys["76"] = true;
             }
-            if (noteL.y < appY + appHeight)
+            if (noteL.y < appY + appHeight + noteL.height)
               noteL.y += Math.ceil(speed * (appHeight / 800));
             else {
               combo = 0;
