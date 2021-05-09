@@ -80,7 +80,7 @@ const Basket = () => {
                   class="form-check-input"
                   type="checkbox"
                   id="defaultCheck1"
-                  checked={myCart.check}
+                  checked={myCart.selectAll}
                   onChange={selectAllitem}
                 />
                 <label class="form-check-label" for="defaultCheck1">

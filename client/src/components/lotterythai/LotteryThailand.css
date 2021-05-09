@@ -77,7 +77,7 @@
   .prize-number-one-body span {
     letter-spacing: 18px;
     margin: 0;
-    font-size: 68px;
+    font-size: 60px;
     font-weight: bold;
     font-family: sans-serif;
     color: rgb(50, 50, 50);
@@ -97,7 +97,7 @@
   .prize-number-near-one-header h4 {
     display: inline-block;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 19.5px;
   }
   .prize-number-near-one-header h6 {
     display: inline-block;
@@ -106,14 +106,14 @@
   .prize-number-near-one-body {
     background-color: white;
     margin: 0;
-    padding: 10px 0;
+    padding: 7px 0;
     text-align: center;
     border: 1px solid rgb(167, 167, 167);
   }
   .prize-number-near-one-body div {
     letter-spacing: 3px;
     margin: 0;
-    font-size: 26px;
+    font-size: 24px;
     font-weight: bold;
     font-family: sans-serif;
     color: rgb(50, 50, 50);

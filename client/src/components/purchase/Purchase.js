@@ -28,7 +28,7 @@ const Purchase = () => {
     }, [])
 
     return (
-        <div className="container mt-3 p-4 bg-white">
+        <div className="container mt-3 p-4 bg-white card">
 
             <Widget/>
 

@@ -42,11 +42,11 @@ const Foryou = () => {
             {loading ?
                 <div className="recommend-body">
                     {data.map((item, k) => {
-                        if (k < 4) {
+                        // if (k < 4) {
                             return (
                                 <Lottoryitem key={k} data={item} number={2} />
                             )
-                        }
+                        // }
                     })}
 
                 </div>

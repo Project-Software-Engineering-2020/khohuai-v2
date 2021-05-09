@@ -6,7 +6,8 @@ const initialState = {
   check: true,
   cart: [],
   selected: [],
-  message: ""
+  message: "",
+  selectAll: true
 };
 
 function Cart(state = initialState, action) {
@@ -15,7 +16,7 @@ function Cart(state = initialState, action) {
     let totalPrice = 0;
     let totalItem = 0;
     let ArraySelected = [];
-
+    let select_All = true
       state.cart.map((item) => {
         totalItem += item.qty;
 
@@ -25,6 +26,9 @@ function Cart(state = initialState, action) {
           totalSelect += item.qty;
           ArraySelected.push(item);
         }
+        else if(item.selected === false) {
+          select_All = false;
+        }
       })
 
 
@@ -33,7 +37,8 @@ function Cart(state = initialState, action) {
       totalSelect: totalSelect,
       totalPrice: totalPrice,
       totalItem: totalItem,
-      selected: ArraySelected
+      selected: ArraySelected,
+      selectAll: select_All
     });
   }
 
