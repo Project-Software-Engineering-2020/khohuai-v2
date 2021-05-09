@@ -12,7 +12,6 @@ const getCart = async (uid) => {
             .collection("cart").get()
             .then((doc) => {
                 doc.docs.forEach(item => {
-                    console.log("item in cart", item)
                     MyCart.push(
                         {
                             id: item.id,
@@ -106,8 +105,6 @@ const getMyCart = async (req, res) => {
     });
 
     const MyCart = await getCart(uid)
-    console.log("cart", uid)
-    console.log(MyCart)
     await res.status(200).send({ data: MyCart, message: "ข้อมูลตะกร้าสินค้าของคุณ" })
 
 }
@@ -135,8 +132,6 @@ const addMyCart = async (req, res) => {
         //check lottery in stock 
         await firestore.collection("lottery").doc(lottery_number).get()
             .then((doc) => {
-
-                console.log("instock  == ", doc.data().photoURL.length)
 
                 if (doc.data().photoURL.length > 0) {
                     stock = doc.data().photoURL.length;
@@ -281,7 +276,7 @@ const removeMyCart = async (req, res) => {
     });
     
     const id = req.params.id;
-    let MyCart = []
+
     try {
         //ลบ item ในตะกร้า
         await firestore.collection("users").doc(uid)

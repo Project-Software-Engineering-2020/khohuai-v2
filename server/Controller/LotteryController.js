@@ -227,7 +227,7 @@ const getAlmostOutOfStock = async (req, res, next) => {
             lotteryArray[doc.data().photoURL.length].push({
                 id: doc.id,
                 photoURL: doc.data().photoURL,
-                nguad: doc.data().nguad,
+                ngud: doc.data().ngud.id,
                 stock: doc.data().photoURL.length
             });
         });

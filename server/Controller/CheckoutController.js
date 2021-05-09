@@ -10,8 +10,9 @@ const omise = require('omise')({
 })
 
 const checkoutCreditCard = async (req, res, next) => {
-  console.log("เข้ามาแล้ว")
-  const { email, uid, amount, token, buyItem, totalItem, book_name, book_number, book_provider, name } = req.body;
+  console.log("เข้ามาแล้ว");
+
+  const { email, uid, amount, token, buyItem, totalItem } = req.body;
 
   try {
     const customer = await omise.customers.create({
@@ -24,6 +25,7 @@ const checkoutCreditCard = async (req, res, next) => {
       currency: "thb",
       customer: customer.id
     })
+    
     createinvoice(charge, buyItem, uid, totalItem)
     // console.log("Charge ========> " , charge)
     res.send({
@@ -53,9 +55,11 @@ const romoveInStock = async (item_buy) => {
       {
         number: item.id,
         lottery_img: item.data().photoURL,
+        ngud: item.data().ngud
       }
     );
   });
+
 
 
   let enough = true;
@@ -129,10 +133,11 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
   let item_buy = doto;
   let ngud = [];
 
+  let ngud_id_buy = "01";
+
 
   try {
-    const ngudDB = await firestore.collection('ngud').orderBy("end", "desc").get()
-    await ngudDB.docs.forEach(doc => {
+    await firestore.collection('ngud').doc(ngud_id_buy).get().then(doc => {
       ngud.push({
         ngud: doc.id,
         end: doc.data().end,
@@ -272,7 +277,7 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
             .catch((err) => console.log("ลบไม่ได้", err));
         })
       })
-      await firestore.collection("ngud").doc(ngud[0].id).update({ total_onhand: ngud.total_onhand - totalItem })
+      await firestore.collection("ngud").doc(ngud[0].ngud).update({ total_onhand: ngud.total_onhand - totalItem })
       // await romoveInStock()
     }
   } catch (err) {

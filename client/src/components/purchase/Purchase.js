@@ -23,7 +23,7 @@ const Purchase = () => {
 
     useEffect(async () => {
         await dispatch(getMyCartFromDB());
-        // await dispatch(getPurchase());
+        await dispatch(getPurchase());
 
     }, [])
 
@@ -52,7 +52,7 @@ const Purchase = () => {
                                     คำสั่งซื้อ #{item.invoiceid}
                                 </div>
                                 <div className="text-right">
-                                    <Moment format="ชำระเงินเมื่อ DD-MM-YYYY เวลา HH:mm:ss">
+                                    <Moment format="ชำระเงินเมื่อ DD MMMM YYYY เวลา HH:mm:ss">
                                         {item.date}
                                     </Moment>
                                 </div>
