@@ -4,7 +4,16 @@ import * as PIXI from "pixi.js";
 import { default as PIXI_SOUND } from "pixi-sound";
 import Axios from "axios";
 import { api } from '../../environment'
+var WebFont = require('webfontloader');
 function Game() {
+
+  WebFont.load({
+    google: {
+        families: ['Sarabun']
+    }
+  });
+
+
   //database
   let inventory = [];
 
@@ -93,7 +102,7 @@ function Game() {
     let modifier = 0;
     let bossCoinConverted = 0;
 
-    var cheatMode = false;
+    var cheatMode = true;
 
     let tempGachaCache = [];
 
@@ -198,25 +207,26 @@ function Game() {
     } else if (windowHeight >= 1000 && windowWidth < 500) {
       appHeight = windowWidth * 1.6;
       appWidth = windowWidth * 0.8;
-      smallFontSize = 10;
-      normalFontSize = 15;
-      bigFontSize = 20;
+      smallFontSize = 20;
+      normalFontSize = 25;
+      bigFontSize = 40;
     } else if (windowHeight < 1000 && windowWidth >= 500) {
       appHeight = windowHeight * 0.8;
       appWidth = windowHeight * 0.4;
-      smallFontSize = 10;
-      normalFontSize = 15;
-      bigFontSize = 20;
+      smallFontSize = 15;
+      normalFontSize = 20;
+      bigFontSize = 30;
     } else {
       appHeight = windowHeight * 0.8;
       appWidth = windowWidth * 0.8;
-      smallFontSize = 10;
-      normalFontSize = 15;
-      bigFontSize = 20;
+      smallFontSize = 15;
+      normalFontSize = 20;
+      bigFontSize = 30;
     }
 
     var appX = windowWidth / 2 - appWidth / 2;
-    var appY = windowHeight / 2 - appHeight / 2;
+    var appY = 20;
+    //var appY = windowHeight / 2 - appHeight / 2;
 
     perfromanceGraphProp.x = appX + appWidth * 0.2;
     perfromanceGraphProp.y = appY + appHeight * 0.5;
@@ -226,23 +236,28 @@ function Game() {
     const Headerstyle = new PIXI.TextStyle({
       fontSize: bigFontSize,
       fontWeight: "bolder",
+      fontFamily: "Sarabun"
     });
 
     const Menustyle = new PIXI.TextStyle({
       fontSize: normalFontSize,
       fontStyle: "italic",
+      fontFamily: "Sarabun"
     });
 
     const Menustyle2 = new PIXI.TextStyle({
       fontSize: normalFontSize,
+      fontFamily: "Sarabun"
     });
 
     const Detailstyle = new PIXI.TextStyle({
       fontSize: smallFontSize,
+      fontFamily: "Sarabun"
     });
 
     const Dangerstyle = new PIXI.TextStyle({
       fontSize: normalFontSize,
+      fontFamily: "Sarabun",
       fill: "#b00b0b",
     });
 
@@ -283,7 +298,7 @@ function Game() {
     );
 
     background = new PIXI.Graphics();
-    background.beginFill(0xaaaaaa);
+    background.beginFill(0xDEDEDE);
     background.drawRect(appX, appY, appWidth, appHeight);
     app.stage.addChild(background);
 
@@ -494,6 +509,16 @@ function Game() {
       tutorialScreen.visible = false;
       titleScreen.visible = true;
     });
+    
+    let tutorialShadow = new PIXI.Graphics();
+    tutorialShadow.beginFill(0x303030);   
+    tutorialShadow.drawRect(appX + appWidth * 0.22, appY + appHeight * 0.09, appWidth * 0.6, appHeight * 0.5);
+    tutorialScreen.addChild(tutorialShadow);
+
+    let tutorialFrame = new PIXI.Graphics();
+    tutorialFrame.beginFill(0xffffff);   
+    tutorialFrame.drawRect(appX + appWidth * 0.195, appY + appHeight * 0.0975, appWidth * 0.61, appHeight * 0.505);
+    tutorialScreen.addChild(tutorialFrame);
 
     for(let i=1; i<=6; i++){
       let tutorialTexture = new PIXI.Texture.from("images/tutorial/" + i + ".png");
@@ -505,20 +530,20 @@ function Game() {
     let tutorialTextArray = [
       "กดที่เพลงเพื่อเลือกเล่นเพลง หมายเหตุ: หากท่านไม่มีตั๋วเล่นเกมจะเข้าเล่นเกมไม่ได้ ท่านสามารถหาตั๋วเล่นเกมได้จากการซื้อสลาก",
       "กดปรับความเร็วและกดใช้ตั๋วเพื่อเริ่มเล่น หมายเหตุ: ยิ่งเพิ่มความเร็วมากเท่าไหร่จะยิ่งมีโอกาส เล่นโน้ตมากขึ้นและทำคะแนนได้มากขึ้น",
-      "กดปุ่ม S, D, K, L ให้ตรงตามโน้ตเพลง หากโน้ตเป็นแถบยาวให้กดค้างและปล่อยเมื่อ โน้ตสิ้นสุดพอดี หากเล่นในโทรศัพท์ สามารถใช้มือกดปุ่มได้เลย",
+      "กดปุ่ม S, D, K, L ให้ตรงตามโน้ตเพลง หากโน้ตเป็นแถบยาวให้กดค้างและปล่อยเมื่อโน้ตสิ้นสุดพอดี หากเล่นในโทรศัพท์ สามารถใช้มือกดปุ่มได้เลย",
       "เมื่อเล่นเสร็จจะได้รับ Boss coin ตามคะแนนและเกรดที่ได้รับ",
       "กดสัญลักษณ์กาชาในหน้า Home เพื่อใช้ Boss coin ที่ได้รับ",
-      "ใช้ Boss coin เพื่อเล่นกาชา ทุกครั้งที่เล่นอาจจะได้รับ Chonlasit coin ไปใช้เป็นส่วนลดในการซื้อสลาก ก็ได้นะ!"
+      "ใช้ Boss coin เพื่อเล่นกาชา ทุกครั้งที่เล่นอาจจะได้รับ Chonlasit coin ไปใช้เป็นส่วนลดในการซื้อสลากก็ได้นะ!"
     ];
 
     let tutorialText = new PIXI.Text(tutorialTextArray[0], {
-      fontFamily: "Courier New",
+      fontFamily: "Saarabun",
       fontSize: smallFontSize,
       wordWrap: true,
-      //breakWords: true,
-      wordWrapWidth: appWidth * 0.9
+      breakWords: true,
+      wordWrapWidth: appWidth * 0.6
     });
-    adjObj(tutorialText, tutorialScreen, appX + appWidth * 0.05, appY + appHeight * 0.65, false);
+    adjObj(tutorialText, tutorialScreen, appX + appWidth * 0.2, appY + appHeight * 0.65, false);
 
 
     let backTutorialButton = new PIXI.Text("<-", Headerstyle);
@@ -2612,7 +2637,7 @@ function Game() {
             if (cheatMode && isPerfect(SButton, noteS)) {
               keys["83"] = true;
             }
-            if (noteS.y < appY + appHeight)
+            if (noteS.y < appY + appHeight + noteS.height)
               noteS.y += Math.ceil(speed * (appHeight / 800));
             else {
               combo = 0;
@@ -2625,7 +2650,7 @@ function Game() {
             if (cheatMode && isPerfect(DButton, noteD)) {
               keys["68"] = true;
             }
-            if (noteD.y < appY + appHeight)
+            if (noteD.y < appY + appHeight + noteD.height)
               noteD.y += Math.ceil(speed * (appHeight / 800));
             else {
               combo = 0;
@@ -2638,7 +2663,7 @@ function Game() {
             if (cheatMode && isPerfect(KButton, noteK)) {
               keys["75"] = true;
             }
-            if (noteK.y < appY + appHeight)
+            if (noteK.y < appY + appHeight + noteK.height)
               noteK.y += Math.ceil(speed * (appHeight / 800));
             else {
               combo = 0;
@@ -2651,7 +2676,7 @@ function Game() {
             if (cheatMode && isPerfect(LButton, noteL)) {
               keys["76"] = true;
             }
-            if (noteL.y < appY + appHeight)
+            if (noteL.y < appY + appHeight + noteL.height)
               noteL.y += Math.ceil(speed * (appHeight / 800));
             else {
               combo = 0;
@@ -2902,7 +2927,8 @@ function Game() {
     };
   },[]);
 
-  return <div></div>;
+  return <div>
+  </div>;
 }
 
 export default Game;
