@@ -10,24 +10,26 @@ import { getCurrent } from '../../redux/action/ngud'
 const Home = () => {
 
   const dispatch = useDispatch();
-  const ngud = useSelector(state => state.ngud);
+
+  const auth = useSelector(state => state.auth);
 
   useEffect(async () => {
     await dispatch(getCurrent());
-    await dispatch(getMyCartFromDB())
+    // if (auth.status === true) {
+    //   await dispatch(getMyCartFromDB())
+    // }
   }, [])
 
-  const mycart = useSelector((state) => state.cart);
 
   return (
     <div>
       <div className="home">
         <div className="container">
           <Carousel />
-            <div>
-              <Foryou />
-              <Hot />
-            </div>
+          <div>
+            <Foryou />
+            <Hot />
+          </div>
         </div>
       </div>
 

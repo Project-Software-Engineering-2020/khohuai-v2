@@ -32,7 +32,6 @@ const getAllUser = async (req, res, next) => {
                 // console.log(user)
                 userArray.push(user);
             });
-            console.log(userArray);
             res.send(userArray);
         }
     } catch (error) {

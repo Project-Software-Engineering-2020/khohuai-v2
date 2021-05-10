@@ -25,7 +25,7 @@ const checkoutCreditCard = async (req, res, next) => {
       currency: "thb",
       customer: customer.id
     })
-    
+
     createinvoice(charge, buyItem, uid, totalItem)
     // console.log("Charge ========> " , charge)
     res.send({
@@ -129,23 +129,24 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
   const Mycart = doto;
   const uid = idUser;
   const date = new Date();
-  let lottery_instock = [];
   let item_buy = doto;
   let ngud = [];
-
-  let ngud_id_buy = "01";
-
+  let ngud_id_buy = "";
 
   try {
-    await firestore.collection('ngud').doc(ngud_id_buy).get().then(doc => {
-      ngud.push({
-        ngud: doc.id,
-        end: doc.data().end,
-        start: doc.data().start,
-        total_onhand: doc.data().total_onhand
-      })
-    });
-
+    await firestore.collection("ngud")
+      .where("open", "==", true)
+      .get().then(docs => {
+        docs.forEach((doc) => {
+          ngud.push({
+            ngud: doc.id,
+            end: doc.data().end,
+            start: doc.data().start,
+            total_onhand: doc.data().total_onhand
+          })
+          ngud_id_buy = doc.id;
+        })
+      });
 
     if (charge.status === "successful") {
 
@@ -161,10 +162,7 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
         })
       })
 
-      // const item_bought = await romoveInStock(Mycart);
       let lottery_instock = [];
-      // let item_buy = [];
-      let cut_stock = [];
 
       //ดึงข้อมูล stock
       const instock = await firestore.collection("lottery").get()
@@ -176,9 +174,6 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
           }
         );
       });
-
-
-      let enough = true;
 
       let buy = [];
 
@@ -206,23 +201,21 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
 
                 img.push(target_lottery);
 
-              
+
                 lottery_each_number.pop(target_lottery);
 
-                 console.log(lottery_each_number.length);
-                 console.log(lottery_instock[j].number)
+                console.log(lottery_each_number.length);
+                console.log(lottery_instock[j].number)
 
-                if(lottery_each_number.length == 0){
+                if (lottery_each_number.length == 0) {
                   await firestore.collection("lottery").doc(lottery_instock[j].number).delete()
                 }
                 else {
                   await firestore.collection("lottery").doc(lottery_instock[j].number)
-                  .update({
-                    photoURL: lottery_each_number
-                  })
+                    .update({
+                      photoURL: lottery_each_number
+                    })
                 }
-
-                
               }
 
               buy.push(
@@ -234,7 +227,6 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
                   prize: [""]
                 }
               );
-
             }
             else {
 
@@ -244,9 +236,8 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
         }
         continue;
       }
-      console.log(buy);
 
-      console.log("ngud   ",ngud)
+      console.log("ngud ", ngud)
 
       let datainsert = {
         charge_id: charge.id,
@@ -264,7 +255,7 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
         lastname: userData[0].lastname
       }
 
-      console.log("dataInsrt  ",datainsert);
+      console.log("dataInsrt  ", datainsert);
 
       const invoice = await firestore.collection("invoices").doc().set(datainsert).then((res) => {
         console.log("invoice เพิ่มแล้ว")
@@ -277,8 +268,11 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
             .catch((err) => console.log("ลบไม่ได้", err));
         })
       })
-      await firestore.collection("ngud").doc(ngud[0].ngud).update({ total_onhand: ngud.total_onhand - totalItem })
-      // await romoveInStock()
+      let _onhand = ngud[0].total_onhand
+      _onhand = _onhand - totalItem;
+
+      await firestore.collection("ngud").doc(ngud[0].ngud).update({ total_onhand: _onhand })
+
     }
   } catch (err) {
     console.log(err)
@@ -310,8 +304,6 @@ const checkCompleteProfile = async (req, res) => {
         bank_provider: doc.data().book_provider
       }
     })
-
-    console.log(userData);
 
     if (userData.firstname === "" || userData.firstname === undefined || userData.firstname === null) { complete = false }
     if (userData.lastname === "" || userData.lastname === undefined || userData.lastname === null) { complete = false }

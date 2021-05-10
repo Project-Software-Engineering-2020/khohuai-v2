@@ -11,16 +11,20 @@ const Lottery = require("../Models/Lottery");
 const getNgudShop = async (req,res) => {
 
     let ngud = [];
-    const ngudDB = await firestore.collection('ngud').orderBy("end", "desc").get()
-    await ngudDB.docs.forEach(doc => {
-        ngud.push({
+
+    await firestore.collection("ngud")
+      .where("open", "==", true)
+      .get().then(docs => {
+        docs.forEach((doc) => {
+          ngud.push({
             ngud: doc.id,
             end: doc.data().end,
             start: doc.data().start,
-            open: doc.data().open
+            total_onhand: doc.data().total_onhand
+          })
         })
-    });
-    //console.log(ngud[0]);
+      });
+
     res.send(ngud[0]);
 }
 
@@ -104,8 +108,6 @@ const getRecommendedLottery = async (req, res, next) => {
 
             history.docs.forEach(hist => {
                 //หาประวัติการซื้อของ user นั้น
-                console.log("nguad : ", lotteryArray[0].nguad);
-                console.log("user.id : ", user.uid);
 
                 if (hist.data().userid === user.uid && lotteryArray[0].nguad >= hist.data().nguad - 2) {
                     if (lotteryArray[0].nguad >= hist.data().nguad - 2) {
@@ -210,9 +212,6 @@ const getRecommendedLottery = async (req, res, next) => {
             }
         }
 
-        // console.log("historyArray : ", historyArray);
-        // console.log("lotteryArray : ", lotteryArray);
-        // console.log("matchedArray : ", matchedArray);
         res.send(matchedArray);
     } catch (error) {
         console.log(error);
@@ -249,9 +248,7 @@ const getAlmostOutOfStock = async (req, res, next) => {
             }
             if (count === 8) break;
         }
-        // console.log("hot : ", almostOutOfStockLotteryArray);
-        // console.log("lotteryArray : ", lotteryArray);
-        // console.log("almostOutOfStockLotteryArray : ", almostOutOfStockLotteryArray);
+
         res.send(almostOutOfStockLotteryArray);
     }
     catch (error) {
@@ -266,9 +263,6 @@ const getSearchNumber = async (req, res, next) => {
         //recieved search number
         const number = req.query.keyword;
         const position = req.query.position;
-
-        // console.log(number);
-        // console.log(position);
 
         const finding = number.split("");
         let findingNum = "";
@@ -335,7 +329,6 @@ const getSearchNumber = async (req, res, next) => {
             });
         }
 
-        //console.log(matchedLotteryArray);
         res.send(matchedLotteryArray);
     } catch (error) {
         console.log(error);

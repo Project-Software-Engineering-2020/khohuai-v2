@@ -67,7 +67,7 @@ const googleLogin = async (req, res) => {
       //ดึงข้อมูล
     } else {
       //ผู้ใช้ปัจจุบัน
-      console.log("Present", doc.data());
+      console.log("Present");
       // u.then((doc) => {
       const user = new User(
         (uid = doc.data().uid),
