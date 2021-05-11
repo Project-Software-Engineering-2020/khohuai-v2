@@ -11,7 +11,7 @@ function ProtectedRoute({component: Component, ...rest}) {
             {...rest}
             component={(props) => {
                 // check login
-                if(auth.status === true && auth.role === "user") {
+                if(auth.authenticated === true) {
                     return <Component {...props} />
                 }
                 else{
@@ -24,3 +24,28 @@ function ProtectedRoute({component: Component, ...rest}) {
 }
 
 export default ProtectedRoute
+
+
+// import React from 'react';
+// import { Route, Redirect } from 'react-router-dom';
+// import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
+
+// const AuthRoute = ({ component: Component, authenticated, ...rest }) => (
+//   <Route
+//     {...rest}
+//     render={(props) =>
+//       authenticated === true ? <Redirect to="/" /> : <Component {...props} />
+//     }
+//   />
+// );
+
+// const mapStateToProps = (state) => ({
+//   authenticated: state.user.authenticated
+// });
+
+// AuthRoute.propTypes = {
+//   user: PropTypes.object
+// };
+
+// export default connect(mapStateToProps)(AuthRoute);

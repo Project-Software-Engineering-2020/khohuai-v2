@@ -115,32 +115,41 @@ const googleLogin = async (req, res) => {
 const signin = async (req, res) => {
   const _email = req.body.email;
   const _password = req.body.password;
-  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+  // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
   try {
-    firebase.auth()
+    auth
       .signInWithEmailAndPassword(_email, _password)
       .then((result) => {
-        result.result.getIdToken().then((UserToken) => {
-          console.log("UserTOken ++++++++++++++++++++++++++++++++",UserToken);
-          const user = firestore.collection("users").doc(result.user.uid);
-          user.get().then((doc) => {
-            const user = new User(
-              (uid = doc.data().uid),
-              (firstname = doc.data().firstname),
-              (lastname = doc.data().lastname),
-              (displayName = doc.data().displayName),
-              (photoURL = doc.data().photoURL),
-              (email = doc.data().email),
-              (role = doc.data().role),
-              (provider = doc.data().provider)
-              // (localToken = UserToken)
-            );
-            res.status(200).send(user);
-          });
-        })
+        return result.user.getIdToken();
+
+        // result.result.getIdToken().then((UserToken) => {
+        //   console.log("UserTOken ++++++++++++++++++++++++++++++++",UserToken);
+          
+        
+        // const user = firestore.collection("users").doc(result.user.uid);
+        //   user.get().then((doc) => {
+        //     const user = new User(
+        //       (uid = doc.data().uid),
+        //       (firstname = doc.data().firstname),
+        //       (lastname = doc.data().lastname),
+        //       (displayName = doc.data().displayName),
+        //       (photoURL = doc.data().photoURL),
+        //       (email = doc.data().email),
+        //       (role = doc.data().role),
+        //       (provider = doc.data().provider)
+        //       // (localToken = UserToken)
+        //     );
+        //     res.status(200).send(user);
+        //   });
+
+
+        // })
+      }).then((token) => {
+      return res.json({ token });
       })
       .catch((error) => {
-        res.status(201).send(error.code);
+        console.log(error)
+        res.status(201).send(error);
       });
   } catch (error) {
     console.log(error);
@@ -157,16 +166,23 @@ const signup = (req, res) => {
     "https://img2.thaipng.com/20180523/tha/kisspng-businessperson-computer-icons-avatar-clip-art-lattice-5b0508dc6a3a10.0013931115270566044351.jpg";
   const role = "user";
   const provider = "hotmail";
+  let token , userID;
+
+
+  // const userRef = firestore.collection("users").doc(email);
+
 
   try {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then(async (result) => {
-        const user = auth.currentUser();
-        console.log("Current User ++++++++++++++++++++++++++++++",user);
+        console.log("Here is Result" + result.user.uid);
+        // console.log("Current User ++++++++++++++++++++++++++++++",user);
         if (result.additionalUserInfo.isNewUser === true) {
           const userRef = firestore.collection("users").doc(result.user.uid);
+          // console.log("UserRed ++++++++++++++++++++++++",userRef);
           const doc = await userRef.get();
+          // console.log("UserRed ++++++++++++++++++++++++",doc.data());
           if (!doc.data()) {
             await userRef
               .set({
@@ -178,10 +194,15 @@ const signup = (req, res) => {
                 photoURL: photoURL,
                 email: result.user.email,
                 role: role,
+                status:true,
                 provider: provider,
               })
               .then((r) => {
-                res.status(200).send(result.user.uid);
+                userID = result.user.uid;
+                return result.user.getIdToken();
+                // res.status(200).send(result);
+              }).then((idtoken) => {
+                return res.status(201).json({idtoken });
               });
 
               let inventory = await firestore.collection("inventorys").get();

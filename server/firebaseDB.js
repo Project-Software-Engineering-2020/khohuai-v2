@@ -1,4 +1,7 @@
 const firebase = require('firebase');
+const firebaseAdmin = require("firebase-admin");
+
+
 // const config = require('./config');
 // const firebaseAdmin = require("firebase-admin");
 
@@ -21,6 +24,9 @@ const firebase = require('firebase');
 //   databaseURL: "https://hi-chon.firebaseio.com"
 // });
 
+const serviceAccount = require("./khohuai-admin-firebase-adminsdk-x9a4w-782bb15df6.json");
+
+
 // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 const firebaseConfig = {
   apiKey: "AIzaSyDFVW8oB9jThgn0V_dBOlwlSw7xXOIGEMk",
@@ -31,6 +37,13 @@ const firebaseConfig = {
   messagingSenderId: "644654390402",
   appId: "1:644654390402:web:7d6bb217c4a6daff64e89b"
 };
+
+const admin = firebaseAdmin.initializeApp({
+  credential: firebaseAdmin.credential.cert(serviceAccount),
+  databaseURL: "https://khohuai-v2-default-rtdb.firebaseio.com",
+  storageBucket: "gs://khohuai-v2.appspot.com"
+});
+
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
@@ -51,6 +64,7 @@ facebookProvider.addScope('user_birthday');
 // const storage = firebase.storage();
 
 module.exports = {
+  admin,
   firebase,
     firebaseApp,
     firestore,

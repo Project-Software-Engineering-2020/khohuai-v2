@@ -6,12 +6,20 @@ const initialState = {
     email: null,
     provider: null,
     status:false,
-    token:null
+    // token:null,
+    authenticated: false,
 };
 
 function userAuth(state = initialState , action) {
 
     switch (action.type) {
+        
+        case 'SET_AUTHENTICATED':
+            state = {
+              ...state,
+              authenticated: action.data
+            };
+            return state;
 
         case 'SET_LOGIN':
             state = {
@@ -23,7 +31,7 @@ function userAuth(state = initialState , action) {
                 email: action.data.email,
                 provider: action.data.provider,
                 status: action.data.status,
-                token: action.data.token
+                authenticated: true
             };
             return state;
 
@@ -37,13 +45,13 @@ function userAuth(state = initialState , action) {
                 email: action.data.email,
                 provider: action.data.provider,
                 status: action.data.status,
-                token: action.data.token
+                // token: action.data.token
             };
             return state;
 
         case 'SET_LOGOUT':
             state = initialState;
-            return state;
+            return initialState;
 
         default:
             return state;

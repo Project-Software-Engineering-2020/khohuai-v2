@@ -35,14 +35,46 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import { closeAlert } from './redux/action/alertAction';
 import { Fragment } from "react";
 import UpdateProfile from "./components/profile/UpdateProfile";
+import {
+  setloginWithEmail,
+  setauthenticate,
+  setlogout,
+} from "./redux/action/authAction";
+// import { SET_AUTHENTICATED } from './redux/types';
+// jwtDecode
+import jwtDecode from 'jwt-decode';
+import Axios from "axios";
+
 
 function App() {
 
   const dispatch = useDispatch();
 
-  const auth = useSelector((state) => state.auth);
+  // const auth = useSelector((state) => state.auth);
+
   const alert = useSelector(state => state.alert)
 
+  const token = localStorage.FBIdToken;
+  console.log("Tokenno +++++++++" + token)
+  if (token) {
+    const decodedToken = jwtDecode(token);
+    if (decodedToken.exp * 1000 < Date.now()) {
+      console.log("Can't Decoder")
+      dispatch(setlogout());
+      window.location.href = '/login';
+    } else {
+      console.log("Samart Decoder :" , decodedToken)
+      // dispatch(setloginWithEmail())
+      dispatch(setauthenticate());
+      // Axios.defaults.headers.common['Authorization'] = token;
+      // dispatch(getUserData());
+    }
+  }
+  else{
+    // window.location.href = '/login';
+    console.log("Mai Mee Token")
+  }
+  
   return (
 
     <Fragment>
@@ -59,7 +91,7 @@ function App() {
           <PrivateRoute path="/me/:complete" component={Profile} />
           <PrivateRoute path="/upload" component={UploadLottery} />
           <PrivateRoute path="/updatepassword" component={UpdatePassword} />
-          <PrivateRoute path="/forgotpassword" component={ForgotPassword} />
+          <Route path="/forgotpassword" component={ForgotPassword} />
           <PrivateRoute
             path="/LotteryReports"
             exact

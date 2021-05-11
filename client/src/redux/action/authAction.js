@@ -15,6 +15,31 @@ export function setloginWithEmail(user) {
         }
     });
 }
+export function setauthenticate(){
+    return store.dispatch({
+        type: 'SET_AUTHENTICATED',
+        data:{
+            authenticated: true,
+        }
+    })
+}
+
+export function setloginAfterSignup(user){
+    return store.dispatch({
+        type: 'SET_LOGIN',
+        data:{
+            uid: user.data.user.uid,
+            displayName: user.data.user.displayName,
+            photoURL: "https://img2.thaipng.com/20180523/tha/kisspng-businessperson-computer-icons-avatar-clip-art-lattice-5b0508dc6a3a10.0013931115270566044351.jpg",
+            role: user.data.user.role,
+            email: user.data.user.email,
+            provider: "email",
+            status: true,
+            authenticated: true,
+
+        }
+    })
+}
 
 export function setloginWithGoogle(user,token) {
     return store.dispatch({
@@ -34,6 +59,7 @@ export function setloginWithGoogle(user,token) {
 }
 
 export function setlogout() {
+    localStorage.removeItem('FBIdToken');
     return store.dispatch({ type: "SET_LOGOUT" })
 }
 

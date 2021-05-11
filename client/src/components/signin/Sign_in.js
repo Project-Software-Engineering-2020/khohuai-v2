@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect , useHistory} from "react-router-dom";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import { auth, firestore, googleProvider } from "../../firebase/firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,6 +13,7 @@ import {
 import Axios from "axios";
 import { api } from '../../environment'
 const Sign_in = () => {
+  const history = useHistory();
   const stetus = useSelector((state) => state.auth);
   const [redirect, setredirect] = useState(null);
   const [email, setemail] = useState("");
@@ -34,7 +35,7 @@ const Sign_in = () => {
     setPasswordErr("");
     setUserErr("");
     e.preventDefault();
-
+    
     try {
       Axios.post(api + "/auth/login", {
         email,
@@ -53,8 +54,10 @@ const Sign_in = () => {
             setUserErr("คุณใส่รหัสผ่านผิดเกิน 3 ครั้ง กรุณารอสักครู่");
           }
         } else if (res.status === 200) {
-          // localStorage.setItem('token', res.data.localToken)
-          dispatch(setloginWithEmail(res));
+          history.push("/");
+          localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`)
+          // console.log(res)
+          // dispatch(setloginWithEmail(res));
         }
       });
     } catch (error) {
