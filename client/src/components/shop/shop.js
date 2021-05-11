@@ -3,20 +3,24 @@ import queryString from 'query-string';
 import { Form } from 'react-bootstrap';
 import { Redirect, useHistory, useLocation, useParams } from 'react-router-dom';
 import Lottoryitem from "./LotteryItem";
+import { getCurrent } from '../../redux/action/ngud'
+import { useDispatch,useSelector } from 'react-redux'
 import './shop.css';
 import Axios from "axios";
 import Moment from 'react-moment';
 import 'moment/locale/th';
 import { api } from '../../environment'
 const Shop = ({ }) => {
+
+    const ngud = useSelector(state => state.ngud);
+    const dispatch = useDispatch();
+
     const history = useHistory()
     const [loading, setloading] = useState(true);
 
     const [numberState, setNumber] = useState("");
     const [positionState, setPosition] = useState("last2");
     const [data, setData] = useState();
-
-    const [ngud, setNgud] = useState();
 
     //params from url
     const { search } = useLocation();
@@ -72,28 +76,23 @@ const Shop = ({ }) => {
         history.push("/shop?position=" + positionState + "&number=" + numberState);
     }
 
-
-    const getNgudShop = () => {
-        Axios.get(api + "/lottery/currentngud").then((res) => setNgud(res.data))
-    }
-
     useEffect(async () => {
 
         await getData();
 
-        await getNgudShop()
+        await dispatch(getCurrent())
 
         await setloading(false);
 
     }, [search])
 
     return (
-        <div>
+        <div className="container">
             <div>
                 {loading ? (
                     <div className="loader">Loading...</div>
                 ) : (
-                    <div className="container">
+                    <div >
                         <div className="shop">
                             <section className="section-search">
 
@@ -106,7 +105,7 @@ const Shop = ({ }) => {
                                     <div className="header-shop-text">
                                         <h3>สลากงวดประจำวันที่
                                             <Moment format=" DD MMMM YYYY ">
-                                                {ngud}
+                                                {ngud.end}
                                             </Moment>
                                         </h3>
                                         <h5>ราคาใบละ 80 บาท</h5>
@@ -155,6 +154,7 @@ const Shop = ({ }) => {
                     </div>
                 )}
             </div>
+          
         </div>
     )
 

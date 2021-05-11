@@ -4,29 +4,32 @@ import Foryou from "./foryou";
 import Hot from "./hot";
 import Carousel from "./carousel";
 import Footer from "../footer/Footer";
-import { useSelector } from "react-redux";
 import { getMyCartFromDB } from '../../redux/action/cartAction';
-import { useDispatch } from 'react-redux'
-
+import { useDispatch, useSelector } from 'react-redux'
+import { getCurrent } from '../../redux/action/ngud'
 const Home = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  const auth = useSelector(state => state.auth);
 
-    dispatch(getMyCartFromDB);
-
+  useEffect(async () => {
+    await dispatch(getCurrent());
+    // if (auth.status === true) {
+    //   await dispatch(getMyCartFromDB())
+    // }
   }, [])
 
-  const mycart = useSelector((state) => state.cart);
 
   return (
     <div>
       <div className="home">
         <div className="container">
           <Carousel />
-          <Foryou />
-          <Hot />
+          <div>
+            <Foryou />
+            <Hot />
+          </div>
         </div>
       </div>
 

@@ -28,14 +28,14 @@ const serviceAccount = require("./khohuai-admin-firebase-adminsdk-x9a4w-782bb15d
 
 
 // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
-const firebaseConfig = {
-  apiKey: "AIzaSyDFVW8oB9jThgn0V_dBOlwlSw7xXOIGEMk",
-  authDomain: "khohuai-v2.firebaseapp.com",
-  databaseURL: "https://khohuai-v2-default-rtdb.firebaseio.com",
-  projectId: "khohuai-v2",
-  storageBucket: "khohuai-v2.appspot.com",
-  messagingSenderId: "644654390402",
-  appId: "1:644654390402:web:7d6bb217c4a6daff64e89b"
+var firebaseConfig = {
+  apiKey: "AIzaSyBN3QqOyoNoDiX5prLxCSKN7Q5k1i3cjGg",
+  authDomain: "khohuai-admin.firebaseapp.com",
+  projectId: "khohuai-admin",
+  storageBucket: "khohuai-admin.appspot.com",
+  messagingSenderId: "108256796724",
+  appId: "1:108256796724:web:41996f0a36c1a496bf2a61",
+  measurementId: "G-FX5WHX5ZPH"
 };
 
 const admin = firebaseAdmin.initializeApp({

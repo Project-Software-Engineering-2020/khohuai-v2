@@ -3,9 +3,12 @@ import { Button, Modal } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import { getReward } from "../../redux/action/rewardAction";
 import { useDispatch, useSelector } from "react-redux";
+import s from '../userdashboard/widget'
 import Moment from "react-moment";
 import "moment/locale/th";
 import "./Reward.css";
+import Widget from '../userdashboard/widget';
+
 const Reward = () => {
   const dispatch = useDispatch();
   const reward = useSelector((state) => state.reward);
@@ -31,7 +34,10 @@ const Reward = () => {
   }, []);
 
   return (
-    <div className="container mt-3 p-3 bg-white">
+    <div className="container mt-3 p-4 bg-white card">
+
+      <Widget/>
+
       <header className="header-purchase-page">
         <NavLink
           to="/purchase"
@@ -49,47 +55,20 @@ const Reward = () => {
         </NavLink>
       </header>
       <div className="history-user-buy">
-        <div className="allReward m-4">
-          <h3>สรุปรางวัลทั้งหมด</h3>
+        <div className="allReward mt-4">
+          <h4>รางวัลทั้งหมด</h4>
         </div>
-        {/* <div className="card">
-          <div className="card-header">
-            <h5 className="card-titl mt-2">
-              หมายเลขรับรางวัล : {reward.data.id}
-              หมายเลขรับรางวัล : {reward.data.id}
-            </h5>
-            <p className="card-titl mt-2">
-              งวดประจำวันที่{" "}
-              <Moment format="DD MMMM YYYY" locale="th">
-                {reward.data.ngud_date}
-              </Moment>
-            </p>
-            <div className="mt-2">
-              {reward.data.success ? (
-                <span className="box success ">รับเงินรางวัลแล้ว</span>
-              ) : (
-                <span className="box waiting">กำลังดำเนินการ</span>
-              )}
-            </div>
-            <div className="mt-2">
-              <a
-                href={"/reward/detail/" + reward.data.id}
-                class="btn btn-sm btn-info float-left"
-              >
-                ดูเพิ่มเติม
-              </a>
-            </div>
-          </div> */}
+       
           {!reward.data?
           <div>wait</div> : reward.data.map((item, index) => {
           return (
             <div key={index}>
               <div className="card">
                 <div className="card-header">
-                  <h5 className="card-titl mt-2">
+                  <p className="card-titl mt-2">
                     หมายเลขรับรางวัล : {item.id}
                     {/* หมายเลขรับรางวัล : {reward.data.id} */}
-                  </h5>
+                  </p>
                   <p className="card-titl mt-2">
                     งวดประจำวันที่{" "}
                     <Moment format="DD MMMM YYYY" locale="th">

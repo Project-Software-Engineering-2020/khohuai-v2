@@ -1,6 +1,6 @@
 const initialState = {
     loading: false,
-    data: []
+    data: [],
 };
 
 function Reward(state = initialState, action) {
@@ -8,18 +8,23 @@ function Reward(state = initialState, action) {
     switch (action.type) {
 
         case "IS_FETCHING_REWARD":
+
             state = {
                 ...state,
                 loading: true,
-                data: []
+                data: [],
+                wait: 0
             }
             return state
 
         case "FETCHED_REWARD":
+
+            // const result = action.data.filter(r => r.success === false);
+
             state = {
                 ...state,
                 loading: false,
-                data: action.data
+                data: action.data,
             }
             return state
 

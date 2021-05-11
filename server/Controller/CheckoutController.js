@@ -1,4 +1,4 @@
-const { firestore } = require('../firebaseDB');
+const { firestore, auth } = require('../firebaseDB');
 // const FieldValue = firestore.FieldValue;
 // const admin = require('firebase-admin')
 // const FieldValue = admin.firestore.FieldValue;
@@ -10,7 +10,8 @@ const omise = require('omise')({
 })
 
 const checkoutCreditCard = async (req, res, next) => {
-  console.log("เข้ามาแล้ว")
+  console.log("เข้ามาแล้ว");
+
   const { email, uid, amount, token, buyItem, totalItem } = req.body;
 
   try {
@@ -24,6 +25,7 @@ const checkoutCreditCard = async (req, res, next) => {
       currency: "thb",
       customer: customer.id
     })
+
     createinvoice(charge, buyItem, uid, totalItem)
     // console.log("Charge ========> " , charge)
     res.send({
@@ -53,9 +55,11 @@ const romoveInStock = async (item_buy) => {
       {
         number: item.id,
         lottery_img: item.data().photoURL,
+        ngud: item.data().ngud
       }
     );
   });
+
 
 
   let enough = true;
@@ -91,7 +95,7 @@ const romoveInStock = async (item_buy) => {
 
             await firestore.collection("lottery").doc(lottery_instock[j].number)
               .update({
-                lottery: lottery_each_number
+                photoURL: lottery_each_number
               })
           }
 
@@ -120,22 +124,44 @@ const romoveInStock = async (item_buy) => {
 
 
 const createinvoice = async (data, doto, idUser, totalItem) => {
+
   const charge = data;
   const Mycart = doto;
   const uid = idUser;
   const date = new Date();
-  let lottery_instock = [];
   let item_buy = doto;
-
-  console.log("สลากที่ซื้อ", Mycart);
+  let ngud = [];
 
   try {
+    await firestore.collection("ngud")
+      .where("open", "==", true)
+      .get().then(docs => {
+        docs.forEach((doc) => {
+          ngud.push({
+            ngud: doc.id,
+            end: doc.data().end,
+            start: doc.data().start,
+            total_onhand: doc.data().total_onhand
+          })
+          ngud_id_buy = doc.id;
+        })
+      });
+
     if (charge.status === "successful") {
 
-      // const item_bought = await romoveInStock(Mycart);
+      let userData = [];
+
+      await firestore.collection("users").doc(uid).get().then((doc) => {
+        userData.push({
+          book_name: doc.data().book_name,
+          book_number: doc.data().book_number,
+          book_provider: doc.data().book_provider,
+          firstname: doc.data().firstname,
+          lastname: doc.data().lastname
+        })
+      })
+
       let lottery_instock = [];
-      // let item_buy = [];
-      let cut_stock = [];
 
       //ดึงข้อมูล stock
       const instock = await firestore.collection("lottery").get()
@@ -148,12 +174,9 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
         );
       });
 
-
-      let enough = true;
-
       let buy = [];
 
-      console.log(lottery_instock)
+      // console.log(lottery_instock)
       let lottery_each_number = [];
       for (i = 0; i < item_buy.length; i++) {
 
@@ -177,14 +200,21 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
 
                 img.push(target_lottery);
 
-                console.log(lottery_each_number);
 
                 lottery_each_number.pop(target_lottery);
 
-                await firestore.collection("lottery").doc(lottery_instock[j].number)
-                  .update({
-                    lottery: lottery_each_number
-                  })
+                // console.log(lottery_each_number.length);
+                // console.log(lottery_instock[j].number)
+
+                if (lottery_each_number.length == 0) {
+                  await firestore.collection("lottery").doc(lottery_instock[j].number).delete()
+                }
+                else {
+                  await firestore.collection("lottery").doc(lottery_instock[j].number)
+                    .update({
+                      photoURL: lottery_each_number
+                    })
+                }
               }
 
               buy.push(
@@ -196,7 +226,6 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
                   prize: [""]
                 }
               );
-
             }
             else {
 
@@ -206,18 +235,28 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
         }
         continue;
       }
-      console.log(buy);
 
-      const invoice = firestore.collection("invoices").doc();
-      await invoice.set({
+      // console.log("ngud ", ngud)
+
+      let datainsert = {
         charge_id: charge.id,
         userid: uid,
         lottery: buy,
         date: date,
         totalprice: charge.amount / 100,
         quantity: totalItem,
-        nguad: 15,
-      }).then((res) => {
+        ngud: ngud[0].ngud,
+        ngud_date: ngud[0].end,
+        book_name: userData[0].book_name,
+        book_number: userData[0].book_number,
+        book_provider: userData[0].book_provider,
+        firstname: userData[0].firstname,
+        lastname: userData[0].lastname
+      }
+
+      // console.log("dataInsrt  ", datainsert);
+
+      const invoice = await firestore.collection("invoices").doc().set(datainsert).then((res) => {
         console.log("invoice เพิ่มแล้ว")
 
         //ลบ item ในตะกร้า
@@ -228,45 +267,54 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
             .catch((err) => console.log("ลบไม่ได้", err));
         })
       })
-      // await romoveInStock()
+      let _onhand = ngud[0].total_onhand
+      _onhand = _onhand - totalItem;
+
+      await firestore.collection("ngud").doc(ngud[0].ngud).update({ total_onhand: _onhand })
+
     }
   } catch (err) {
     console.log(err)
   }
 }
 
-const checkCompleteProfile = async (req,res) => {
+const checkCompleteProfile = async (req, res) => {
 
-  const uid = auth.currentUser.id;
+  let uid = "";
+
+  await auth.onAuthStateChanged(function (user) {
+    if (user) {
+      uid = user.uid;
+    }
+  });
+
   let userData = {};
   let complete = true;
 
   try {
-      await firestore.collection('users').doc(uid).get().then((doc) => {
+    await firestore.collection('users').doc(uid).get().then((doc) => {
 
-        userData = {
-          firstname:doc.data().firstname,
-          lastname:doc.data().lastname,
-          phone:doc.data().phone,
-          bank_name: doc.data().book_name,
-          bank_number: doc.data().book_number,
-          bank_provider: doc.data().book_provider
-        }
-      })
+      userData = {
+        firstname: doc.data().firstname,
+        lastname: doc.data().lastname,
+        phone: doc.data().phone,
+        bank_name: doc.data().book_name,
+        bank_number: doc.data().book_number,
+        bank_provider: doc.data().book_provider
+      }
+    })
 
-      console.log(userData);
+    if (userData.firstname === "" || userData.firstname === undefined || userData.firstname === null) { complete = false }
+    if (userData.lastname === "" || userData.lastname === undefined || userData.lastname === null) { complete = false }
+    if (userData.phone === "" || userData.phone === undefined || userData.phone === null) { complete = false }
+    if (userData.bank_name === "" || userData.bank_name === undefined || userData.bank_name === null) { complete = false }
+    if (userData.bank_number === "" || userData.bank_number === undefined || userData.bank_number === null) { complete = false }
+    if (userData.bank_provider === "" || userData.bank_provider === undefined || userData.bank_provider === null) { complete = false }
 
-      if(userData.firstname === "" || userData.firstname === undefined || userData.firstname === null) { complete = false }
-      if(userData.lastname === "" || userData.lastname === undefined || userData.lastname === null) { complete = false }
-      if(userData.phone === "" || userData.phone === undefined || userData.phone === null) { complete = false }
-      if(userData.bank_name === "" || userData.bank_name === undefined || userData.bank_name === null) { complete = false }
-      if(userData.bank_number === "" || userData.bank_number ===  undefined || userData.bank_number ===  null) { complete = false }
-      if(userData.bank_provider === "" || userData.bank_provider === undefined || userData.bank_provider === null) { complete = false }
-
-      res.send(complete);
+    res.send(complete);
 
   } catch (error) {
-      console.log(error);
+    console.log(error);
   }
 }
 

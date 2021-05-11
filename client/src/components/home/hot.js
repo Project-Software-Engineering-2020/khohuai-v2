@@ -9,19 +9,17 @@ const Hot = () => {
     const [data, setData] = useState();
     const [loading, setloading] = useState(false);
 
-
-    
-
-    useEffect(() => {
+    useEffect(async() => {
 
         const FetchData = async () => {
             await Axios.get(api + "/lottery/aos").then((lot) => {
+                console.log(lot.data);
                 setData(lot.data);
             })
             await setloading(true);
         }
 
-        FetchData();
+        await FetchData();
     }, [])
 
 

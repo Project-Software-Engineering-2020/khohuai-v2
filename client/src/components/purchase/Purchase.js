@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getPurchase } from '../../redux/action/purchaseAction';
 import { getMyCartFromDB } from '../../redux/action/cartAction'
 import { setPurchaseDetail } from '../../redux/action/purchaseDetailAction';
+import Widget from '../userdashboard/widget'
 import Moment from 'react-moment';
 import 'moment/locale/th';
 
@@ -27,7 +28,10 @@ const Purchase = () => {
     }, [])
 
     return (
-        <div className="container mt-3 p-3 bg-white">
+        <div className="container mt-3 p-4 bg-white card">
+
+            <Widget/>
+
             <header className="header-purchase-page">
                 <NavLink to="/purchase" activeClassName="purchase-item-active" className="purchase-item">
                     ประวัติการซื้อ
@@ -48,7 +52,7 @@ const Purchase = () => {
                                     คำสั่งซื้อ #{item.invoiceid}
                                 </div>
                                 <div className="text-right">
-                                    <Moment format="ชำระเงินเมื่อ DD-MM-YYYY เวลา HH:mm:ss">
+                                    <Moment format="ชำระเงินเมื่อ DD MMMM YYYY เวลา HH:mm:ss">
                                         {item.date}
                                     </Moment>
                                 </div>
@@ -75,7 +79,7 @@ const Purchase = () => {
                                                         {lottery.status ?
                                                             <span className="badge badge-success">ตรวจรางวัลแล้ว</span>
                                                             :
-                                                            <span className="badge badge-warning">รอการประการผล</span>
+                                                            <span className="badge badge-warning">รอการประกาศผล</span>
                                                         }
 
                                                     </div>

@@ -32,7 +32,6 @@ const getAllUser = async (req, res, next) => {
                 // console.log(user)
                 userArray.push(user);
             });
-            console.log(userArray);
             res.send(userArray);
         }
     } catch (error) {
@@ -55,16 +54,48 @@ const deleteUser = async (req, res, next) => {
 const getProfile = async (req, res, next) => {
 
     const uid = req.params.id;
-
+    let d = []
     try {
         await firestore.collection('users').doc(uid).get().then((doc) => {
             console.log(doc.data());
-            res.status(200).send(doc.data())
+
+            if (doc.data().book_name || doc.data().book_number || doc.data().book_provider) {
+                d.push({
+                    id: doc.id,
+                    displayName: doc.data().displayName,
+                    firstname: doc.data().firstname,
+                    lastname: doc.data().lastname,
+                    phone: doc.data().phone,
+                    email: doc.data().email,
+                    book_name: doc.data().book_name,
+                    book_number: doc.data().book_number,
+                    book_provider: doc.data().book_provider,
+                    photoURL: doc.data().photoURL,
+                })
+            }
+            else {
+                d.push({
+                    id: doc.id,
+                    firstname: doc.data().firstname,
+                    lastname: doc.data().lastname,
+                    displayName: doc.data().displayName,
+                    email: doc.data().email,
+                    phone: doc.data().phone,
+                    book_name: "",
+                    book_number: "",
+                    book_provider: "",
+                    photoURL: doc.data().photoURL,
+                })
+
+            }
+
+
         })
+        res.status(200).send(d[0])
     } catch (error) {
         console.log(error);
     }
-    
+
 }
 
 const updateProfile = async (req, res, next) => {

@@ -12,7 +12,7 @@ import { faLine } from "@fortawesome/free-brands-svg-icons";
 const Footer = () => {
   return (
     <footer className="bg-light text-left text-lg-start">
-      <div className="d-flex justify-content-center">
+      {/* <div className="d-flex justify-content-center">
         <div className="container p-4">
           <div className="row">
             <div className="col-md-4 mb-4 mb-md-0 mt-2">
@@ -73,7 +73,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="copyright">
         <div class="text-center p-3">

@@ -50,8 +50,10 @@ function userAuth(state = initialState , action) {
             return state;
 
         case 'SET_LOGOUT':
+
             state = initialState;
-            return initialState;
+            
+            return state;
 
         default:
             return state;

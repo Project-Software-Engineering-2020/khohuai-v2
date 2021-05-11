@@ -110,7 +110,7 @@ const Profile = (props) => {
         if (updateImage) {
           
             const uploadTask = storage.ref("images/" + uid).put(updateImage);
-            uploadTask.on(
+            await uploadTask.on(
                 "state_change",
                 (snapshot) => { },
                 (error) => {
@@ -121,9 +121,9 @@ const Profile = (props) => {
                         .ref("images")
                         .child(uid)
                         .getDownloadURL()
-                        .then((url) => {
+                        .then(async(url) => {
                      
-                            firestore.collection("users").doc(uid).update({
+                            await firestore.collection("users").doc(uid).update({
                                 firstname: newProfile.firstname,
                                 lastname: newProfile.lastname,
                                 phone: newProfile.phone,
@@ -133,6 +133,7 @@ const Profile = (props) => {
                                 photoURL: url,
                             });
                             setEditState(!editState);
+                            
                             if(completeProfile === "false") {
                                 history.push("/cart")
                             }
@@ -141,12 +142,22 @@ const Profile = (props) => {
             );
         }
         else {
-            dispatch(updateUserProfile(newProfile))
-                .then(() => {
-                    setEditState(!editState)
-                    // setProfile(newProfile)
-                }
-                )
+
+            await firestore.collection("users").doc(uid).update({
+                firstname: newProfile.firstname,
+                lastname: newProfile.lastname,
+                phone: newProfile.phone,
+                book_name: newProfile.book_name,
+                book_number: newProfile.book_number,
+                book_provider: newProfile.book_provider,
+
+            });
+        
+            await setEditState(!editState)
+            if(completeProfile === "false") {
+                history.push("/cart")
+            }
+                
         }
     }
 
@@ -202,7 +213,7 @@ const Profile = (props) => {
 
                                     <div className="profile-data">
                                         <label htmlFor="text"> ชื่อบัญชี : </label>
-                                        <input type="text" className="form-control"value={newProfile.book_name} onChange={(event) => { ChangeDataProfile("book_name", event.target.value) }}></input>
+                                        <input type="text" className="form-control" value={newProfile.book_name} onChange={(event) => { ChangeDataProfile("book_name", event.target.value) }}></input>
                                     </div>
                                     <div className="profile-data">
                                         <label htmlFor="text"> เลขที่บัญชี : </label>

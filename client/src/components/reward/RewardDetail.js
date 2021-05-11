@@ -29,8 +29,6 @@ const Reward = (props) => {
     setlotterydate(item)
   }
 
-
-
   useEffect(() => {
     dispatch(getRewardDetail(reward_id));
   }, [])
@@ -63,21 +61,22 @@ const Reward = (props) => {
             <a href={"/reward"} class="backBtn"><i class="fa fa-chevron-left" aria-hidden="true"></i>  ย้อนกลับ</a>
             </div>  
               {/* Morris chart - Sales */}
-              <h3 className="rewardIdDetail"> หมายเลขรับรางวัล : {reward_id} </h3>
+              <h5 className="rewardIdDetail"> หมายเลขรับรางวัล : {reward_id} </h5>
               <p>
                 งวดประจำวันที่{" "}
                 <Moment format="DD MMMM YYYY" locale="th">
                   {reward.data.ngud_date}
                 </Moment>
               </p>
-              <p>เลขที่บัญชีสำหรับรับรางวัล</p>
+              <p>ชื่อบัญชี : {reward.data.book_name}</p>
+              <p>เลขที่บัญชี : {reward.data.book_number}</p>
+              <p>ธนาคาร: {reward.data.book_provider}</p>
               <p className="line">สถานะ :
               {reward.data.success ? 
                <a className="linecolor" style={{cursor:'pointer'}} onClick={handleShow}>
                 ดูหลักฐานการรับรางวัล
               </a>
               :
-              
                 <span> กำลังดำเนินการ</span>
             }
               </p>
@@ -138,7 +137,10 @@ const Reward = (props) => {
                 <div className="txt">
                   **โปรดตรวจสอบเลขที่บัญชีให้ถูกต้องเพื่อรักษาผลประโยชน์ของท่าน**
                 </div>
-                {/* <Button onClick={handleShowconfirm}>ยืนยัน</Button> */}
+                {/* {
+                  reward.data.success ? null : <Button onClick={handleShowconfirm}>ยืนยัน</Button>
+                } */}
+               
               </div>
             </div>
           </div>
@@ -168,24 +170,16 @@ const Reward = (props) => {
 
       </Modal>
 
-      <Modal size="sm" show={show} onHide={handleClose}>
+      <Modal size="md" show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>หลักฐานการรับรางวัล</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <img
             className="slip"
-            src="https://obs.line-scdn.net/0hd_rioZEKO3BPEBPqvuFEJ3VGOB98fChzKyZqcxN-ZUQ2dylxISZzHmxFYElqKXwuISJwHm0SIEEwIiwlcX5z/w644"
+            src={reward.data.slip}
           />
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            ปิด
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            ยืนยัน
-          </Button>
-        </Modal.Footer>
       </Modal>
 
       <Modal size="md" show={comfirm} onHide={handleCloseconfirm}>

@@ -1,7 +1,13 @@
 const { firestore, auth } = require("../firebaseDB");
 
 const getInventory = async (req, res) => {
-  const uid = auth.currentUser.uid;
+  let uid = "";
+
+  await auth.onAuthStateChanged(function (user) {
+    if (user) {
+      uid = user.uid;
+    }
+  });
   //const uid = "MEi2CKybAkZYfAFhkerLUqO0EYR2";
   let inventory = [];
   await firestore
@@ -32,7 +38,13 @@ const getInventory = async (req, res) => {
 const setInventory = async (req, res) => {
   let token = req.body.tokens;
   let updateValue = req.body.update_value;
-  const uid = auth.currentUser.uid;
+  let uid = "";
+
+  await auth.onAuthStateChanged(function (user) {
+    if (user) {
+      uid = user.uid;
+    }
+  });
   //const uid = "MEi2CKybAkZYfAFhkerLUqO0EYR2";
   let inventory = [];
   try {
