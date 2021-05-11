@@ -131,7 +131,6 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
   const date = new Date();
   let item_buy = doto;
   let ngud = [];
-  let ngud_id_buy = "";
 
   try {
     await firestore.collection("ngud")
@@ -177,7 +176,7 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
 
       let buy = [];
 
-      console.log(lottery_instock)
+      // console.log(lottery_instock)
       let lottery_each_number = [];
       for (i = 0; i < item_buy.length; i++) {
 
@@ -204,8 +203,8 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
 
                 lottery_each_number.pop(target_lottery);
 
-                console.log(lottery_each_number.length);
-                console.log(lottery_instock[j].number)
+                // console.log(lottery_each_number.length);
+                // console.log(lottery_instock[j].number)
 
                 if (lottery_each_number.length == 0) {
                   await firestore.collection("lottery").doc(lottery_instock[j].number).delete()
@@ -237,7 +236,7 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
         continue;
       }
 
-      console.log("ngud ", ngud)
+      // console.log("ngud ", ngud)
 
       let datainsert = {
         charge_id: charge.id,
@@ -255,7 +254,7 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
         lastname: userData[0].lastname
       }
 
-      console.log("dataInsrt  ", datainsert);
+      // console.log("dataInsrt  ", datainsert);
 
       const invoice = await firestore.collection("invoices").doc().set(datainsert).then((res) => {
         console.log("invoice เพิ่มแล้ว")

@@ -42,7 +42,9 @@ function userAuth(state = initialState , action) {
             return state;
 
         case 'SET_LOGOUT':
+
             state = initialState;
+            
             return state;
 
         default:
