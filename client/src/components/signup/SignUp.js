@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect,useHistory } from "react-router-dom";
 import "../../stylesheet/signup.css";
 import Axios from 'axios';
 // import { firestore, auth } from "../../firebase/firebase";
@@ -9,6 +9,8 @@ import {
 } from "../../redux/action/authAction";
 import { api } from '../../environment'
 const SignUp = () => {
+
+  const history = useHistory();
 
   //check status user
   const currentUser = useSelector(state => state.auth)
@@ -34,6 +36,7 @@ const SignUp = () => {
 
 
   const formValidation = () => {
+
     const firstnameErr = {};
     const lastnameErr = {};
     const emailErr = {};
@@ -205,19 +208,10 @@ const SignUp = () => {
         email: email,
         password: password,
       }).then((res) => {
-        console.log("Singup User New Uid ++++++++++++++++++++" , res.data.user.uid);
-        dispatch(setloginAfterSignup(res));
+       // console.log(res);
+       dispatch({type:"SET_TOKEN",data:res.data})
 
-        // dispatch({
-        //   type: 'SET_LOGIN',
-        //   uid: res.data.user.uid,
-        //   displayName: firstname,
-        //   photoURL: "https://img2.thaipng.com/20180523/tha/kisspng-businessperson-computer-icons-avatar-clip-art-lattice-5b0508dc6a3a10.0013931115270566044351.jpg",
-        //   email: email,
-        //   role: "user",
-        //   provider: "hotmail",
-        //   status: true
-        // })
+       history.push("/");
       }
       )
     }
