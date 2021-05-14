@@ -35,46 +35,71 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import { closeAlert } from './redux/action/alertAction';
 import { Fragment } from "react";
 import UpdateProfile from "./components/profile/UpdateProfile";
+import jwtDecode from 'jwt-decode';
 import {
   setloginWithEmail,
   setauthenticate,
   setlogout,
 } from "./redux/action/authAction";
-// import { SET_AUTHENTICATED } from './redux/types';
-// jwtDecode
-import jwtDecode from 'jwt-decode';
-import Axios from "axios";
 
 
 function App() {
 
   const dispatch = useDispatch();
 
-  // const auth = useSelector((state) => state.auth);
-
+  const auth = useSelector((state) => state.auth);
   const alert = useSelector(state => state.alert)
 
-  const token = localStorage.FBIdToken;
-  console.log("Tokenno +++++++++" + token)
-  if (token) {
-    const decodedToken = jwtDecode(token);
-    if (decodedToken.exp * 1000 < Date.now()) {
-      console.log("Can't Decoder")
-      dispatch(setlogout());
-      window.location.href = '/login';
-    } else {
-      console.log("Samart Decoder :" , decodedToken)
-      // dispatch(setloginWithEmail())
-      dispatch(setauthenticate());
-      // Axios.defaults.headers.common['Authorization'] = token;
-      // dispatch(getUserData());
+  const token = useSelector((state) => state.token);
+  // const Usid = jwtDecode(token)
+  // const Userid = Usid.user_id;
+
+  // const token = localStorage.FBIdToken;
+  // console.log("Tokenno +++++++++" + token)
+  useEffect(() => {
+    if (token) {
+      const { exp, photoURL, displayName } = jwtDecode(token);
+      //   console.log(decodedToken)
+      if (exp * 1000 < Date.now()) {
+        console.log("Can't Decoder")
+        dispatch(setlogout());
+        // window.location.href = '/login';
+      } else {
+        // console.log("Samart Decoder :" , decodedToken)
+        // dispatch(setloginWithEmail())
+        dispatch(setauthenticate(photoURL, displayName));
+        // Axios.defaults.headers.common['Authorization'] = token;
+        // dispatch(getUserData());
+      }
     }
-  }
-  else{
-    // window.location.href = '/login';
-    console.log("Mai Mee Token")
-  }
-  
+    else {
+      // window.location.href = '/login';
+      console.log("Mai Mee Token")
+    }
+
+  },[token])
+
+  // const token = localStorage.FBIdToken;
+  // console.log("Tokenno +++++++++" + token)
+  // if (token) {
+  //   const decodedToken = jwtDecode(token);
+  //   if (decodedToken.exp * 1000 < Date.now()) {
+  //     console.log("Can't Decoder")
+  //     dispatch(setlogout());
+  //     // window.location.href = '/login';
+  //   } else {
+  //     console.log("Samart Decoder :" , decodedToken)
+  //     // dispatch(setloginWithEmail())
+  //     dispatch(setauthenticate());
+  //     // Axios.defaults.headers.common['Authorization'] = token;
+  //     // dispatch(getUserData());
+  //   }
+  // }
+  // else{
+  //   // window.location.href = '/login';
+  //   console.log("Mai Mee Token")
+  // }
+
   return (
 
     <Fragment>
@@ -97,12 +122,12 @@ function App() {
             exact
             component={LotteryReports}
           />
-          <Route path="/Invoice" exact component={Invoice} />
-          <Route path="/AdUser" exact component={AdUser} />
-          <Route path="/game" component={Game} />
-          <Route path="/cart" component={CartTest} />
-          <Route path="/purchase" exact={true} component={Purchase} />
-          <Route path="/purchase/:id" component={PurchaseDetail} />
+          <PrivateRoute path="/Invoice" exact component={Invoice} />
+          <PrivateRoute path="/AdUser" exact component={AdUser} />
+          <PrivateRoute path="/game" component={Game} />
+          <PrivateRoute path="/cart" component={CartTest} />
+          <PrivateRoute path="/purchase" exact={true} component={Purchase} />
+          <PrivateRoute path="/purchase/:id" component={PurchaseDetail} />
           <Route path="/reward" exact={true} component={Reward} />
           <Route path="/reward/detail/:id" component={RewardDetail} />
           <Route path="/updateprofile" component={UpdateProfile} />

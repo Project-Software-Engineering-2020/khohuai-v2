@@ -5,21 +5,24 @@ const initialState = {
     role: null,
     email: null,
     provider: null,
-    status:false,
+    // status:false,
     // token:null,
-    authenticated: false,
+    authenticated: false
 };
 
 function userAuth(state = initialState , action) {
 
     switch (action.type) {
-        
+
         case 'SET_AUTHENTICATED':
             state = {
               ...state,
-              authenticated: action.data
+              photoURL:action.data.photoURL,
+              displayName:action.data.displayName,
+              authenticated: action.data.authenticated
             };
             return state;
+
 
         case 'SET_LOGIN':
             state = {
@@ -30,8 +33,10 @@ function userAuth(state = initialState , action) {
                 role: action.data.role,
                 email: action.data.email,
                 provider: action.data.provider,
-                status: action.data.status,
-                authenticated: true
+                authenticated: action.data.authenticated
+
+                // status: action.data.status,
+                // token: action.data.token
             };
             return state;
 
@@ -44,15 +49,13 @@ function userAuth(state = initialState , action) {
                 role: action.role,
                 email: action.data.email,
                 provider: action.data.provider,
-                status: action.data.status,
+                // status: action.data.status,
                 // token: action.data.token
             };
             return state;
 
         case 'SET_LOGOUT':
-
             state = initialState;
-            
             return state;
 
         default:

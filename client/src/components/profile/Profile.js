@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { storage, firestore } from '../../firebase/firebase'
 import { updateUserProfile, getProfile } from "../../redux/action/profileAction"
 import { api } from '../../environment';
+import {uiddecoded} from '../../util/decodeUID'
 
 const Profile = (props) => {
 
@@ -15,6 +16,7 @@ const Profile = (props) => {
     const dispatch = useDispatch();
 
     const auth = useSelector(state => state.auth);
+    const token = useSelector(state => state.token);
     const UserProfile = useSelector(state => state.profile);
 
     const uid = auth.uid;
@@ -33,7 +35,7 @@ const Profile = (props) => {
 
     useEffect(async () => {
        
-        await dispatch(getProfile(uid));
+        await dispatch(getProfile(uiddecoded(token)));
         // await checkComplete();
         
     }, []);
@@ -106,6 +108,7 @@ const Profile = (props) => {
         }
     };
     const UpdateProfile = async () => {
+        const uid = uiddecoded(token);
         // const uid = status.uid;
         if (updateImage) {
           

@@ -16,7 +16,7 @@ const Button = ({ closeMenu }) => {
   const dispatch = useDispatch();
 
   const stetus = useSelector(state => state.auth)
-  const stotus = stetus.status;
+  const stotus = stetus.authenticated;
   const stotus2 = stetus.displayName;
   const stotus3 = stetus.photoURL;
 
@@ -74,7 +74,7 @@ const Button = ({ closeMenu }) => {
 
   useEffect(() => {
     setuser(stotus);
-  }, [stetus, stotus2, stotus3]);
+  },[stotus,stotus2,stotus3]);
 
   const signouthandle = () => {
 

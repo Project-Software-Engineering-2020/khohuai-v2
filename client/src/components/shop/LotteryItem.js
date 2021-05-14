@@ -90,7 +90,7 @@ const LotteryItem = ({ data, number }) => {
 
     const item = data;
 
-    if (auth.status === true) {
+    if (auth.authenticated === true) {
       dispatch(addToCart(item));
     }
     else {

@@ -96,7 +96,7 @@ function Navbar() {
             </Link>
           </li>
           <li className="cart-on-nav">
-            {stetus.status === true ?
+            {stetus.authenticated === true ?
               <a href="/cart" className="text-white">
                 <i className="fas fa-shopping-cart fa-lg"></i>
                 <span className="badge-cart">{Mycart.totalItem}</span>

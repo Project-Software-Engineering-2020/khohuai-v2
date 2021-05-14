@@ -17,6 +17,7 @@ function Cart(state = initialState, action) {
     let totalItem = 0;
     let ArraySelected = [];
     let select_All = true
+    if (state.cart) {
       state.cart.map((item) => {
         totalItem += item.qty;
 
@@ -26,12 +27,11 @@ function Cart(state = initialState, action) {
           totalSelect += item.qty;
           ArraySelected.push(item);
         }
-        else if(item.selected === false) {
+        else if (item.selected === false) {
           select_All = false;
         }
       })
-
-
+    }
     return (state = {
       ...state,
       totalSelect: totalSelect,
@@ -55,7 +55,7 @@ function Cart(state = initialState, action) {
 
   switch (action.type) {
 
-    case "CALCULATE_CART": 
+    case "CALCULATE_CART":
 
       return SumTotal();
 

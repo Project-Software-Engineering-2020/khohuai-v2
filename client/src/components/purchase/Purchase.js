@@ -22,15 +22,14 @@ const Purchase = () => {
     }
 
     useEffect(async () => {
-        await dispatch(getMyCartFromDB());
         await dispatch(getPurchase());
-
+        await dispatch(getMyCartFromDB());
     }, [])
 
     return (
         <div className="container mt-3 p-4 bg-white card">
 
-            <Widget/>
+            <Widget />
 
             <header className="header-purchase-page">
                 <NavLink to="/purchase" activeClassName="purchase-item-active" className="purchase-item">
@@ -113,12 +112,12 @@ const Purchase = () => {
                                             ยอดคำสั่งซื้อทั้งหมด {item.totalprice} บาท
                                         </div>
                                     </div>
-            
+
 
                                 </div>
-                                {item.lottery.reward > 0 ? 
-                                     <button className="btn-purchase-detail">รับเงินรางวัล</button>
-                                : 
+                                {item.lottery.reward > 0 ?
+                                    <button className="btn-purchase-detail">รับเงินรางวัล</button>
+                                    :
                                     null
                                 }
                                 <div>
