@@ -34,9 +34,10 @@ const Profile = (props) => {
     } 
 
     useEffect(async () => {
+
+        const uid = uiddecoded(token)
        
-        await dispatch(getProfile(uiddecoded(token)));
-        // await checkComplete();
+        await dispatch(getProfile(uid));
         
     }, []);
 

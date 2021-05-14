@@ -1,49 +1,34 @@
 const firebase = require('firebase');
 const firebaseAdmin = require("firebase-admin");
 
-
-// const config = require('./config');
-// const firebaseAdmin = require("firebase-admin");
-
-// const serviceAccount = {
-//   "type": "service_account",
-//   "project_id": "hi-chon",
-//   "private_key_id": "4cf41da28a70eea210e16bcc6eaf9fc6f7672748",
-//   "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCfCFsiyDs4mSKs\nxIyXm9J1PcWg6L6Y6yNXGDRAyCskEco3okZrY8PDpvmK4+8f5ORMf0eyj2TpBH5n\nDFYRC9iDZ2gbSdIXQ1Bob20SbC1dfg70pLOKTNSmkpusJuO2Eq/RQnL1QdZ9oxmF\n/h0i+CTvqyRkSDIdFzsA64M26xnAJwbK2qEvnuCQ+Y6NHNZ9XfWHKLNvi/5QaKMp\nv3fS8TYTKr9Uma8Dti64gkV6flE9JQ4uiTcB2t6RcDEl/0EtRfb2n3+OuWul27L2\nGEpWHmfaek3m/dHna69rXYFRkKRWKkGA9uDOe39O9DcGxMijUjNqDTd/3xO7U+0e\nCxa7vzvDAgMBAAECggEAS0GkBvij9auZ2hIEyfXGCQ8bR4L8NtcG2T8t8v4GVEJK\n5DrZghYq3JpWemBUl040rvKIVjo/MXmb613OGLD3W2+Ct28eiT2kfldEUTR530U5\nBJIwGCE1fEHigvvARDfhlXARgHgQbVHSUTMoTJUKvZPKW95CQLvugwfwBvwIKoJO\nU0nlk2kv1eSQ0joYm59m73aGM34DH4eczg3yLr4wyXcBoUaphxUHkTTa3YasCTwJ\n6QBJo54CCQ6ep3ZCDB7czgZPmaqsN14Mv4uqVFCslI0x+YZDPQM0fcsjxcj0rlqy\nqRy9O5IFo+DeQfOL+BuUF5/9n8rCsCsZlK2h7/hjwQKBgQDOdMOI6rlVOAcPb6g6\nZrWB83VUgNfDjypGBWaVn9WRtSF+gb17GM74XSaVnQk4bjn8AY9hdKRJXLKg7hQY\nSX4N830QZW0iGYUuWtz4YQyHblgquUxj2aVG8VL3ffiQ5oJxkTo26h/ITXnu0usA\nn3JXMmlhRpNIw17TRUz+Cf6cowKBgQDFMjjdkW9veJNZHNIR173I9rPcUdkp7XDh\nFhfzcBTm5N5YUntviu45L6334AUo7Ao0x1XZ6SwiqAbw3vOCWZubvekTekX9cL+2\ntPdWFbNDZKoveM7Z7DVJvJFsE9u+SZDOehsHBJUGW6voV+RU0zNnRc/9FplKldhP\nnFeFCg62YQKBgQCVibN7f3BgDmXmw1xZeL1tc9b/LxeZGSBoeU71f0Dk+gpZpEWH\nXM/Ey0vAQG9GRWiQZNzinObGEHN95xP9B3ZbSorCjoR+l3eEvOGiskCt87m+sFpp\nVGLHQNJ0WvTol13SPnuo/OmqXpu75V+8IsFh8Sys/b5+jKwpYN/EfZ7C+wKBgB81\nZ5KJZd16c7dyvDxerIaVpLmFqpzcGzVETd4VKvmv1xCbXTW2AyXBygKkzaxATw0z\nTv8BzB5gAVk1r8w9akcnsy+F9nW51l2QHmTdYlWUJOsGb5ZFr9lPoqQ8MFbZRbWn\n1YcyznMHJxnKbzSNiGEbx2MCpJgNRwKyd5dylAmBAoGACEXqe7VP2Z9s9Q3rwGJ4\nNEFvlIeFqC6t8etgW/Ex7bxtzJypl8fwKWkehnVUEuSnERijB4IrBkf0wXEsX3Uw\nWTMV7DRStvChyPNqpSeVuyVguLx40vwt3H8rkA+LWK7UdPHX/PWWv6CJL3ZYI84f\nuMP3TxWVhzS6DbKDUVm4b+k=\n-----END PRIVATE KEY-----\n",
-//   "client_email": "firebase-adminsdk-9pav9@hi-chon.iam.gserviceaccount.com",
-//   "client_id": "110214467177026900937",
-//   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-//   "token_uri": "https://oauth2.googleapis.com/token",
-//   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-//   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-9pav9%40hi-chon.iam.gserviceaccount.com"
-// }
-
-// const serviceAccount = require("./hi-chon-firebase-adminsdk-9pav9-4cf41da28a.json");
-// const admin = firebaseAdmin.initializeApp({
-//   credential: firebaseAdmin.credential.cert(serviceAccount),
-//   databaseURL: "https://hi-chon.firebaseio.com"
-// });
-
-const serviceAccount = require("./khohuai-admin-firebase-adminsdk-x9a4w-782bb15df6.json");
-
-
-// firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
-var firebaseConfig = {
-  apiKey: "AIzaSyBN3QqOyoNoDiX5prLxCSKN7Q5k1i3cjGg",
-  authDomain: "khohuai-admin.firebaseapp.com",
-  projectId: "khohuai-admin",
-  storageBucket: "khohuai-admin.appspot.com",
-  messagingSenderId: "108256796724",
-  appId: "1:108256796724:web:41996f0a36c1a496bf2a61",
-  measurementId: "G-FX5WHX5ZPH"
-};
-
+const serviceAccount = {
+  type: "service_account",
+  project_id: "khohuai-v2",
+  private_key_id: "e5d591bbafd20dcad2918bd1d41b2e7511258d81",
+  private_key: "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCRaQCigg2jBwTe\npmvC+N6NlPMV/4qkFHoPyfnkqbAVMzkaertyr0FuJTYZfeYb0Vbz+aDZTV8iCKcq\nRaQ2iVHe/iUXYr95hA3Lx/2PlJ761xSF4liXX3RJ5JZXlEQq9dJXq2aXi+qmiOoB\n593IFMu1mxViSOTinl0GU/DurIkf8RF1gR7dwHlxgz8qRTKhUc0lzrfI4si7tapj\nsYb2/3SAIXxfLxV2iXGgQ8GexG5x7zhS1ZLFAk9bvBgGvvWSkeCZ/6c1fbhFpqce\nT4ZKr+CfF7WIsB+D0bDvTsYCKKAHNqFsGAn1CqnYH6CJedxya00cM7ZTyC1g8PBy\ns2eA3mbjAgMBAAECggEAOFU7EzoaKV4HQ3Cqz+KVablaQVv6LJ3oOeSwJKeemV/6\nT+lbZE9EJHVTE6YkNwOvUZ6Uc4sXf3pltKk9OImTh7XizcAKWPvRUnC8qVrVCm23\nvDSXyLEIvrXJjs1YaWJJpoA3Ix/n/LOPIMTgtWplDwqxSp3d2nOqq1BqxzRdfVtT\n/gwmS3ITWj5NLkMqPgFXSqKCr//00qtOLgtIdc9TC3bIbrRZ55PO96oEXRm4VJKc\nK/VvIgCjYEmtCIkTIdja7BbAKNtJme+HqqBp3hJdiIIOZ/O8Prg3KHYb4m7wA5nC\niqvU15IhmXdWJstblTtmaW9B8aZCxOqUgPYkRcj43QKBgQDMjTRec+gtNGHWGXr3\nAwfPZ2SS9QEI4dZ6iTkxQ3CvJxjwKhKifYV06LZKlek5xi9IDxd0Om0gfPVbSms/\nXv0XwrXgTqsQh4XG4tsiYXZqZ8tCf8ixTLwb8vB0yZyQDWWVZlG3j6SSKi477fcI\n0iCQxISKFn4NtIHnSxfMkqUkTQKBgQC1+8Nwainw71G0CVHxmRSS8Ns7AoyTahdm\nkd+dLFPxkYossn6I1+A+KQ+j3K1aux3g5xHPwlk8g104rsZEWeLjmgCl7fEi5KDx\nZEtu/gc3tAiL//6NvrCSmClrOWqBy979fR4F2kkBsp8/EUY26WDJG/D66i3aIUVd\nKPj8VlUP7wKBgQCvG0Y0gVbFs+z5InDwmkiKVYF0iIatOt+noGc0c/44AulHV00C\nix+/OCQtb23rhmwdbMXwOsAGqtJDp05uPnu9ZnLaJZ4tlUaBPtzG7tY3Osl3EPsW\nRJFX/722zIzZiI5oueHEmRQSCEfyB8GNbIxyQbkQmTapttfpz4/9EaCLlQKBgEkW\nmVK/wKJ8a3MEPz3p/kJZq6LSjkTyWf2e3pFQaVJe4oC7G2i4Ut6EPTzRd2o2NnTK\nOPQZGR/dnoYSY5y2ARLqGhKKMsuRyTXJ0yX7rkhn7PrVUJX7HQ1zQUdIIweIKsHi\nCznMhn/BDoYU2P9a0b1TlIAhp1KxBBu7ReyKe9VPAoGABCBZH38kU7gcE2oTO80w\njf2XiWnqX0cMF8ScxPcmijQrepO7BDUnFWu9X+LIvOXGSS9Z699Z6s3jLRVuU8+6\nLJvVwNASLL7I09azrWsXQRoQrxEBuwoUYEDs30puWjpfKZP1xWXcPdo8M/ZBwMVI\nqcLl3U7/+gLkOlA/WwADIDw=\n-----END PRIVATE KEY-----\n",
+  client_email: "firebase-adminsdk-olov5@khohuai-v2.iam.gserviceaccount.com",
+  client_id: "114904195817107777594",
+  auth_uri: "https://accounts.google.com/o/oauth2/auth",
+  token_uri: "https://oauth2.googleapis.com/token",
+  auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
+  client_x509_cert_url: "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-olov5%40khohuai-v2.iam.gserviceaccount.com"
+}
 const admin = firebaseAdmin.initializeApp({
   credential: firebaseAdmin.credential.cert(serviceAccount),
   databaseURL: "https://khohuai-v2-default-rtdb.firebaseio.com",
   storageBucket: "gs://khohuai-v2.appspot.com"
 });
 
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDFVW8oB9jThgn0V_dBOlwlSw7xXOIGEMk",
+  authDomain: "khohuai-v2.firebaseapp.com",
+  databaseURL: "https://khohuai-v2-default-rtdb.firebaseio.com",
+  projectId: "khohuai-v2",
+  storageBucket: "khohuai-v2.appspot.com",
+  messagingSenderId: "644654390402",
+  appId: "1:644654390402:web:7d6bb217c4a6daff64e89b"
+};
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 

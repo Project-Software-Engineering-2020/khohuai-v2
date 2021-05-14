@@ -15,9 +15,6 @@ const Basket = () => {
   const Usernaw = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [loading, setloading] = useState(true);
-  // const [myCart, setmyCart] = useState();
-  const [clearCart, setclearCart] = useState();
-  const [removeFromCart, setremoveFromCart] = useState();
   const [success, setsuccess] = useState();
   const [show, setShow] = useState(false);
   const history = useHistory();
@@ -25,9 +22,6 @@ const Basket = () => {
   const createCreditCardCharge = async (email, uid, macart, amount, token) => {
     const buyItem = myCart.selected;
     const totalItem = myCart.totalSelect;
-
-
-    console.log("Token Here ===>" + token);
     try {
       await axios
         .post(api + "/checkout-credit-card", {
@@ -69,7 +63,7 @@ const Basket = () => {
 
   return (
     <div className="container mt-3 p-3">
-      {loading ? (
+      {myCart.loading ? (
         <div>loading...</div>
       ) : (
         <div className="row">

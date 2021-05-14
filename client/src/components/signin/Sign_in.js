@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Redirect , useHistory } from "react-router-dom";
-import { GoogleLogin, GoogleLogout } from "react-google-login";
-import { auth, firestore, googleProvider } from "../../firebase/firebase";
+import { auth,  googleProvider } from "../../firebase/firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import "../../stylesheet/signin.css";
 import { useDispatch, useSelector } from "react-redux";
-// import { SET_TOKEN } from 
-import {
-  setloginWithEmail,
-  setloginWithGoogle,
-} from "../../redux/action/authAction";
+
 import Axios from "axios";
 import { api } from '../../environment'
-import axios from "axios";
-import jwtDecode from 'jwt-decode';
+
 
 const Sign_in = () => {
   const history = useHistory();
@@ -58,31 +52,12 @@ const Sign_in = () => {
             setUserErr("คุณใส่รหัสผ่านผิดเกิน 3 ครั้ง กรุณารอสักครู่");
           }
         } else if (res.status === 200) {
-          // const decodedToken = jwtDecode(res.data);
-          // console.log(decodedToken)
-          // console.log("Token Here ====> " ,res)
-          // localStorage.setItem('FBIdToken', `${res.data.token}`)
+
           dispatch({type:"SET_TOKEN",data:res.data})
 
             history.push("/");
-
-          // console.log(Userid)
-          // localStorage.setItem('token', res.data.localToken)
-
-          // Axios.post(api + "/auth/getDetail", {
-          //   Userid
-          // }).then((resalt) => {
-          //   console.log("UserDetail Before Test =+++ :" , resalt)
-          //   dispatch(setloginWithEmail(resalt));
-          //   history.push("/");
-          // })
-
-
         }
       })
-      // .then(() => {
-      //   history.push("/");
-      // });
     } catch (error) {
       console.log(error);
     }
@@ -90,30 +65,15 @@ const Sign_in = () => {
 
 
   const onloginwithgoogle = async () => {
+    console.log("login google")
     const result = await auth.signInWithPopup(googleProvider);
-    console.log(result);
-    const token = result.credential.idToken;
+    const token = await result.credential.idToken;
     await Axios.post(api + "/auth/google", { token }).then(
       (res) => {
-        dispatch(setloginWithGoogle(res, token));
+        dispatch({type:"SET_TOKEN",data:res.data})
+        history.push("/");
       }
     );
-
-    // console.log(result);
-    // if (result) {
-    //   // const userref = firestore.collection("users").doc(result.user.uid);
-    //   // userref.get().then((doc) => {
-
-    //   //   if (!doc.data()) {
-
-    //   //       dispatch(setloginWithGoogle(res));
-    //   //   } else {
-    //   //     const token = result.credential.idToken;
-    //   //     Axios.post("http://localhost:3001/auth/google", { token })
-    //   //       .then((res) => { dispatch(setloginWithGoogle(res)) })
-    //   //   }
-    //   // });
-    // }
   };
 
   // const handleLogin = async googleData => {

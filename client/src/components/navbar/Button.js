@@ -77,21 +77,15 @@ const Button = ({ closeMenu }) => {
   },[stotus,stotus2,stotus3]);
 
   const signouthandle = () => {
+    dispatch(setlogout())
 
-    Axios.post(api + "/auth/logout")
-      .then((res) => {
-        if (res.data === "logout_success") {
-          dispatch(setlogout())
-        }
-      })
-
-    // auth.signOut().then(() => {
-    //   dispatch(setlogout());
-
-    // })
-    //   .catch((err) => {
-    //     console.log("Logout Not work" + err)
+    // Axios.post(api + "/auth/logout")
+    //   .then((res) => {
+    //     if (res.data === "logout_success") {
+    //       dispatch(setlogout())
+    //     }
     //   })
+
   }
   return (
     <div>

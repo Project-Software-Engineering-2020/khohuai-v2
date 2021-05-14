@@ -1,4 +1,5 @@
 const initialState = {
+  loading: false,
   totalItem: 0,
   totalSelect: 0,
   totalPrice: 0,
@@ -63,6 +64,7 @@ function Cart(state = initialState, action) {
       state = {
         ...state,
         cart: action.data,
+        loading: false,
         message: action.message
       };
 

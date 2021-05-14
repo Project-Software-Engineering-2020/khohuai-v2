@@ -73,32 +73,10 @@ function App() {
       }
     }
     else {
-      // window.location.href = '/login';
       console.log("Mai Mee Token")
     }
 
   },[token])
-
-  // const token = localStorage.FBIdToken;
-  // console.log("Tokenno +++++++++" + token)
-  // if (token) {
-  //   const decodedToken = jwtDecode(token);
-  //   if (decodedToken.exp * 1000 < Date.now()) {
-  //     console.log("Can't Decoder")
-  //     dispatch(setlogout());
-  //     // window.location.href = '/login';
-  //   } else {
-  //     console.log("Samart Decoder :" , decodedToken)
-  //     // dispatch(setloginWithEmail())
-  //     dispatch(setauthenticate());
-  //     // Axios.defaults.headers.common['Authorization'] = token;
-  //     // dispatch(getUserData());
-  //   }
-  // }
-  // else{
-  //   // window.location.href = '/login';
-  //   console.log("Mai Mee Token")
-  // }
 
   return (
 
@@ -109,28 +87,24 @@ function App() {
           <Route path="/" exact={true} component={Home} />
           <Route path="/shop" component={Shop} />
           <Route path="/lottery" component={LotteryThailand} />
-          {/* <Route path="/game" component={Game} /> */}
           <Route path="/login" component={Sign_in} />
           <Route path="/signup" component={SignUp} />
+          <Route path="/updatepassword" component={UpdatePassword} />
+          <Route path="/forgotpassword" component={ForgotPassword} />
+
           <PrivateRoute path="/product/:id" component={LotteryDetail} />
           <PrivateRoute path="/me/:complete" component={Profile} />
           <PrivateRoute path="/upload" component={UploadLottery} />
-          <Route path="/updatepassword" component={UpdatePassword} />
-          <Route path="/forgotpassword" component={ForgotPassword} />
-          <PrivateRoute
-            path="/LotteryReports"
-            exact
-            component={LotteryReports}
-          />
+          <PrivateRoute path="/LotteryReports" exact component={LotteryReports}/>
           <PrivateRoute path="/Invoice" exact component={Invoice} />
           <PrivateRoute path="/AdUser" exact component={AdUser} />
           <PrivateRoute path="/game" component={Game} />
           <PrivateRoute path="/cart" component={CartTest} />
           <PrivateRoute path="/purchase" exact={true} component={Purchase} />
           <PrivateRoute path="/purchase/:id" component={PurchaseDetail} />
-          <Route path="/reward" exact={true} component={Reward} />
-          <Route path="/reward/detail/:id" component={RewardDetail} />
-          <Route path="/updateprofile" component={UpdateProfile} />
+          <PrivateRoute path="/reward" exact={true} component={Reward} />
+          <PrivateRoute path="/reward/detail/:id" component={RewardDetail} />
+          <PrivateRoute path="/updateprofile" component={UpdateProfile} />
         </Switch>
       </Router>
 
