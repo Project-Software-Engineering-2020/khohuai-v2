@@ -76,57 +76,12 @@ const Sign_in = () => {
     );
   };
 
-  // const handleLogin = async googleData => {
-  //   await console.log("login", googleData.tokenId);
-  //   const res = await fetch("http://localhost:3001/auth/google", {
-  //     method: "POST",
-  //     body: JSON.stringify({
-  //       token: googleData.tokenId
-  //     }),
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     }
-  //   })
-  //   const data = await res.json()
-  //   // store returned user somehow
-  // }
-
-  // const handleChange = (e) => {
-  //   if (e.target.files[0]) {
-  //     setImage(e.target.files[0]);
-  //   }
-  // };
-
-  // const handleUpload = () => {
-  //   const uploadTask = storage.ref("images/" + user.uid).put(image);
-  //   uploadTask.on(
-  //     "state_change",
-  //     (snapshot) => { },
-  //     (error) => {
-  //       console.log(error);
-  //     },
-  //     () => {
-  //       storage
-  //         .ref("images")
-  //         .child(user.uid)
-  //         .getDownloadURL()
-  //         .then((url) => {
-  //           setImgUrl(url);
-  //           console.log(url);
-  //           firestore.collection("users").doc(user.uid).update({
-  //             photoURL: url,
-  //           });
-  //         });
-  //     }
-  //   );
-  // };
-
   return (
     <div>
       {!redirect ? (
         <div className="signin">
           <div className="main-form">
-            <form>
+            <form onSubmit={onEmaillogin}>
               <div className="d-flex justify-content-center">
                 <h1>
                   ลงชื่อเข้าใช้
@@ -180,7 +135,7 @@ const Sign_in = () => {
 
               <div className="">
                 <button
-                  type="button"
+                  type="submit"
                   className="btn-signin"
                   onClick={onEmaillogin}
                 >

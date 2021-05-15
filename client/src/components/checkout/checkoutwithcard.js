@@ -49,7 +49,6 @@ const CheckoutCreditcard = ({ user, cart, total, createCreditCardCharge }) => {
                     cart,
                     total * 100,
                     token)
-                console.log("Here =====>", user.uid);
 
             },
             onFormClosed: () => { },

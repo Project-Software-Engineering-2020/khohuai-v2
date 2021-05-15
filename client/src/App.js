@@ -3,12 +3,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-
+import { Modal, Button } from 'react-bootstrap'
 import PrivateRoute from "./util/ProtectedRoute";
 
 //page
 import Navbar from "./components/navbar/Navbar";
-// import Footer from "./components/footer/Footer";
 import Home from "./components/home/Home";
 import Shop from "./components/shop/shop";
 import LotteryThailand from "./components/lotterythai/LotteryThailand";
@@ -21,8 +20,6 @@ import UploadLottery from "./components/insert/insertLottery";
 import Error404 from "./components/error/Error404";
 import UpdatePassword from "./components/recover/Updatepassword";
 import ForgotPassword from "./components/recover/Forgotpassword";
-import Basket from "./components/pages/basket";
-import Sidebar from "./components/admin/Sidebar";
 import CartTest from "./components/cart/CartTest";
 import Purchase from './components/purchase/Purchase';
 import Reward from './components/reward/Reward';
@@ -36,47 +33,43 @@ import { closeAlert } from './redux/action/alertAction';
 import { Fragment } from "react";
 import UpdateProfile from "./components/profile/UpdateProfile";
 import jwtDecode from 'jwt-decode';
-import {
-  setloginWithEmail,
-  setauthenticate,
-  setlogout,
-} from "./redux/action/authAction";
-
+import { setauthenticate, setlogout } from "./redux/action/authAction";
+import tutorial from './images/tutorial.jpg';
+import Axios from 'axios';
+import { api } from './environment';
+import { uiddecoded } from './util/decodeUID'
 
 function App() {
 
   const dispatch = useDispatch();
-
-  const auth = useSelector((state) => state.auth);
   const alert = useSelector(state => state.alert)
-
   const token = useSelector((state) => state.token);
-  // const Usid = jwtDecode(token)
-  // const Userid = Usid.user_id;
 
-  // const token = localStorage.FBIdToken;
-  // console.log("Tokenno +++++++++" + token)
+  const [show, setShow] = useState(false);
+  const handleClose = async () => {
+    await Axios.get(api + '/user/currentuser/' + uiddecoded(token))
+      .then((res) => {
+        dispatch({ type: "SET_TOKEN", data: res.data })
+        setShow(false)
+      })
+
+  };
+
+
   useEffect(() => {
     if (token) {
-      const { exp, photoURL, displayName } = jwtDecode(token);
-      //   console.log(decodedToken)
+      const { exp, photoURL, displayName, new_user } = jwtDecode(token);
       if (exp * 1000 < Date.now()) {
-        console.log("Can't Decoder")
         dispatch(setlogout());
-        // window.location.href = '/login';
       } else {
-        // console.log("Samart Decoder :" , decodedToken)
-        // dispatch(setloginWithEmail())
+        if (new_user === true) {
+          setShow(true);
+        }
         dispatch(setauthenticate(photoURL, displayName));
-        // Axios.defaults.headers.common['Authorization'] = token;
-        // dispatch(getUserData());
       }
     }
-    else {
-      console.log("Mai Mee Token")
-    }
 
-  },[token])
+  }, [token])
 
   return (
 
@@ -95,7 +88,7 @@ function App() {
           <PrivateRoute path="/product/:id" component={LotteryDetail} />
           <PrivateRoute path="/me/:complete" component={Profile} />
           <PrivateRoute path="/upload" component={UploadLottery} />
-          <PrivateRoute path="/LotteryReports" exact component={LotteryReports}/>
+          <PrivateRoute path="/LotteryReports" exact component={LotteryReports} />
           <PrivateRoute path="/Invoice" exact component={Invoice} />
           <PrivateRoute path="/AdUser" exact component={AdUser} />
           <PrivateRoute path="/game" component={Game} />
@@ -107,6 +100,21 @@ function App() {
           <PrivateRoute path="/updateprofile" component={UpdateProfile} />
         </Switch>
       </Router>
+
+      {/* tutorial */}
+      <Modal show={show} size="lg" onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title><h5>วิธีการใช้งาน</h5></Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <img src={tutorial} className="w-100"></img>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleClose}>
+            ฉันเข้าใจแล้ว
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
       <SweetAlert
         show={alert.open}

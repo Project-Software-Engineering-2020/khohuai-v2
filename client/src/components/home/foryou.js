@@ -21,7 +21,6 @@ const Foryou = () => {
         const FetchData = async () => {
 
             await Axios.get(api + "/lottery/recommended").then((lot) => {
-                console.log(lot);
                 setData(lot.data);
                 datb = lot.data;
             })

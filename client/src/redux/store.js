@@ -12,7 +12,8 @@ import purchase_Detail from "./reducer/purchaseDetailReducer";
 import reward from "./reducer/rewardReducer";
 import alertReducer from "./reducer/alertReducer";
 import ngudReducer from "./reducer/ngudReducer";
-import tokenRudecer from "./reducer/tokenRudecer"
+import tokenRudecer from "./reducer/tokenRudecer";
+import newuser from './reducer/newuserReducer';
 // ******Combine Reducers******
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -23,14 +24,15 @@ const rootReducer = combineReducers({
   reward: reward,
   alert: alertReducer,
   ngud: ngudReducer,
-  token: tokenRudecer
+  token: tokenRudecer,
+  newuser: newuser
 });
 
 //redux persit manage local storage
 const PersistConfig = {
   key: "root",
   storage: storage,
-  whitelist: ["auth","cart","purchase_detail","token"],
+  whitelist: ["auth","cart","purchase_detail","token","newuser"],
 };
 const persitReducer = persistReducer(PersistConfig, rootReducer);
 

@@ -13,7 +13,7 @@ const Hot = () => {
 
         const FetchData = async () => {
             await Axios.get(api + "/lottery/aos").then((lot) => {
-                console.log(lot.data);
+
                 setData(lot.data);
             })
             await setloading(true);

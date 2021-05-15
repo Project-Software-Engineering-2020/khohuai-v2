@@ -1,8 +1,8 @@
-function ngud(state = [], action) {
+function newuser(state = true, action) {
 
     switch (action.type) {
 
-        case 'SET_NGUD':
+        case 'SET_NEWUSER':
             state = action.data
             return state;
             
@@ -11,4 +11,4 @@ function ngud(state = [], action) {
     }
 }
 
-export default ngud;
+export default newuser;

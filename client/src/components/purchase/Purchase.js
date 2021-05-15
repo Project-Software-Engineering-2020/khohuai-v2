@@ -50,7 +50,7 @@ const Purchase = () => {
                                 <div>
                                     คำสั่งซื้อ #{item.invoiceid}
                                 </div>
-                                <div className="text-right">
+                                <div>
                                     <Moment format="ชำระเงินเมื่อ DD MMMM YYYY เวลา HH:mm:ss">
                                         {item.date}
                                     </Moment>
@@ -59,7 +59,6 @@ const Purchase = () => {
                             <div className="card-body">
                                 <div className="number-lottery-list">
                                     <div className="text-info-perchase-head">เลขสลาก</div>
-                                    <div className="text-info-perchase-head">ราคา</div>
                                     <div className="text-info-perchase-head">จำนวน</div>
                                     <div className="text-info-perchase-head">สถานะ</div>
                                     <div className="text-info-perchase-head">ผลรางวัล</div>
@@ -71,14 +70,13 @@ const Purchase = () => {
                                             {i < 3 ?
                                                 <div className="number-lottery-list" key={i}>
                                                     <div className="text-info-perchase space-number-purchase">{lottery.number}</div>
-                                                    <div className="text-info-perchase">฿80</div>
                                                     <div className="text-info-perchase">{lottery.qty} ใบ</div>
 
                                                     <div className="text-info-perchase">
                                                         {lottery.status ?
                                                             <span className="badge badge-success">ตรวจรางวัลแล้ว</span>
                                                             :
-                                                            <span className="badge badge-warning">รอการประกาศผล</span>
+                                                            <span className="badge badge-warning">รอประกาศผล</span>
                                                         }
 
                                                     </div>

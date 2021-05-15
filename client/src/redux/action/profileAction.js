@@ -31,7 +31,7 @@ export function getProfile(uid) {
     return function (dispatch) {
         return Axios.get(api + "/user/profile/" + uid)
             .then(user => {
-                console.log(user.data)
+      
                 dispatch(setProfile(user.data))
             });
     }
@@ -45,12 +45,6 @@ export function updateUserProfile(newProfile) {
             }
         })
 
-    // const data_alert = {
-    //     title: "อัพเดพข้อมูลสำเร็จ",
-    //     text: "เกิดข้อผิดพลาด",
-    //     type: 'success'
-    // }
-    // store.dispatch({ type: "OPEN_ALERT", data: data_alert });
 
     return function (dispatch) {
 

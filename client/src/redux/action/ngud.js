@@ -10,7 +10,7 @@ export function getCurrent() {
     return function (dispatch) {
         return Axios.get(api + "/lottery/currentngud")
             .then(n => {
-                console.log(n)
+
                 dispatch({type:"SET_NGUD",data:n.data})
             });
     }

@@ -14,6 +14,8 @@ const checkoutCreditCard = async (req, res, next) => {
 
   const { email, uid, amount, token, buyItem, totalItem } = req.body;
 
+  console.log(req.body);
+
   try {
     const customer = await omise.customers.create({
       email,
@@ -27,7 +29,7 @@ const checkoutCreditCard = async (req, res, next) => {
     })
 
     createinvoice(charge, buyItem, uid, totalItem)
-    // console.log("Charge ========> " , charge)
+
     res.send({
       amount: amount,
       status: charge.status,

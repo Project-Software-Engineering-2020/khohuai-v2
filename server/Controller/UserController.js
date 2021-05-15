@@ -1,5 +1,7 @@
 const { firestore, firebaseApp, auth, googleProvider } = require('../firebaseDB');
+const sign = require("jwt-encode");
 
+const secret = 'secret';
 //Models DB
 const User = require('../Models/User');
 
@@ -101,10 +103,7 @@ const getProfile = async (req, res, next) => {
 const updateProfile = async (req, res, next) => {
 
     const data = req.body.newProfile;
-    // const token = req.body.token.toString();
-    // console.log(data);
-    // console.log(token);
-    // console.log(uid);
+
     try {
         firestore.collection('users').doc(data.uid).update(data)
             .then((result) => { res.status(200).send(result) })
@@ -114,10 +113,36 @@ const updateProfile = async (req, res, next) => {
     }
 }
 
+const setCurrentUser = async (req, res) => {
+
+    const uid = req.params.id;
+    console.log(uid);
+
+    try {
+        await firestore.collection("users").doc(uid).update({new_user: false})
+        await firestore.collection("users").doc(uid)
+          .get().then((doc) => {
+            user = {
+              email: doc.data().email,
+              uid: doc.data().uid,
+              displayName: doc.data().displayName,
+              photoURL: doc.data().photoURL,
+              new_user: doc.data().new_user,
+              exp: (Date.now() / 1000 + (60 * 60))//นี่ไง หนึ่งชั่วโมง
+            }
+          });
+        const jwt = sign(user, secret)
+        res.status(200).send(jwt)
+    } catch (error) {
+        
+    }
+}
+
 module.exports = {
     addUser,
     getAllUser,
     deleteUser,
     getProfile,
-    updateProfile
+    updateProfile,
+    setCurrentUser
 }

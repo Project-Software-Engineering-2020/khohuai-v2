@@ -20,7 +20,7 @@ const Widget = () => {
     return (
         <div>
             <div className="row">
-                <div className="col-lg-4 col-6">
+                <div className="col-lg-4 col-6 ">
                     <div className="small-box bg-info">
                         <div className="inner">
                              <p>จำนวนครั้งที่ซื้อ</p>
@@ -33,6 +33,18 @@ const Widget = () => {
                     </div>
                 </div>
                 <div className="col-lg-4 col-6">
+                    <div className="small-box bg-warning text-white">
+                        <div className="inner">
+                            <p>รอการประกาศผล</p>
+                            <h3>{purchase.wait}</h3>
+                        </div>
+                        <div className="icon">
+                            <i className="ion ion-stats-bars" />
+                        </div>
+                    
+                    </div>
+                </div>
+                <div className="col-lg-4 col-12">
                     <div className="small-box bg-success">
                         <div className="inner">
                             <p>จำนวนครั้งที่ถูกรางวัล</p>
@@ -44,18 +56,7 @@ const Widget = () => {
                     
                     </div>
                 </div>
-                <div className="col-lg-4 col-6">
-                    <div className="small-box bg-warning">
-                        <div className="inner">
-                            <p>รอการประกาศผล</p>
-                            <h3>{purchase.wait}</h3>
-                        </div>
-                        <div className="icon">
-                            <i className="ion ion-stats-bars" />
-                        </div>
-                    
-                    </div>
-                </div>
+                
             </div>
         </div>
     )

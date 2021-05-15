@@ -6,9 +6,10 @@ const {
   googleProvider,
 } = require("../firebaseDB");
 const { OAuth2Client } = require("google-auth-library");
-const sign = require("jwt-encode")
-const client = new OAuth2Client("909598832056-4e7km1tuqnqp1k8l5mghsk912rsf3j93.apps.googleusercontent.com");
+const sign = require("jwt-encode");
 const secret = 'secret';
+const client = new OAuth2Client("909598832056-4e7km1tuqnqp1k8l5mghsk912rsf3j93.apps.googleusercontent.com");
+
 const User = require("../Models/User");
 
 const googleLogin = async (req, res) => {
@@ -16,12 +17,13 @@ const googleLogin = async (req, res) => {
   console.log("signin with google")
 
   // Sign in with credential from the Google user.
-  const tokenID = req.body.token;
-  const credential = await googleProvider.credential(tokenID);
-  const result = await firebaseApp.auth().signInWithCredential(credential);
-  let user = {};
-
   try {
+    const tokenID = req.body.token;
+    const credential = await googleProvider.credential(tokenID);
+    const result = await firebaseApp.auth().signInWithCredential(credential);
+    let user = {};
+
+
     const userRef = firestore.collection("users").doc(result.user.uid);
     await userRef.get().then(async (doc) => {
       if (!doc.data()) {
@@ -74,7 +76,7 @@ const googleLogin = async (req, res) => {
           new_user: doc.data().new_user,
           exp: (Date.now() / 1000 + (60 * 60))//หนึ่งชั่วโมง
         }
-        console.log(user);
+
 
         const jwt = sign(user, secret)
         res.status(200).send(jwt)
@@ -110,6 +112,7 @@ const signin = async (req, res) => {
               uid: doc.data().uid,
               displayName: doc.data().displayName,
               photoURL: doc.data().photoURL,
+              new_user: doc.data().new_user,
               exp: (Date.now() / 1000 + (60 * 60))//นี่ไง หนึ่งชั่วโมง
             }
 

@@ -7,11 +7,11 @@
 }
 .card-header-purchase {
     background-color: rgb(233, 233, 233);
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
+    color: rgb(39, 39, 39);
+    display: flex;
+    justify-content: space-between;
     padding: 15px 28px;
     font-size: 16px;
-    font-weight: bold;
 }
 .purchase-item {
     text-align: center;
@@ -67,7 +67,7 @@ a.purchase-item:hover {
 .number-lottery-list {
     margin: 0 10px;
     display: grid;
-    grid-template-columns: repeat(5,1fr);
+    grid-template-columns: repeat(4,1fr);
 }
 .btn-purchase-detail {
     margin-left: auto;
@@ -83,4 +83,37 @@ a.purchase-item:hover {
     font-size: 18px;
     margin: 10px 0;
     font-weight: normal;
+}
+
+@media screen and (max-width: 760px) {
+    .card-header-purchase {
+        padding: 5px;
+        font-size: 14px;
+        text-align: center;
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    .number-lottery-list {
+        text-align: center;
+    }
+    .card-body {
+        padding: 5px;
+    }
+    .text-info-perchase-head {
+        margin: 0;
+        font-size: 14px;
+    }
+    .text-info-perchase {
+        font-size: 14px;
+    }
+    .space-number-purchase {
+        letter-spacing: 1px;
+    }
+    .summary-purchase-item {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    .summary-purchase-item div {
+        font-size: 14px !important;
+    }
 }

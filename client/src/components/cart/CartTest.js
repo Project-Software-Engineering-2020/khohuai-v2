@@ -9,11 +9,12 @@ import Coupon from "./Coupon";
 import { getMyCartFromDB } from "../../redux/action/cartAction";
 import { selectAll } from "../../redux/action/cartAction";
 import { api } from '../../environment';
-import {uiddecoded} from '../../util/decodeUID'
+import {uiddecoded,emaildecoded} from '../../util/decodeUID'
 
 const Basket = () => {
   const myCart = useSelector((state) => state.cart);
   const Usernaw = useSelector((state) => state.auth);
+  const token = useSelector(state => state.token)
   const dispatch = useDispatch();
   const [loading, setloading] = useState(true);
   const [success, setsuccess] = useState();
@@ -25,6 +26,9 @@ const Basket = () => {
     const totalItem = myCart.totalSelect;
 
     try {
+      // const uid = uiddecoded(token)
+      // const email = emaildecoded(token)
+
       await axios
         .post(api + "/checkout-credit-card", {
           email,
@@ -50,9 +54,6 @@ const Basket = () => {
       console.log("Error Checkoutpage" + err);
     }
   };
-  // const payfromcart = () => {
-  //     alert("ชำระเงิน")
-  // }
 
   useEffect(async () => {
     await dispatch(getMyCartFromDB());

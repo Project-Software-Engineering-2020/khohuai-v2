@@ -78,13 +78,7 @@ const Button = ({ closeMenu }) => {
 
   const signouthandle = () => {
     dispatch(setlogout())
-
-    // Axios.post(api + "/auth/logout")
-    //   .then((res) => {
-    //     if (res.data === "logout_success") {
-    //       dispatch(setlogout())
-    //     }
-    //   })
+    closeMenu()
 
   }
   return (
@@ -95,13 +89,13 @@ const Button = ({ closeMenu }) => {
           <Dropdown.Menu as={CustomMenu}>
             <Dropdown.Item onClick={closeMenu} eventKey="1" href="/me/profile"><i className="fas fa-user"></i> ข้อมูลส่วนตัว</Dropdown.Item>
             <Dropdown.Item onClick={closeMenu} eventKey="3" href="/purchase"><i className="fas fa-file-invoice"></i> ประวัติการซื้อ</Dropdown.Item>
-            <Dropdown.Item onClick={closeMenu} eventKey="2" onClick={signouthandle}><i className="fas fa-sign-out-alt"></i> ออกจากระบบ</Dropdown.Item>
+            <Dropdown.Item eventKey="2" onClick={signouthandle}><i className="fas fa-sign-out-alt"></i> ออกจากระบบ</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       ) : (
 
         <Link to='/login'>
-          <button className='signup-btn'>ลงชื่อเข้าใช้</button>
+          <button className='signup-btn' onClick={closeMenu}>ลงชื่อเข้าใช้</button>
         </Link>
 
       )
