@@ -67,8 +67,8 @@ const Sign_in = () => {
   const onloginwithgoogle = async () => {
     console.log("login google")
     const result = await auth.signInWithPopup(googleProvider);
-    const token = await result.credential.idToken;
-    await Axios.post(api + "/auth/google", { token }).then(
+    const token = result.credential.idToken;
+    Axios.post(api + "/auth/google", { token }).then(
       (res) => {
         dispatch({type:"SET_TOKEN",data:res.data})
         history.push("/");
