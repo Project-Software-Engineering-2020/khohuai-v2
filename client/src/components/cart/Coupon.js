@@ -49,6 +49,9 @@ function Coupon() {
         setChon(0);
         setInvent("Chonlasit coin", 0);
       }
+      else if(totalPrice <= 20){
+        //do nothing
+      }
       else{
         dispatch({type: "USE_COIN", coin : totalPrice - 20});
         setChon(chon - totalPrice + 20);
