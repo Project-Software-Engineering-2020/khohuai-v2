@@ -24,7 +24,7 @@ function Checkout() {
             amount: 10000,
             submitFormTarget: '#creditcard',
             onCreateTokenSuccess: (token) => {
-                console.log(token)
+                // console.log(token)
             },
             onFormClosed: () => {
             },

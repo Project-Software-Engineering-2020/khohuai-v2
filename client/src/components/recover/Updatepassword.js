@@ -111,9 +111,9 @@ const Updatepassword = () => {
         setConfirmpasswordErr(confirmpasswordErr);
     }
     const Reauthen = (currentpassword) => {
-        console.log(ujer.email)
+        // console.log(ujer.email)
         // setemail(ujer.email)
-        console.log(currentpassword)
+        // console.log(currentpassword)
         const cred = auth.EmailAuthProvider.credential("chon26910@hotmail.com", "Chon26911");
         return ujer.reauthenticateWithCredential(cred);
     }

@@ -8,14 +8,14 @@ const Foryou = () => {
 
     const stetus = useSelector(state => state.auth)
     const stotus = stetus.status;
-    
+
     const [recommendedData, setRecommendedData] = useState();
     const [loading, setloading] = useState(false);
 
 
     const [data, setData] = useState();
 
-    useEffect(async() => {
+    useEffect(async () => {
 
         let datb = [];
         const FetchData = async () => {
@@ -33,27 +33,31 @@ const Foryou = () => {
     }, [stotus])
 
     return (
-        <div>
-            <div className="recommend-header">
-                <span>แนะนำสำหรับคุณ </span>
-
-            </div>
+        <>
             {loading ?
-                <div className="recommend-body">
-                    {data.map((item, k) => {
-                        // if (k < 4) {
+                <div className="recommend">
+                    <div className="recommend-header">
+                        <span>แนะนำสำหรับคุณ </span>
+                    </div>
+
+                    <div className="recommend-body">
+                        
+                        {data.map((item, k) => {
+
                             return (
                                 <Lottoryitem key={k} data={item} number={2} />
                             )
-                        // }
-                    })}
 
+                        })}
+
+                    </div>
                 </div>
                 :
-                <div className="loader">Loading...</div>
+                null
+                // <div className="loader">Loading...</div>
             }
 
-        </div>
+        </>
 
     )
 }

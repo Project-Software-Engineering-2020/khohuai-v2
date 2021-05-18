@@ -134,5 +134,8 @@ a.purchase-item:hover {
     .section-summary-invoice {
       grid-template-columns: 100%;
     }
+    .reward-mobile {
+      display: block;
+    }
   }
   

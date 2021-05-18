@@ -3,9 +3,8 @@ import './Profile.css';
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { storage, firestore } from '../../firebase/firebase'
-import { updateUserProfile, getProfile } from "../../redux/action/profileAction"
-import { api } from '../../environment';
-import {uiddecoded} from '../../util/decodeUID'
+import { getProfile } from "../../redux/action/profileAction"
+import { uiddecoded,providerdecode} from '../../util/decodeUID';
 
 const Profile = (props) => {
 
@@ -20,6 +19,8 @@ const Profile = (props) => {
     const UserProfile = useSelector(state => state.profile);
 
     const uid = auth.uid;
+
+    const provider = providerdecode(token);
 
     const [newProfile, setNewProfile] = useState();
     const [updateImage, setUpdateImage] = useState(null);
@@ -284,7 +285,7 @@ const Profile = (props) => {
                                         </div>
                                         <div className="group-btn-profile">
                                             <button type="button" className="btn-edit-profile" onClick={OnClickeditProfile}> แก้ไขข้อมูล </button>
-                                            {auth.provider != "google" ?
+                                            {provider != "google" ?
                                                 <button type="button" className="btn-change-password" ><a href="/updatepassword">เปลี่ยนรหัสผ่าน</a></button>
                                                 :
                                                 null

@@ -21,7 +21,7 @@ const PurchaseDetail = (props) => {
 
     return (
         <div className="container mt-3 p-3 bg-white">
-            {console.log(item.data)}
+    
             <header className="header-purchase-page">
                 <NavLink to="/purchase" activeClassName="purchase-item-active" className="purchase-item">
                     ประวัติการซื้อ

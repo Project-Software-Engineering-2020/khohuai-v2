@@ -102,7 +102,7 @@ const getRecommendedLottery = async (req, res, next) => {
                 lotteryArray.push({
                     id: doc.id,
                     photoURL: doc.data().photoURL,
-                    nguad: doc.data().nguad
+                    nguad: doc.data().ngud
                 });
             });
 
@@ -182,8 +182,8 @@ const getRecommendedLottery = async (req, res, next) => {
                 lotteryArray.push({
                     id: doc.id,
                     photoURL: doc.data().photoURL,
-                    nguad: doc.data().nguad,
-                    stock: doc.data().stock
+                    nguad: doc.data().ngud,
+                    stock: doc.data().photoURL.length
                 });
             });
             let i = 0;

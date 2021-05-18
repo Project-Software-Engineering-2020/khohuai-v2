@@ -147,7 +147,7 @@ const LotteryThailand = () => {
 
                 })
                 if (item.result.length === 0) {
-                    console.log("ไม่ถูกรางวัล")
+                    // console.log("ไม่ถูกรางวัล")
                     const list = [...inputList];
                     list[index]["result"].push("ไม่ถูกรางวัล");
                     setInputList(list);

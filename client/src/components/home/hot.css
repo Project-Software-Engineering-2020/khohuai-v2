@@ -1,13 +1,18 @@
+.hot {
+  margin-top: 25px;
+  border-radius: 7px;
+  border: 1px solid rgb(228, 228, 228);
+  width: 100%;
+  background: #f79b5e;
+}
 .hot-header {
-    margin-top: 25px;
-    background: #f4690c;
-    text-align: center;
+  
+    text-align: left;
     border-top-right-radius: 15px;
     border-top-left-radius: 15px;
-    padding: 15px 10px;
+    padding: 15px 25px;
     color: white;
-    border: 1px solid rgb(228, 228, 228);
-    width: 25%;
+   
   }
   .hot-header span {
     display: inline-block;
@@ -23,7 +28,7 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
-    border: 1px solid#f4690c;
+    border: 1px solid#ff802c;
 
     display: grid;
     grid-template-columns: repeat(4,1fr);
@@ -47,9 +52,7 @@
 
   
   @media screen and (max-width: 1024px) {
-    .hot-header{
-      width: 32%;
-    }
+   
     .hot-header span {
       
       font-size: 14px;
@@ -59,9 +62,7 @@
     }
   }
   @media screen and (max-width: 812px) {
-    .hot-header{
-      width: 30%;
-    }
+   
     .hot span {
       font-size: 14px;
     }
@@ -69,10 +70,7 @@
 
 
   @media screen and (max-width: 736px) {
-    .hot-header{
-      padding: 12px ;
-      width: 45%;
-    }
+    
     .hot-header span {
       font-size: 14px;
     }
@@ -87,10 +85,7 @@
 
 
   @media screen and (max-width: 720px) {
-    .hot-header{
-     
-      width: 45%;
-    }
+    
     
     .hot-header span {
       font-size: 14px;

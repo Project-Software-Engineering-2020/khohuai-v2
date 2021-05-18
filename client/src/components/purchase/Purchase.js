@@ -50,13 +50,17 @@ const Purchase = () => {
                                 <div>
                                     คำสั่งซื้อ #{item.invoiceid}
                                 </div>
-                                <div>
+
+                            </div>
+                            <div className="card-body">
+                                <div className="m-2">
                                     <Moment format="ชำระเงินเมื่อ DD MMMM YYYY เวลา HH:mm:ss">
                                         {item.date}
                                     </Moment>
                                 </div>
-                            </div>
-                            <div className="card-body">
+                                <div className="m-2">งวดประจำวันที่ <Moment format=" DD MMMM YYYY ">
+                                    {item.ngud_date}
+                                </Moment></div>
                                 <div className="number-lottery-list">
                                     <div className="text-info-perchase-head">เลขสลาก</div>
                                     <div className="text-info-perchase-head">จำนวน</div>

@@ -2,32 +2,50 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "react-bootstrap";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useHistory,Redirect } from "react-router-dom";
 import CartitemTest from "./CartitemTest";
 import CheckoutCreditcard from "../checkout/checkoutwithcard";
 import Coupon from "./Coupon";
 import { getMyCartFromDB } from "../../redux/action/cartAction";
 import { selectAll } from "../../redux/action/cartAction";
 import { api } from '../../environment';
-import {uiddecoded,emaildecoded} from '../../util/decodeUID'
+import LoadingOverlay from "react-loading-overlay";
+import styled, { css } from "styled-components";
+const DarkBackground = styled.div`
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 999; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+
+  ${props =>
+    props.disappear &&
+    css`
+      display: block; /* show */
+    `}
+`;
 
 const Basket = () => {
   const myCart = useSelector((state) => state.cart);
   const Usernaw = useSelector((state) => state.auth);
-  const token = useSelector(state => state.token)
   const dispatch = useDispatch();
-  const [loading, setloading] = useState(true);
   const [success, setsuccess] = useState();
   const [show, setShow] = useState(false);
   const history = useHistory();
+  const [isActive, setisActive] = useState(false);
+
 
   const createCreditCardCharge = async (email, uid, macart, amount, token) => {
     const buyItem = myCart.selected;
     const totalItem = myCart.totalSelect;
+    setisActive(true)
 
     try {
-      // const uid = uiddecoded(token)
-      // const email = emaildecoded(token)
 
       await axios
         .post(api + "/checkout-credit-card", {
@@ -42,14 +60,14 @@ const Basket = () => {
           },
         })
         .then(async (res) => {
-          await dispatch(getMyCartFromDB());
-          await setsuccess(res.data.amount);
+          if (res.data === "success") {
+            await setisActive(false);
+            window.location.replace('/purchase')
+          }
 
-          await history.push("/purchase");
         });
 
-      // const resData = res.data;
-      // setcharge(resData);
+
     } catch (err) {
       console.log("Error Checkoutpage" + err);
     }
@@ -57,21 +75,24 @@ const Basket = () => {
 
   useEffect(async () => {
     await dispatch(getMyCartFromDB());
-    await setloading(false);
   }, []);
 
   const selectAllitem = () => {
     dispatch(selectAll(myCart.check));
   };
 
+
+
   return (
+    // <DarkBackground disappear={isActive}>
+
     <div className="container mt-3 p-3">
       {myCart.loading ? (
         <div>loading...</div>
       ) : (
         <div className="row">
           <div className="col-md-8 mt-4">
-            <div class="card-header all">
+            <div class="card-header all card">
               <div class="form-check">
                 <input
                   class="form-check-input"
@@ -193,7 +214,23 @@ const Basket = () => {
           <h5>จำนวนเงิน {success / 100} บาท</h5>
         </Modal.Body>
       </Modal>
+      <LoadingOverlay
+        active={isActive}
+        spinner
+        text='กำลังดำเนินการ'
+        styles={{
+          wrapper: {
+            width: '400px',
+            height: '100%',
+            overflow: isActive ? 'hidden' : 'scroll'
+          }
+        }}
+      >
+      </LoadingOverlay>
+
     </div>
+
+    // </DarkBackground>
   );
 };
 

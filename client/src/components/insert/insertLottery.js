@@ -17,8 +17,8 @@ const UploadLottery = () => {
         if (e.target.files[0]) {
             setImage(e.target.files[0]);
         }
-        console.log(e.target.files[0].name);
-        console.log(image);
+        // console.log(e.target.files[0].name);
+        // console.log(image);
     };
 
     const handleUpload = (e) => {

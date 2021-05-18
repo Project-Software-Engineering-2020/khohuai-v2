@@ -61,7 +61,7 @@ const Reward = (props) => {
             <a href={"/reward"} class="backBtn"><i class="fa fa-chevron-left" aria-hidden="true"></i>  ย้อนกลับ</a>
             </div>  
               {/* Morris chart - Sales */}
-              <h5 className="rewardIdDetail"> หมายเลขรับรางวัล : {reward_id} </h5>
+              <p> หมายเลขรับรางวัล : {reward_id} </p>
               <p>
                 งวดประจำวันที่{" "}
                 <Moment format="DD MMMM YYYY" locale="th">
@@ -133,15 +133,13 @@ const Reward = (props) => {
                   </div>
                 </div>
               </div>
-              <div className="footer-reward">
+              {/* <div className="footer-reward">
                 <div className="txt">
                   **โปรดตรวจสอบเลขที่บัญชีให้ถูกต้องเพื่อรักษาผลประโยชน์ของท่าน**
                 </div>
-                {/* {
-                  reward.data.success ? null : <Button onClick={handleShowconfirm}>ยืนยัน</Button>
-                } */}
+                
                
-              </div>
+              </div> */}
             </div>
           </div>
           {/* /.card-body */}

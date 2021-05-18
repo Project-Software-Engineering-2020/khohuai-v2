@@ -60,7 +60,7 @@ const CheckoutCreditcard = ({ user, cart, total, createCreditCardCharge }) => {
         e.preventDefault();
 
         await Axios.get(api + "/checkout-credit-card/checkprofilecomplete").then(async (res) => {
-            console.log(res);
+            // console.log(res);
             if (res.data === true) {
 
                 await creditCardConfigure();

@@ -12,13 +12,25 @@
     padding: 10px;
     margin: 10px;
 }
-.lottery-item:hover {
+/* .lottery-item:hover {
     cursor: pointer;
     box-shadow: 0px 7px 7px 5px rgba(192, 192, 192, 0.397);
+} */
+.lottery-item-image {
+    position: relative;
+    margin: 7px 0;
 }
-.lottery-item-image img {
+.lottery-item-image > img {
     width: 100%;
-
+}
+.lottery-item-image > div {
+    bottom: 0;
+    color: white;
+    background-color: rgba(68, 68, 68, 0.705);
+    height: 27px;
+    font-size: 14px;
+    width: 100%;
+    position: absolute;
 }
 .add-to-cart {
     border: none;

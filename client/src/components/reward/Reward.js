@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Button, Modal } from "react-bootstrap";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { getReward } from "../../redux/action/rewardAction";
 import { useDispatch, useSelector } from "react-redux";
-import s from '../userdashboard/widget'
+
 import Moment from "react-moment";
 import "moment/locale/th";
 import "./Reward.css";
@@ -13,21 +12,21 @@ const Reward = () => {
   const dispatch = useDispatch();
   const reward = useSelector((state) => state.reward);
 
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  // const [show, setShow] = useState(false);
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
 
-  const [comfirm, setConfirm] = useState(false);
-  const handleCloseconfirm = () => setConfirm(false);
-  const handleShowconfirm = () => setConfirm(true);
+  // const [comfirm, setConfirm] = useState(false);
+  // const handleCloseconfirm = () => setConfirm(false);
+  // const handleShowconfirm = () => setConfirm(true);
 
-  const [showLottery, setshowLottery] = useState(false);
-  const [lotterydate, setlotterydate] = useState([]);
-  const handleLotteryClose = () => setshowLottery(false);
-  const handleShowLottery = (item) => {
-    setshowLottery(true);
-    setlotterydate(item);
-  };
+  // const [showLottery, setshowLottery] = useState(false);
+  // const [lotterydate, setlotterydate] = useState([]);
+  // const handleLotteryClose = () => setshowLottery(false);
+  // const handleShowLottery = (item) => {
+  //   setshowLottery(true);
+  //   setlotterydate(item);
+  // };
 
   useEffect(() => {
     dispatch(getReward());
@@ -55,16 +54,16 @@ const Reward = () => {
         </NavLink>
       </header>
       <div className="history-user-buy">
-        <div className="allReward mt-4">
+        {/* <div className="allReward mt-4">
           <h4>รางวัลทั้งหมด</h4>
-        </div>
+        </div> */}
        
           {!reward.data?
           <div>wait</div> : reward.data.map((item, index) => {
           return (
-            <div key={index}>
-              <div className="card">
-                <div className="card-header">
+            <div key={index} >
+              <div className="card" >
+                <div className="card-header reward-mobile">
                   <p className="card-titl mt-2">
                     หมายเลขรับรางวัล : {item.id}
                     {/* หมายเลขรับรางวัล : {reward.data.id} */}
@@ -87,7 +86,7 @@ const Reward = () => {
                       href={"/reward/detail/" + item.id}
                       class="rewardMoredetail"
                     >
-                      ดูเพิ่มเติม 
+                      ดูรายละเอียด 
                     </a>
                   </div>
                 </div>

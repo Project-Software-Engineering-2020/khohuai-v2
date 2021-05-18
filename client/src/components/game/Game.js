@@ -102,7 +102,7 @@ function Game() {
     let modifier = 0;
     let bossCoinConverted = 0;
 
-    var cheatMode = true;
+    var cheatMode = false;
 
     let tempGachaCache = [];
 

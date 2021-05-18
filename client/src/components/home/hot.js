@@ -9,7 +9,7 @@ const Hot = () => {
     const [data, setData] = useState();
     const [loading, setloading] = useState(false);
 
-    useEffect(async() => {
+    useEffect(async () => {
 
         const FetchData = async () => {
             await Axios.get(api + "/lottery/aos").then((lot) => {
@@ -24,32 +24,33 @@ const Hot = () => {
 
 
     return (
-        <div>
-            <div className="hot-header">
-                <span>กำลังจะหมด </span>
-
-            </div>
+        <>
             {loading ?
-                <div className="hot-body">
-                    {data.map((item, index) => {
-                        // if (index < 4) {
+                <div className="hot">
+                    <div className="hot-header">
+                        <span>กำลังจะหมด </span>
+
+                    </div>
+
+                    <div className="hot-body">
+                        {data.map((item, index) => {
+                            // if (index < 4) {
                             return (
                                 <Lottoryitem key={index} data={item} ></Lottoryitem>
                             )
-                        // }
+                            // }
 
-                    })}
-                    {/* <div>
+                        })}
+                        {/* <div>
                     <button className="other"> ดูเพิ่มเติม</button>
                 </div> */}
+                    </div>
                 </div>
                 :
-                <div className="loader">Loading...</div>
+                null
+                // <div className="loader">Loading...</div>
             }
-
-
-        </div>
-
+        </>
     )
 }
 export default Hot

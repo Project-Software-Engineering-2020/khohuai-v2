@@ -58,6 +58,7 @@ const googleLogin = async (req, res) => {
           displayName: result.user.displayName,
           photoURL: result.user.photoURL,
           new_user: true,
+          provider: "google",
           exp: (Date.now() / 1000 + (60 * 60))//หนึ่งชั่วโมง
         }
 
@@ -74,6 +75,7 @@ const googleLogin = async (req, res) => {
           displayName: doc.data().displayName,
           photoURL: doc.data().photoURL,
           new_user: doc.data().new_user,
+          provider: "google",
           exp: (Date.now() / 1000 + (60 * 60))//หนึ่งชั่วโมง
         }
 
@@ -113,6 +115,7 @@ const signin = async (req, res) => {
               displayName: doc.data().displayName,
               photoURL: doc.data().photoURL,
               new_user: doc.data().new_user,
+              provider: doc.data().provider,
               exp: (Date.now() / 1000 + (60 * 60))//นี่ไง หนึ่งชั่วโมง
             }
 

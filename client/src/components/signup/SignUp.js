@@ -207,7 +207,7 @@ const SignUp = () => {
         email: email,
         password: password,
       }).then((res) => {
-        console.log("Singup User New Uid ++++++++++++++++++++" , res);
+        // console.log("Singup User New Uid ++++++++++++++++++++" , res);
 
         // console.log(res);
         dispatch({type:"SET_TOKEN",data:res.data})

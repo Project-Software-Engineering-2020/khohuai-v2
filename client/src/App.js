@@ -17,7 +17,7 @@ import Profile from "./components/profile/Profile";
 import Sign_in from "./components/signin/Sign_in";
 import LotteryDetail from "./components/shop/LottoDetail";
 import UploadLottery from "./components/insert/insertLottery";
-import Error404 from "./components/error/Error404";
+// import Error404 from "./components/error/Error404";
 import UpdatePassword from "./components/recover/Updatepassword";
 import ForgotPassword from "./components/recover/Forgotpassword";
 import CartTest from "./components/cart/CartTest";
@@ -69,7 +69,7 @@ function App() {
       }
     }
 
-  }, [token])
+  }, [token,dispatch])
 
   return (
 
@@ -107,7 +107,7 @@ function App() {
           <Modal.Title><h5>วิธีการใช้งาน</h5></Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <img src={tutorial} className="w-100"></img>
+          <img src={tutorial} alt="tutorial" className="w-100"></img>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={handleClose}>

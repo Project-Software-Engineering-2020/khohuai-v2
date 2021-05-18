@@ -4,7 +4,6 @@ import Foryou from "./foryou";
 import Hot from "./hot";
 import Carousel from "./carousel";
 import Footer from "../footer/Footer";
-import { getMyCartFromDB } from '../../redux/action/cartAction';
 import { useDispatch, useSelector } from 'react-redux'
 import { getCurrent } from '../../redux/action/ngud'
 const Home = () => {
@@ -15,24 +14,17 @@ const Home = () => {
 
   useEffect(async () => {
     await dispatch(getCurrent());
-    // if (auth.status === true) {
-    //   await dispatch(getMyCartFromDB())
-    // }
   }, [])
 
-
   return (
-    <div>
+    <div className="landing-page">
       <div className="home">
         <div className="container">
           <Carousel />
-          <div>
-            <Foryou />
-            <Hot />
-          </div>
+          <Foryou />
+          <Hot />
         </div>
       </div>
-
       <Footer />
     </div>
   );

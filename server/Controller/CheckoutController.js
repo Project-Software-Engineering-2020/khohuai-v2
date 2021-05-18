@@ -28,12 +28,12 @@ const checkoutCreditCard = async (req, res, next) => {
       customer: customer.id
     })
 
-    createinvoice(charge, buyItem, uid, totalItem)
+    await createinvoice(charge, buyItem, uid, totalItem,res)
 
-    res.send({
-      amount: amount,
-      status: charge.status,
-    })
+    // res.send({
+    //   amount: amount,
+    //   status: charge.status,
+    // })
 
   } catch (err) {
     console.log("ตรงนี้")
@@ -125,7 +125,7 @@ const romoveInStock = async (item_buy) => {
 }
 
 
-const createinvoice = async (data, doto, idUser, totalItem) => {
+const createinvoice = async (data, doto, idUser, totalItem, res) => {
 
   const charge = data;
   const Mycart = doto;
@@ -272,7 +272,8 @@ const createinvoice = async (data, doto, idUser, totalItem) => {
       let _onhand = ngud[0].total_onhand
       _onhand = _onhand - totalItem;
 
-      await firestore.collection("ngud").doc(ngud[0].ngud).update({ total_onhand: _onhand })
+      await firestore.collection("ngud").doc(ngud[0].ngud).update({ total_onhand: _onhand });
+      res.send("success");
 
     }
   } catch (err) {
@@ -306,12 +307,12 @@ const checkCompleteProfile = async (req, res) => {
       }
     })
 
-    if (userData.firstname === "" || userData.firstname === undefined || userData.firstname === null) { complete = false }
-    if (userData.lastname === "" || userData.lastname === undefined || userData.lastname === null) { complete = false }
-    if (userData.phone === "" || userData.phone === undefined || userData.phone === null) { complete = false }
-    if (userData.bank_name === "" || userData.bank_name === undefined || userData.bank_name === null) { complete = false }
-    if (userData.bank_number === "" || userData.bank_number === undefined || userData.bank_number === null) { complete = false }
-    if (userData.bank_provider === "" || userData.bank_provider === undefined || userData.bank_provider === null) { complete = false }
+    if (userData.firstname == "" || userData.firstname == undefined || userData.firstname == null) { complete = false }
+    if (userData.lastname == "" || userData.lastname == undefined || userData.lastname == null) { complete = false }
+    if (userData.phone == "" || userData.phone == undefined || userData.phone == null) { complete = false }
+    if (userData.bank_name == "" || userData.bank_name == undefined || userData.bank_name == null) { complete = false }
+    if (userData.bank_number == "" || userData.bank_number == undefined || userData.bank_number == null) { complete = false }
+    if (userData.bank_provider == "" || userData.bank_provider == undefined || userData.bank_provider == null) { complete = false }
 
     res.send(complete);
 

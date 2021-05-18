@@ -131,7 +131,7 @@ a.lottery-nav-links {
     flex-direction: column;
     grid-gap: 1rem;
     width: 100%;
-    /* height: 90vh; */
+    height: 100%;
     position: absolute;
     top: 70px;
     left: -100%;

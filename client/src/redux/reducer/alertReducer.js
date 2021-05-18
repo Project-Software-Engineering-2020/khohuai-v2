@@ -13,7 +13,7 @@ const initialState = {
 function Alert(state = initialState, action) {
   switch (action.type) {
     case "OPEN_ALERT":
-      console.log(action.data);
+ 
       state = {
         ...state,
         open: true,

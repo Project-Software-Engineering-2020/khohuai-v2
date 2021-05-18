@@ -1,19 +1,16 @@
 import React from "react";
 import "./footer.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome } from "@fortawesome/free-solid-svg-icons";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { faMoneyBillAlt } from "@fortawesome/free-solid-svg-icons";
-import { faGamepad } from "@fortawesome/free-solid-svg-icons";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import { faLine } from "@fortawesome/free-brands-svg-icons";
-// import logo from "./navbar/khohuai.png";
+import chon from '../../images/dev/1.png';
+import boss from '../../images/dev/2.png';
+import toy from '../../images/dev/3.png';
+import aum from '../../images/dev/4.png';
+import jujee from '../../images/dev/5.jpg';
 
 const Footer = () => {
   return (
-    <footer className="bg-light text-left text-lg-start">
-      {/* <div className="d-flex justify-content-center">
-        <div className="container p-4">
+    <footer className="text-center footer">
+      {/* <div className="d-flex justify-content-center bg-white">
+        <div className="container p-4 ">
           <div className="row">
             <div className="col-md-4 mb-4 mb-md-0 mt-2">
               <h5 className="text-uppercase"></h5>
@@ -74,18 +71,45 @@ const Footer = () => {
           </div>
         </div>
       </div> */}
+      {/* <div className="container p-3">
+        <h5 className="text-center">ทีมผู้พัฒนา</h5>
+        <div className="developer-team">
+          <div >
+            <img src={chon} alt="ชลสิทธิ์ สาตสุข" className="dev"/>
+            <div> ชลสิทธิ์ สาตสุข</div>
+           
+          </div>
+          <div >
+          <img src={boss} alt="ไตรรัตน์ จามรธวัช" className="dev"></img>
+            <div>ไตรรัตน์ จามรธวัช</div>
+          </div>
+
+          <div >
+          <img src={toy} alt="เธียรวิชญ์ สิริสาครสกุล" className="dev"></img>
+          <div> เธียรวิชญ์ สิริสาครสกุล</div>
+          </div>
+          <div >
+          <img src={aum} alt="ณัฐชภา ลักษโนวาท" className="dev"></img>
+          <div>ณัฐชภา ลักษโนวาท</div>
+            
+          </div>
+          <div >
+          <img src={jujee} alt="ณัฐมน วุฒิเวชนันท์" className="dev"></img>
+          <div>ณัฐมน วุฒิเวชนันท์</div>
+            
+          </div>
+        </div>
+      </div> */}
+      
+
 
       <div className="copyright">
         <div class="text-center p-3">
-          © 2020 Copyright 2021 Khohuai - All rights reserved
-          {/* <a class="text-dark" href="https://mdbootstrap.com/">
-          MDBootstrap.com
-        </a> */}
+          © Copyright 2021 Khohuai - All rights reserved
+       
         </div>
       </div>
     </footer>
-
-    // <img src={logo} alt="khohuai" className="lottery-logo"></img>
   );
 };
 

@@ -49,3 +49,11 @@
     font-weight: bold;
     box-shadow: 2px 2px 5px rgb(204, 204, 204);
 }
+.landing-page {
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: stretch;
+    flex-wrap: nowrap;
+}

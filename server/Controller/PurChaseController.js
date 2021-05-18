@@ -17,7 +17,8 @@ const BeforePurchase = async (req, res, next) => {
             result.forEach((doc) => {
                 ArrayPurchase.push({
                     date: doc.data().date.toDate(),
-                    nguad: doc.data().nguad,
+                    nguad: doc.data().ngud,
+                    ngud_date: doc.data().ngud_date,
                     totalprice: doc.data().totalprice,
                     invoiceid: doc.id,
                     quantity: doc.data().quantity,

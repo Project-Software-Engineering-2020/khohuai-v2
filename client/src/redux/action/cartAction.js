@@ -48,7 +48,6 @@ export function decrementQty(item) {
       (result) => {
         const data = result.data.data;
         const message = result.data.message;
-        console.log(data);
         dispatch({ type: "SET_CART", data });
         dispatch({ type: "CALCULATE_CART" });
       }
@@ -57,7 +56,7 @@ export function decrementQty(item) {
 }
 
 export function removeItemInCart(id) {
-  console.log(id);
+
   return function (dispatch) {
     return Axios.delete(api+"/cart/" + id).then((result) => {
       if (result.status === 200) {
@@ -68,7 +67,7 @@ export function removeItemInCart(id) {
       }
       store.dispatch({ type: "OPEN_ALERT", data: data_alert });
       }
-      console.log(result)
+
       const data = result.data.data;
       const message = result.data.message;
       dispatch({ type: "SET_CART", data });
@@ -77,7 +76,7 @@ export function removeItemInCart(id) {
 }
 
 export function selectItem(id, select) {
-  console.log(id, select);
+
   return store.dispatch({ type: "SELECT_ITEM_CART", id, select });
 }
 

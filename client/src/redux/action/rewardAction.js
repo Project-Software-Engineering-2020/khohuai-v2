@@ -23,7 +23,7 @@ export function getRewardDetail(reward_id) {
     return function (dispatch) {
         return Axios.get(api + "/reward/detail/"+reward_id)
             .then(reward => {
-                console.log(reward.data);
+      
                 dispatch({type:"FETCHED_REWARD",data:reward.data})
             });
     }

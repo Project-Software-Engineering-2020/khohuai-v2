@@ -1,4 +1,34 @@
 .copyright {
-  background-color: black;
+  background-color: rgb(46, 46, 46);
   color: white;
+}
+.dev{
+  border-radius: 50%;
+  width: 110px;
+  border: 5px solid rgb(228, 228, 228);
+}
+.developer-team {
+  padding: 10px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  justify-content: center;
+}
+.footer {
+  background-color: rgb(214, 214, 214);
+}
+@media screen and (max-width: 700px) {
+  .developer-team {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .developer-team > div {
+    margin: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  .dev {
+    width: 45px;
+  }
 }
